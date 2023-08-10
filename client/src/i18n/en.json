@@ -1,0 +1,19 @@
+{
+  "Admin": {
+    "buttons": {
+      "logout": "Logout",
+      "test": "Test"
+    },
+    "messages": {
+      "success": "You've successfully authenticated"
+    }
+  },
+  "Home": {
+    "header": "Welcome to Rails-React Template <1>Edit <1>src/App.js</1> and save to reload.</1>"
+  },
+  "Login": {
+    "buttons": {
+      "login": "Login"
+    }
+  }
+}

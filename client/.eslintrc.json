@@ -1,0 +1,57 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb"
+  ],
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "babelOptions": {
+      "presets": [
+        "@babel/preset-react"
+      ]
+    }
+  },
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "class-methods-use-this": "off",
+    "comma-dangle": "off",
+    "import/order": "off",
+    "jsx-quotes": ["error", "prefer-single"],
+    "lines-between-class-members": "off",
+    "max-len": ["error", { "code": 120 }],
+    "no-underscore-dangle": "off",
+    "no-use-before-define": "off",
+    "react/destructuring-assignment": "off",
+    "react/function-component-definition": [2, { "namedComponents": "arrow-function" }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-no-bind": "off",
+    "react/no-did-update-set-state": "off",
+    "react/prefer-stateless-function": "off",
+    "react/require-default-props": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/sort-comp": "off",
+    "react/static-property-placement": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".js.flow", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  }
+}

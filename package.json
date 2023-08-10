@@ -1,0 +1,13 @@
+{
+  "name": "rails-react-template",
+  "engines": {
+    "node": "18.x"
+  },
+  "private": true,
+  "scripts": {
+    "build": "cd client && yarn install && yarn build && cd ..",
+    "deploy": "cp -a client/build/. public/",
+    "dev-build": "cd client && yarn build && cd ..",
+    "heroku-postbuild": "yarn build && yarn deploy"
+  }
+}
