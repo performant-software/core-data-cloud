@@ -10,7 +10,7 @@ class Authentication extends BaseService {
    * @returns {string}
    */
   getBaseUrl(): string {
-    return '/api/auth/login';
+    return '/auth/login';
   }
 
   /**
