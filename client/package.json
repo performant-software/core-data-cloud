@@ -11,13 +11,14 @@
     "flow": "flow"
   },
   "dependencies": {
-    "@performant-software/semantic-components": "^0.5.17",
-    "@performant-software/shared-components": "^0.5.17",
+    "@performant-software/semantic-components": "^1.0.19-beta.2",
+    "@performant-software/shared-components": "^1.0.19-beta.2",
     "classnames": "^2.3.1",
     "i18next": "^21.9.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^11.18.4",
+    "react-icons": "^4.10.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "semantic-ui-react": "^2.1.2",
@@ -34,7 +35,7 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.5.0",
-    "flow-bin": "^0.177.0"
+    "flow-bin": "^0.215.1"
   },
   "browserslist": {
     "production": [

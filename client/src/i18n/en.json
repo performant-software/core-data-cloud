@@ -8,12 +8,67 @@
       "success": "You've successfully authenticated"
     }
   },
+  "Common": {
+    "buttons": {
+      "delete": "Delete"
+    }
+  },
   "Home": {
     "header": "Welcome to Rails-React Template <1>Edit <1>src/App.js</1> and save to reload.</1>"
+  },
+  "Layout": {
+    "labels": {
+      "new": "New",
+      "projects": "Projects",
+      "users": "Users"
+    }
   },
   "Login": {
     "buttons": {
       "login": "Login"
+    }
+  },
+  "Project": {
+    "messages": {
+      "delete": {
+        "content": "Do you really want to delete this project? This action cannot be undone.",
+        "header": "Are you sure?"
+      }
+    }
+  },
+  "Projects": {
+    "sort": {
+      "created": "Date created",
+      "name": "Name",
+      "updated": "Last modified"
+    }
+  },
+  "Sidebar": {
+    "labels": {
+      "logout": "Logout",
+      "projects": "Projects",
+      "users": "Users"
+    }
+  },
+  "User": {
+    "labels": {
+      "admin": "Admin",
+      "email": "Email",
+      "name": "Name",
+      "password": "Password",
+      "passwordConfirmation": "Password confirmation"
+    },
+    "messages": {
+      "password": {
+        "content": "Passwords must be at least eight (8) characters.",
+        "header": "Password Policy"
+      }
+    }
+  },
+  "Users": {
+    "columns": {
+      "email": "Email",
+      "name": "Name"
     }
   }
 }

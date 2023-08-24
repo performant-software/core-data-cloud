@@ -1,7 +1,10 @@
 class User < ApplicationRecord
-  # JWT
-  has_secure_password
+  # Relationships
+  has_many :user_projects, dependent: :destroy
 
   # Resourceable parameters
-  allow_params :name, :email, :password, :password_confirmation
+  allow_params :name, :email, :password, :password_confirmation, :admin
+
+  # JWT
+  has_secure_password
 end
