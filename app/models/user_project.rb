@@ -1,6 +1,11 @@
 class UserProject < ApplicationRecord
   # Constants
-  ALLOWED_ROLES = %w(owner editor)
+  ROLE_OWNER = 'owner'
+  ROLE_EDITOR = 'editor'
+  ALLOWED_ROLES = [
+    ROLE_OWNER,
+    ROLE_EDITOR
+  ]
 
   # Relationships
   belongs_to :user
