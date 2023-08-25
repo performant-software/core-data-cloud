@@ -30,4 +30,7 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  errors:
+    user_project:
+      roles: "%{value} is not a valid role"
+      unique: "A user can only be added to a project once"
