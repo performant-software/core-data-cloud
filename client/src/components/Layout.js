@@ -1,9 +1,21 @@
 // @flow
 
 import { Breadcrumbs } from '@performant-software/semantic-components';
-import React, { useEffect, useMemo, useRef, useState, type AbstractComponent } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type AbstractComponent
+} from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useParams
+} from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 import _ from 'underscore';
 import BreadcrumbsService, { Services } from '../services/Breadcrumbs';
@@ -21,13 +33,26 @@ const Layout: AbstractComponent<any> = () => {
   const defaultLabel = { new: t('Layout.labels.new') };
 
   /**
+   * Resolves the label for nested join tables.
+   *
+   * @type {function(*, string): *}
+   */
+  const resolveLabel = useCallback((memo: any, key: string) => {
+    let label = t(`Layout.labels.${key}`);
+
+    if (key === Services.user_projects) {
+      label = params.projectId
+        ? t(`Layout.labels.${Services.users}`)
+        : t(`Layout.labels.${Services.projects}`);
+    }
+
+    return _.extend(memo, { [key]: label });
+  }, [params]);
+
+  /**
    * Builds the map of URL key to label.
    */
-  const labels = useMemo(() => _.reduce(
-    _.keys(Services),
-    (memo, key) => _.extend(memo, { [key] : t(`Layout.labels.${key}`) }),
-    defaultLabel
-  ), [defaultLabel, t]);
+  const labels = useMemo(() => _.reduce(_.keys(Services), resolveLabel, defaultLabel), [defaultLabel, t]);
 
   /**
    * Sets the sidebar menu width when the component is mounted.

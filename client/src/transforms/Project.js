@@ -1,6 +1,8 @@
 // @flow
 
 import { BaseTransform } from '@performant-software/shared-components';
+import type { Option as OptionType } from '../types/Option';
+import type { Project as ProjectType } from '../types/Project';
 
 /**
  * Class responsible for transforming project records for POST/PUT requests.
@@ -25,6 +27,21 @@ class Project extends BaseTransform {
       'name',
       'description'
     ];
+  }
+
+  /**
+   * Returns the passed project as a dropdown option.
+   *
+   * @param project
+   *
+   * @returns {{text: string, value: number, key: number}}
+   */
+  toDropdown(project: ProjectType): OptionType {
+    return {
+      key: project.id,
+      value: project.id,
+      text: project.name
+    };
   }
 }
 

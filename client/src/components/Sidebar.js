@@ -6,7 +6,12 @@ import { useTranslation, withTranslation } from 'react-i18next';
 import { FaFolderOpen, FaUsers } from 'react-icons/fa';
 import { TbDatabaseShare } from 'react-icons/tb';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Icon, Menu, Popup, Ref } from 'semantic-ui-react';
+import {
+  Icon,
+  Menu,
+  Popup,
+  Ref
+} from 'semantic-ui-react';
 import AuthenticationService from '../services/Authentication';
 import MenuLink from './MenuLink';
 import styles from './Sidebar.module.css';
@@ -67,8 +72,13 @@ const Sidebar: ComponentType<any> = withTranslation()((props: Props) => {
               { params.projectId && (
                 <Menu.Menu>
                   <MenuLink
-                    content={'Details'}
+                    content={t('Sidebar.labels.details')}
                     to={`/projects/${params.projectId}`}
+                  />
+                  <MenuLink
+                    content={t('Sidebar.labels.users')}
+                    parent
+                    to={`/projects/${params.projectId}/user_projects`}
                   />
                 </Menu.Menu>
               )}
@@ -91,8 +101,13 @@ const Sidebar: ComponentType<any> = withTranslation()((props: Props) => {
               { params.userId && (
                 <Menu.Menu>
                   <MenuLink
-                    content={'Details'}
+                    content={t('Sidebar.labels.details')}
                     to={`/users/${params.userId}`}
+                  />
+                  <MenuLink
+                    content={t('Sidebar.labels.projects')}
+                    parent
+                    to={`/users/${params.userId}/user_projects`}
                   />
                 </Menu.Menu>
               )}

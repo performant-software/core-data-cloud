@@ -1,6 +1,8 @@
 // @flow
 
 import { BaseTransform } from '@performant-software/shared-components';
+import type { Option as OptionType } from '../types/Option';
+import type { User as UserType } from '../types/User';
 
 /**
  * Class responsible for transforming user records for POST/PUT requests.
@@ -12,7 +14,7 @@ class User extends BaseTransform {
    * @returns {string}
    */
   getParameterName(): string {
-    return 'user'
+    return 'user';
   }
 
   /**
@@ -28,6 +30,21 @@ class User extends BaseTransform {
       'password',
       'password_confirmation'
     ];
+  }
+
+  /**
+   * Returns the passed user as a dropdown option.
+   *
+   * @param user
+   *
+   * @returns {{text: string, value: number, key: number}}
+   */
+  toDropdown(user: UserType): OptionType {
+    return {
+      key: user.id,
+      value: user.id,
+      text: user.name
+    };
   }
 }
 

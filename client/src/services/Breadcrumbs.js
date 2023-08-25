@@ -1,10 +1,12 @@
 // @flow
 
 import ProjectsService from './Projects';
+import UserProjectsService from './UserProjects';
 import UsersService from './Users';
 
 const Services = {
   projects: 'projects',
+  user_projects: 'user_projects',
   users: 'users'
 };
 
@@ -27,6 +29,14 @@ const onLoad: OnLoadType = (name: string, id: number, params: any = {}) => {
       promise = ProjectsService
         .fetchOne(id)
         .then(({ data }) => data.project?.name);
+      break;
+
+    case Services.user_projects:
+      promise = UserProjectsService.fetchOne(id).then(({ data }) => (
+        params.projectId
+          ? data.user_project?.user?.name
+          : data.user_project?.project?.name
+      ));
       break;
 
     case Services.users:

@@ -34,10 +34,9 @@ const Users: AbstractComponent<any> = () => {
       }]}
       onDelete={(user) => UsersService.delete(user)}
       onLoad={(params) => UsersService.fetchAll(params)}
-      onSave={(user) => UsersService.save(user)}
       searchable
     />
   );
-}
+};
 
 export default Users;

@@ -20,6 +20,7 @@
     "labels": {
       "new": "New",
       "projects": "Projects",
+      "user_projects": "User Projects",
       "users": "Users"
     }
   },
@@ -45,6 +46,7 @@
   },
   "Sidebar": {
     "labels": {
+      "details": "Details",
       "logout": "Logout",
       "projects": "Projects",
       "users": "Users"
@@ -63,6 +65,26 @@
         "content": "Passwords must be at least eight (8) characters.",
         "header": "Password Policy"
       }
+    }
+  },
+  "UserProject": {
+    "labels": {
+      "project": "Project",
+      "role": "Role",
+      "user": "User"
+    }
+  },
+  "UserProjectRoles": {
+    "labels": {
+      "editor": "Editor",
+      "owner": "Owner"
+    }
+  },
+  "UserProjects": {
+    "columns": {
+      "project": "Project",
+      "role": "Role",
+      "user": "User"
     }
   },
   "Users": {

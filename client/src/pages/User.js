@@ -17,55 +17,58 @@ const UserForm = (props: Props) => {
   const { t } = useTranslation();
 
   return (
-  <SimpleEditPage
-    {...props}
-  >
-    <SimpleEditPage.Tab
-      key='default'
+    <SimpleEditPage
+      {...props}
+      menuProps={{
+        text: true
+      }}
     >
-      <Form.Input
-        error={props.isError('name')}
-        label={t('User.labels.name')}
-        required={props.isRequired('name')}
-        onChange={props.onTextInputChange.bind(this, 'name')}
-        value={props.item.name}
-      />
-      <Form.Input
-        error={props.isError('email')}
-        label={t('User.labels.email')}
-        required={props.isRequired('email')}
-        onChange={props.onTextInputChange.bind(this, 'email')}
-        value={props.item.email}
-      />
-      <Form.Checkbox
-        checked={props.item.admin}
-        error={props.isError('admin')}
-        label={t('User.labels.admin')}
-        onChange={props.onCheckboxInputChange.bind(this, 'admin')}
-      />
-      <Message
-        content={t('User.messages.password.content')}
-        header={t('User.messages.password.header')}
-      />
-      <Form.Input
-        error={props.isError('password')}
-        label={t('User.labels.password')}
-        onChange={props.onTextInputChange.bind(this, 'password')}
-        required={props.isRequired('password')}
-        type='password'
-        value={props.item.password || ''}
-      />
-      <Form.Input
-        error={props.isError('password_confirmation')}
-        label={t('User.labels.passwordConfirmation')}
-        onChange={props.onTextInputChange.bind(this, 'password_confirmation')}
-        required={props.isRequired('password_confirmation')}
-        type='password'
-        value={props.item.password_confirmation || ''}
-      />
-    </SimpleEditPage.Tab>
-  </SimpleEditPage>
-);
+      <SimpleEditPage.Tab
+        key='default'
+      >
+        <Form.Input
+          error={props.isError('name')}
+          label={t('User.labels.name')}
+          required={props.isRequired('name')}
+          onChange={props.onTextInputChange.bind(this, 'name')}
+          value={props.item.name}
+        />
+        <Form.Input
+          error={props.isError('email')}
+          label={t('User.labels.email')}
+          required={props.isRequired('email')}
+          onChange={props.onTextInputChange.bind(this, 'email')}
+          value={props.item.email}
+        />
+        <Form.Checkbox
+          checked={props.item.admin}
+          error={props.isError('admin')}
+          label={t('User.labels.admin')}
+          onChange={props.onCheckboxInputChange.bind(this, 'admin')}
+        />
+        <Message
+          content={t('User.messages.password.content')}
+          header={t('User.messages.password.header')}
+        />
+        <Form.Input
+          error={props.isError('password')}
+          label={t('User.labels.password')}
+          onChange={props.onTextInputChange.bind(this, 'password')}
+          required={props.isRequired('password')}
+          type='password'
+          value={props.item.password || ''}
+        />
+        <Form.Input
+          error={props.isError('password_confirmation')}
+          label={t('User.labels.passwordConfirmation')}
+          onChange={props.onTextInputChange.bind(this, 'password_confirmation')}
+          required={props.isRequired('password_confirmation')}
+          type='password'
+          value={props.item.password_confirmation || ''}
+        />
+      </SimpleEditPage.Tab>
+    </SimpleEditPage>
+  );
 };
 
 const User: AbstractComponent<any> = withReactRouterEditPage(UserForm, {
