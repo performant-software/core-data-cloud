@@ -21,15 +21,11 @@ const Roles: RolesType = {
   }
 };
 
-const getRoleOptions = (): any => [{
-  key: Roles.owner.value,
-  value: Roles.owner.value,
-  text: Roles.owner.label
-}, {
-  key: Roles.editor.value,
-  value: Roles.editor.value,
-  text: Roles.editor.label
-}];
+const getRoleOptions = (): any => _.map(_.keys(Roles), (key) => ({
+  key: Roles[key].value,
+  value: Roles[key].value,
+  text: Roles[key].label
+}));
 
 const getRoleView = (value: string): string => {
   const role = _.findWhere(_.values(Roles), { value });

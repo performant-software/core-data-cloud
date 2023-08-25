@@ -43,15 +43,16 @@ const ProjectForm = (props: Props) => {
         key='default'
       >
         <Form.Input
+          autoFocus
           error={props.isError('name')}
-          label={'Name'}
+          label={t('Project.labels.name')}
           required={props.isRequired('name')}
           onChange={props.onTextInputChange.bind(this, 'name')}
           value={props.item.name}
         />
         <Form.TextArea
           error={props.isError('description')}
-          label={'Description'}
+          label={t('Project.labels.description')}
           required={props.isRequired('description')}
           rows={5}
           onChange={props.onTextInputChange.bind(this, 'description')}

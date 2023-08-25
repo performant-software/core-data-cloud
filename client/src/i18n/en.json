@@ -30,6 +30,10 @@
     }
   },
   "Project": {
+    "labels": {
+      "description": "Description",
+      "name": "Name"
+    },
     "messages": {
       "delete": {
         "content": "Do you really want to delete this project? This action cannot be undone.",

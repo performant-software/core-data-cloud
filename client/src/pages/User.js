@@ -27,6 +27,7 @@ const UserForm = (props: Props) => {
         key='default'
       >
         <Form.Input
+          autoFocus
           error={props.isError('name')}
           label={t('User.labels.name')}
           required={props.isRequired('name')}

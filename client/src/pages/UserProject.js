@@ -102,7 +102,8 @@ const UserProject: AbstractComponent<any> = withReactRouterEditPage(UserProjectF
       .save(userProject)
       .then(({ data }) => data.user_project)
   ),
-  required: ['project_id', 'user_id', 'role']
+  required: ['project_id', 'user_id', 'role'],
+  resolveValidationError: ({ key, error }) => ({ [key]: error })
 });
 
 export default UserProject;
