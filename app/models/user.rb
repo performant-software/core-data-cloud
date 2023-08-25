@@ -7,4 +7,7 @@ class User < ApplicationRecord
 
   # JWT
   has_secure_password
+
+  # Validations
+  validates :email, uniqueness: true
 end
