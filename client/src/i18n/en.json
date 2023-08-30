@@ -56,7 +56,7 @@
       "users": "Users"
     }
   },
-  "User": {
+  "UserForm": {
     "labels": {
       "admin": "Admin",
       "email": "Email",
@@ -69,6 +69,12 @@
         "content": "Passwords must be at least eight (8) characters.",
         "header": "Password Policy"
       }
+    }
+  },
+  "UserModal": {
+    "title": {
+      "add": "Add User",
+      "edit": "Edit User"
     }
   },
   "UserProject": {

@@ -1,7 +1,9 @@
 // @flow
 
 import { BaseService } from '@performant-software/shared-components';
+import AuthenticationService from './Authentication';
 import UserProjectTransform from '../transforms/UserProject';
+import type { UserProject as UserProjectType } from '../types/UserProject';
 
 /**
  * Class responsible for handling all user_projects API requests.
@@ -23,6 +25,20 @@ class UserProjects extends BaseService {
    */
   getTransform(): typeof UserProjectTransform {
     return UserProjectTransform;
+  }
+
+  /**
+   * Overrides the parent save method to reset the session user.
+   *
+   * @param userProject
+   *
+   * @returns {*}
+   */
+  save(userProject: UserProjectType): Promise<any> {
+    return super.create(userProject).then((response) => {
+      AuthenticationService.reset();
+      return response;
+    });
   }
 }
 

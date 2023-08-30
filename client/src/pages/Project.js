@@ -6,6 +6,7 @@ import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Button, Confirm, Form } from 'semantic-ui-react';
+import PermissionsService from '../services/Permissions';
 import { type Project as ProjectType } from '../types/Project';
 import ProjectsService from '../services/Projects';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
@@ -35,6 +36,7 @@ const ProjectForm = (props: Props) => {
   return (
     <SimpleEditPage
       {...props}
+      editable={PermissionsService.canEditProject(props.item.id)}
       menuProps={{
         text: true
       }}
@@ -58,21 +60,25 @@ const ProjectForm = (props: Props) => {
           onChange={props.onTextInputChange.bind(this, 'description')}
           value={props.item.description}
         />
-        <Button
-          color='red'
-          content={t('Common.buttons.delete')}
-          floated='right'
-          icon='trash'
-          onClick={() => setDeleteModal(true)}
-        />
-        <Confirm
-          centered={false}
-          content={t('Project.messages.delete.content')}
-          header={t('Project.messages.delete.header')}
-          open={deleteModal}
-          onCancel={() => setDeleteModal(false)}
-          onConfirm={onDelete}
-        />
+        { PermissionsService.canDeleteProject(props.item.id) && (
+          <>
+            <Button
+              color='red'
+              content={t('Common.buttons.delete')}
+              floated='right'
+              icon='trash'
+              onClick={() => setDeleteModal(true)}
+            />
+            <Confirm
+              centered={false}
+              content={t('Project.messages.delete.content')}
+              header={t('Project.messages.delete.header')}
+              open={deleteModal}
+              onCancel={() => setDeleteModal(false)}
+              onConfirm={onDelete}
+            />
+          </>
+        )}
       </SimpleEditPage.Tab>
     </SimpleEditPage>
   );

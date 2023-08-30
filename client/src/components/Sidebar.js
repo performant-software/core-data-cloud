@@ -14,6 +14,7 @@ import {
 } from 'semantic-ui-react';
 import AuthenticationService from '../services/Authentication';
 import MenuLink from './MenuLink';
+import PermissionsService from '../services/Permissions';
 import styles from './Sidebar.module.css';
 
 type Props = {
@@ -26,8 +27,10 @@ type Props = {
 
 const Sidebar: ComponentType<any> = withTranslation()((props: Props) => {
   const navigate = useNavigate();
-  const params = useParams();
   const { t } = useTranslation();
+
+  const params = useParams();
+  const { projectId, userId } = params;
 
   /**
    * Logs the user out and navigates to the index page.
@@ -69,51 +72,53 @@ const Sidebar: ComponentType<any> = withTranslation()((props: Props) => {
               <FaFolderOpen
                 size='2em'
               />
-              { params.projectId && (
+              { projectId && (
                 <Menu.Menu>
                   <MenuLink
                     content={t('Sidebar.labels.details')}
-                    to={`/projects/${params.projectId}`}
+                    to={`/projects/${projectId}`}
                   />
                   <MenuLink
                     content={t('Sidebar.labels.users')}
                     parent
-                    to={`/projects/${params.projectId}/user_projects`}
+                    to={`/projects/${projectId}/user_projects`}
                   />
                 </Menu.Menu>
               )}
             </MenuLink>
           )}
         />
-        <Popup
-          content={t('Sidebar.labels.users')}
-          mouseEnterDelay={1000}
-          position='right center'
-          trigger={(
-            <MenuLink
-              className={styles.item}
-              parent
-              to='/users'
-            >
-              <FaUsers
-                size='2em'
-              />
-              { params.userId && (
-                <Menu.Menu>
-                  <MenuLink
-                    content={t('Sidebar.labels.details')}
-                    to={`/users/${params.userId}`}
-                  />
-                  <MenuLink
-                    content={t('Sidebar.labels.projects')}
-                    parent
-                    to={`/users/${params.userId}/user_projects`}
-                  />
-                </Menu.Menu>
-              )}
-            </MenuLink>
-          )}
-        />
+        { PermissionsService.canEditUsers() && (
+          <Popup
+            content={t('Sidebar.labels.users')}
+            mouseEnterDelay={1000}
+            position='right center'
+            trigger={(
+              <MenuLink
+                className={styles.item}
+                parent
+                to='/users'
+              >
+                <FaUsers
+                  size='2em'
+                />
+                { userId && (
+                  <Menu.Menu>
+                    <MenuLink
+                      content={t('Sidebar.labels.details')}
+                      to={`/users/${userId}`}
+                    />
+                    <MenuLink
+                      content={t('Sidebar.labels.projects')}
+                      parent
+                      to={`/users/${userId}/user_projects`}
+                    />
+                  </Menu.Menu>
+                )}
+              </MenuLink>
+            )}
+          />
+        )}
         <Popup
           content={t('Sidebar.labels.logout')}
           mouseEnterDelay={1000}

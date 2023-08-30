@@ -2,18 +2,21 @@
 
 import { AssociatedDropdown, SimpleEditPage } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
-import React, { type AbstractComponent, useEffect } from 'react';
+import React, { useEffect, useMemo, type AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Form } from 'semantic-ui-react';
-import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
+import PermissionsService from '../services/Permissions';
 import Project from '../transforms/Project';
 import ProjectsService from '../services/Projects';
 import User from '../transforms/User';
 import type { UserProject as UserProjectType } from '../types/UserProject';
+import UserModal from '../components/UserModal';
 import UserProjectRoles from '../utils/UserProjectRoles';
 import UserProjectsService from '../services/UserProjects';
 import UsersService from '../services/Users';
+import Validation from '../utils/Validation';
+import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
 
 type Props = EditContainerProps & {
   item: UserProjectType
@@ -22,6 +25,9 @@ type Props = EditContainerProps & {
 const UserProjectForm = (props: Props) => {
   const params = useParams();
   const { t } = useTranslation();
+
+  const projectId = useMemo(() => parseInt(params.projectId, 10), [params.projectId]);
+  const editable = useMemo(() => PermissionsService.canEditUserProjects(projectId), [projectId]);
 
   /*
  * For a new record, set the foreign key ID based on the route parameters.
@@ -39,6 +45,7 @@ const UserProjectForm = (props: Props) => {
   return (
     <SimpleEditPage
       {...props}
+      editable={editable}
     >
       <SimpleEditPage.Tab
         key='default'
@@ -67,6 +74,14 @@ const UserProjectForm = (props: Props) => {
           >
             <AssociatedDropdown
               collectionName='users'
+              modal={{
+                component: UserModal,
+                onSave: (user) => (
+                  UsersService
+                    .save(user)
+                    .then(({ data }) => data.user)
+                )
+              }}
               onSearch={(search) => UsersService.fetchAll({ search })}
               onSelection={props.onAssociationInputChange.bind(this, 'user_id', 'user')}
               renderOption={(user) => User.toDropdown(user)}
@@ -103,7 +118,7 @@ const UserProject: AbstractComponent<any> = withReactRouterEditPage(UserProjectF
       .then(({ data }) => data.user_project)
   ),
   required: ['project_id', 'user_id', 'role'],
-  resolveValidationError: ({ key, error }) => ({ [key]: error })
+  resolveValidationError: Validation.resolveUpdateError.bind(this)
 });
 
 export default UserProject;

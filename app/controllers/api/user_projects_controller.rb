@@ -5,11 +5,15 @@ class Api::UserProjectsController < Api::BaseController
   # Joins
   joins :user, :project
 
+  # Preloads
+  preloads :user, :project
+
   protected
 
   def base_query
     return super if params[:id].present?
 
+    # User projects are only visible in the context of a user or a project.
     if params[:project_id].present?
       UserProject.where(project_id: params[:project_id])
     elsif params[:user_id].present?

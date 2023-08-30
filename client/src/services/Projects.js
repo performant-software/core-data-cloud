@@ -1,12 +1,28 @@
 // @flow
 
 import { BaseService } from '@performant-software/shared-components';
+import AuthenticationService from './Authentication';
 import ProjectTransform from '../transforms/Project';
+import type { Project as ProjectType } from '../types/Project';
 
 /**
  * Class responsible for handling all project API requests.
  */
 class Projects extends BaseService {
+  /**
+   * Overrides the parent create method to reset the session user.
+   *
+   * @param project
+   *
+   * @returns {*}
+   */
+  create(project: ProjectType): Promise<any> {
+    return super.create(project).then((response) => {
+      AuthenticationService.reset();
+      return response;
+    });
+  }
+
   /**
    * Returns the projects base URL.
    *
