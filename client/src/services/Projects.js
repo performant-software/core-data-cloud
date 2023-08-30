@@ -1,9 +1,9 @@
 // @flow
 
 import { BaseService } from '@performant-software/shared-components';
-import AuthenticationService from './Authentication';
 import ProjectTransform from '../transforms/Project';
 import type { Project as ProjectType } from '../types/Project';
+import SessionService from './Session';
 
 /**
  * Class responsible for handling all project API requests.
@@ -17,10 +17,9 @@ class Projects extends BaseService {
    * @returns {*}
    */
   create(project: ProjectType): Promise<any> {
-    return super.create(project).then((response) => {
-      AuthenticationService.reset();
-      return response;
-    });
+    return super
+      .create(project)
+      .then((response) => SessionService.reset().then(() => response));
   }
 
   /**

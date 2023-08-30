@@ -1,7 +1,7 @@
 // @flow
 
 import { BaseService } from '@performant-software/shared-components';
-import AuthenticationService from './Authentication';
+import SessionService from './Session';
 import UserProjectTransform from '../transforms/UserProject';
 import type { UserProject as UserProjectType } from '../types/UserProject';
 
@@ -35,10 +35,9 @@ class UserProjects extends BaseService {
    * @returns {*}
    */
   save(userProject: UserProjectType): Promise<any> {
-    return super.create(userProject).then((response) => {
-      AuthenticationService.reset();
-      return response;
-    });
+    return super
+      .create(userProject)
+      .then((response) => SessionService.reset().then(() => response));
   }
 }
 

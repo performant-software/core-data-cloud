@@ -2,14 +2,13 @@
 
 import _ from 'underscore';
 import type { User as UserType } from '../types/User';
+import SessionService from './Session';
 import UserProjectRoles from '../utils/UserProjectRoles';
 
 /**
  * Class responsible for permissions business logic.
  */
 class Permissions {
-  user: UserType | void;
-
   /**
    * An admin user or project owner can delete a project.
    *
@@ -67,12 +66,23 @@ class Permissions {
   }
 
   /**
+   * Returns a reference to the currently logged in user.
+   *
+   * @returns {User}
+   */
+  getUser(): UserType {
+    const { user } = SessionService.getSession();
+    return user;
+  }
+
+  /**
    * Returns true if the current user is an admin.
    *
    * @returns {boolean}
    */
   isAdmin(): boolean {
-    return this.user?.admin || false;
+    const user = this.getUser();
+    return user?.admin || false;
   }
 
   /**
@@ -83,23 +93,15 @@ class Permissions {
    * @returns {boolean}
    */
   isOwner(projectId: number): boolean {
-    const { user_projects: userProjects } = this.user || {};
+    const user = this.getUser();
+    const { user_projects: userProjects } = user || {};
 
     return !!_.findWhere(userProjects, {
       project_id: projectId,
       role: UserProjectRoles.Roles.owner.value
     });
   }
-
-  /**
-   * Resets the user instance based on local storage.
-   *
-   * @param user
-   */
-  reset(user: UserType | void) {
-    this.user = user;
-  }
 }
 
-const PermissionsInstance: Permissions = new Permissions();
-export default PermissionsInstance;
+const PermissionsService: Permissions = new Permissions();
+export default PermissionsService;
