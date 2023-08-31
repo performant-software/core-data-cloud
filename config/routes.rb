@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   mount JwtAuth::Engine => '/auth'
+  mount CoreDataConnector::Engine => '/core_data'
 
   namespace :api do
     resources :projects
