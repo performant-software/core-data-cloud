@@ -1,4 +1,14 @@
 GIT
+  remote: https://github.com/performant-software/core-data-connector
+  revision: 963d0d0bd2f13f75af7b1b24c14fa64f29723e32
+  tag: v0.1.0
+  specs:
+    core_data_connector (0.1.0)
+      faker
+      rails (>= 6.0.3.2, < 8)
+      resource_api
+
+GIT
   remote: https://github.com/performant-software/jwt-auth.git
   revision: 1dae0ca32504a463497b0379348e4d6c45b2cbd1
   tag: v0.1.1
@@ -100,6 +110,8 @@ GEM
       dotenv (= 2.8.1)
       railties (>= 3.2)
     erubi (1.12.0)
+    faker (3.2.1)
+      i18n (>= 1.8.11, < 2)
     globalid (1.1.0)
       activesupport (>= 5.0)
     i18n (1.14.1)
@@ -195,6 +207,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt (~> 3.1.18)
   bootsnap
+  core_data_connector!
   debug
   dotenv-rails
   jwt (~> 2.4, >= 2.4.1)
