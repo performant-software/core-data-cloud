@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
 import Layout from './components/Layout';
 import Login from './pages/Login';
+import Place from './pages/Place';
+import Places from './pages/Places';
 import Project from './pages/Project';
 import Projects from './pages/Projects';
 import User from './pages/User';
@@ -64,6 +66,22 @@ const App: ComponentType<any> = useDragDrop(() => (
                 element={<UserProject />}
               />
             </Route>
+            <Route
+              path='places'
+            >
+              <Route
+                index
+                element={<Places />}
+              />
+              <Route
+                path='new'
+                element={<Place />}
+              />
+              <Route
+                path=':placeId'
+                element={<Place />}
+              />
+            </Route>
           </Route>
         </Route>
         <Route
@@ -101,6 +119,22 @@ const App: ComponentType<any> = useDragDrop(() => (
               />
             </Route>
           </Route>
+        </Route>
+        <Route
+          path='places'
+        >
+          <Route
+            index
+            element={<Places />}
+          />
+          <Route
+            path='new'
+            element={<Place />}
+          />
+          <Route
+            path=':placeId'
+            element={<Place />}
+          />
         </Route>
       </Route>
     </Routes>

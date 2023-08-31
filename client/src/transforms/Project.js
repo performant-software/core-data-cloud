@@ -14,7 +14,7 @@ class Project extends BaseTransform {
    * @returns {string}
    */
   getParameterName(): string {
-    return 'project'
+    return 'project';
   }
 
   /**

@@ -49,10 +49,6 @@ class Permissions {
    * @returns {boolean}
    */
   canEditUserProjects(projectId: number): boolean {
-    if (!projectId) {
-      return false;
-    }
-
     return this.isAdmin() || this.isOwner(projectId);
   }
 

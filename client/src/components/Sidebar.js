@@ -3,6 +3,7 @@
 import cx from 'classnames';
 import React, { useCallback, type ComponentType } from 'react';
 import { useTranslation, withTranslation } from 'react-i18next';
+import { BiWorld } from 'react-icons/bi';
 import { FaFolderOpen, FaUsers } from 'react-icons/fa';
 import { TbDatabaseShare } from 'react-icons/tb';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -27,10 +28,8 @@ type Props = {
 
 const Sidebar: ComponentType<any> = withTranslation()((props: Props) => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
-
   const params = useParams();
-  const { projectId, userId } = params;
+  const { t } = useTranslation();
 
   /**
    * Logs the user out and navigates to the index page.
@@ -72,16 +71,21 @@ const Sidebar: ComponentType<any> = withTranslation()((props: Props) => {
               <FaFolderOpen
                 size='2em'
               />
-              { projectId && (
+              { params.projectId && (
                 <Menu.Menu>
                   <MenuLink
                     content={t('Sidebar.labels.details')}
-                    to={`/projects/${projectId}`}
+                    to={`/projects/${params.projectId}`}
                   />
                   <MenuLink
                     content={t('Sidebar.labels.users')}
                     parent
-                    to={`/projects/${projectId}/user_projects`}
+                    to={`/projects/${params.projectId}/user_projects`}
+                  />
+                  <MenuLink
+                    content={t('Sidebar.labels.places')}
+                    parent
+                    to={`/projects/${params.projectId}/places`}
                   />
                 </Menu.Menu>
               )}
@@ -102,16 +106,16 @@ const Sidebar: ComponentType<any> = withTranslation()((props: Props) => {
                 <FaUsers
                   size='2em'
                 />
-                { userId && (
+                { params.userId && (
                   <Menu.Menu>
                     <MenuLink
                       content={t('Sidebar.labels.details')}
-                      to={`/users/${userId}`}
+                      to={`/users/${params.userId}`}
                     />
                     <MenuLink
                       content={t('Sidebar.labels.projects')}
                       parent
-                      to={`/users/${userId}/user_projects`}
+                      to={`/users/${params.userId}/user_projects`}
                     />
                   </Menu.Menu>
                 )}
@@ -119,6 +123,31 @@ const Sidebar: ComponentType<any> = withTranslation()((props: Props) => {
             )}
           />
         )}
+        <Popup
+          content={t('Sidebar.labels.places')}
+          mouseEnterDelay={1000}
+          position='right center'
+          trigger={(
+            <MenuLink
+              className={styles.item}
+              parent
+              to='/places'
+            >
+              <BiWorld
+                size='2em'
+              />
+              { params.placeId && (
+                <Menu.Menu>
+                  <MenuLink
+                    content={t('Sidebar.labels.details')}
+                    parent
+                    to={`/places/${params.placeId}`}
+                  />
+                </Menu.Menu>
+              )}
+            </MenuLink>
+          )}
+        />
         <Popup
           content={t('Sidebar.labels.logout')}
           mouseEnterDelay={1000}
