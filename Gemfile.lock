@@ -1,20 +1,16 @@
-PATH
-  remote: ../core-data-connector
-  specs:
-    core_data_connector (0.1.0)
-      faker
-      rails (>= 6.0.3.2, < 8)
-      resource_api
-
-PATH
-  remote: ../jwt-auth
+GIT
+  remote: https://github.com/performant-software/jwt-auth.git
+  revision: 1dae0ca32504a463497b0379348e4d6c45b2cbd1
+  tag: v0.1.1
   specs:
     jwt_auth (0.1.0)
       jwt (~> 2.7.1)
       rails (~> 7.0.7)
 
-PATH
-  remote: ../resource-api
+GIT
+  remote: https://github.com/performant-software/resource-api.git
+  revision: 309aa4266ebf6fa7c315c5e5178758a18f0e4252
+  tag: v0.5.0
   specs:
     resource_api (0.1.0)
       pagy (~> 5.10)
@@ -104,8 +100,6 @@ GEM
       dotenv (= 2.8.1)
       railties (>= 3.2)
     erubi (1.12.0)
-    faker (3.2.1)
-      i18n (>= 1.8.11, < 2)
     globalid (1.1.0)
       activesupport (>= 5.0)
     i18n (1.14.1)
@@ -138,6 +132,8 @@ GEM
       net-protocol
     nio4r (2.5.9)
     nokogiri (1.15.4-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.15.4-x86_64-linux)
       racc (~> 1.4)
     pagy (5.10.1)
       activesupport
@@ -194,11 +190,11 @@ GEM
 
 PLATFORMS
   x86_64-darwin-21
+  x86_64-linux
 
 DEPENDENCIES
   bcrypt (~> 3.1.18)
   bootsnap
-  core_data_connector!
   debug
   dotenv-rails
   jwt (~> 2.4, >= 2.4.1)

@@ -1,7 +1,8 @@
 {
   "name": "rails-react-template",
   "engines": {
-    "node": "18.x"
+    "node": "18.x",
+    "yarn": "1.x"
   },
   "private": true,
   "scripts": {

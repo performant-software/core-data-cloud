@@ -1948,12 +1948,12 @@
     "@stitches/react" "^1.2.7"
     react "^18.2.0"
 
-"@performant-software/semantic-components@^1.0.19-beta.3":
-  version "1.0.19-beta.3"
-  resolved "https://registry.yarnpkg.com/@performant-software/semantic-components/-/semantic-components-1.0.19-beta.3.tgz#22dd64e59e880be7abd6f583b18ab6516239470f"
-  integrity sha512-4UEp63MgzNfz9l91toZkWBkoRdOeMjieDE4KlKjlyc4cfPUVzXXOyJq9810xfnzQ0A/N4Z7nPdXQLegYORGsHA==
+"@performant-software/semantic-components@^1.0.19":
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/@performant-software/semantic-components/-/semantic-components-1.0.19.tgz#753059fd162f5312408987075c9d130695415b3b"
+  integrity sha512-NSPFY9XEglNmVw5rwFVmPEyg6pzy0cuOV7Yxk14I+epM8x+QVJaFfNaE+LKCzcOTmfMmEliORjy0pBMNwGQbUw==
   dependencies:
-    "@performant-software/shared-components" "^1.0.19-beta.3"
+    "@performant-software/shared-components" "^1.0.19"
     "@react-google-maps/api" "^2.8.1"
     axios "^0.26.1"
     i18next "^19.4.4"
@@ -1972,10 +1972,10 @@
     zotero-api-client "^0.40.0"
     zotero-translation-client "^5.0.1"
 
-"@performant-software/shared-components@^1.0.19-beta.3":
-  version "1.0.19-beta.3"
-  resolved "https://registry.yarnpkg.com/@performant-software/shared-components/-/shared-components-1.0.19-beta.3.tgz#f745841d09e7dc960a29a0c6b38b6bf5265520d1"
-  integrity sha512-FYCwvUq2PSCDuQXTuvKHh8kKzSwrBSmcKddBw8a7W4x9g+8jNdVipthfLZsZx0lGC9zEqfUpaeHNW8UnbreqZA==
+"@performant-software/shared-components@^1.0.19":
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/@performant-software/shared-components/-/shared-components-1.0.19.tgz#5b387df52b83fb7b9dde282865bd2718eb619c4c"
+  integrity sha512-KN7HEBtkMZwBPo86MY42YR1MGJTxyYoUWynr1xP6WO4UueKDvPJ0VyxdebhD/oWbJjU2hAiI1DJVGp4JQxinQg==
   dependencies:
     "@react-google-maps/api" "^2.8.1"
     "@samvera/clover-iiif" "^1.10.3"
