@@ -30,4 +30,12 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  authorization:
+    user_project_policy:
+      create?: 'You cannot add users to this project'
+      destroy?: 'You cannot remove users from this project'
+      update?: 'You cannot update users in this project'
+  errors:
+    user_project:
+      roles: "%{value} is not a valid role"
+      unique: "A user can only be added to a project once"

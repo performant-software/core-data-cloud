@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/jwt-auth.git
-  revision: c924704ce57365c6d3d5cdb9db93d8b2f2f33c48
-  tag: v0.1.0
+  revision: 1dae0ca32504a463497b0379348e4d6c45b2cbd1
+  tag: v0.1.1
   specs:
     jwt_auth (0.1.0)
       jwt (~> 2.7.1)
@@ -9,11 +9,12 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/resource-api.git
-  revision: ebfc4357bdfd13ae863f1e1aebdcc637be2ff6de
-  tag: v0.4.5
+  revision: 309aa4266ebf6fa7c315c5e5178758a18f0e4252
+  tag: v0.5.0
   specs:
     resource_api (0.1.0)
       pagy (~> 5.10)
+      pundit (~> 2.3.1)
       rails (>= 7.0, < 8)
 
 GEM
@@ -137,6 +138,8 @@ GEM
     pg (1.5.3)
     puma (5.6.7)
       nio4r (~> 2.0)
+    pundit (2.3.1)
+      activesupport (>= 3.0.0)
     racc (1.7.1)
     rack (2.2.8)
     rack-cors (1.1.1)

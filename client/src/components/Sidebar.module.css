@@ -1,0 +1,19 @@
+.sidebar.ui.vertical.icon.menu {
+  width: 8em;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.sidebar.ui.vertical.icon.menu > .item {
+  color: #bdbdbd;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.sidebar.ui.vertical.icon.menu > .item.active:hover {
+  color: #bdbdbd;
+}
+
+.sidebar.ui.vertical.icon.menu > .item.header {
+  background-color: #2185d0;
+  color: #FFFFFF;
+}
