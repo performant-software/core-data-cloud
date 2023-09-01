@@ -1,7 +1,6 @@
 // @flow
 
 import {
-  AssociatedDropdown,
   BooleanIcon,
   EmbeddedList,
   SimpleEditPage
@@ -10,13 +9,12 @@ import type { EditContainerProps } from '@performant-software/shared-components/
 import React, { type AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Header } from 'semantic-ui-react';
-import PlaceNameModal from '../components/PlaceNameModal';
-import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
-import PlacesService from '../services/Places';
-import ProjectsService from '../services/Projects';
-import ProjectTransform from '../transforms/Project';
+import OwnableDropdown from '../components/OwnableDropdown';
 import type { Place as PlaceType } from '../types/Place';
+import PlaceNameModal from '../components/PlaceNameModal';
+import PlacesService from '../services/Places';
 import Validation from '../utils/Validation';
+import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
 
 type Props = EditContainerProps & {
   item: PlaceType
@@ -36,13 +34,9 @@ const PlaceForm = (props: Props) => {
           label={t('Place.labels.project')}
           required
         >
-          <AssociatedDropdown
-            collectionName='projects'
-            onSearch={(search) => ProjectsService.fetchAll({ search })}
-            onSelection={(project) => props.onSetState({ project_item: { project_id: project.id, project } })}
-            renderOption={(project) => ProjectTransform.toDropdown(project)}
-            searchQuery={props.item.project_item?.project?.name}
-            value={props.item.project_item?.project_id}
+          <OwnableDropdown
+            item={props.item}
+            onSetState={props.onSetState}
           />
         </Form.Input>
         <Header
