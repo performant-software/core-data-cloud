@@ -10,28 +10,53 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_22_143805) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_07_201038) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "projects", force: :cascade do |t|
+  create_table "core_data_connector_locations", force: :cascade do |t|
+    t.bigint "place_id", null: false
+    t.string "locateable_type", null: false
+    t.bigint "locateable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["locateable_type", "locateable_id"], name: "index_core_data_connector_locations_on_locateable"
+    t.index ["place_id"], name: "index_core_data_connector_locations_on_place_id"
+  end
+
+  create_table "core_data_connector_place_names", force: :cascade do |t|
+    t.bigint "place_id", null: false
+    t.string "name"
+    t.boolean "primary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["place_id"], name: "index_core_data_connector_place_names_on_place_id"
+  end
+
+  create_table "core_data_connector_places", force: :cascade do |t|
+    t.string "uid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "core_data_connector_projects", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "user_projects", force: :cascade do |t|
+  create_table "core_data_connector_user_projects", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "project_id", null: false
     t.string "role", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["project_id"], name: "index_user_projects_on_project_id"
-    t.index ["user_id"], name: "index_user_projects_on_user_id"
+    t.index ["project_id"], name: "index_core_data_connector_user_projects_on_project_id"
+    t.index ["user_id"], name: "index_core_data_connector_user_projects_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "core_data_connector_users", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.string "password_digest"
@@ -40,6 +65,4 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_143805) do
     t.boolean "admin", default: false
   end
 
-  add_foreign_key "user_projects", "projects"
-  add_foreign_key "user_projects", "users"
 end

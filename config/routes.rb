@@ -1,11 +1,6 @@
 Rails.application.routes.draw do
+  mount CoreDataConnector::Engine => '/core_data'
   mount JwtAuth::Engine => '/auth'
-
-  namespace :api do
-    resources :projects
-    resources :user_projects
-    resources :users
-  end
 
   # Default route for static front-end
   get '*path', to: "application#fallback_index_html", constraints: -> (request) do

@@ -1,7 +1,17 @@
 GIT
-  remote: https://github.com/performant-software/jwt-auth.git
-  revision: 1dae0ca32504a463497b0379348e4d6c45b2cbd1
+  remote: https://github.com/performant-software/core-data-connector.git
+  revision: 54c3bccff5192700052caa14c2f0c9fc262bf7e9
   tag: v0.1.1
+  specs:
+    core_data_connector (0.1.0)
+      faker
+      rails (>= 6.0.3.2, < 8)
+      resource_api
+
+GIT
+  remote: https://github.com/performant-software/jwt-auth.git
+  revision: fa54af0cdcad6122fad10d9ad745b814c2918853
+  tag: v0.1.2
   specs:
     jwt_auth (0.1.0)
       jwt (~> 2.7.1)
@@ -9,8 +19,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/resource-api.git
-  revision: 309aa4266ebf6fa7c315c5e5178758a18f0e4252
-  tag: v0.5.0
+  revision: d3e6e72abbd37e6bddd7ab461e37cf34d7c701ba
+  tag: v0.5.1
   specs:
     resource_api (0.1.0)
       pagy (~> 5.10)
@@ -100,6 +110,8 @@ GEM
       dotenv (= 2.8.1)
       railties (>= 3.2)
     erubi (1.12.0)
+    faker (3.2.1)
+      i18n (>= 1.8.11, < 2)
     globalid (1.1.0)
       activesupport (>= 5.0)
     i18n (1.14.1)
@@ -131,6 +143,8 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.9)
+    nokogiri (1.15.4-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.15.4-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.15.4-x86_64-linux)
@@ -189,12 +203,14 @@ GEM
     zeitwerk (2.6.11)
 
 PLATFORMS
+  arm64-darwin-22
   x86_64-darwin-21
   x86_64-linux
 
 DEPENDENCIES
   bcrypt (~> 3.1.18)
   bootsnap
+  core_data_connector!
   debug
   dotenv-rails
   jwt (~> 2.4, >= 2.4.1)

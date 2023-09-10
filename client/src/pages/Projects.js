@@ -29,15 +29,15 @@ const Projects: AbstractComponent<any> = () => {
       onLoad={(params) => ProjectsService.fetchAll(params)}
       sort={[{
         key: 'name',
-        value: 'projects.name',
+        value: 'core_data_connector_projects.name',
         text: t('Projects.sort.name')
       }, {
         key: 'projects.created_at',
-        value: 'projects.created_at',
+        value: 'core_data_connector_projects.created_at',
         text: t('Projects.sort.created')
       }, {
         key: 'projects.updated_at',
-        value: 'projects.updated_at',
+        value: 'core_data_connector_projects.updated_at',
         text: t('Projects.sort.updated')
       }]}
     />

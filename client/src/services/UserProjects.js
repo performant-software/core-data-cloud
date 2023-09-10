@@ -15,7 +15,7 @@ class UserProjects extends BaseService {
    * @returns {string}
    */
   getBaseUrl(): string {
-    return '/api/user_projects';
+    return '/core_data/user_projects';
   }
 
   /**
@@ -36,7 +36,7 @@ class UserProjects extends BaseService {
    */
   save(userProject: UserProjectType): Promise<any> {
     return super
-      .create(userProject)
+      .save(userProject)
       .then((response) => SessionService.reset().then(() => response));
   }
 }

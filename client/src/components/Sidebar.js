@@ -5,7 +5,7 @@ import React, { useCallback, type ComponentType } from 'react';
 import { useTranslation, withTranslation } from 'react-i18next';
 import { FaFolderOpen, FaUsers } from 'react-icons/fa';
 import { TbDatabaseShare } from 'react-icons/tb';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   Icon,
   Menu,
@@ -16,6 +16,7 @@ import AuthenticationService from '../services/Authentication';
 import MenuLink from './MenuLink';
 import PermissionsService from '../services/Permissions';
 import styles from './Sidebar.module.css';
+import useParams from '../hooks/ParsedParams';
 
 type Props = {
   color?: string,
@@ -78,11 +79,13 @@ const Sidebar: ComponentType<any> = withTranslation()((props: Props) => {
                     content={t('Sidebar.labels.details')}
                     to={`/projects/${projectId}`}
                   />
-                  <MenuLink
-                    content={t('Sidebar.labels.users')}
-                    parent
-                    to={`/projects/${projectId}/user_projects`}
-                  />
+                  { PermissionsService.canEditUserProjects(projectId) && (
+                    <MenuLink
+                      content={t('Sidebar.labels.users')}
+                      parent
+                      to={`/projects/${projectId}/user_projects`}
+                    />
+                  )}
                 </Menu.Menu>
               )}
             </MenuLink>

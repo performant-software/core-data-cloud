@@ -28,7 +28,7 @@ class Projects extends BaseService {
    * @returns {string}
    */
   getBaseUrl(): string {
-    return '/api/projects';
+    return '/core_data/projects';
   }
 
   /**
