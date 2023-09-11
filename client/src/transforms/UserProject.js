@@ -1,6 +1,7 @@
 // @flow
 
 import { BaseTransform } from '@performant-software/shared-components';
+import UserTransform from './User';
 
 /**
  * Class responsible for transforming user_project records for POST/PUT requests.
@@ -25,6 +26,7 @@ class UserProject extends BaseTransform {
       'user_id',
       'project_id',
       'role',
+      ...UserTransform.getPayloadKeys()
     ];
   }
 }

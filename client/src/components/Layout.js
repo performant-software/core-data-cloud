@@ -16,11 +16,12 @@ import {
   useLocation,
   useParams
 } from 'react-router-dom';
-import { Container } from 'semantic-ui-react';
+import { Container, Grid } from 'semantic-ui-react';
 import _ from 'underscore';
 import BreadcrumbsService, { Services } from '../services/Breadcrumbs';
 import Sidebar from './Sidebar';
 import styles from './Layout.module.css';
+import UserLabel from './UserLabel';
 
 const Layout: AbstractComponent<any> = () => {
   const [menuWidth, setMenuWidth] = useState(0);
@@ -79,12 +80,23 @@ const Layout: AbstractComponent<any> = () => {
           marginLeft: `${menuWidth}px`
         }}
       >
-        <Breadcrumbs
-          as={Link}
-          labels={labels}
-          onLoad={(id, name) => BreadcrumbsService.onLoad(name, id, params)}
-          pathname={pathname}
-        />
+        <Grid
+          columns={2}
+        >
+          <Grid.Column>
+            <Breadcrumbs
+              as={Link}
+              labels={labels}
+              onLoad={(id, name) => BreadcrumbsService.onLoad(name, id, params)}
+              pathname={pathname}
+            />
+          </Grid.Column>
+          <Grid.Column
+            textAlign='right'
+          >
+            <UserLabel />
+          </Grid.Column>
+        </Grid>
         <Outlet />
       </div>
     </Container>

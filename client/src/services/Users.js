@@ -13,7 +13,7 @@ class Users extends BaseService {
    * @returns {string}
    */
   getBaseUrl(): string {
-    return '/api/users';
+    return '/core_data/users';
   }
 
   /**

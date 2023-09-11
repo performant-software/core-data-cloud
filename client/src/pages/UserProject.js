@@ -4,19 +4,21 @@ import { AssociatedDropdown, SimpleEditPage } from '@performant-software/semanti
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import React, { useEffect, useMemo, type AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 import { Form } from 'semantic-ui-react';
 import PermissionsService from '../services/Permissions';
 import Project from '../transforms/Project';
 import ProjectsService from '../services/Projects';
 import User from '../transforms/User';
 import type { UserProject as UserProjectType } from '../types/UserProject';
+import UserForm from '../components/UserForm';
 import UserModal from '../components/UserModal';
 import UserProjectRoles from '../utils/UserProjectRoles';
 import UserProjectsService from '../services/UserProjects';
 import UsersService from '../services/Users';
+import useParams from '../hooks/ParsedParams';
 import Validation from '../utils/Validation';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
+import UserPassword from '../components/UserPassword';
 
 type Props = EditContainerProps & {
   item: UserProjectType
@@ -26,8 +28,8 @@ const UserProjectForm = (props: Props) => {
   const params = useParams();
   const { t } = useTranslation();
 
-  const projectId = useMemo(() => parseInt(params.projectId, 10), [params.projectId]);
-  const editable = useMemo(() => PermissionsService.canEditUserProjects(projectId), [projectId]);
+  const isNew = useMemo(() => !props.item.id, [props.item.id]);
+  const editable = useMemo(() => PermissionsService.canEditProject(props.item.project_id), [props.item.project_id]);
 
   /*
  * For a new record, set the foreign key ID based on the route parameters.
@@ -50,7 +52,7 @@ const UserProjectForm = (props: Props) => {
       <SimpleEditPage.Tab
         key='default'
       >
-        { params.userId && (
+        { PermissionsService.canEditUsers() && params.userId && (
           <Form.Input
             error={props.isError('project_id')}
             label={t('UserProject.labels.project')}
@@ -66,7 +68,7 @@ const UserProjectForm = (props: Props) => {
             />
           </Form.Input>
         )}
-        { params.projectId && (
+        { PermissionsService.canEditUsers() && params.projectId && (
           <Form.Input
             error={props.isError('user_id')}
             label={t('UserProject.labels.user')}
@@ -89,6 +91,16 @@ const UserProjectForm = (props: Props) => {
               value={props.item.user_id}
             />
           </Form.Input>
+        )}
+        { PermissionsService.isOwner(props.item.project_id) && isNew && (
+          <UserForm
+            {...props}
+          />
+        )}
+        { PermissionsService.isOwner(props.item.project_id) && !isNew && (
+          <UserPassword
+            {...props}
+          />
         )}
         <Form.Dropdown
           error={props.isError('role')}
@@ -117,7 +129,7 @@ const UserProject: AbstractComponent<any> = withReactRouterEditPage(UserProjectF
       .save(userProject)
       .then(({ data }) => data.user_project)
   ),
-  required: ['project_id', 'user_id', 'role'],
+  required: ['project_id', 'role'],
   resolveValidationError: Validation.resolveUpdateError.bind(this)
 });
 
