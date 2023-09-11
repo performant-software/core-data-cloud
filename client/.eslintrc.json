@@ -45,6 +45,7 @@
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/jsx-no-bind": "off",
     "react/no-did-update-set-state": "off",
+    "react/prefer-exact-props": "off",
     "react/prefer-stateless-function": "off",
     "react/require-default-props": "off",
     "react/jsx-props-no-spreading": "off",

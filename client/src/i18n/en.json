@@ -29,6 +29,30 @@
       "login": "Login"
     }
   },
+  "Place": {
+    "labels": {
+      "names": "Names",
+      "project": "Project"
+    },
+    "placeNames": {
+      "columns": {
+        "name": "Name",
+        "primary": "Primary"
+      }
+    }
+  },
+  "PlaceNameModal": {
+    "labels": {
+      "name": "Name",
+      "primary": "Primary"
+    }
+  },
+  "Places": {
+    "columns": {
+      "name": "Name",
+      "project": "Project"
+    }
+  },
   "Project": {
     "labels": {
       "description": "Description",
