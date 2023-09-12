@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_07_201038) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_11_195624) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_201038) do
     t.datetime "updated_at", null: false
     t.index ["locateable_type", "locateable_id"], name: "index_core_data_connector_locations_on_locateable"
     t.index ["place_id"], name: "index_core_data_connector_locations_on_place_id"
+  end
+
+  create_table "core_data_connector_people", force: :cascade do |t|
+    t.text "biography"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "core_data_connector_person_names", force: :cascade do |t|
+    t.bigint "person_id"
+    t.string "first_name"
+    t.string "middle_name"
+    t.string "last_name"
+    t.boolean "primary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_core_data_connector_person_names_on_person_id"
   end
 
   create_table "core_data_connector_place_names", force: :cascade do |t|
@@ -37,6 +54,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_201038) do
     t.string "uid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "core_data_connector_project_items", force: :cascade do |t|
+    t.bigint "project_id"
+    t.string "ownable_type"
+    t.bigint "ownable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ownable_type", "ownable_id"], name: "index_core_data_connector_project_items_on_ownable"
+    t.index ["project_id"], name: "index_core_data_connector_project_items_on_project_id"
   end
 
   create_table "core_data_connector_projects", force: :cascade do |t|
