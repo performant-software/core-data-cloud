@@ -31,7 +31,7 @@ const PlaceForm = (props: Props) => {
         key='default'
       >
         <Form.Input
-          label={t('Place.labels.project')}
+          label={t('Common.labels.project')}
           required
         >
           <OwnableDropdown

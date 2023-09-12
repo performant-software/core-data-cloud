@@ -5,6 +5,7 @@ import React, { useCallback, type ComponentType } from 'react';
 import { useTranslation, withTranslation } from 'react-i18next';
 import { BiWorld } from 'react-icons/bi';
 import { FaFolderOpen, FaUsers } from 'react-icons/fa';
+import { GoPeople } from 'react-icons/go';
 import { TbDatabaseShare } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -142,6 +143,31 @@ const Sidebar: ComponentType<any> = withTranslation()((props: Props) => {
                     content={t('Sidebar.labels.details')}
                     parent
                     to={`/places/${params.placeId}`}
+                  />
+                </Menu.Menu>
+              )}
+            </MenuLink>
+          )}
+        />
+        <Popup
+          content={t('Sidebar.labels.people')}
+          mouseEnterDelay={1000}
+          position='right center'
+          trigger={(
+            <MenuLink
+              className={styles.item}
+              parent
+              to='/people'
+            >
+              <GoPeople
+                size='2em'
+              />
+              { params.personId && (
+                <Menu.Menu>
+                  <MenuLink
+                    content={t('Sidebar.labels.details')}
+                    parent
+                    to={`/people/${params.personId}`}
                   />
                 </Menu.Menu>
               )}

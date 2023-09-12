@@ -1,10 +1,15 @@
 // @flow
 
+import PeopleService from './People';
+import PeopleUtils from '../utils/People';
+import PlacesService from './Places';
 import ProjectsService from './Projects';
 import UserProjectsService from './UserProjects';
 import UsersService from './Users';
 
 const Services = {
+  people: 'people',
+  places: 'places',
   projects: 'projects',
   user_projects: 'user_projects',
   users: 'users'
@@ -25,6 +30,18 @@ const onLoad: OnLoadType = (name: string, id: number, params: any = {}) => {
   let promise;
 
   switch (name) {
+    case Services.people:
+      promise = PeopleService
+        .fetchOne(id)
+        .then(({ data }) => PeopleUtils.getNameView(data.person));
+      break;
+
+    case Services.places:
+      promise = PlacesService
+        .fetchOne(id)
+        .then(({ data }) => data.place?.name);
+      break;
+
     case Services.projects:
       promise = ProjectsService
         .fetchOne(id)

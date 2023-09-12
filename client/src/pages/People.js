@@ -4,10 +4,10 @@ import { ListTable } from '@performant-software/semantic-components';
 import React, { type AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import PlacesService from '../services/Places';
+import PeopleService from '../services/People';
 import useParams from '../hooks/ParsedParams';
 
-const Places: AbstractComponent<any> = () => {
+const People: AbstractComponent<any> = () => {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const { t } = useTranslation();
@@ -16,7 +16,7 @@ const Places: AbstractComponent<any> = () => {
     <ListTable
       actions={[{
         name: 'edit',
-        onClick: (place) => navigate(`${place.id}`)
+        onClick: (person) => navigate(`${person.id}`)
       }, {
         name: 'delete'
       }]}
@@ -24,21 +24,25 @@ const Places: AbstractComponent<any> = () => {
         location: 'top',
         onClick: () => navigate('new')
       }}
-      collectionName='places'
+      collectionName='people'
       columns={[{
-        name: 'name',
-        label: t('Places.columns.name'),
+        name: 'last_name',
+        label: t('People.columns.lastName'),
+        sortable: true
+      }, {
+        name: 'first_name',
+        label: t('People.columns.firstName'),
         sortable: true
       }, {
         name: 'project',
         label: t('Common.labels.project'),
-        resolve: (place) => place.project_item?.project?.name
+        resolve: (person) => person.project_item?.project?.name
       }]}
-      onDelete={(place) => PlacesService.delete(place)}
-      onLoad={(params) => PlacesService.fetchAll({ ...params, project_id: projectId })}
+      onDelete={(place) => PeopleService.delete(place)}
+      onLoad={(params) => PeopleService.fetchAll({ ...params, project_id: projectId })}
       searchable
     />
   );
 };
 
-export default Places;
+export default People;

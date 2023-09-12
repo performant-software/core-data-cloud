@@ -11,6 +11,9 @@
   "Common": {
     "buttons": {
       "delete": "Delete"
+    },
+    "labels": {
+      "project": "Project"
     }
   },
   "Home": {
@@ -19,6 +22,8 @@
   "Layout": {
     "labels": {
       "new": "New",
+      "people": "People",
+      "places": "Places",
       "projects": "Projects",
       "user_projects": "User Projects",
       "users": "Users"
@@ -29,10 +34,41 @@
       "login": "Login"
     }
   },
+  "People": {
+    "columns": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "project": "Project"
+    }
+  },
+  "Person": {
+    "labels": {
+      "biography": "Biography",
+      "names": "Names"
+    },
+    "personNames": {
+      "columns": {
+        "firstName": "First name",
+        "lastName": "Last name",
+        "primary": "Primary"
+      }
+    }
+  },
+  "PersonNameModal": {
+    "labels": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "middleName": "Middle name",
+      "primary": "Primary"
+    },
+    "title": {
+      "add": "Add Person Name",
+      "edit": "Edit Person Name"
+    }
+  },
   "Place": {
     "labels": {
-      "names": "Names",
-      "project": "Project"
+      "names": "Names"
     },
     "placeNames": {
       "columns": {
@@ -49,8 +85,7 @@
   },
   "Places": {
     "columns": {
-      "name": "Name",
-      "project": "Project"
+      "name": "Name"
     }
   },
   "Project": {
@@ -76,6 +111,8 @@
     "labels": {
       "details": "Details",
       "logout": "Logout",
+      "people": "People",
+      "places": "Places",
       "projects": "Projects",
       "users": "Users"
     }
