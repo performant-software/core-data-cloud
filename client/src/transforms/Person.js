@@ -19,6 +19,17 @@ class Person extends BaseTransform {
   }
 
   /**
+   * Returns the person payload keys.
+   *
+   * @returns {string[]}
+   */
+  getPayloadKeys(): Array<string> {
+    return [
+      'biography'
+    ];
+  }
+
+  /**
    * Returns the person for POST/PUT requests as a plain Javascript object.
    *
    * @param person

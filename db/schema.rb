@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_11_195624) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_12_134126) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_195624) do
     t.datetime "updated_at", null: false
     t.index ["locateable_type", "locateable_id"], name: "index_core_data_connector_locations_on_locateable"
     t.index ["place_id"], name: "index_core_data_connector_locations_on_place_id"
+  end
+
+  create_table "core_data_connector_organization_names", force: :cascade do |t|
+    t.bigint "organization_id"
+    t.string "name"
+    t.boolean "primary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_core_data_connector_organization_names_on_organization_id"
+  end
+
+  create_table "core_data_connector_organizations", force: :cascade do |t|
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "core_data_connector_people", force: :cascade do |t|

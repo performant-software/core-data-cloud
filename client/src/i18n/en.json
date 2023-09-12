@@ -22,6 +22,7 @@
   "Layout": {
     "labels": {
       "new": "New",
+      "organizations": "Organizations",
       "people": "People",
       "places": "Places",
       "projects": "Projects",
@@ -32,6 +33,29 @@
   "Login": {
     "buttons": {
       "login": "Login"
+    }
+  },
+  "Organization": {
+    "labels": {
+      "description": "Description",
+      "names": "Names"
+    },
+    "organizationNames": {
+      "columns": {
+        "name": "Name",
+        "primary": "Primary"
+      }
+    }
+  },
+  "OrganizationNameModal": {
+    "labels": {
+      "name": "Name",
+      "primary": "Primary"
+    }
+  },
+  "Organizations": {
+    "columns": {
+      "name": "Name"
     }
   },
   "People": {
@@ -111,6 +135,7 @@
     "labels": {
       "details": "Details",
       "logout": "Logout",
+      "organizations": "Organizations",
       "people": "People",
       "places": "Places",
       "projects": "Projects",
