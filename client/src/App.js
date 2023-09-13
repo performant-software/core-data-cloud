@@ -13,6 +13,8 @@ import Person from './pages/Person';
 import Place from './pages/Place';
 import Places from './pages/Places';
 import Project from './pages/Project';
+import ProjectModel from './pages/ProjectModel';
+import ProjectModels from './pages/ProjectModels';
 import Projects from './pages/Projects';
 import User from './pages/User';
 import UserProject from './pages/UserProject';
@@ -68,6 +70,22 @@ const App: ComponentType<any> = useDragDrop(() => (
               <Route
                 path=':userProjectId'
                 element={<UserProject />}
+              />
+            </Route>
+            <Route
+              path='project_models'
+            >
+              <Route
+                index
+                element={<ProjectModels />}
+              />
+              <Route
+                path='new'
+                element={<ProjectModel />}
+              />
+              <Route
+                path=':projectModelId'
+                element={<ProjectModel />}
               />
             </Route>
             <Route

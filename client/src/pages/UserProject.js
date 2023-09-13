@@ -32,8 +32,8 @@ const UserProjectForm = (props: Props) => {
   const editable = useMemo(() => PermissionsService.canEditProject(props.item.project_id), [props.item.project_id]);
 
   /*
- * For a new record, set the foreign key ID based on the route parameters.
- */
+   * For a new record, set the foreign key ID based on the route parameters.
+   */
   useEffect(() => {
     if (!props.item.id) {
       if (params.projectId) {

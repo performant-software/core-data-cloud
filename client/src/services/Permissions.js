@@ -42,21 +42,6 @@ class Permissions {
   }
 
   /**
-   * An admin user or project owner can edit the users associated with a project.
-   *
-   * @param projectId
-   *
-   * @returns {boolean}
-   */
-  canEditUserProjects(projectId: number): boolean {
-    if (!projectId) {
-      return false;
-    }
-
-    return this.isAdmin() || this.isOwner(projectId);
-  }
-
-  /**
    * Only an admin user can edit users.
    *
    * @returns {boolean}

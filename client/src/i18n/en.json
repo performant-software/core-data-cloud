@@ -25,6 +25,7 @@
       "organizations": "Organizations",
       "people": "People",
       "places": "Places",
+      "project_models": "Project Models",
       "projects": "Projects",
       "user_projects": "User Projects",
       "users": "Users"
@@ -124,6 +125,21 @@
       }
     }
   },
+  "ProjectModel": {
+    "errors": {
+      "invalidType": "\"{{type}}\" is not a valid type."
+    },
+    "labels": {
+      "name": "Name",
+      "type": "Type"
+    }
+  },
+  "ProjectModels": {
+    "columns": {
+      "name": "Name",
+      "type": "Type"
+    }
+  },
   "Projects": {
     "sort": {
       "created": "Date created",
@@ -139,6 +155,7 @@
       "people": "People",
       "places": "Places",
       "projects": "Projects",
+      "settings": "Settings",
       "users": "Users"
     }
   },

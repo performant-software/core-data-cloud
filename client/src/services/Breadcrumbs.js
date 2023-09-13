@@ -4,6 +4,7 @@ import OrganizationsService from './Organizations';
 import PeopleService from './People';
 import PeopleUtils from '../utils/People';
 import PlacesService from './Places';
+import ProjectModelsService from './ProjectModels';
 import ProjectsService from './Projects';
 import UserProjectsService from './UserProjects';
 import UsersService from './Users';
@@ -12,6 +13,7 @@ const Services = {
   organizations: 'organizations',
   people: 'people',
   places: 'places',
+  project_models: 'project_models',
   projects: 'projects',
   user_projects: 'user_projects',
   users: 'users'
@@ -48,6 +50,12 @@ const onLoad: OnLoadType = (name: string, id: number, params: any = {}) => {
       promise = PlacesService
         .fetchOne(id)
         .then(({ data }) => data.place?.name);
+      break;
+
+    case Services.project_models:
+      promise = ProjectModelsService
+        .fetchOne(id)
+        .then(({ data }) => data.project_model?.name);
       break;
 
     case Services.projects:

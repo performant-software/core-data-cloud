@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_12_134126) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_12_181655) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -79,6 +79,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_134126) do
     t.datetime "updated_at", null: false
     t.index ["ownable_type", "ownable_id"], name: "index_core_data_connector_project_items_on_ownable"
     t.index ["project_id"], name: "index_core_data_connector_project_items_on_project_id"
+  end
+
+  create_table "core_data_connector_project_models", force: :cascade do |t|
+    t.bigint "project_id"
+    t.string "name"
+    t.string "model_class"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_core_data_connector_project_models_on_project_id"
   end
 
   create_table "core_data_connector_projects", force: :cascade do |t|

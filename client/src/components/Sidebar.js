@@ -82,7 +82,14 @@ const Sidebar: ComponentType<any> = withTranslation()((props: Props) => {
                     content={t('Sidebar.labels.details')}
                     to={`/projects/${projectId}`}
                   />
-                  { PermissionsService.canEditUserProjects(projectId) && (
+                  { PermissionsService.canEditProject(projectId) && (
+                    <MenuLink
+                      content={t('Sidebar.labels.settings')}
+                      parent
+                      to={`/projects/${projectId}/project_models`}
+                    />
+                  )}
+                  { PermissionsService.canEditProject(projectId) && (
                     <MenuLink
                       content={t('Sidebar.labels.users')}
                       parent
