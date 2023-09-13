@@ -2,6 +2,7 @@
 
 import { BaseTransform } from '@performant-software/shared-components';
 import { UserDefinedFieldsTransform } from '@performant-software/user-defined-fields';
+import ProjectModelRelationshipsTransform from './ProjectModelRelationships';
 
 /**
  * Class responsible for transforming project model records for POST/PUT requests.
@@ -30,6 +31,21 @@ class ProjectModel extends BaseTransform {
   }
 
   /**
+   * Returns the passed project model as a dropdown option.
+   *
+   * @param projectModel
+   *
+   * @returns {{text, value, key}}
+   */
+  toDropdown(projectModel) {
+    return {
+      key: projectModel.id,
+      value: projectModel.id,
+      text: projectModel.name
+    };
+  }
+
+  /**
    * Returns the passed project model to send on POST/PUT requests.
    *
    * @param projectModel
@@ -38,7 +54,8 @@ class ProjectModel extends BaseTransform {
    */
   toPayload(projectModel) {
     return super.toPayload(projectModel, {
-      ...UserDefinedFieldsTransform.toPayload(projectModel)
+      ...UserDefinedFieldsTransform.toPayload(projectModel),
+      ...ProjectModelRelationshipsTransform.toPayload(projectModel)
     });
   }
 }

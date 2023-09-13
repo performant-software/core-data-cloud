@@ -133,9 +133,28 @@
       "name": "Name",
       "type": "Type"
     },
+    "relationships": {
+      "columns": {
+        "related": "Related type",
+        "multiple": "Multiple",
+        "name": "Name"
+      }
+    },
     "tabs": {
       "details": "Details",
-      "fields": "Fields"
+      "fields": "Fields",
+      "relationships": "Relationships"
+    }
+  },
+  "ProjectModelRelationshipModal": {
+    "labels": {
+      "multiple": "Multiple",
+      "name": "Name",
+      "related": "Related type"
+    },
+    "title": {
+      "add": "Add Relationship",
+      "edit": "Edit Relationship"
     }
   },
   "ProjectModels": {

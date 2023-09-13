@@ -5,9 +5,11 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import ProjectModelsService from '../services/ProjectModels';
+import useParams from '../hooks/ParsedParams';
 
 const ProjectModels = () => {
   const navigate = useNavigate();
+  const { projectId } = useParams();
   const { t } = useTranslation();
 
   return (
@@ -33,7 +35,7 @@ const ProjectModels = () => {
         sortable: true
       }]}
       onDelete={(projectModel) => ProjectModelsService.delete(projectModel)}
-      onLoad={(params) => ProjectModelsService.fetchAll(params)}
+      onLoad={(params) => ProjectModelsService.fetchAll({ ...params, project_id: projectId })}
       searchable
     />
   );

@@ -1,6 +1,10 @@
 // @flow
 
-import { SimpleEditPage } from '@performant-software/semantic-components';
+import {
+  BooleanIcon,
+  EmbeddedList,
+  SimpleEditPage
+} from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsEmbeddedList } from '@performant-software/user-defined-fields';
 import React, { useEffect } from 'react';
@@ -8,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
 import ModelClassDropdown from '../components/ModelClassDropdown';
 import type { ProjectModel as ProjectModelType } from '../types/ProjectModel';
+import ProjectModelRelationshipModal from '../components/ProjectModelRelationshipModal';
 import ProjectModelsService from '../services/ProjectModels';
 import ProjectModelsUtils from '../utils/ProjectModels';
 import useParams from '../hooks/ParsedParams';
@@ -73,6 +78,36 @@ const ProjectModelForm = (props: Props) => {
           }}
           onDelete={props.onDeleteChildAssociation.bind(this, 'user_defined_fields')}
           onSave={props.onSaveChildAssociation.bind(this, 'user_defined_fields')}
+        />
+      </SimpleEditPage.Tab>
+      <SimpleEditPage.Tab
+        key='relationships'
+        name={t('ProjectModel.tabs.relationships')}
+      >
+        <EmbeddedList
+          actions={[{
+            name: 'edit'
+          }, {
+            name: 'delete'
+          }]}
+          columns={[{
+            name: 'model_name',
+            label: t('ProjectModel.relationships.columns.related'),
+            resolve: (relationship) => relationship.related_model.name
+          }, {
+            name: 'name',
+            label: t('ProjectModel.relationships.columns.name')
+          }, {
+            name: 'multiple',
+            label: t('ProjectModel.relationships.columns.multiple'),
+            render: (relationship) => <BooleanIcon value={relationship.multiple} />
+          }]}
+          items={props.item.project_model_relationships}
+          modal={{
+            component: ProjectModelRelationshipModal
+          }}
+          onDelete={props.onDeleteChildAssociation.bind(this, 'project_model_relationships')}
+          onSave={props.onSaveChildAssociation.bind(this, 'project_model_relationships')}
         />
       </SimpleEditPage.Tab>
     </SimpleEditPage>
