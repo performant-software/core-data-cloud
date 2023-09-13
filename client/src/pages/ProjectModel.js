@@ -2,6 +2,7 @@
 
 import { SimpleEditPage } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
+import { UserDefinedFieldsEmbeddedList } from '@performant-software/user-defined-fields';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
@@ -34,7 +35,8 @@ const ProjectModelForm = (props: Props) => {
       {...props}
     >
       <SimpleEditPage.Tab
-        key='default'
+        key='details'
+        name={t('ProjectModel.tabs.details')}
       >
         <Form.Input
           error={props.isError('model_class')}
@@ -53,6 +55,24 @@ const ProjectModelForm = (props: Props) => {
           required={props.isRequired('name')}
           onChange={props.onTextInputChange.bind(this, 'name')}
           value={props.item.name}
+        />
+      </SimpleEditPage.Tab>
+      <SimpleEditPage.Tab
+        key='fields'
+        name={t('ProjectModel.tabs.fields')}
+      >
+        <UserDefinedFieldsEmbeddedList
+          items={props.item.user_defined_fields}
+          modal={{
+            defaults: {
+              table_name: props.item.model_class
+            },
+            props: {
+              hideTable: true
+            }
+          }}
+          onDelete={props.onDeleteChildAssociation.bind(this, 'user_defined_fields')}
+          onSave={props.onSaveChildAssociation.bind(this, 'user_defined_fields')}
         />
       </SimpleEditPage.Tab>
     </SimpleEditPage>

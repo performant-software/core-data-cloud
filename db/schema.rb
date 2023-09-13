@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_12_181655) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_13_091856) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -114,6 +114,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_181655) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false
+  end
+
+  create_table "user_defined_fields_user_defined_fields", force: :cascade do |t|
+    t.string "defineable_type"
+    t.bigint "defineable_id"
+    t.string "table_name"
+    t.string "column_name"
+    t.string "data_type"
+    t.boolean "required"
+    t.boolean "allow_multiple"
+    t.text "options", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "searchable", default: false, null: false
+    t.integer "order", default: 0, null: false
+    t.index ["defineable_type", "defineable_id"], name: "index_user_defined_fields_on_defineable"
   end
 
 end

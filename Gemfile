@@ -31,13 +31,18 @@ gem 'jwt', '~> 2.4', '>= 2.4.1'
 gem 'bcrypt', '~> 3.1.18'
 
 # Resource API
-gem 'resource_api', git: 'https://github.com/performant-software/resource-api.git', tag: 'v0.5.1'
+#gem 'resource_api', git: 'https://github.com/performant-software/resource-api.git', tag: 'v0.5.1'
+gem 'resource_api', path: '../resource-api'
 
 # Authentication
 gem 'jwt_auth', git: 'https://github.com/performant-software/jwt-auth.git', tag: 'v0.1.2'
 
 # Core data
-gem 'core_data_connector', git: 'https://github.com/performant-software/core-data-connector.git', tag: 'v0.1.1'
+# gem 'core_data_connector', git: 'https://github.com/performant-software/core-data-connector.git', tag: 'v0.1.1'
+gem 'core_data_connector', path: '../core-data-connector'
+
+#gem 'user_defined_fields', git: 'https://github.com/performant-software/user-defined-fields.git', tag: 'v0.1.7'
+gem 'user_defined_fields', path: '../user-defined-fields'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

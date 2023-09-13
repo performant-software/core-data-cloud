@@ -132,6 +132,10 @@
     "labels": {
       "name": "Name",
       "type": "Type"
+    },
+    "tabs": {
+      "details": "Details",
+      "fields": "Fields"
     }
   },
   "ProjectModels": {
