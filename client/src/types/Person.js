@@ -10,6 +10,7 @@ export type PersonName = {
 
 export type Person = {
   id: number,
+  project_model_id: number,
   biography: string,
   person_names: Array<PersonName>
 };

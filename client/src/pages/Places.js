@@ -9,7 +9,7 @@ import useParams from '../hooks/ParsedParams';
 
 const Places: AbstractComponent<any> = () => {
   const navigate = useNavigate();
-  const { projectId } = useParams();
+  const { projectModelId } = useParams();
   const { t } = useTranslation();
 
   return (
@@ -29,13 +29,9 @@ const Places: AbstractComponent<any> = () => {
         name: 'name',
         label: t('Places.columns.name'),
         sortable: true
-      }, {
-        name: 'project',
-        label: t('Common.labels.project'),
-        resolve: (place) => place.project_item?.project?.name
       }]}
       onDelete={(place) => PlacesService.delete(place)}
-      onLoad={(params) => PlacesService.fetchAll({ ...params, project_id: projectId })}
+      onLoad={(params) => PlacesService.fetchAll({ ...params, project_model_id: projectModelId })}
       searchable
     />
   );

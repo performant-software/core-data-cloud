@@ -6,14 +6,14 @@ import {
   SimpleEditPage
 } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
-import React, { type AbstractComponent } from 'react';
+import React, { type AbstractComponent, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Header } from 'semantic-ui-react';
-import OwnableDropdown from '../components/OwnableDropdown';
 import type { Organization as OrganizationType } from '../types/Organization';
 import OrganizationNameModal from '../components/OrganizationNameModal';
 import OrganizationService from '../services/Organizations';
 import styles from './Organization.module.css';
+import useParams from '../hooks/ParsedParams';
 import Validation from '../utils/Validation';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
 
@@ -22,7 +22,14 @@ type Props = EditContainerProps & {
 };
 
 const OrganizationForm = (props: Props) => {
+  const { projectModelId } = useParams();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (!props.item.id) {
+      props.onSetState({ project_model_id: projectModelId });
+    }
+  }, [projectModelId, props.item.id]);
 
   return (
     <SimpleEditPage
@@ -32,15 +39,6 @@ const OrganizationForm = (props: Props) => {
       <SimpleEditPage.Tab
         key='default'
       >
-        <Form.Input
-          label={t('Common.labels.project')}
-          required
-        >
-          <OwnableDropdown
-            item={props.item}
-            onSetState={props.onSetState}
-          />
-        </Form.Input>
         <Header
           content={t('Organization.labels.names')}
         />
@@ -79,7 +77,7 @@ const OrganizationForm = (props: Props) => {
 };
 
 const Organization: AbstractComponent<any> = withReactRouterEditPage(OrganizationForm, {
-  id: 'organizationId',
+  id: 'itemId',
   onInitialize: (id) => (
     OrganizationService
       .fetchOne(id)

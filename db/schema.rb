@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_13_145859) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_15_115004) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -37,12 +37,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_145859) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "project_model_id"
+    t.index ["project_model_id"], name: "index_core_data_connector_organizations_on_project_model_id"
   end
 
   create_table "core_data_connector_people", force: :cascade do |t|
     t.text "biography"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "project_model_id"
+    t.index ["project_model_id"], name: "index_core_data_connector_people_on_project_model_id"
   end
 
   create_table "core_data_connector_person_names", force: :cascade do |t|
@@ -69,16 +73,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_145859) do
     t.string "uid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "core_data_connector_project_items", force: :cascade do |t|
-    t.bigint "project_id"
-    t.string "ownable_type"
-    t.bigint "ownable_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["ownable_type", "ownable_id"], name: "index_core_data_connector_project_items_on_ownable"
-    t.index ["project_id"], name: "index_core_data_connector_project_items_on_project_id"
+    t.bigint "project_model_id"
+    t.index ["project_model_id"], name: "index_core_data_connector_places_on_project_model_id"
   end
 
   create_table "core_data_connector_project_model_relationships", force: :cascade do |t|
@@ -88,6 +84,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_145859) do
     t.boolean "multiple"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
     t.index ["primary_model_id"], name: "index_cdc_project_model_relationships_on_primary_model_id"
     t.index ["related_model_id"], name: "index_cdc_project_model_relationships_on_related_model_id"
   end
@@ -98,6 +95,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_145859) do
     t.string "model_class"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
     t.index ["project_id"], name: "index_core_data_connector_project_models_on_project_id"
   end
 

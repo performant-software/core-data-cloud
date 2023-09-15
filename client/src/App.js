@@ -4,14 +4,10 @@ import { useDragDrop } from '@performant-software/shared-components';
 import React, { type ComponentType } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
+import EditPageFactory from './components/EditPageFactory';
 import Layout from './components/Layout';
+import ListPageFactory from './components/ListPageFactory';
 import Login from './pages/Login';
-import Organization from './pages/Organization';
-import Organizations from './pages/Organizations';
-import People from './pages/People';
-import Person from './pages/Person';
-import Place from './pages/Place';
-import Places from './pages/Places';
 import Project from './pages/Project';
 import ProjectModel from './pages/ProjectModel';
 import ProjectModels from './pages/ProjectModels';
@@ -89,20 +85,40 @@ const App: ComponentType<any> = useDragDrop(() => (
               />
             </Route>
             <Route
-              path='places'
+              path=':projectModelId'
             >
               <Route
                 index
-                element={<Places />}
+                element={<ListPageFactory />}
               />
               <Route
                 path='new'
-                element={<Place />}
+                element={<EditPageFactory />}
               />
               <Route
-                path=':placeId'
-                element={<Place />}
-              />
+                path=':itemId'
+              >
+                <Route
+                  index
+                  element={<EditPageFactory />}
+                />
+                <Route
+                  path=':projectModelRelationshipId'
+                >
+                  <Route
+                    index
+                    element={<div>Related List</div>}
+                  />
+                  <Route
+                    path='new'
+                    element={<div>Related New</div>}
+                  />
+                  <Route
+                    path=':relatedItemId'
+                    element={<div>Related Edit</div>}
+                  />
+                </Route>
+              </Route>
             </Route>
           </Route>
         </Route>
@@ -141,54 +157,6 @@ const App: ComponentType<any> = useDragDrop(() => (
               />
             </Route>
           </Route>
-        </Route>
-        <Route
-          path='places'
-        >
-          <Route
-            index
-            element={<Places />}
-          />
-          <Route
-            path='new'
-            element={<Place />}
-          />
-          <Route
-            path=':placeId'
-            element={<Place />}
-          />
-        </Route>
-        <Route
-          path='people'
-        >
-          <Route
-            index
-            element={<People />}
-          />
-          <Route
-            path='new'
-            element={<Person />}
-          />
-          <Route
-            path=':personId'
-            element={<Person />}
-          />
-        </Route>
-        <Route
-          path='organizations'
-        >
-          <Route
-            index
-            element={<Organizations />}
-          />
-          <Route
-            path='new'
-            element={<Organization />}
-          />
-          <Route
-            path=':organizationId'
-            element={<Organization />}
-          />
         </Route>
       </Route>
     </Routes>

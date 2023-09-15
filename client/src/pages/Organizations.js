@@ -9,7 +9,7 @@ import useParams from '../hooks/ParsedParams';
 
 const Organizations: AbstractComponent<any> = () => {
   const navigate = useNavigate();
-  const { projectId } = useParams();
+  const { projectModelId } = useParams();
   const { t } = useTranslation();
 
   return (
@@ -29,13 +29,9 @@ const Organizations: AbstractComponent<any> = () => {
         name: 'name',
         label: t('Organizations.columns.name'),
         sortable: true
-      }, {
-        name: 'project',
-        label: t('Common.labels.project'),
-        resolve: (organization) => organization.project_item?.project?.name
       }]}
       onDelete={(organization) => OrganizationsService.delete(organization)}
-      onLoad={(params) => OrganizationsService.fetchAll({ ...params, project_id: projectId })}
+      onLoad={(params) => OrganizationsService.fetchAll({ ...params, project_model_id: projectModelId })}
       searchable
     />
   );

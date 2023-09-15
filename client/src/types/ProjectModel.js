@@ -7,7 +7,8 @@ export type ProjectModelRelationship = {
   related_model_id: number,
   related_model: ProjectModel,
   name: string,
-  multiple: boolean
+  multiple: boolean,
+  slug: string
 };
 
 export type ProjectModel = {
@@ -15,5 +16,6 @@ export type ProjectModel = {
   project_id: number,
   name: string,
   model_class: string,
+  slug: string,
   project_model_relationships: Array<ProjectModelRelationship>
 };

@@ -3,7 +3,6 @@
 import { BaseTransform } from '@performant-software/shared-components';
 import type { Organization as OrganizationType } from '../types/Organization';
 import OrganizationNames from './OrganizationNames';
-import ProjectItem from './ProjectItem';
 
 /**
  * Class responsible for transforming organization records for POST/PUT requests.
@@ -25,6 +24,7 @@ class Organization extends BaseTransform {
    */
   getPayloadKeys(): Array<string> {
     return [
+      'project_model_id',
       'description'
     ];
   }
@@ -38,7 +38,6 @@ class Organization extends BaseTransform {
    */
   toPayload(organization: OrganizationType): any {
     return super.toPayload(organization, {
-      ...ProjectItem.toPayload(organization),
       ...OrganizationNames.toPayload(organization)
     });
   }

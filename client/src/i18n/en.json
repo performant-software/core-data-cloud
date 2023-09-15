@@ -19,18 +19,6 @@
   "Home": {
     "header": "Welcome to Rails-React Template <1>Edit <1>src/App.js</1> and save to reload.</1>"
   },
-  "Layout": {
-    "labels": {
-      "new": "New",
-      "organizations": "Organizations",
-      "people": "People",
-      "places": "Places",
-      "project_models": "Project Models",
-      "projects": "Projects",
-      "user_projects": "User Projects",
-      "users": "Users"
-    }
-  },
   "Login": {
     "buttons": {
       "login": "Login"
@@ -161,6 +149,13 @@
     "columns": {
       "name": "Name",
       "type": "Type"
+    }
+  },
+  "ProjectSidebar": {
+    "labels": {
+      "details": "Details",
+      "settings": "Settings",
+      "users": "Users"
     }
   },
   "Projects": {

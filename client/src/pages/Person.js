@@ -6,14 +6,14 @@ import {
   SimpleEditPage
 } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
-import React, { type AbstractComponent } from 'react';
+import React, { type AbstractComponent, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Header } from 'semantic-ui-react';
-import OwnableDropdown from '../components/OwnableDropdown';
 import PeopleService from '../services/People';
 import type { Person as PersonType } from '../types/Place';
 import PersonNameModal from '../components/PersonNameModal';
 import styles from './Person.module.css';
+import useParams from '../hooks/ParsedParams';
 import Validation from '../utils/Validation';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
 
@@ -22,7 +22,14 @@ type Props = EditContainerProps & {
 };
 
 const PlaceForm = (props: Props) => {
+  const { projectModelId } = useParams();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (!props.item.id) {
+      props.onSetState({ project_model_id: projectModelId });
+    }
+  }, [projectModelId, props.item.id]);
 
   return (
     <SimpleEditPage
@@ -32,15 +39,6 @@ const PlaceForm = (props: Props) => {
       <SimpleEditPage.Tab
         key='default'
       >
-        <Form.Input
-          label={t('Common.labels.project')}
-          required
-        >
-          <OwnableDropdown
-            item={props.item}
-            onSetState={props.onSetState}
-          />
-        </Form.Input>
         <Header
           content={t('Person.labels.names')}
         />
@@ -82,7 +80,7 @@ const PlaceForm = (props: Props) => {
 };
 
 const Person: AbstractComponent<any> = withReactRouterEditPage(PlaceForm, {
-  id: 'personId',
+  id: 'itemId',
   onInitialize: (id) => (
     PeopleService
       .fetchOne(id)

@@ -3,7 +3,6 @@
 import { BaseTransform } from '@performant-software/shared-components';
 import type { Person as PersonType } from '../types/Place';
 import PersonNames from './PersonNames';
-import ProjectItem from './ProjectItem';
 
 /**
  * Class responsible for transforming person records for POST/PUT requests.
@@ -25,6 +24,7 @@ class Person extends BaseTransform {
    */
   getPayloadKeys(): Array<string> {
     return [
+      'project_model_id',
       'biography'
     ];
   }
@@ -38,7 +38,6 @@ class Person extends BaseTransform {
    */
   toPayload(person: PersonType): any {
     return super.toPayload(person, {
-      ...ProjectItem.toPayload(person),
       ...PersonNames.toPayload(person)
     });
   }

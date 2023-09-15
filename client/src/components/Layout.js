@@ -1,70 +1,50 @@
 // @flow
 
-import { Breadcrumbs } from '@performant-software/semantic-components';
 import React, {
-  useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState,
   type AbstractComponent
 } from 'react';
-import { useTranslation } from 'react-i18next';
-import {
-  Link,
-  Outlet,
-  useLocation,
-  useParams
-} from 'react-router-dom';
-import { Container, Grid } from 'semantic-ui-react';
-import _ from 'underscore';
-import BreadcrumbsService, { Services } from '../services/Breadcrumbs';
+import { Outlet, useParams } from 'react-router-dom';
+import { Container } from 'semantic-ui-react';
 import Sidebar from './Sidebar';
 import styles from './Layout.module.css';
-import UserLabel from './UserLabel';
+import ProjectSidebar from './ProjectSidebar';
 
 const Layout: AbstractComponent<any> = () => {
-  const [menuWidth, setMenuWidth] = useState(0);
-  const menuRef = useRef();
+  const [rootMenuWidth, setRootMenuWidth] = useState(0);
+  const [projectMenuWidth, setProjectMenuWidth] = useState(0);
 
-  const { pathname } = useLocation();
+  const rootMenuRef = useRef();
+  const projectMenuRef = useRef();
   const params = useParams();
 
-  const { t } = useTranslation();
-  const defaultLabel = { new: t('Layout.labels.new') };
-
   /**
-   * Resolves the label for nested join tables.
-   *
-   * @type {function(*, string): *}
-   */
-  const resolveLabel = useCallback((memo: any, key: string) => {
-    let label = t(`Layout.labels.${key}`);
-
-    if (key === Services.user_projects) {
-      label = params.projectId
-        ? t(`Layout.labels.${Services.users}`)
-        : t(`Layout.labels.${Services.projects}`);
-    }
-
-    return _.extend(memo, { [key]: label });
-  }, [params]);
-
-  /**
-   * Builds the map of URL key to label.
-   */
-  const labels = useMemo(() => _.reduce(_.keys(Services), resolveLabel, defaultLabel), [defaultLabel, t]);
-
-  /**
-   * Sets the sidebar menu width when the component is mounted.
+   * Sets the root sidebar menu width when the component is mounted.
    */
   useEffect(() => {
-    const { current: instance } = menuRef;
+    const { current: instance } = rootMenuRef;
 
     if (instance) {
-      setMenuWidth(instance.offsetWidth);
+      setRootMenuWidth(instance.offsetWidth);
+    } else {
+      setRootMenuWidth(0);
     }
-  }, [menuRef.current]);
+  }, [rootMenuRef.current]);
+
+  /**
+   * Sets the project sidebar menu width when the component is mounted.
+   */
+  useEffect(() => {
+    const { current: instance } = projectMenuRef;
+
+    if (instance) {
+      setProjectMenuWidth(instance.offsetWidth);
+    } else {
+      setProjectMenuWidth(0);
+    }
+  }, [projectMenuRef.current, params.projectId]);
 
   return (
     <Container
@@ -72,31 +52,21 @@ const Layout: AbstractComponent<any> = () => {
       fluid
     >
       <Sidebar
-        context={menuRef}
+        context={rootMenuRef}
       />
+      { params.projectId && (
+        <ProjectSidebar
+          context={projectMenuRef}
+          offset={rootMenuWidth}
+          visible={!!params.projectId}
+        />
+      )}
       <div
         className={styles.content}
         style={{
-          marginLeft: `${menuWidth}px`
+          marginLeft: `${rootMenuWidth + projectMenuWidth}px`
         }}
       >
-        <Grid
-          columns={2}
-        >
-          <Grid.Column>
-            <Breadcrumbs
-              as={Link}
-              labels={labels}
-              onLoad={(id, name) => BreadcrumbsService.onLoad(name, id, params)}
-              pathname={pathname}
-            />
-          </Grid.Column>
-          <Grid.Column
-            textAlign='right'
-          >
-            <UserLabel />
-          </Grid.Column>
-        </Grid>
         <Outlet />
       </div>
     </Container>
