@@ -67,15 +67,11 @@ const ProjectModelForm = (props: Props) => {
         name={t('ProjectModel.tabs.fields')}
       >
         <UserDefinedFieldsEmbeddedList
-          items={props.item.user_defined_fields}
-          modal={{
-            defaults: {
-              table_name: props.item.model_class
-            },
-            props: {
-              hideTable: true
-            }
+          defaults={{
+            table_name: props.item.model_class
           }}
+          excludeColumns={['table_name']}
+          items={props.item.user_defined_fields}
           onDelete={props.onDeleteChildAssociation.bind(this, 'user_defined_fields')}
           onSave={props.onSaveChildAssociation.bind(this, 'user_defined_fields')}
         />
