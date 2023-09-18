@@ -41,8 +41,7 @@ gem 'jwt_auth', git: 'https://github.com/performant-software/jwt-auth.git', tag:
 # gem 'core_data_connector', git: 'https://github.com/performant-software/core-data-connector.git', tag: 'v0.1.1'
 gem 'core_data_connector', path: '../core-data-connector'
 
-#gem 'user_defined_fields', git: 'https://github.com/performant-software/user-defined-fields.git', tag: 'v0.1.7'
-gem 'user_defined_fields', path: '../user-defined-fields'
+gem 'user_defined_fields', git: 'https://github.com/performant-software/user-defined-fields.git', tag: 'v0.1.7'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

@@ -7,6 +7,15 @@ GIT
       jwt (~> 2.7.1)
       rails (~> 7.0.7)
 
+GIT
+  remote: https://github.com/performant-software/user-defined-fields.git
+  revision: 18e14d28d6daefa403699617e3807eb646a31bcc
+  tag: v0.1.7
+  specs:
+    user_defined_fields (0.1.0)
+      rails (>= 6.0.3.2, < 8)
+      resource_api
+
 PATH
   remote: ../core-data-connector
   specs:
@@ -23,13 +32,6 @@ PATH
       pagy (~> 5.10)
       pundit (~> 2.3.1)
       rails (>= 7.0, < 8)
-
-PATH
-  remote: ../user-defined-fields
-  specs:
-    user_defined_fields (0.1.0)
-      rails (>= 6.0.3.2, < 8)
-      resource_api
 
 GEM
   remote: https://rubygems.org/
