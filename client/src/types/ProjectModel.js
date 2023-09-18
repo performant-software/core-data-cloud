@@ -16,6 +16,7 @@ export type ProjectModel = {
   project_id: number,
   name: string,
   model_class: string,
+  model_class_view: string,
   slug: string,
   project_model_relationships: Array<ProjectModelRelationship>
 };

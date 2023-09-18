@@ -12,6 +12,8 @@ import Project from './pages/Project';
 import ProjectModel from './pages/ProjectModel';
 import ProjectModels from './pages/ProjectModels';
 import Projects from './pages/Projects';
+import Relationship from './pages/Relationship';
+import Relationships from './pages/Relationships';
 import User from './pages/User';
 import UserProject from './pages/UserProject';
 import UserProjects from './pages/UserProjects';
@@ -107,15 +109,15 @@ const App: ComponentType<any> = useDragDrop(() => (
                 >
                   <Route
                     index
-                    element={<div>Related List</div>}
+                    element={<Relationships />}
                   />
                   <Route
                     path='new'
-                    element={<div>Related New</div>}
+                    element={<Relationship />}
                   />
                   <Route
-                    path=':relatedItemId'
-                    element={<div>Related Edit</div>}
+                    path=':relationshipId'
+                    element={<Relationship />}
                   />
                 </Route>
               </Route>

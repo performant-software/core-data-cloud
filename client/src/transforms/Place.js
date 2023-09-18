@@ -29,6 +29,21 @@ class Place extends BaseTransform {
   }
 
   /**
+   * Returns the passed place as a dropdown option.
+   *
+   * @param place
+   *
+   * @returns {{text: string, value: number, key: number}}
+   */
+  toDropdown(place: PlaceType) {
+    return {
+      key: place.id,
+      value: place.id,
+      text: place.name
+    };
+  }
+
+  /**
    * Returns the place for POST/PUT requests as a plain Javascript object.
    *
    * @param place

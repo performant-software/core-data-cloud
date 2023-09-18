@@ -4,7 +4,8 @@ import React from 'react';
 import Organizations from '../pages/Organizations';
 import People from '../pages/People';
 import Places from '../pages/Places';
-import useProjectModel, { Types } from '../hooks/ProjectModel';
+import { Types } from '../utils/ProjectModels';
+import useProjectModel from '../hooks/ProjectModel';
 
 const ListPageFactory = () => {
   const { className } = useProjectModel();

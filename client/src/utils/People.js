@@ -13,16 +13,19 @@ const NAME_SEPARATOR = ' ';
  * @returns {*}
  */
 const getNameView = (person: PersonType) => {
-  let nameView;
+  let names;
 
-  const primary = _.findWhere(person.person_names, { primary: true });
+  if (person) {
+    const primary = _.findWhere(person.person_names, { primary: true });
 
-  if (primary) {
-    const names = [primary.first_name, primary.middle_name, primary.last_name];
-    nameView = _.compact(names).join(NAME_SEPARATOR);
+    if (primary) {
+      names = [primary.first_name, primary.middle_name, primary.last_name];
+    } else {
+      names = [person.first_name, person.middle_name, person.last_name];
+    }
   }
 
-  return nameView;
+  return _.compact(names).join(NAME_SEPARATOR);
 };
 
 export default {

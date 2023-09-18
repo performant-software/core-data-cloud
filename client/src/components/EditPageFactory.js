@@ -4,7 +4,8 @@ import React from 'react';
 import Organization from '../pages/Organization';
 import Person from '../pages/Person';
 import Place from '../pages/Place';
-import useProjectModel, { Types } from '../hooks/ProjectModel';
+import { Types } from '../utils/ProjectModels';
+import useProjectModel from '../hooks/ProjectModel';
 
 const EditPageFactory = () => {
   const { className } = useProjectModel();

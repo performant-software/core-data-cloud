@@ -1,7 +1,8 @@
 // @flow
 
 import { BaseTransform } from '@performant-software/shared-components';
-import type { Person as PersonType } from '../types/Place';
+import _ from 'underscore';
+import type { Person as PersonType } from '../types/Person';
 import PersonNames from './PersonNames';
 
 /**
@@ -27,6 +28,21 @@ class Person extends BaseTransform {
       'project_model_id',
       'biography'
     ];
+  }
+
+  /**
+   * Returns the passed person as a dropdown option.
+   *
+   * @param person
+   *
+   * @returns {{text: *, value: *, key: *}}
+   */
+  toDropdown(person: PersonType) {
+    return {
+      key: person.id,
+      value: person.id,
+      text: _.compact([person.first_name, person.middle_name, person.last_name]).join(' ')
+    };
   }
 
   /**

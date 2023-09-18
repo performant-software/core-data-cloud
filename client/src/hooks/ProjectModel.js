@@ -4,12 +4,6 @@ import { useEffect, useState } from 'react';
 import useParams from './ParsedParams';
 import ProjectModelsService from '../services/ProjectModels';
 
-const Types = {
-  Organization: 'Organization',
-  Person: 'Person',
-  Place: 'Place'
-};
-
 const useProjectModel = () => {
   const [projectModel, setProjectModel] = useState();
   const { projectModelId } = useParams();
@@ -27,7 +21,3 @@ const useProjectModel = () => {
 };
 
 export default useProjectModel;
-
-export {
-  Types
-};

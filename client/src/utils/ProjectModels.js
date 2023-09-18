@@ -7,6 +7,12 @@ import Validation from './Validation';
 const ERROR_INVALID_TYPE = 'is not included in the list';
 const KEY_MODEL_CLASS = 'model_class';
 
+const Types = {
+  Organization: 'Organization',
+  Person: 'Person',
+  Place: 'Place'
+};
+
 /**
  * Resolves the project models validation errors.
  *
@@ -29,5 +35,9 @@ const resolveValidationError = ({ key, error, item }) => {
 };
 
 export default {
-  resolveValidationError
+  resolveValidationError,
+};
+
+export {
+  Types
 };

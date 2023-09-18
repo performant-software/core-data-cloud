@@ -119,6 +119,7 @@ const ProjectSidebar = (props: Props) => {
                       <MenuLink
                         className={styles.item}
                         content={relationship.name}
+                        parent
                         to={`/projects/${projectId}/${projectModel.id}/${itemId}/${relationship.id}`}
                       />
                     ))}

@@ -30,6 +30,21 @@ class Organization extends BaseTransform {
   }
 
   /**
+   * Returns the passed organization as a dropdown option.
+   *
+   * @param organization
+   *
+   * @returns {{text: string, value: number, key: number}}
+   */
+  toDropdown(organization: OrganizationType) {
+    return {
+      key: organization.id,
+      value: organization.id,
+      text: organization.name
+    };
+  }
+
+  /**
    * Returns the organization for POST/PUT requests as a plain Javascript object.
    *
    * @param organization
