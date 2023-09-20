@@ -16,7 +16,7 @@ const UserProjects: AbstractComponent<any> = () => {
   const { t } = useTranslation();
 
   const ids = useMemo(() => ({ project_id: projectId, user_id: userId }), [projectId, userId]);
-  const editable = useMemo(() => PermissionsService.canEditUserProjects(projectId), [projectId]);
+  const editable = useMemo(() => PermissionsService.canEditProject(projectId), [projectId]);
 
   return (
     <ListTable

@@ -1948,12 +1948,12 @@
     "@stitches/react" "^1.2.7"
     react "^18.2.0"
 
-"@performant-software/semantic-components@^1.0.19":
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/@performant-software/semantic-components/-/semantic-components-1.0.19.tgz#753059fd162f5312408987075c9d130695415b3b"
-  integrity sha512-NSPFY9XEglNmVw5rwFVmPEyg6pzy0cuOV7Yxk14I+epM8x+QVJaFfNaE+LKCzcOTmfMmEliORjy0pBMNwGQbUw==
+"@performant-software/semantic-components@^1.0.20":
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/@performant-software/semantic-components/-/semantic-components-1.0.20.tgz#692dc5f8d3725db485b78d27638803c66c494723"
+  integrity sha512-mqlMpwpntebFm2g1IPaQE2seOUDsEVCs+t4vLXzeo4PU9MZbo5h5VqjcKNTuDhXWFJryHNmi/+tCQgAOnhBCrA==
   dependencies:
-    "@performant-software/shared-components" "^1.0.19"
+    "@performant-software/shared-components" "^1.0.20"
     "@react-google-maps/api" "^2.8.1"
     axios "^0.26.1"
     i18next "^19.4.4"
@@ -1972,10 +1972,10 @@
     zotero-api-client "^0.40.0"
     zotero-translation-client "^5.0.1"
 
-"@performant-software/shared-components@^1.0.19":
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/@performant-software/shared-components/-/shared-components-1.0.19.tgz#5b387df52b83fb7b9dde282865bd2718eb619c4c"
-  integrity sha512-KN7HEBtkMZwBPo86MY42YR1MGJTxyYoUWynr1xP6WO4UueKDvPJ0VyxdebhD/oWbJjU2hAiI1DJVGp4JQxinQg==
+"@performant-software/shared-components@^1.0.20":
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/@performant-software/shared-components/-/shared-components-1.0.20.tgz#e5e6a30e6c78bff73a3eae58f5a22ca94e8ec919"
+  integrity sha512-B0UCd08CNjJd3uwfUFhMGCoPJqtzcqGg1dcFU63qQujBmX9aPGJIvyr0fzqvTPA9SsNHNtUOBeNpLOJLcQTb3A==
   dependencies:
     "@react-google-maps/api" "^2.8.1"
     "@samvera/clover-iiif" "^1.10.3"
@@ -1994,6 +1994,17 @@
     simple-keyboard-layouts "^3.0.0"
     underscore "^1.13.2"
     zotero-translation-client "^5.0.1"
+
+"@performant-software/user-defined-fields@^1.0.20":
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/@performant-software/user-defined-fields/-/user-defined-fields-1.0.20.tgz#2f0b400651086ef8c13b514d53e783f206ba00b8"
+  integrity sha512-876q1nzbrlLCK/z/OgMLkvd1zhEfx3WFIi/jS3jcHCtUX+GiKbSsKO95TWJc3iWKELNq2mtGoJpxafh3ejScuA==
+  dependencies:
+    "@performant-software/semantic-components" "^1.0.20"
+    "@performant-software/shared-components" "^1.0.20"
+    i18next "^21.9.1"
+    semantic-ui-react "^2.1.2"
+    underscore "^1.13.2"
 
 "@pmmmwh/react-refresh-webpack-plugin@^0.5.3":
   version "0.5.6"

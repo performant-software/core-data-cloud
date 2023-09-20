@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_07_201038) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_15_155412) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +22,42 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_201038) do
     t.datetime "updated_at", null: false
     t.index ["locateable_type", "locateable_id"], name: "index_core_data_connector_locations_on_locateable"
     t.index ["place_id"], name: "index_core_data_connector_locations_on_place_id"
+  end
+
+  create_table "core_data_connector_organization_names", force: :cascade do |t|
+    t.bigint "organization_id"
+    t.string "name"
+    t.boolean "primary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_core_data_connector_organization_names_on_organization_id"
+  end
+
+  create_table "core_data_connector_organizations", force: :cascade do |t|
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "project_model_id"
+    t.index ["project_model_id"], name: "index_core_data_connector_organizations_on_project_model_id"
+  end
+
+  create_table "core_data_connector_people", force: :cascade do |t|
+    t.text "biography"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "project_model_id"
+    t.index ["project_model_id"], name: "index_core_data_connector_people_on_project_model_id"
+  end
+
+  create_table "core_data_connector_person_names", force: :cascade do |t|
+    t.bigint "person_id"
+    t.string "first_name"
+    t.string "middle_name"
+    t.string "last_name"
+    t.boolean "primary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_core_data_connector_person_names_on_person_id"
   end
 
   create_table "core_data_connector_place_names", force: :cascade do |t|
@@ -37,6 +73,30 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_201038) do
     t.string "uid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "project_model_id"
+    t.index ["project_model_id"], name: "index_core_data_connector_places_on_project_model_id"
+  end
+
+  create_table "core_data_connector_project_model_relationships", force: :cascade do |t|
+    t.bigint "primary_model_id", null: false
+    t.bigint "related_model_id", null: false
+    t.string "name"
+    t.boolean "multiple"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "slug"
+    t.index ["primary_model_id"], name: "index_cdc_project_model_relationships_on_primary_model_id"
+    t.index ["related_model_id"], name: "index_cdc_project_model_relationships_on_related_model_id"
+  end
+
+  create_table "core_data_connector_project_models", force: :cascade do |t|
+    t.bigint "project_id"
+    t.string "name"
+    t.string "model_class"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "slug"
+    t.index ["project_id"], name: "index_core_data_connector_project_models_on_project_id"
   end
 
   create_table "core_data_connector_projects", force: :cascade do |t|
@@ -44,6 +104,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_201038) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "core_data_connector_relationships", force: :cascade do |t|
+    t.bigint "project_model_relationship_id"
+    t.string "primary_record_type"
+    t.bigint "primary_record_id"
+    t.string "related_record_type"
+    t.bigint "related_record_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["primary_record_type", "primary_record_id"], name: "index_core_data_connector_relationships_on_primary_record"
+    t.index ["project_model_relationship_id"], name: "index_cdc_relationships_on_project_model_relationship_id"
+    t.index ["related_record_type", "related_record_id"], name: "index_core_data_connector_relationships_on_related_record"
   end
 
   create_table "core_data_connector_user_projects", force: :cascade do |t|
@@ -63,6 +136,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_201038) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false
+  end
+
+  create_table "user_defined_fields_user_defined_fields", force: :cascade do |t|
+    t.string "defineable_type"
+    t.bigint "defineable_id"
+    t.string "table_name"
+    t.string "column_name"
+    t.string "data_type"
+    t.boolean "required"
+    t.boolean "allow_multiple"
+    t.text "options", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "searchable", default: false, null: false
+    t.integer "order", default: 0, null: false
+    t.index ["defineable_type", "defineable_id"], name: "index_user_defined_fields_on_defineable"
   end
 
 end
