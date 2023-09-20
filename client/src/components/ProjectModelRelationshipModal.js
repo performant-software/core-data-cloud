@@ -1,10 +1,11 @@
 // @flow
 
-import { AssociatedDropdown } from '@performant-software/semantic-components';
+import { AssociatedDropdown, TabbedModal } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
+import { UserDefinedFieldsEmbeddedList } from '@performant-software/user-defined-fields';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Modal } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 import type { ProjectModelRelationship as ProjectModelRelationshipType } from '../types/ProjectModel';
 import ProjectModelsService from '../services/ProjectModels';
 import ProjectModelTransform from '../transforms/ProjectModel';
@@ -19,17 +20,17 @@ const ProjectModelRelationshipModal = (props: Props) => {
   const { t } = useTranslation();
 
   return (
-    <Modal
+    <TabbedModal
       as={Form}
       centered={false}
+      renderHeader={() => (props.item.id
+        ? t('ProjectModelRelationshipModal.title.edit')
+        : t('ProjectModelRelationshipModal.title.add'))}
       open
     >
-      <Modal.Header
-        content={props.item.id
-          ? t('ProjectModelRelationshipModal.title.edit')
-          : t('ProjectModelRelationshipModal.title.add')}
-      />
-      <Modal.Content>
+      <TabbedModal.Tab
+        name={t('Common.tabs.details')}
+      >
         <Form.Input
           error={props.isError('related_model_id')}
           label={t('ProjectModelRelationshipModal.labels.related')}
@@ -57,9 +58,22 @@ const ProjectModelRelationshipModal = (props: Props) => {
           label={t('ProjectModelRelationshipModal.labels.multiple')}
           onChange={props.onCheckboxInputChange.bind(this, 'multiple')}
         />
-      </Modal.Content>
+      </TabbedModal.Tab>
+      <TabbedModal.Tab
+        name={t('Common.tabs.fields')}
+      >
+        <UserDefinedFieldsEmbeddedList
+          defaults={{
+            table_name: 'CoreDataConnector::Relationship'
+          }}
+          excludeColumns={['table_name']}
+          items={props.item.user_defined_fields}
+          onDelete={props.onDeleteChildAssociation.bind(this, 'user_defined_fields')}
+          onSave={props.onSaveChildAssociation.bind(this, 'user_defined_fields')}
+        />
+      </TabbedModal.Tab>
       { props.children }
-    </Modal>
+    </TabbedModal>
   );
 };
 

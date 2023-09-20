@@ -31,7 +31,12 @@ const Organizations: AbstractComponent<any> = () => {
         sortable: true
       }]}
       onDelete={(organization) => OrganizationsService.delete(organization)}
-      onLoad={(params) => OrganizationsService.fetchAll({ ...params, project_model_id: projectModelId })}
+      onLoad={(params) => OrganizationsService.fetchAll({
+        ...params,
+        project_model_id: projectModelId,
+        defineable_id: projectModelId,
+        defineable_type: 'CoreDataConnector::ProjectModel'
+      })}
       searchable
     />
   );

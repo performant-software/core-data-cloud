@@ -1,6 +1,8 @@
 // @flow
 
 import { NestedAttributesTransform } from '@performant-software/shared-components';
+import { UserDefinedFieldsTransform } from '@performant-software/user-defined-fields';
+import _ from 'underscore';
 import type { ProjectModel as ProjectModelType } from '../types/ProjectModel';
 
 /**
@@ -31,7 +33,13 @@ class ProjectModelRelationships extends NestedAttributesTransform {
    * @returns {*}
    */
   toPayload(projectModel: ProjectModelType, collection: string = 'project_model_relationships') {
-    return super.toPayload(projectModel, collection);
+    return {
+      [collection]: _.map(projectModel[collection], (item, index) => ({
+        ..._.pick(item, this.getPayloadKeys()),
+        ...UserDefinedFieldsTransform.toPayload(item),
+        order: index
+      }))
+    };
   }
 }
 

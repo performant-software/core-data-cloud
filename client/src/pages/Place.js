@@ -6,6 +6,7 @@ import {
   SimpleEditPage
 } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
+import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
 import React, { type AbstractComponent, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Header } from 'semantic-ui-react';
@@ -60,6 +61,15 @@ const PlaceForm = (props: Props) => {
           }}
           onSave={props.onSaveChildAssociation.bind(this, 'place_names')}
           onDelete={props.onDeleteChildAssociation.bind(this, 'place_names')}
+        />
+        <UserDefinedFieldsForm
+          data={props.item.user_defined}
+          defineableId={projectModelId}
+          defineableType='CoreDataConnector::ProjectModel'
+          isError={props.isError}
+          onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
+          onClearValidationError={props.onClearValidationError}
+          tableName='CoreDataConnector::Place'
         />
       </SimpleEditPage.Tab>
     </SimpleEditPage>

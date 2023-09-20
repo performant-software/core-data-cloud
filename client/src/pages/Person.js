@@ -6,6 +6,7 @@ import {
   SimpleEditPage
 } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
+import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
 import React, { type AbstractComponent, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Header } from 'semantic-ui-react';
@@ -73,6 +74,15 @@ const PlaceForm = (props: Props) => {
           onChange={props.onTextInputChange.bind(this, 'biography')}
           required={props.isRequired('biography')}
           value={props.item.biography}
+        />
+        <UserDefinedFieldsForm
+          data={props.item.user_defined}
+          defineableId={projectModelId}
+          defineableType='CoreDataConnector::ProjectModel'
+          isError={props.isError}
+          onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
+          onClearValidationError={props.onClearValidationError}
+          tableName='CoreDataConnector::Person'
         />
       </SimpleEditPage.Tab>
     </SimpleEditPage>

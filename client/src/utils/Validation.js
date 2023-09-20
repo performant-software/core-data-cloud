@@ -1,5 +1,6 @@
 // @flow
 
+import { UserDefinedFields as UserDefinedFieldsUtils } from '@performant-software/user-defined-fields';
 import _ from 'underscore';
 
 type DeleteErrorType = {
@@ -41,7 +42,15 @@ type UpdateErrorType = {
  *
  * @returns {{}}
  */
-const resolveUpdateError = ({ key, error }: UpdateErrorType): any => ({ [key]: error });
+const resolveUpdateError = ({ key, error }: UpdateErrorType): any => {
+  const errors = UserDefinedFieldsUtils.resolveError({ key, error });
+
+  if (_.isEmpty(errors)) {
+    _.extend(errors, { [key]: error });
+  }
+
+  return errors;
+};
 
 export default {
   resolveDeleteError,

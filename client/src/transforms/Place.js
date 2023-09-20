@@ -24,7 +24,8 @@ class Place extends BaseTransform {
    */
   getPayloadKeys() {
     return [
-      'project_model_id'
+      'project_model_id',
+      'user_defined'
     ];
   }
 

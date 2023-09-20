@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_15_155412) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_18_201655) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -38,7 +38,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_155412) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "project_model_id"
+    t.jsonb "user_defined", default: {}
     t.index ["project_model_id"], name: "index_core_data_connector_organizations_on_project_model_id"
+    t.index ["user_defined"], name: "index_core_data_connector_organizations_on_user_defined", using: :gin
   end
 
   create_table "core_data_connector_people", force: :cascade do |t|
@@ -46,7 +48,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_155412) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "project_model_id"
+    t.jsonb "user_defined", default: {}
     t.index ["project_model_id"], name: "index_core_data_connector_people_on_project_model_id"
+    t.index ["user_defined"], name: "index_core_data_connector_people_on_user_defined", using: :gin
   end
 
   create_table "core_data_connector_person_names", force: :cascade do |t|
@@ -74,7 +78,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_155412) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "project_model_id"
+    t.jsonb "user_defined", default: {}
     t.index ["project_model_id"], name: "index_core_data_connector_places_on_project_model_id"
+    t.index ["user_defined"], name: "index_core_data_connector_places_on_user_defined", using: :gin
   end
 
   create_table "core_data_connector_project_model_relationships", force: :cascade do |t|
@@ -114,9 +120,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_155412) do
     t.bigint "related_record_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "user_defined", default: {}
     t.index ["primary_record_type", "primary_record_id"], name: "index_core_data_connector_relationships_on_primary_record"
     t.index ["project_model_relationship_id"], name: "index_cdc_relationships_on_project_model_relationship_id"
     t.index ["related_record_type", "related_record_id"], name: "index_core_data_connector_relationships_on_related_record"
+    t.index ["user_defined"], name: "index_core_data_connector_relationships_on_user_defined", using: :gin
   end
 
   create_table "core_data_connector_user_projects", force: :cascade do |t|
