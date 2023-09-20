@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_18_201655) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_20_153659) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "core_data_connector_locations", force: :cascade do |t|
@@ -159,6 +160,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_201655) do
     t.datetime "updated_at", null: false
     t.boolean "searchable", default: false, null: false
     t.integer "order", default: 0, null: false
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.index ["defineable_type", "defineable_id"], name: "index_user_defined_fields_on_defineable"
   end
 
