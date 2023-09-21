@@ -1948,12 +1948,12 @@
     "@stitches/react" "^1.2.7"
     react "^18.2.0"
 
-"@performant-software/semantic-components@^1.0.21-beta.0":
-  version "1.0.21-beta.0"
-  resolved "https://registry.yarnpkg.com/@performant-software/semantic-components/-/semantic-components-1.0.21-beta.0.tgz#6166dee1af345e70bb1bb44fcca0f8f5a43ccf1d"
-  integrity sha512-Sqq3yTmLLlJRpm6OXTNgTfcv7/YzEC8l+hfzKAGWZtba8t5/PQMK1Rd1Ci7l23sPVOcWkEQIiFfsTqu/vJAmDQ==
+"@performant-software/semantic-components@^1.0.21":
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/@performant-software/semantic-components/-/semantic-components-1.0.21.tgz#9c70a4bc61bed0d06c92c0b75292d8c7c307d74c"
+  integrity sha512-4O53C5BAxGmtW/FFgXVH9u9m+4UlqHIJ1EUaPYa+jrNNb2aJ2JT1Mtp4eFgtc4vZyhsWTqh6odMsuwD8KF5wLg==
   dependencies:
-    "@performant-software/shared-components" "^1.0.21-beta.0"
+    "@performant-software/shared-components" "^1.0.21"
     "@react-google-maps/api" "^2.8.1"
     axios "^0.26.1"
     i18next "^19.4.4"
@@ -1972,10 +1972,10 @@
     zotero-api-client "^0.40.0"
     zotero-translation-client "^5.0.1"
 
-"@performant-software/shared-components@^1.0.21-beta.0":
-  version "1.0.21-beta.0"
-  resolved "https://registry.yarnpkg.com/@performant-software/shared-components/-/shared-components-1.0.21-beta.0.tgz#39fb13f99fc324f42ffc083d066d8284d5dbfb74"
-  integrity sha512-fWUJwUAWlzd8LVh61VbuB/2BmGLi2KMMCPJyKUoeIGZ2FEZZxqzucPKI9d3MXaG5msw64eEsbfnWAxAcOo1+SQ==
+"@performant-software/shared-components@^1.0.21":
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/@performant-software/shared-components/-/shared-components-1.0.21.tgz#cfe4f10f4777e092b5db90efdd3d41f64bd0031f"
+  integrity sha512-KFi+vsH5nr6PrHortvlTHiTALNdaK7GrUacVEdS99uV5wJyAg1OBcLN1eqyG4F6PxgVHTsKD1F9hhLqRJK7Xxw==
   dependencies:
     "@react-google-maps/api" "^2.8.1"
     "@samvera/clover-iiif" "^1.10.3"
@@ -1995,13 +1995,13 @@
     underscore "^1.13.2"
     zotero-translation-client "^5.0.1"
 
-"@performant-software/user-defined-fields@^1.0.21-beta.0":
-  version "1.0.21-beta.0"
-  resolved "https://registry.yarnpkg.com/@performant-software/user-defined-fields/-/user-defined-fields-1.0.21-beta.0.tgz#823cfd42735388502e22f2f59353901a3d9493ff"
-  integrity sha512-wiBBryPsEtpbX3X/v7vDqOTKJnmP4v0iNDfkE/UOjQN3VgEgp14O0DUpa1M7ubUlVB/jLgA6q3DVALQjMI2Jig==
+"@performant-software/user-defined-fields@^1.0.21":
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/@performant-software/user-defined-fields/-/user-defined-fields-1.0.21.tgz#4ad52931061fb397678f5143cdf80f384bef4037"
+  integrity sha512-YgyddeBslL2YPc3R8gW4vJnQVElEsSLaSh7gc9KpU9HVGwdV8DN/gLqmGifpVsXEq8g7LGjpwr6MyO4Bb01/pQ==
   dependencies:
-    "@performant-software/semantic-components" "^1.0.21-beta.0"
-    "@performant-software/shared-components" "^1.0.21-beta.0"
+    "@performant-software/semantic-components" "^1.0.21"
+    "@performant-software/shared-components" "^1.0.21"
     i18next "^21.9.1"
     semantic-ui-react "^2.1.2"
     underscore "^1.13.2"
