@@ -37,8 +37,7 @@ gem 'resource_api', git: 'https://github.com/performant-software/resource-api.gi
 gem 'jwt_auth', git: 'https://github.com/performant-software/jwt-auth.git', tag: 'v0.1.2'
 
 # Core data
-#gem 'core_data_connector', git: 'https://github.com/performant-software/core-data-connector.git', tag: 'v0.1.2'
-gem 'core_data_connector', path: '../core-data-connector'
+gem 'core_data_connector', git: 'https://github.com/performant-software/core-data-connector.git', tag: 'v0.1.3'
 
 # User defined fields
 gem 'user_defined_fields', git: 'https://github.com/performant-software/user-defined-fields.git', tag: 'v0.1.8'
