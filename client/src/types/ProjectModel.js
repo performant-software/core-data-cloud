@@ -15,6 +15,7 @@ export type ProjectModel = {
   id: number,
   project_id: number,
   name: string,
+  name_singular: string,
   model_class: string,
   model_class_view: string,
   slug: string,

@@ -26,7 +26,8 @@ class Relationship extends BaseTransform {
       'primary_record_id',
       'primary_record_type',
       'related_record_id',
-      'related_record_type'
+      'related_record_type',
+      'user_defined'
     ];
   }
 }

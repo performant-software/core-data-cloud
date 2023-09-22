@@ -35,7 +35,12 @@ const People: AbstractComponent<any> = () => {
         sortable: true
       }]}
       onDelete={(place) => PeopleService.delete(place)}
-      onLoad={(params) => PeopleService.fetchAll({ ...params, project_model_id: projectModelId })}
+      onLoad={(params) => PeopleService.fetchAll({
+        ...params,
+        project_model_id: projectModelId,
+        defineable_id: projectModelId,
+        defineable_type: 'CoreDataConnector::ProjectModel'
+      })}
       searchable
     />
   );

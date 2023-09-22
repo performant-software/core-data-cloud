@@ -25,7 +25,8 @@ class Organization extends BaseTransform {
   getPayloadKeys(): Array<string> {
     return [
       'project_model_id',
-      'description'
+      'description',
+      'user_defined'
     ];
   }
 

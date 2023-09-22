@@ -68,7 +68,9 @@ const Relationships = () => {
         ...params,
         project_model_relationship_id: projectModelRelationshipId,
         primary_record_id: itemId,
-        primary_record_type: primaryClass
+        primary_record_type: primaryClass,
+        defineable_id: projectModelRelationshipId,
+        defineable_type: 'CoreDataConnector::ProjectModelRelationship'
       })}
       searchable
     />

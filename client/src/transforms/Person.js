@@ -26,7 +26,8 @@ class Person extends BaseTransform {
   getPayloadKeys(): Array<string> {
     return [
       'project_model_id',
-      'biography'
+      'biography',
+      'user_defined'
     ];
   }
 

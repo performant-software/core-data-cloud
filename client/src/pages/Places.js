@@ -31,7 +31,12 @@ const Places: AbstractComponent<any> = () => {
         sortable: true
       }]}
       onDelete={(place) => PlacesService.delete(place)}
-      onLoad={(params) => PlacesService.fetchAll({ ...params, project_model_id: projectModelId })}
+      onLoad={(params) => PlacesService.fetchAll({
+        ...params,
+        project_model_id: projectModelId,
+        defineable_id: projectModelId,
+        defineable_type: 'CoreDataConnector::ProjectModel'
+      })}
       searchable
     />
   );
