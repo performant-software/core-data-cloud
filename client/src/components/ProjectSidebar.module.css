@@ -3,6 +3,12 @@
   border: none;
 }
 
+.projectSidebar.ui.vertical.menu > .item > .menu > .item,
 .projectSidebar.ui.vertical.menu > .item {
   color: white;
+}
+
+.projectSidebar.ui.vertical.menu > .item > .menu > .item:hover,
+.projectSidebar.ui.vertical.menu > .item:hover {
+  color: #e1e1e1;
 }

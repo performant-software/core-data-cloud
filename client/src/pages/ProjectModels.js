@@ -21,6 +21,8 @@ const ProjectModels = () => {
         name: 'delete'
       }]}
       addButton={{
+        basic: false,
+        color: 'blue',
         location: 'top',
         onClick: () => navigate('new')
       }}

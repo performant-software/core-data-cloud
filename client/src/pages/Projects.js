@@ -3,8 +3,10 @@
 import { ItemList, ItemViews } from '@performant-software/semantic-components';
 import React, { type AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ProjectsService from '../services/Projects';
+import ProjectHeader from '../components/ProjectHeader';
+import ProjectDescription from '../components/ProjectDescription';
 
 const Projects: AbstractComponent<any> = () => {
   const navigate = useNavigate();
@@ -13,19 +15,29 @@ const Projects: AbstractComponent<any> = () => {
   return (
     <ItemList
       addButton={{
+        basic: false,
+        color: 'blue',
         location: 'top',
         onClick: () => navigate('new')
       }}
-      as={Link}
-      asProps={(item) => ({
-        to: `${item.id}`
+      asProps={() => ({
+        raised: true
       })}
-      link
+      basic={false}
       collectionName='projects'
       defaultView={ItemViews.grid}
       hideToggle
-      renderHeader={(project) => project.name}
-      renderDescription={(project) => project.description}
+      renderHeader={(project) => (
+        <ProjectHeader
+          project={project}
+        />
+      )}
+      renderDescription={(project) => (
+        <ProjectDescription
+          project={project}
+        />
+      )}
+      renderEmptyList={() => null}
       onLoad={(params) => ProjectsService.fetchAll(params)}
       sort={[{
         key: 'name',
@@ -40,6 +52,7 @@ const Projects: AbstractComponent<any> = () => {
         value: 'core_data_connector_projects.updated_at',
         text: t('Projects.sort.updated')
       }]}
+      sortColor='blue'
     />
   );
 };

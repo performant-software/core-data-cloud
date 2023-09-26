@@ -1,7 +1,7 @@
 // @flow
 
 import cx from 'classnames';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Menu, Ref } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import _ from 'underscore';
@@ -11,6 +11,7 @@ import ProjectModelsService from '../services/ProjectModels';
 import ProjectsService from '../services/Projects';
 import styles from './ProjectSidebar.module.css';
 import useParams from '../hooks/ParsedParams';
+import ProjectContext from '../context/Project';
 
 type Props = {
   context: {
@@ -20,45 +21,17 @@ type Props = {
 };
 
 const ProjectSidebar = (props: Props) => {
-  const [project, setProject] = useState();
-  const [currentProjectModel, setCurrentProjectModel] = useState();
-  const [projectModels, setProjectModels] = useState();
-
+  const { project, projectModel, projectModels } = useContext(ProjectContext);
   const { projectId, projectModelId, itemId } = useParams();
   const { t } = useTranslation();
 
   const relationships = useMemo(() => (
-    _.where(currentProjectModel?.project_model_relationships, { multiple: true })
-  ), [currentProjectModel]);
+    _.where(projectModel?.project_model_relationships, { multiple: true })
+  ), [projectModel]);
 
-  /**
-   * Load the project.
-   */
-  useEffect(() => {
-    ProjectsService
-      .fetchOne(projectId)
-      .then(({ data }) => setProject(data.project));
-  }, []);
-
-  /**
-   * Load the related project models.
-   */
-  useEffect(() => {
-    ProjectModelsService
-      .fetchAll({ project_id: projectId })
-      .then(({ data }) => setProjectModels(data.project_models));
-  }, []);
-
-  /**
-   * Load the project model relationships.
-   */
-  useEffect(() => {
-    if (projectModelId) {
-      ProjectModelsService
-        .fetchOne(projectModelId)
-        .then(({ data }) => setCurrentProjectModel(data.project_model));
-    }
-  }, [projectModelId]);
+  if (!project) {
+    return null;
+  }
 
   return (
     <Ref
@@ -101,26 +74,28 @@ const ProjectSidebar = (props: Props) => {
                 />
               </>
             )}
-            { _.map(projectModels, (projectModel) => (
+            { _.map(projectModels, (pm) => (
               <MenuLink
                 className={styles.item}
                 parent
-                to={`/projects/${projectId}/${projectModel.id}`}
+                to={`/projects/${projectId}/${pm.id}`}
               >
-                { projectModel.name }
-                { currentProjectModel?.id === projectModel.id && itemId && (
-                  <Menu.Menu>
+                { pm.name }
+                { projectModel?.id === pm.id && itemId && (
+                  <Menu.Menu
+                    className={styles.menu}
+                  >
                     <MenuLink
                       className={styles.item}
                       content={t('ProjectSidebar.labels.details')}
-                      to={`/projects/${projectId}/${projectModel.id}/${itemId}`}
+                      to={`/projects/${projectId}/${pm.id}/${itemId}`}
                     />
                     { _.map(relationships, (relationship) => (
                       <MenuLink
                         className={styles.item}
                         content={relationship.name}
                         parent
-                        to={`/projects/${projectId}/${projectModel.id}/${itemId}/${relationship.id}`}
+                        to={`/projects/${projectId}/${pm.id}/${itemId}/${relationship.id}`}
                       />
                     ))}
                   </Menu.Menu>

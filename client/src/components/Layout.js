@@ -6,69 +6,99 @@ import React, {
   useState,
   type AbstractComponent
 } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
-import { Container } from 'semantic-ui-react';
+import { Link, Outlet, useParams } from 'react-router-dom';
+import { Container, Icon, Menu, Ref } from 'semantic-ui-react';
 import Sidebar from './Sidebar';
 import styles from './Layout.module.css';
 import ProjectSidebar from './ProjectSidebar';
+import MenuBar from './MenuBar';
+import MenuLink from './MenuLink';
 
 const Layout: AbstractComponent<any> = () => {
-  const [rootMenuWidth, setRootMenuWidth] = useState(0);
-  const [projectMenuWidth, setProjectMenuWidth] = useState(0);
+  const [menuBarHeight, setMenuBarHeight] = useState(0);
+  const [sideBarWidth, setSideBarWidth] = useState(0);
 
-  const rootMenuRef = useRef();
-  const projectMenuRef = useRef();
+  const menuBarRef = useRef();
   const params = useParams();
+  const sideBarRef = useRef();
 
   /**
    * Sets the root sidebar menu width when the component is mounted.
    */
   useEffect(() => {
-    const { current: instance } = rootMenuRef;
+    const { current: instance } = menuBarRef;
 
     if (instance) {
-      setRootMenuWidth(instance.offsetWidth);
-    } else {
-      setRootMenuWidth(0);
+      setMenuBarHeight(instance.offsetHeight);
     }
-  }, [rootMenuRef.current]);
+  }, [menuBarRef.current]);
 
-  /**
-   * Sets the project sidebar menu width when the component is mounted.
-   */
   useEffect(() => {
-    const { current: instance } = projectMenuRef;
+    const { current: instance } = sideBarRef;
 
     if (instance) {
-      setProjectMenuWidth(instance.offsetWidth);
-    } else {
-      setProjectMenuWidth(0);
+      setSideBarWidth(instance.offsetWidth);
     }
-  }, [projectMenuRef.current, params.projectId]);
+  }, [sideBarRef.current]);
 
   return (
     <Container
       className={styles.layout}
       fluid
+      style={{
+        marginLeft: `calc(100vw - ${sideBarWidth}px !important`
+      }}
     >
-      <Sidebar
-        context={rootMenuRef}
+      <Ref
+        innerRef={menuBarRef}
+      >
+        <Container
+          className={styles.menuBarContainer}
+          fluid
+        >
+          <MenuBar />
+        </Container>
+      </Ref>
+      <ProjectSidebar
+        context={sideBarRef}
       />
-      { params.projectId && (
-        <ProjectSidebar
-          context={projectMenuRef}
-          offset={rootMenuWidth}
-          visible={!!params.projectId}
-        />
-      )}
-      <div
-        className={styles.content}
+      <Container
+        className={styles.contentContainer}
+        fluid
         style={{
-          marginLeft: `${rootMenuWidth + projectMenuWidth}px`
+          height: `calc(100vh - ${menuBarHeight}px)`
         }}
       >
+        { params.projectId && (
+          <Menu
+            secondary
+          >
+            <MenuLink
+              to='/projects'
+            >
+              <Icon
+                name='arrow left'
+              />
+              All Projects
+            </MenuLink>
+            <MenuLink
+              content={'Details'}
+              to={`/projects/${params.projectId}`}
+            />
+            <MenuLink
+              content={'Configure'}
+              parent
+              to={`/projects/${params.projectId}/project_models`}
+            />
+            <MenuLink
+              content={'Users'}
+              parent
+              to={`/projects/${params.projectId}/user_projects`}
+            />
+          </Menu>
+        )}
         <Outlet />
-      </div>
+      </Container>
     </Container>
   );
 };

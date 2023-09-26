@@ -18,6 +18,8 @@ import User from './pages/User';
 import UserProject from './pages/UserProject';
 import UserProjects from './pages/UserProjects';
 import Users from './pages/Users';
+import Logout from './pages/Logout';
+import ProjectContextProvider from './components/ProjectContextProvider';
 
 const App: ComponentType<any> = useDragDrop(() => (
   <Router>
@@ -32,10 +34,16 @@ const App: ComponentType<any> = useDragDrop(() => (
         path='/'
         element={(
           <AuthenticatedRoute>
-            <Layout />
+            <ProjectContextProvider>
+              <Layout />
+            </ProjectContextProvider>
           </AuthenticatedRoute>
         )}
       >
+        <Route
+          path='/logout'
+          element={<Logout />}
+        />
         <Route
           path='/projects'
         >
