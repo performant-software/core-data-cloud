@@ -9,6 +9,8 @@ import Layout from './components/Layout';
 import ListPageFactory from './components/ListPageFactory';
 import Login from './pages/Login';
 import Project from './pages/Project';
+import ProjectContextProvider from './components/ProjectContextProvider';
+import ProjectEdit from './pages/ProjectEdit';
 import ProjectModel from './pages/ProjectModel';
 import ProjectModels from './pages/ProjectModels';
 import Projects from './pages/Projects';
@@ -19,7 +21,6 @@ import UserProject from './pages/UserProject';
 import UserProjects from './pages/UserProjects';
 import Users from './pages/Users';
 import Logout from './pages/Logout';
-import ProjectContextProvider from './components/ProjectContextProvider';
 
 const App: ComponentType<any> = useDragDrop(() => (
   <Router>
@@ -61,6 +62,11 @@ const App: ComponentType<any> = useDragDrop(() => (
             <Route
               index
               element={<Project />}
+            />
+            <Route
+              path='edit'
+              element={<ProjectEdit />}
+              exact
             />
             <Route
               path='user_projects'

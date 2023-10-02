@@ -17,7 +17,6 @@ textarea {
 
 .list > .header > .ui.grid .row > .column > .ui.menu input {
   background: transparent;
-  /*box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;*/
 }
 
 .list.data-table-column-selector > table.ui.sortable {
@@ -27,10 +26,6 @@ textarea {
 .list.data-table-column-selector > table.ui.sortable > thead > tr > th {
   background-color: #f6f6f6;
   border: none;
-}
-
-.list.data-table-column-selector > table.ui.sortable > thead > tr > th.sorted {
-
 }
 
 .list.data-table-column-selector > table.ui.sortable > tbody > tr > td:first-child {
@@ -48,8 +43,3 @@ textarea {
 .list.data-table-column-selector > table.ui.sortable > tbody > tr:last-child > td {
   border-bottom: 1px solid rgba(34, 36, 38, 0.1);
 }
-
-/*.list.data-table-column-selector > table.ui.sortable > tbody > tr > td {*/
-/*  border: 1px solid rgba(34, 36, 38, 0.1);*/
-/*  border-collapse: collapse;*/
-/*}*/

@@ -1,14 +1,15 @@
 // @flow
 
-import React from 'react';
+import React, { useContext } from 'react';
 import Organization from '../pages/Organization';
 import Person from '../pages/Person';
 import Place from '../pages/Place';
+import ProjectContext from '../context/Project';
 import { Types } from '../utils/ProjectModels';
-import useProjectModel from '../hooks/ProjectModel';
 
 const EditPageFactory = () => {
-  const { className } = useProjectModel();
+  const { projectModel } = useContext(ProjectContext);
+  const className = projectModel?.model_class_view;
 
   if (!className) {
     return null;

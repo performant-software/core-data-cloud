@@ -28,6 +28,9 @@
       "login": "Login"
     }
   },
+  "Logo": {
+    "title": "Core Data Cloud"
+  },
   "Organization": {
     "labels": {
       "description": "Description",
@@ -117,6 +120,18 @@
       }
     }
   },
+  "ProjectHeader": {
+    "labels": {
+      "edit": "Edit",
+      "settings": "Settings"
+    }
+  },
+  "ProjectItemMenu": {
+    "labels": {
+      "backToAll": "All {{name}}",
+      "details": "Details"
+    }
+  },
   "ProjectModel": {
     "errors": {
       "invalidType": "\"{{type}}\" is not a valid type."
@@ -155,10 +170,11 @@
       "type": "Type"
     }
   },
-  "ProjectSidebar": {
+  "ProjectSettingsMenu": {
     "labels": {
+      "allProjects": "All Projects",
+      "configure": "Configure",
       "details": "Details",
-      "settings": "Settings",
       "users": "Users"
     }
   },
@@ -186,6 +202,11 @@
       "admin": "Admin",
       "email": "Email",
       "name": "Name"
+    }
+  },
+  "UserMenu": {
+    "labels": {
+      "logout": "Logout"
     }
   },
   "UserModal": {

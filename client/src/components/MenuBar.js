@@ -1,27 +1,35 @@
 // @flow
 
+import cx from 'classnames';
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
 import Logo from './Logo';
+import ProjectModelsMenu from './ProjectModelsMenu';
+import styles from './MenuBar.module.css';
 import UserMenu from './UserMenu';
 
-const MenuBar = () => {
-  return (
-    <Grid
-      columns={3}
+const MenuBar = () => (
+  <Grid
+    className={cx(styles.menuBar, styles.ui, styles.grid)}
+  >
+    <Grid.Column
+      width={3}
     >
-      <Grid.Column>
-        <Logo />
-      </Grid.Column>
-      <Grid.Column>
-      </Grid.Column>
-      <Grid.Column
-        textAlign='right'
-      >
-        <UserMenu />
-      </Grid.Column>
-    </Grid>
-  );
-};
+      <Logo />
+    </Grid.Column>
+    <Grid.Column
+      className={cx(styles.column, styles.centered)}
+      width={10}
+    >
+      <ProjectModelsMenu />
+    </Grid.Column>
+    <Grid.Column
+      textAlign='right'
+      width={3}
+    >
+      <UserMenu />
+    </Grid.Column>
+  </Grid>
+);
 
 export default MenuBar;

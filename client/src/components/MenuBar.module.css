@@ -1,0 +1,4 @@
+.menuBar.ui.grid .column.centered {
+  display: flex;
+  align-items: center;
+}
