@@ -7,7 +7,7 @@ import _ from 'underscore';
 import useParams from '../hooks/ParsedParams';
 
 const ProjectEdit = () => {
-  const { projectModels } = useContext(ProjectContext);
+  const { loadedProjectModels, projectModels } = useContext(ProjectContext);
   const { projectId } = useParams();
 
   /**
@@ -15,8 +15,17 @@ const ProjectEdit = () => {
    */
   const projectModel = _.first(projectModels);
 
-  if (!projectModel) {
+  if (!loadedProjectModels) {
     return null;
+  }
+
+  if (loadedProjectModels && !projectModel) {
+    return (
+      <Navigate
+        replace
+        to={`/projects/${projectId}`}
+      />
+    );
   }
 
   return (

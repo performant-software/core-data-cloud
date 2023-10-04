@@ -16,6 +16,7 @@ type Props = {
 };
 
 const ProjectContextProvider = (props: Props) => {
+  const [loadedProjectModels, setLoadedProjectModels] = useState(false);
   const [project, setProject] = useState();
   const [projectModel, setProjectModel] = useState();
   const [projectModels, setProjectModels] = useState();
@@ -55,8 +56,10 @@ const ProjectContextProvider = (props: Props) => {
     if (projectId) {
       ProjectModelsService
         .fetchAll({ project_id: projectId })
-        .then(({ data }) => setProjectModels(data.project_models));
+        .then(({ data }) => setProjectModels(data.project_models))
+        .finally(() => setLoadedProjectModels(true));
     } else {
+      setLoadedProjectModels(false);
       setProjectModels(null);
     }
   }, [projectId]);
@@ -67,10 +70,11 @@ const ProjectContextProvider = (props: Props) => {
    * @type {{projectModel: unknown, project: unknown, projectModels: unknown}}
    */
   const value = useMemo(() => ({
+    loadedProjectModels,
     project,
     projectModel,
     projectModels
-  }), [project, projectModel, projectModels]);
+  }), [loadedProjectModels, project, projectModel, projectModels]);
 
   return (
     <ProjectContext.Provider

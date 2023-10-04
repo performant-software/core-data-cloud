@@ -12,6 +12,7 @@ import MenuBar from './MenuBar';
 import ProjectSettingsMenu from './ProjectSettingsMenu';
 import ProjectItemMenu from './ProjectItemMenu';
 import styles from './Layout.module.css';
+import UserEditMenu from './UserEditMenu';
 
 const Layout: AbstractComponent<any> = () => {
   const [menuBarHeight, setMenuBarHeight] = useState(0);
@@ -50,8 +51,9 @@ const Layout: AbstractComponent<any> = () => {
           height: `calc(100vh - ${menuBarHeight}px)`
         }}
       >
-        <ProjectSettingsMenu />
         <ProjectItemMenu />
+        <ProjectSettingsMenu />
+        <UserEditMenu />
         <Outlet />
       </Container>
     </Container>

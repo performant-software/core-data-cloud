@@ -8,6 +8,12 @@
       "success": "You've successfully authenticated"
     }
   },
+  "AdminMenu": {
+    "labels": {
+      "projects": "Projects",
+      "users": "Users"
+    }
+  },
   "Common": {
     "buttons": {
       "delete": "Delete"
@@ -195,6 +201,12 @@
       "projects": "Projects",
       "settings": "Settings",
       "users": "Users"
+    }
+  },
+  "UserEditMenu": {
+    "labels": {
+      "details": "Details",
+      "projects": "Projects"
     }
   },
   "UserForm": {

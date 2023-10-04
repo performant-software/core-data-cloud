@@ -27,7 +27,7 @@ const ProjectModelsMenu = () => {
    *
    * @type {function(*): PathMatch<ParamParseKey<string>>}
    */
-  const isActive = (id) => useMatch({ path: getURL(id), end: true });
+  const isActive = (id) => useMatch({ path: `${getURL(id)}/*`, end: true });
 
   if (!projectModel) {
     return null;

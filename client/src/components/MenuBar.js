@@ -3,6 +3,7 @@
 import cx from 'classnames';
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
+import AdminMenu from './AdminMenu';
 import Logo from './Logo';
 import ProjectModelsMenu from './ProjectModelsMenu';
 import styles from './MenuBar.module.css';
@@ -21,6 +22,7 @@ const MenuBar = () => (
       className={cx(styles.column, styles.centered)}
       width={10}
     >
+      <AdminMenu />
       <ProjectModelsMenu />
     </Grid.Column>
     <Grid.Column
