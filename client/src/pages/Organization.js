@@ -49,6 +49,11 @@ const OrganizationForm = (props: Props) => {
           }, {
             name: 'delete'
           }]}
+          addButton={{
+            basic: false,
+            color: 'blue',
+            location: 'top'
+          }}
           className={styles.organizationNames}
           columns={[{
             name: 'name',

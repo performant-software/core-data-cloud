@@ -49,6 +49,11 @@ const PlaceForm = (props: Props) => {
           }, {
             name: 'delete'
           }]}
+          addButton={{
+            basic: false,
+            color: 'blue',
+            location: 'top'
+          }}
           className={styles.names}
           columns={[{
             name: 'last_name',

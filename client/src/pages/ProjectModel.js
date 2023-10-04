@@ -86,6 +86,11 @@ const ProjectModelForm = (props: Props) => {
           }, {
             name: 'delete'
           }]}
+          addButton={{
+            basic: false,
+            color: 'blue',
+            location: 'top'
+          }}
           columns={[{
             name: 'model_name',
             label: t('ProjectModel.relationships.columns.related'),
