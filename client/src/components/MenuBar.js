@@ -6,6 +6,7 @@ import { Grid } from 'semantic-ui-react';
 import AdminMenu from './AdminMenu';
 import Logo from './Logo';
 import ProjectModelsMenu from './ProjectModelsMenu';
+import ProjectTitle from './ProjectTitle';
 import styles from './MenuBar.module.css';
 import UserMenu from './UserMenu';
 
@@ -14,15 +15,16 @@ const MenuBar = () => (
     className={cx(styles.menuBar, styles.ui, styles.grid)}
   >
     <Grid.Column
-      width={3}
+      width={4}
     >
       <Logo />
     </Grid.Column>
     <Grid.Column
       className={cx(styles.column, styles.centered)}
-      width={10}
+      width={9}
     >
       <AdminMenu />
+      <ProjectTitle />
       <ProjectModelsMenu />
     </Grid.Column>
     <Grid.Column
