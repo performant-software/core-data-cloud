@@ -138,6 +138,12 @@
       "details": "Details"
     }
   },
+  "ProjectModeLink": {
+    "labels": {
+      "edit": "Edit",
+      "settings": "Settings"
+    }
+  },
   "ProjectModel": {
     "errors": {
       "invalidType": "\"{{type}}\" is not a valid type."

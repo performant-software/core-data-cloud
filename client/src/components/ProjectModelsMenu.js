@@ -1,5 +1,6 @@
 // @flow
 
+import cx from 'classnames';
 import React, { useContext } from 'react';
 import {
   Link,
@@ -11,6 +12,7 @@ import { Dropdown } from 'semantic-ui-react';
 import _ from 'underscore';
 import ProjectContext from '../context/Project';
 import type { ProjectModel as ProjectModelType } from '../types/ProjectModel';
+import styles from './ProjectModelsMenu.module.css';
 import useParams from '../hooks/ParsedParams';
 
 type Props = {
@@ -47,6 +49,7 @@ const ProjectModelsMenu = () => {
 
   return (
     <Dropdown
+      className={cx(styles.projectModelsMenu, styles.ui, styles.dropdown)}
       text={currentModel.name}
     >
       <Dropdown.Menu>

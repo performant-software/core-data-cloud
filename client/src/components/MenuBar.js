@@ -5,6 +5,7 @@ import React from 'react';
 import { Grid } from 'semantic-ui-react';
 import AdminMenu from './AdminMenu';
 import Logo from './Logo';
+import ProjectModeLink from './ProjectModeLink';
 import ProjectModelsMenu from './ProjectModelsMenu';
 import ProjectTitle from './ProjectTitle';
 import styles from './MenuBar.module.css';
@@ -26,6 +27,7 @@ const MenuBar = () => (
       <AdminMenu />
       <ProjectTitle />
       <ProjectModelsMenu />
+      <ProjectModeLink />
     </Grid.Column>
     <Grid.Column
       textAlign='right'
