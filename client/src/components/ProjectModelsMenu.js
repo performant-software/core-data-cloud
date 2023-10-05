@@ -1,49 +1,58 @@
 // @flow
 
 import React, { useContext } from 'react';
-import ProjectContext from '../context/Project';
+import {
+  Link,
+  matchPath,
+  useLocation,
+  useMatch
+} from 'react-router-dom';
 import { Dropdown } from 'semantic-ui-react';
-import useParams from '../hooks/ParsedParams';
 import _ from 'underscore';
-import { Link, useMatch } from 'react-router-dom';
+import ProjectContext from '../context/Project';
+import type { ProjectModel as ProjectModelType } from '../types/ProjectModel';
+import useParams from '../hooks/ParsedParams';
+
+type Props = {
+  projectModel: ProjectModelType
+};
+
+const CONFIG_PATH = '/projects/:projectId/project_models/:projectModelId';
+
+const DropdownItem = ({ projectModel }: Props) => {
+  const url = `projects/${projectModel.project_id}/${projectModel.id}`;
+  const isActive = useMatch({ path: `${url}/*`, end: true });
+
+  return (
+    <Dropdown.Item
+      active={isActive}
+      as={Link}
+      content={projectModel.name}
+      to={url}
+    />
+  );
+};
 
 const ProjectModelsMenu = () => {
   const { projectModels } = useContext(ProjectContext);
-  const { projectId, projectModelId } = useParams();
+  const { pathname } = useLocation();
+  const { projectModelId } = useParams();
 
-  const projectModel = _.findWhere(projectModels, { id: projectModelId });
+  const currentModel = _.findWhere(projectModels, { id: projectModelId });
+  const isConfigPath = !!matchPath({ path: CONFIG_PATH, end: true }, pathname);
 
-  /**
-   * Returns the URL for the passed project model ID.
-   *
-   * @param id
-   *
-   * @returns {`projects/${number}/${string}`}
-   */
-  const getURL = (id) => `projects/${projectId}/${id}`;
-
-  /**
-   * Returns true if the passed project model ID is the current URL.
-   *
-   * @type {function(*): PathMatch<ParamParseKey<string>>}
-   */
-  const isActive = (id) => useMatch({ path: `${getURL(id)}/*`, end: true });
-
-  if (!projectModel) {
+  if (!currentModel || isConfigPath) {
     return null;
   }
 
   return (
     <Dropdown
-      text={projectModel.name}
+      text={currentModel.name}
     >
       <Dropdown.Menu>
-        { _.map(projectModels, ({ id, name }) => (
-          <Dropdown.Item
-            active={isActive(id)}
-            as={Link}
-            content={name}
-            to={getURL(id)}
+        { _.map(projectModels, (projectModel) => (
+          <DropdownItem
+            projectModel={projectModel}
           />
         ))}
       </Dropdown.Menu>
