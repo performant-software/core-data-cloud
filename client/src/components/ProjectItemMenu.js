@@ -2,15 +2,17 @@
 
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Icon, Menu } from 'semantic-ui-react';
+import { Header, Icon, Menu } from 'semantic-ui-react';
 import _ from 'underscore';
+import CurrentRecordContext from '../context/CurrentRecord';
 import MenuLink from './MenuLink';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
 
 const ProjectItemMenu = () => {
-  const { projectId, projectModelId, itemId } = useParams();
+  const { name } = useContext(CurrentRecordContext);
   const { projectModel } = useContext(ProjectContext);
+  const { projectId, projectModelId, itemId } = useParams();
   const { t } = useTranslation();
 
   if (!itemId) {
@@ -40,6 +42,13 @@ const ProjectItemMenu = () => {
           to={`/projects/${projectId}/${projectModelId}/${itemId}/${relationship.id}`}
         />
       ))}
+      <Menu.Item
+        position='right'
+      >
+        <Header
+          content={name}
+        />
+      </Menu.Item>
     </Menu>
   );
 };

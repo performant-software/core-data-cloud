@@ -4,6 +4,7 @@ import { useDragDrop } from '@performant-software/shared-components';
 import React, { type ComponentType } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
+import CurrentRecordContextProvider from './components/CurrentRecordContextProvider';
 import EditPageFactory from './components/EditPageFactory';
 import Layout from './components/Layout';
 import ListPageFactory from './components/ListPageFactory';
@@ -36,7 +37,9 @@ const App: ComponentType<any> = useDragDrop(() => (
         element={(
           <AuthenticatedRoute>
             <ProjectContextProvider>
-              <Layout />
+              <CurrentRecordContextProvider>
+                <Layout />
+              </CurrentRecordContextProvider>
             </ProjectContextProvider>
           </AuthenticatedRoute>
         )}
