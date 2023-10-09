@@ -8,6 +8,12 @@
       "success": "You've successfully authenticated"
     }
   },
+  "AdminMenu": {
+    "labels": {
+      "projects": "Projects",
+      "users": "Users"
+    }
+  },
   "Common": {
     "buttons": {
       "delete": "Delete"
@@ -27,6 +33,9 @@
     "buttons": {
       "login": "Login"
     }
+  },
+  "Logo": {
+    "title": "Core Data Cloud"
   },
   "Organization": {
     "labels": {
@@ -117,6 +126,24 @@
       }
     }
   },
+  "ProjectHeader": {
+    "labels": {
+      "edit": "Edit",
+      "settings": "Settings"
+    }
+  },
+  "ProjectItemMenu": {
+    "labels": {
+      "backToAll": "All {{name}}",
+      "details": "Details"
+    }
+  },
+  "ProjectModeLink": {
+    "labels": {
+      "edit": "Edit",
+      "settings": "Settings"
+    }
+  },
   "ProjectModel": {
     "errors": {
       "invalidType": "\"{{type}}\" is not a valid type."
@@ -155,10 +182,11 @@
       "type": "Type"
     }
   },
-  "ProjectSidebar": {
+  "ProjectSettingsMenu": {
     "labels": {
+      "allProjects": "All Projects",
+      "configure": "Configure",
       "details": "Details",
-      "settings": "Settings",
       "users": "Users"
     }
   },
@@ -181,11 +209,22 @@
       "users": "Users"
     }
   },
+  "UserEditMenu": {
+    "labels": {
+      "details": "Details",
+      "projects": "Projects"
+    }
+  },
   "UserForm": {
     "labels": {
       "admin": "Admin",
       "email": "Email",
       "name": "Name"
+    }
+  },
+  "UserMenu": {
+    "labels": {
+      "logout": "Logout"
     }
   },
   "UserModal": {

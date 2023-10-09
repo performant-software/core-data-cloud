@@ -58,6 +58,8 @@ const Relationships = () => {
         name: 'delete'
       }]}
       addButton={{
+        basic: false,
+        color: 'blue',
         location: 'top',
         onClick: () => navigate('new')
       }}

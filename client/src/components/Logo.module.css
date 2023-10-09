@@ -1,0 +1,15 @@
+.logo {
+  color: unset;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.logo:hover {
+  color: unset;
+}
+
+.logo > .ui.header {
+  margin-left: 0.5rem;
+  margin-top: 0px;
+}

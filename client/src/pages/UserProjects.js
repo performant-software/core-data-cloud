@@ -28,6 +28,8 @@ const UserProjects: AbstractComponent<any> = () => {
         name: 'delete'
       }]}
       addButton={editable ? {
+        basic: false,
+        color: 'blue',
         location: 'top',
         onClick: () => navigate('new')
       } : undefined}

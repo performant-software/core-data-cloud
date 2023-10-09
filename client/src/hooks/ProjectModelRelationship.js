@@ -1,24 +1,20 @@
 // @flow
 
-import { useEffect, useState } from 'react';
+import { useContext, useMemo } from 'react';
 import _ from 'underscore';
+import ProjectContext from '../context/Project';
 import useParams from './ParsedParams';
-import useProjectModel from './ProjectModel';
 
 const useProjectModelRelationship = () => {
-  const [projectModelRelationship, setProjectModelRelationship] = useState();
-  const { projectModel } = useProjectModel();
+  const { projectModel } = useContext(ProjectContext);
   const { projectModelRelationshipId } = useParams();
 
   /**
    * Set the current relationship based on the current project model's relationships.
    */
-  useEffect(() => {
-    if (projectModel) {
-      const relationship = _.findWhere(projectModel.project_model_relationships, { id: projectModelRelationshipId });
-      setProjectModelRelationship(relationship);
-    }
-  }, [projectModel, projectModelRelationshipId]);
+  const projectModelRelationship = useMemo(() => (
+    _.findWhere(projectModel.project_model_relationships, { id: projectModelRelationshipId })
+  ), [projectModel, projectModelRelationshipId]);
 
   return {
     projectModelRelationship,

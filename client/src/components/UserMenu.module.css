@@ -1,0 +1,9 @@
+.userMenu.ui.dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.userMenu.ui.dropdown > .ui.header {
+  margin: 0rem 0rem 0rem 1rem;
+}

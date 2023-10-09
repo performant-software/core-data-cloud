@@ -7,13 +7,15 @@ import {
 } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
-import React, { type AbstractComponent, useEffect } from 'react';
+import React, { type AbstractComponent, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Header } from 'semantic-ui-react';
+import CurrentRecordContext from '../context/CurrentRecord';
 import type { Organization as OrganizationType } from '../types/Organization';
 import OrganizationNameModal from '../components/OrganizationNameModal';
 import OrganizationService from '../services/Organizations';
 import styles from './Organization.module.css';
+import { Types } from '../utils/ProjectModels';
 import useParams from '../hooks/ParsedParams';
 import Validation from '../utils/Validation';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
@@ -23,14 +25,23 @@ type Props = EditContainerProps & {
 };
 
 const OrganizationForm = (props: Props) => {
+  const { setCurrentRecord } = useContext(CurrentRecordContext);
   const { projectModelId } = useParams();
   const { t } = useTranslation();
 
+  /**
+   * Sets the project model ID on the state from the route parameters.
+   */
   useEffect(() => {
     if (!props.item.id) {
       props.onSetState({ project_model_id: projectModelId });
     }
   }, [projectModelId, props.item.id]);
+
+  /**
+   * Sets the current record on the context.
+   */
+  useEffect(() => setCurrentRecord(props.item, Types.Organization), [props.item]);
 
   return (
     <SimpleEditPage
@@ -49,6 +60,11 @@ const OrganizationForm = (props: Props) => {
           }, {
             name: 'delete'
           }]}
+          addButton={{
+            basic: false,
+            color: 'blue',
+            location: 'top'
+          }}
           className={styles.organizationNames}
           columns={[{
             name: 'name',
