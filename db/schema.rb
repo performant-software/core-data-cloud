@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_20_153659) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_09_194316) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -23,6 +23,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_20_153659) do
     t.datetime "updated_at", null: false
     t.index ["locateable_type", "locateable_id"], name: "index_core_data_connector_locations_on_locateable"
     t.index ["place_id"], name: "index_core_data_connector_locations_on_place_id"
+  end
+
+  create_table "core_data_connector_media_contents", force: :cascade do |t|
+    t.bigint "project_model_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_model_id"], name: "index_core_data_connector_media_contents_on_project_model_id"
   end
 
   create_table "core_data_connector_organization_names", force: :cascade do |t|
@@ -145,6 +153,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_20_153659) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false
+  end
+
+  create_table "triple_eye_effable_resource_descriptions", force: :cascade do |t|
+    t.string "resourceable_type", null: false
+    t.bigint "resourceable_id", null: false
+    t.string "resource_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["resourceable_type", "resourceable_id"], name: "index_resource_description_on_resourceable"
   end
 
   create_table "user_defined_fields_user_defined_fields", force: :cascade do |t|

@@ -16,6 +16,8 @@
   },
   "Common": {
     "buttons": {
+      "add": "Add",
+      "edit": "Edit",
       "delete": "Delete"
     },
     "labels": {
@@ -36,6 +38,20 @@
   },
   "Logo": {
     "title": "Core Data Cloud"
+  },
+  "MediaContent": {
+    "labels": {
+      "content": "Content",
+      "name": "Name"
+    }
+  },
+  "MediaContentUploadForm": {
+    "labels": {
+      "name": "Name"
+    }
+  },
+  "MediaContentsSelectize": {
+    "title": "Select Media"
   },
   "Organization": {
     "labels": {
@@ -195,6 +211,28 @@
       "created": "Date created",
       "name": "Name",
       "updated": "Last modified"
+    }
+  },
+  "RelatedMediaContents": {
+    "options": {
+      "link": "Link existing record",
+      "upload": "Upload from your computer"
+    }
+  },
+  "RelatedOrganizations": {
+    "columns": {
+      "name": "Name"
+    }
+  },
+  "RelatedPeople": {
+    "columns": {
+      "firstName": "First name",
+      "lastName": "Last name"
+    }
+  },
+  "RelatedPlaces": {
+    "columns": {
+      "name": "Name"
     }
   },
   "Sidebar": {

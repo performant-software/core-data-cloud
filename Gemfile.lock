@@ -1,15 +1,4 @@
 GIT
-  remote: https://github.com/performant-software/core-data-connector.git
-  revision: c5e388950326a4fb4c67d07e4bbc3929dbcb055e
-  tag: v0.1.3
-  specs:
-    core_data_connector (0.1.0)
-      faker
-      rails (>= 6.0.3.2, < 8)
-      resource_api
-      user_defined_fields
-
-GIT
   remote: https://github.com/performant-software/jwt-auth.git
   revision: fa54af0cdcad6122fad10d9ad745b814c2918853
   tag: v0.1.2
@@ -29,6 +18,15 @@ GIT
       rails (>= 7.0, < 8)
 
 GIT
+  remote: https://github.com/performant-software/triple-eye-effable.git
+  revision: 3f914d1035654e260bdc2902e7f0d7909d9e8b49
+  tag: v0.1.9
+  specs:
+    triple_eye_effable (0.1.0)
+      httparty (~> 0.20.0)
+      rails (>= 6.0.3.2, < 8)
+
+GIT
   remote: https://github.com/performant-software/user-defined-fields.git
   revision: 4872b3f1e7c5d4ecf83aedc30202aab91589e5ed
   tag: v0.1.8
@@ -36,6 +34,16 @@ GIT
     user_defined_fields (0.1.0)
       rails (>= 6.0.3.2, < 8)
       resource_api
+
+PATH
+  remote: ../core-data-connector
+  specs:
+    core_data_connector (0.1.0)
+      faker
+      rails (>= 6.0.3.2, < 8)
+      resource_api
+      triple_eye_effable
+      user_defined_fields
 
 GEM
   remote: https://rubygems.org/
@@ -124,6 +132,9 @@ GEM
       i18n (>= 1.8.11, < 2)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    httparty (0.20.0)
+      mime-types (~> 3.0)
+      multi_xml (>= 0.5.2)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     io-console (0.6.0)
@@ -140,9 +151,13 @@ GEM
       net-smtp
     marcel (1.0.2)
     method_source (1.0.0)
+    mime-types (3.5.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2023.1003)
     mini_mime (1.1.5)
     minitest (5.19.0)
     msgpack (1.7.2)
+    multi_xml (0.6.0)
     net-imap (0.3.7)
       date
       net-protocol
@@ -231,6 +246,7 @@ DEPENDENCIES
   rack-cors (~> 1.1.1)
   rails (~> 7.0.7)
   resource_api!
+  triple_eye_effable!
   tzinfo-data
   user_defined_fields!
 

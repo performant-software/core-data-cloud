@@ -43,3 +43,8 @@ textarea {
 .list.data-table-column-selector > table.ui.sortable > tbody > tr:last-child > td {
   border-bottom: 1px solid rgba(34, 36, 38, 0.1);
 }
+
+.dropdown-button.ui.buttons>.ui.dropdown:last-child .menu.right {
+  left: 0;
+  right: auto;
+}
