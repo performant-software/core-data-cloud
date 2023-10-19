@@ -95,6 +95,11 @@ const RelatedMediaContents = () => {
         )}
         renderMeta={() => ''}
         saved={saved}
+        sort={[{
+          key: 'core_data_connector_media_contents.name',
+          value: 'core_data_connector_media_contents.name',
+          text: t('RelatedMediaContents.sort.name')
+        }]}
       />
       { modal === Modal.upload && (
         <MediaContentsUploadModal

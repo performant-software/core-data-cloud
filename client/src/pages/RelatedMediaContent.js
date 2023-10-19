@@ -3,20 +3,23 @@
 import { LazyIIIF, SimpleEditPage } from '@performant-software/semantic-components';
 import { IIIF as IIIFUtils } from '@performant-software/shared-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
+import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
 import React, { useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Button, Header } from 'semantic-ui-react';
 import type { Relationship as RelationshipType } from '../types/Relationship';
 import styles from './RelatedMediaContent.module.css';
+import useParams from '../hooks/ParsedParams';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 import { useRelationship, withRelationshipEditPage } from '../hooks/Relationship';
-import { useTranslation } from 'react-i18next';
 
 type Props = EditContainerProps & {
   item: RelationshipType
 };
 
 const RelatedMediaContentForm = (props: Props) => {
+  const { projectModelRelationshipId } = useParams();
   const { relatedClassUrl } = useProjectModelRelationship();
   const { onNewRecord } = useRelationship(props);
   const { t } = useTranslation();
@@ -67,6 +70,15 @@ const RelatedMediaContentForm = (props: Props) => {
             content={props.item?.related_record?.name}
           />
         </div>
+        <UserDefinedFieldsForm
+          data={props.item.user_defined}
+          defineableId={projectModelRelationshipId}
+          defineableType='CoreDataConnector::ProjectModelRelationship'
+          isError={props.isError}
+          onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
+          onClearValidationError={props.onClearValidationError}
+          tableName='CoreDataConnector::Relationship'
+        />
       </SimpleEditPage.Tab>
     </SimpleEditPage>
   );

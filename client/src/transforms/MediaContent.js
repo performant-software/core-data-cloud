@@ -24,7 +24,8 @@ class MediaContent extends FormDataTransform {
   getPayloadKeys() {
     return [
       'project_model_id',
-      'name'
+      'name',
+      'user_defined'
     ];
   }
 

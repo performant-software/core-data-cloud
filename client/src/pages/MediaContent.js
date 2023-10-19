@@ -3,6 +3,7 @@
 import { LazyIIIF, SimpleEditPage } from '@performant-software/semantic-components';
 import { IIIF as IIIFUtils } from '@performant-software/shared-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
+import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
 import React, { useContext, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
@@ -74,6 +75,15 @@ const MediaContentForm = (props: Props) => {
           required={props.isRequired('name')}
           onChange={props.onTextInputChange.bind(this, 'name')}
           value={props.item.name}
+        />
+        <UserDefinedFieldsForm
+          data={props.item.user_defined}
+          defineableId={projectModelId}
+          defineableType='CoreDataConnector::ProjectModel'
+          isError={props.isError}
+          onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
+          onClearValidationError={props.onClearValidationError}
+          tableName='CoreDataConnector::MediaContent'
         />
       </SimpleEditPage.Tab>
     </SimpleEditPage>

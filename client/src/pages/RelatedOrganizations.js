@@ -28,9 +28,10 @@ const RelatedOrganizations = () => {
       }}
       collectionName='relationships'
       columns={[{
-        name: 'name',
+        name: 'core_data_connector_organization_names.name',
         label: t('RelatedOrganizations.columns.name'),
-        resolve: (relationship) => relationship.related_record?.name
+        resolve: (relationship) => relationship.related_record?.name,
+        sortable: true
       }]}
       onDelete={(relationship) => RelationshipsService.delete(relationship)}
       onLoad={(params) => RelationshipsService.fetchAll({ ...params, ...parameters })}

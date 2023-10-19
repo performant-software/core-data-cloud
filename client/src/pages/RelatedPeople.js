@@ -28,13 +28,15 @@ const RelatedOrganizations = () => {
       }}
       collectionName='relationships'
       columns={[{
-        name: 'last_name',
+        name: 'core_data_connector_person_names.last_name',
         label: t('RelatedPeople.columns.lastName'),
-        resolve: (relationship) => relationship.related_record?.last_name
+        resolve: (relationship) => relationship.related_record?.last_name,
+        sortable: true
       }, {
-        name: 'first_name',
+        name: 'core_data_connector_person_names.first_name',
         label: t('RelatedPeople.columns.firstName'),
-        resolve: (relationship) => relationship.related_record?.first_name
+        resolve: (relationship) => relationship.related_record?.first_name,
+        sortable: true
       }]}
       onDelete={(relationship) => RelationshipsService.delete(relationship)}
       onLoad={(params) => RelationshipsService.fetchAll({ ...params, ...parameters })}

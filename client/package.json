@@ -11,9 +11,9 @@
     "flow": "flow"
   },
   "dependencies": {
-    "@performant-software/semantic-components": "^1.0.24-beta.0",
-    "@performant-software/shared-components": "^1.0.24-beta.0",
-    "@performant-software/user-defined-fields": "^1.0.24-beta.0",
+    "@performant-software/semantic-components": "^1.0.24-beta.2",
+    "@performant-software/shared-components": "^1.0.24-beta.2",
+    "@performant-software/user-defined-fields": "^1.0.24-beta.2",
     "boring-avatars": "^1.10.1",
     "classnames": "^2.3.1",
     "i18next": "^21.9.1",

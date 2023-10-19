@@ -217,6 +217,9 @@
     "options": {
       "link": "Link existing record",
       "upload": "Upload from your computer"
+    },
+    "sort": {
+      "name": "Name"
     }
   },
   "RelatedOrganizations": {

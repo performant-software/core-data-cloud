@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_09_194316) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_18_170143) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -30,7 +30,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_09_194316) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "user_defined", default: {}
     t.index ["project_model_id"], name: "index_core_data_connector_media_contents_on_project_model_id"
+    t.index ["user_defined"], name: "index_core_data_connector_media_contents_on_user_defined", using: :gin
   end
 
   create_table "core_data_connector_organization_names", force: :cascade do |t|
