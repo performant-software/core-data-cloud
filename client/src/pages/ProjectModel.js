@@ -67,6 +67,11 @@ const ProjectModelForm = (props: Props) => {
         name={t('ProjectModel.tabs.fields')}
       >
         <UserDefinedFieldsEmbeddedList
+          addButton={{
+            basic: false,
+            color: 'blue',
+            location: 'top'
+          }}
           defaults={{
             table_name: props.item.model_class
           }}

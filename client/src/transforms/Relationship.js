@@ -1,6 +1,8 @@
 // @flow
 
-import { BaseTransform } from '@performant-software/shared-components';
+import { Attachments, BaseTransform, String } from '@performant-software/shared-components';
+import _ from 'underscore';
+import type { Relationship as RelationshipType } from '../types/Relationship';
 
 /**
  * Class responsible for transforming relationship records for POST/PUT requests.
@@ -29,6 +31,25 @@ class Relationship extends BaseTransform {
       'related_record_type',
       'user_defined'
     ];
+  }
+
+  /**
+   * Creates a new form data object and appends the passed relationships.
+   *
+   * @param relationships
+   *
+   * @returns {FormData}
+   */
+  toUpload(relationships: Array<RelationshipType>) {
+    const formData = new FormData();
+
+    _.each(relationships, (relationship, index) => {
+      _.each(this.getPayloadKeys(), (key) => {
+        formData.append(`relationships[${index}][${key}]`, String.toString(relationship[key]));
+      });
+    });
+
+    return formData;
   }
 }
 

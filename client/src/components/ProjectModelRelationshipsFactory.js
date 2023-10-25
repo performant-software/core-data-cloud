@@ -1,38 +1,21 @@
 // @flow
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import _ from 'underscore';
-import Relationships from '../pages/Relationships';
+import RelatedMediaContents from '../pages/RelatedMediaContents';
+import RelatedOrganizations from '../pages/RelatedOrganizations';
+import RelatedPeople from '../pages/RelatedPeople';
+import RelatedPlaces from '../pages/RelatedPlaces';
 import RelationshipsService from '../services/Relationships';
-import useParams from '../hooks/ParsedParams';
+import { Types } from '../utils/ProjectModels';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 
-const RelationshipFactory = () => {
+const ProjectModelRelationshipsFactory = () => {
   const [loaded, setLoaded] = useState(false);
   const [relationships, setRelationships] = useState();
 
-  const { itemId, projectModelRelationshipId } = useParams();
-  const { primaryClass, projectModelRelationship } = useProjectModelRelationship();
-
-  /**
-   * Memo-izes the parameters for fetching the list of relationships.
-   *
-   * @type {{
-   *   defineable_type: string,
-   *   project_model_relationship_id: *,
-   *   primary_record_id: *,
-   *   primary_record_type: *,
-   *   defineable_id: *
-   * }}
-   */
-  const params = useMemo(() => ({
-    project_model_relationship_id: projectModelRelationshipId,
-    primary_record_id: itemId,
-    primary_record_type: primaryClass,
-    defineable_id: projectModelRelationshipId,
-    defineable_type: 'CoreDataConnector::ProjectModelRelationship'
-  }), [projectModelRelationshipId, itemId, primaryClass]);
+  const { parameters, projectModelRelationship, relatedClassView } = useProjectModelRelationship();
 
   /**
    * For a relationship that only allows a single value, load the relationships. We'll need the ID value
@@ -43,23 +26,46 @@ const RelationshipFactory = () => {
      * If the model allows multiple relationships, there's no need to load the relationships here. That will
      * be handled in the relationships page.
      */
-    if (projectModelRelationship.multiple) {
+    if (!projectModelRelationship || projectModelRelationship.multiple) {
       return;
     }
 
     RelationshipsService
-      .fetchAll(params)
+      .fetchAll(parameters)
       .then(({ data }) => setRelationships(data.relationships))
       .finally(() => setLoaded(true));
-  }, [params, projectModelRelationship?.multiple]);
+  }, [parameters, projectModelRelationship?.multiple]);
 
-  /**
-   * If the relationship allows multiple values, render the relationships page.
-   */
+  if (!projectModelRelationship) {
+    return null;
+  }
+
   if (projectModelRelationship.multiple) {
-    return (
-      <Relationships />
-    );
+    if (relatedClassView === Types.MediaContent) {
+      return (
+        <RelatedMediaContents />
+      );
+    }
+
+    if (relatedClassView === Types.Organization) {
+      return (
+        <RelatedOrganizations />
+      );
+    }
+
+    if (relatedClassView === Types.Person) {
+      return (
+        <RelatedPeople />
+      );
+    }
+
+    if (relatedClassView === Types.Place) {
+      return (
+        <RelatedPlaces />
+      );
+    }
+
+    return null;
   }
 
   /**
@@ -90,4 +96,4 @@ const RelationshipFactory = () => {
   );
 };
 
-export default RelationshipFactory;
+export default ProjectModelRelationshipsFactory;

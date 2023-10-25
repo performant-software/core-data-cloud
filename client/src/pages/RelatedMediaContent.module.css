@@ -1,0 +1,10 @@
+.relatedMediaContent .imageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.relatedMediaContent .imageContainer .header {
+  margin-top: 0px;
+}

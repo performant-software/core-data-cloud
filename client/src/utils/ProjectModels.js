@@ -8,6 +8,7 @@ const ERROR_INVALID_TYPE = 'is not included in the list';
 const KEY_MODEL_CLASS = 'model_class';
 
 const Types = {
+  MediaContent: 'Media Content',
   Organization: 'Organization',
   Person: 'Person',
   Place: 'Place'

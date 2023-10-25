@@ -15,7 +15,7 @@ const ProjectItemMenu = () => {
   const { projectId, projectModelId, itemId } = useParams();
   const { t } = useTranslation();
 
-  if (!itemId) {
+  if (!(itemId && projectModel)) {
     return null;
   }
 

@@ -1,13 +1,14 @@
 // @flow
 
 import React, { useContext } from 'react';
-import Organizations from '../pages/Organizations';
-import People from '../pages/People';
-import Places from '../pages/Places';
+import MediaContent from '../pages/MediaContent';
+import Organization from '../pages/Organization';
+import Person from '../pages/Person';
+import Place from '../pages/Place';
 import ProjectContext from '../context/Project';
 import { Types } from '../utils/ProjectModels';
 
-const ListPageFactory = () => {
+const ProjectModelFactory = () => {
   const { projectModel } = useContext(ProjectContext);
   const className = projectModel?.model_class_view;
 
@@ -18,16 +19,20 @@ const ListPageFactory = () => {
   let component;
 
   switch (className) {
+    case Types.MediaContent:
+      component = <MediaContent />;
+      break;
+
     case Types.Organization:
-      component = <Organizations />;
+      component = <Organization />;
       break;
 
     case Types.Person:
-      component = <People />;
+      component = <Person />;
       break;
 
     case Types.Place:
-      component = <Places />;
+      component = <Place />;
       break;
 
     default:
@@ -38,4 +43,4 @@ const ListPageFactory = () => {
   return component;
 };
 
-export default ListPageFactory;
+export default ProjectModelFactory;
