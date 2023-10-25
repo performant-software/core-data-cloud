@@ -1,4 +1,16 @@
 GIT
+  remote: https://github.com/performant-software/core-data-connector.git
+  revision: fedfcd083ef6fea491768b1f905f3bb8d5172076
+  tag: v0.1.4
+  specs:
+    core_data_connector (0.1.0)
+      faker
+      rails (>= 6.0.3.2, < 8)
+      resource_api
+      triple_eye_effable
+      user_defined_fields
+
+GIT
   remote: https://github.com/performant-software/jwt-auth.git
   revision: fa54af0cdcad6122fad10d9ad745b814c2918853
   tag: v0.1.2
@@ -34,16 +46,6 @@ GIT
     user_defined_fields (0.1.0)
       rails (>= 6.0.3.2, < 8)
       resource_api
-
-PATH
-  remote: ../core-data-connector
-  specs:
-    core_data_connector (0.1.0)
-      faker
-      rails (>= 6.0.3.2, < 8)
-      resource_api
-      triple_eye_effable
-      user_defined_fields
 
 GEM
   remote: https://rubygems.org/
