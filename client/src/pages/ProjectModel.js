@@ -7,7 +7,7 @@ import {
 } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsEmbeddedList } from '@performant-software/user-defined-fields';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
 import ModelClassDropdown from '../components/ModelClassDropdown';
@@ -18,6 +18,9 @@ import ProjectModelsUtils from '../utils/ProjectModels';
 import useParams from '../hooks/ParsedParams';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
 
+const INVERSE_RELATIONSHIP_KEY = 'inverse_project_model_relationships';
+const RELATIONSHIP_KEY = 'project_model_relationships';
+
 type Props = EditContainerProps & {
   item: ProjectModelType
 };
@@ -25,6 +28,53 @@ type Props = EditContainerProps & {
 const ProjectModelForm = (props: Props) => {
   const params = useParams();
   const { t } = useTranslation();
+
+  /**
+   * Returns the model name for the passed relationship based on context.
+   *
+   * @type {function(*): string}
+   */
+  const resolveModelName = useCallback((relationship) => (
+    relationship.inverse ? relationship.primary_model?.name : relationship.related_model?.name
+  ), []);
+
+  /**
+   * Returns the name for the passed relationship based on context.
+   *
+   * @type {function(*): string|*}
+   */
+  const resolveName = useCallback((relationship) => (
+    relationship.inverse ? relationship.inverse_name : relationship.name
+  ), []);
+
+  /**
+   * Returns the multiple attribute for the passed relationship based on context.
+   *
+   * @type {function(*): boolean|*}
+   */
+  const resolveMultiple = useCallback((relationship) => (
+    relationship.inverse ? relationship.inverse_multiple : relationship.multiple
+  ), []);
+
+  /**
+   * Saves the passed relationship to the appropriate collection.
+   *
+   * @type {(function(*): void)|*}
+   */
+  const onSaveRelationship = useCallback((relationship) => {
+    const association = relationship.inverse ? INVERSE_RELATIONSHIP_KEY : RELATIONSHIP_KEY;
+    props.onSaveChildAssociation(association, relationship);
+  }, []);
+
+  /**
+   * Deletes the passed relationship from the appropriate collection.
+   *
+   * @type {(function(*): void)|*}
+   */
+  const onDeleteRelationship = useCallback((relationship) => {
+    const association = relationship.inverse ? INVERSE_RELATIONSHIP_KEY : RELATIONSHIP_KEY;
+    props.onDeleteChildAssociation(association, relationship);
+  }, []);
 
   /*
    * For a new record, set the foreign key ID based on the route parameters.
@@ -99,21 +149,22 @@ const ProjectModelForm = (props: Props) => {
           columns={[{
             name: 'model_name',
             label: t('ProjectModel.relationships.columns.related'),
-            resolve: (relationship) => relationship.related_model.name
+            resolve: resolveModelName
           }, {
             name: 'name',
-            label: t('ProjectModel.relationships.columns.name')
+            label: t('ProjectModel.relationships.columns.name'),
+            resolve: resolveName
           }, {
             name: 'multiple',
             label: t('ProjectModel.relationships.columns.multiple'),
-            render: (relationship) => <BooleanIcon value={relationship.multiple} />
+            render: (relationship) => <BooleanIcon value={resolveMultiple(relationship)} />
           }]}
-          items={props.item.project_model_relationships}
+          items={props.item.all_project_model_relationships}
           modal={{
             component: ProjectModelRelationshipModal
           }}
-          onDelete={props.onDeleteChildAssociation.bind(this, 'project_model_relationships')}
-          onSave={props.onSaveChildAssociation.bind(this, 'project_model_relationships')}
+          onDelete={onDeleteRelationship}
+          onSave={onSaveRelationship}
         />
       </SimpleEditPage.Tab>
     </SimpleEditPage>

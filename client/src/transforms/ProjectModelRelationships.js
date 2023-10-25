@@ -17,9 +17,13 @@ class ProjectModelRelationships extends NestedAttributesTransform {
   getPayloadKeys() {
     return [
       'id',
+      'primary_model_id',
       'related_model_id',
       'name',
       'multiple',
+      'allow_inverse',
+      'inverse_name',
+      'inverse_multiple',
       '_destroy'
     ];
   }

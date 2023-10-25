@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useContext } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Header, Icon, Menu } from 'semantic-ui-react';
 import _ from 'underscore';
@@ -35,9 +35,11 @@ const ProjectItemMenu = () => {
         content={t('ProjectItemMenu.labels.details')}
         to={`/projects/${projectId}/${projectModelId}/${itemId}`}
       />
-      { _.map(projectModel.project_model_relationships, (relationship) => (
+      { _.map(projectModel?.all_project_model_relationships, (relationship) => (
         <MenuLink
-          content={relationship.name}
+          content={relationship.inverse
+            ? relationship.inverse_name
+            : relationship.name}
           parent
           to={`/projects/${projectId}/${projectModelId}/${itemId}/${relationship.id}`}
         />

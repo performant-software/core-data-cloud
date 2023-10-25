@@ -18,12 +18,19 @@ type Props = EditContainerProps & {
 
 const RelatedPersonForm = (props: Props) => {
   const { projectId, projectModelRelationshipId } = useParams();
-  const { label, onNewRecord } = useRelationship(props);
+
+  const {
+    foreignKey,
+    foreignObject,
+    foreignObjectName,
+    label,
+    onNewRecord
+  } = useRelationship(props);
 
   /**
    * For a new record, set the foreign keys.
    */
-  useEffect(() => onNewRecord(), [onNewRecord]);
+  useEffect(() => onNewRecord(), []);
 
   return (
     <SimpleEditPage
@@ -33,17 +40,17 @@ const RelatedPersonForm = (props: Props) => {
         key='default'
       >
         <Form.Input
-          error={props.isError('related_record_id')}
+          error={props.isError(foreignKey)}
           label={label}
-          required={props.isRequired('related_record_id')}
+          required={props.isRequired(foreignKey)}
         >
           <AssociatedDropdown
             collectionName='people'
             onSearch={(search) => PeopleService.fetchAll({ search, project_id: projectId })}
-            onSelection={props.onAssociationInputChange.bind(this, 'related_record_id', 'related_record')}
+            onSelection={props.onAssociationInputChange.bind(this, foreignKey, foreignObjectName)}
             renderOption={PersonTransform.toDropdown.bind(this)}
-            searchQuery={PeopleUtils.getNameView(props.item.related_record)}
-            value={props.item.related_record_id}
+            searchQuery={PeopleUtils.getNameView(foreignObject)}
+            value={props.item[foreignKey]}
           />
         </Form.Input>
         <UserDefinedFieldsForm

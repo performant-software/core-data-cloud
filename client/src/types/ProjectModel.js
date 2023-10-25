@@ -8,7 +8,11 @@ export type ProjectModelRelationship = {
   related_model: ProjectModel,
   name: string,
   multiple: boolean,
-  slug: string
+  slug: string,
+  allow_inverse: boolean,
+  inverse_name: string,
+  inverse_multiple: boolean,
+  inverse: boolean
 };
 
 export type ProjectModel = {
@@ -19,5 +23,7 @@ export type ProjectModel = {
   model_class: string,
   model_class_view: string,
   slug: string,
-  project_model_relationships: Array<ProjectModelRelationship>
+  project_model_relationships: Array<ProjectModelRelationship>,
+  inverse_project_model_relationships: Array<ProjectModelRelationship>,
+  all_project_model_relationships: Array<ProjectModelRelationship>
 };

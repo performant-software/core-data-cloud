@@ -183,6 +183,9 @@
   },
   "ProjectModelRelationshipModal": {
     "labels": {
+      "allowInverse": "Allow inverse",
+      "inverseMultiple": "Inverse multiple",
+      "inverseName": "Inverse name",
       "multiple": "Multiple",
       "name": "Name",
       "related": "Related type"

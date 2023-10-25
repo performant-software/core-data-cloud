@@ -1,6 +1,6 @@
 // flow
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import RelatedMediaContent from '../pages/RelatedMediaContent';
 import RelatedOrganization from '../pages/RelatedOrganization';
 import RelatedPerson from '../pages/RelatedPerson';
@@ -9,11 +9,22 @@ import { Types } from '../utils/ProjectModels';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 
 const ProjectModelRelationshipFactory = () => {
-  const { relatedClassView } = useProjectModelRelationship();
+  const { projectModelRelationship } = useProjectModelRelationship();
+
+  /**
+   * Sets the class view string based on the relationship's inverse status.
+   *
+   * @type {string}
+   */
+  const classView = useMemo(() => (
+    projectModelRelationship.inverse
+      ? projectModelRelationship?.primary_model?.model_class_view
+      : projectModelRelationship?.related_model?.model_class_view
+  ), [projectModelRelationship]);
 
   let component;
 
-  switch (relatedClassView) {
+  switch (classView) {
     case Types.MediaContent:
       component = <RelatedMediaContent />;
       break;
