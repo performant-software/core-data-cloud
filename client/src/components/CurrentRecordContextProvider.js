@@ -40,6 +40,10 @@ const CurrentRecordContextProvider = (props: Props) => {
       return t('CurrentRecordContextProvider.labels.new', { name: projectModel?.name_singular });
     }
 
+    if (!record) {
+      return null;
+    }
+
     if (classView === Types.Organization) {
       return _.findWhere(record.organization_names, { primary: true })?.name;
     }
