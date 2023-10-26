@@ -1,4 +1,7 @@
 .projectItemMenu.ui.secondary.menu {
-  margin-bottom: 0px;
   overflow: auto;
+}
+
+.projectItemMenu.ui.secondary.menu > .item:first-child {
+  padding-left: 0px;
 }

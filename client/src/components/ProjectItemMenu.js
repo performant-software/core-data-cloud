@@ -33,7 +33,9 @@ const ProjectItemMenu = () => {
       )}
       secondary
     >
-      <Menu.Item>
+      <Menu.Item
+        className={cx(styles.item)}
+      >
         <CurrentRecordHeader />
       </Menu.Item>
       <MenuLink
