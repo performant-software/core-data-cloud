@@ -1,11 +1,12 @@
 // @flow
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { matchPath, useLocation, useParams } from 'react-router-dom';
-import { Icon, Menu } from 'semantic-ui-react';
-import MenuLink from './MenuLink';
+import { Header, Icon, Menu } from 'semantic-ui-react';
 import _ from 'underscore';
+import MenuLink from './MenuLink';
+import ProjectSettingsContext from '../context/ProjectSettings';
 
 const PROJECT_MODEL_EDIT_PATHS = [
   '/projects/:projectId/project_models/new',
@@ -24,6 +25,7 @@ const USER_PROJECTS_EDIT_PATHS = [
 ];
 
 const ProjectSettingsMenu = () => {
+  const { projectModel, userProject } = useContext(ProjectSettingsContext);
   const { pathname } = useLocation();
   const { projectId } = useParams();
   const { t } = useTranslation();
@@ -41,24 +43,42 @@ const ProjectSettingsMenu = () => {
       secondary
     >
       { isProjectModelEdit && (
-        <MenuLink
-          to={`/projects/${projectId}/project_models`}
-        >
-          <Icon
-            name='arrow left'
-          />
-          { t('ProjectSettingsMenu.labels.allModels') }
-        </MenuLink>
+        <>
+          <Menu.Item>
+            <Header
+              content={projectModel?.id
+                ? projectModel.name
+                : t('ProjectSettingsMenu.labels.newModel')}
+            />
+          </Menu.Item>
+          <MenuLink
+            to={`/projects/${projectId}/project_models`}
+          >
+            <Icon
+              name='arrow left'
+            />
+            { t('ProjectSettingsMenu.labels.allModels') }
+          </MenuLink>
+        </>
       )}
       { isUserProjectsEdit && (
-        <MenuLink
-          to={`/projects/${projectId}/user_projects`}
-        >
-          <Icon
-            name='arrow left'
-          />
-          { t('ProjectSettingsMenu.labels.allUsers') }
-        </MenuLink>
+        <>
+          <Menu.Item>
+            <Header
+              content={userProject?.user
+                ? userProject.user.name
+                : t('ProjectSettingsMenu.labels.newUser')}
+            />
+          </Menu.Item>
+          <MenuLink
+            to={`/projects/${projectId}/user_projects`}
+          >
+            <Icon
+              name='arrow left'
+            />
+            { t('ProjectSettingsMenu.labels.allUsers') }
+          </MenuLink>
+        </>
       )}
       { isProjectSettings && (
         <>

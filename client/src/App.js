@@ -17,6 +17,7 @@ import ProjectModelRelationshipFactory from './components/ProjectModelRelationsh
 import ProjectModelRelationshipsFactory from './components/ProjectModelRelationshipsFactory';
 import ProjectModels from './pages/ProjectModels';
 import ProjectModelsFactory from './components/ProjectModelsFactory';
+import ProjectSettingsContextProvider from './components/ProjectSettingsContextProvider';
 import Projects from './pages/Projects';
 import User from './pages/User';
 import UserProject from './pages/UserProject';
@@ -37,9 +38,11 @@ const App: ComponentType<any> = useDragDrop(() => (
         element={(
           <AuthenticatedRoute>
             <ProjectContextProvider>
-              <CurrentRecordContextProvider>
-                <Layout />
-              </CurrentRecordContextProvider>
+              <ProjectSettingsContextProvider>
+                <CurrentRecordContextProvider>
+                  <Layout />
+                </CurrentRecordContextProvider>
+              </ProjectSettingsContextProvider>
             </ProjectContextProvider>
           </AuthenticatedRoute>
         )}

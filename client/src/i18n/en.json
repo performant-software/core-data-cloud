@@ -213,6 +213,8 @@
       "allUsers": "All Users",
       "configure": "Configure",
       "details": "Details",
+      "newModel": "New Model",
+      "newUser": "New User",
       "users": "Users"
     }
   },

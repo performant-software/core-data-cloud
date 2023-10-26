@@ -2,29 +2,31 @@
 
 import { AssociatedDropdown, SimpleEditPage } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
-import React, { useEffect, useMemo, type AbstractComponent } from 'react';
+import React, { useEffect, useMemo, type AbstractComponent, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
 import PermissionsService from '../services/Permissions';
 import Project from '../transforms/Project';
 import ProjectsService from '../services/Projects';
+import ProjectSettingsContext from '../context/ProjectSettings';
 import User from '../transforms/User';
 import type { UserProject as UserProjectType } from '../types/UserProject';
 import UserForm from '../components/UserForm';
 import UserModal from '../components/UserModal';
+import UserPassword from '../components/UserPassword';
 import UserProjectRoles from '../utils/UserProjectRoles';
 import UserProjectsService from '../services/UserProjects';
 import UsersService from '../services/Users';
 import useParams from '../hooks/ParsedParams';
 import Validation from '../utils/Validation';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
-import UserPassword from '../components/UserPassword';
 
 type Props = EditContainerProps & {
   item: UserProjectType
 };
 
 const UserProjectForm = (props: Props) => {
+  const { setUserProject } = useContext(ProjectSettingsContext);
   const params = useParams();
   const { t } = useTranslation();
 
@@ -43,6 +45,11 @@ const UserProjectForm = (props: Props) => {
       }
     }
   }, []);
+
+  /**
+   * Sets the current user project on the ProjectSettings context.
+   */
+  useEffect(() => setUserProject(props.item), [props.item]);
 
   return (
     <SimpleEditPage

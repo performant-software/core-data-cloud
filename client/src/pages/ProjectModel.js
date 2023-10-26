@@ -7,7 +7,7 @@ import {
 } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsEmbeddedList } from '@performant-software/user-defined-fields';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
 import ModelClassDropdown from '../components/ModelClassDropdown';
@@ -15,6 +15,7 @@ import type { ProjectModel as ProjectModelType } from '../types/ProjectModel';
 import ProjectModelRelationshipModal from '../components/ProjectModelRelationshipModal';
 import ProjectModelsService from '../services/ProjectModels';
 import ProjectModelsUtils from '../utils/ProjectModels';
+import ProjectSettingsContext from '../context/ProjectSettings';
 import useParams from '../hooks/ParsedParams';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
 
@@ -26,6 +27,7 @@ type Props = EditContainerProps & {
 };
 
 const ProjectModelForm = (props: Props) => {
+  const { setProjectModel } = useContext(ProjectSettingsContext);
   const params = useParams();
   const { t } = useTranslation();
 
@@ -83,7 +85,14 @@ const ProjectModelForm = (props: Props) => {
     if (!props.item.id && params.projectId) {
       props.onSetState({ project_id: params.projectId });
     }
+
+    setProjectModel(props.item);
   }, []);
+
+  /**
+   * Sets the current project model on the ProjectSettings context.
+   */
+  useEffect(() => setProjectModel(props.item), [props.item]);
 
   return (
     <SimpleEditPage
