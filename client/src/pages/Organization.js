@@ -15,7 +15,6 @@ import type { Organization as OrganizationType } from '../types/Organization';
 import OrganizationNameModal from '../components/OrganizationNameModal';
 import OrganizationService from '../services/Organizations';
 import styles from './Organization.module.css';
-import { Types } from '../utils/ProjectModels';
 import useParams from '../hooks/ParsedParams';
 import Validation from '../utils/Validation';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
@@ -41,7 +40,7 @@ const OrganizationForm = (props: Props) => {
   /**
    * Sets the current record on the context.
    */
-  useEffect(() => setCurrentRecord(props.item, Types.Organization), [props.item]);
+  useEffect(() => setCurrentRecord(props.item), [props.item]);
 
   return (
     <SimpleEditPage

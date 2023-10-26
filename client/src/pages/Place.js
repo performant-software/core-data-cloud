@@ -14,7 +14,6 @@ import CurrentRecordContext from '../context/CurrentRecord';
 import type { Place as PlaceType } from '../types/Place';
 import PlaceNameModal from '../components/PlaceNameModal';
 import PlacesService from '../services/Places';
-import { Types } from '../utils/ProjectModels';
 import useParams from '../hooks/ParsedParams';
 import Validation from '../utils/Validation';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
@@ -40,7 +39,7 @@ const PlaceForm = (props: Props) => {
   /**
    * Sets the current record on the context.
    */
-  useEffect(() => setCurrentRecord(props.item, Types.Place), [props.item]);
+  useEffect(() => setCurrentRecord(props.item), [props.item]);
 
   return (
     <SimpleEditPage

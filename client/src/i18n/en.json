@@ -28,6 +28,11 @@
       "fields": "Fields"
     }
   },
+  "CurrentRecordContextProvider": {
+    "labels": {
+      "new": "Add New {{name}}"
+    }
+  },
   "Home": {
     "header": "Welcome to Rails-React Template <1>Edit <1>src/App.js</1> and save to reload.</1>"
   },
@@ -203,7 +208,9 @@
   },
   "ProjectSettingsMenu": {
     "labels": {
+      "allModels": "All Models",
       "allProjects": "All Projects",
+      "allUsers": "All Users",
       "configure": "Configure",
       "details": "Details",
       "users": "Users"
