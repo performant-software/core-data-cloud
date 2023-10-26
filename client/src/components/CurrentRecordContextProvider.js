@@ -26,7 +26,7 @@ const CurrentRecordContextProvider = (props: Props) => {
   const classView = useMemo(() => projectModel?.model_class_view, [projectModel]);
 
   const { pathname } = useLocation();
-  const isNewRecord = useMemo(() => pathname?.endsWith(PATH_NEW), [pathname]);
+  const isNewRecord = useMemo(() => projectModel && pathname?.endsWith(PATH_NEW), [pathname, projectModel]);
 
   const { t } = useTranslation();
 
