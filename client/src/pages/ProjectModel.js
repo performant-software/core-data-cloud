@@ -66,6 +66,7 @@ const ProjectModelForm = (props: Props) => {
   const onSaveRelationship = useCallback((relationship) => {
     const association = relationship.inverse ? INVERSE_RELATIONSHIP_KEY : RELATIONSHIP_KEY;
     props.onSaveChildAssociation(association, relationship);
+    props.onSaveChildAssociation('all_project_model_relationships', relationship);
   }, []);
 
   /**
@@ -76,6 +77,7 @@ const ProjectModelForm = (props: Props) => {
   const onDeleteRelationship = useCallback((relationship) => {
     const association = relationship.inverse ? INVERSE_RELATIONSHIP_KEY : RELATIONSHIP_KEY;
     props.onDeleteChildAssociation(association, relationship);
+    props.onDeleteChildAssociation('all_project_model_relationships', relationship);
   }, []);
 
   /*
