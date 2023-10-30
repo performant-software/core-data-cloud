@@ -117,7 +117,8 @@ class ProjectModel extends BaseTransform {
   toPayload(projectModel) {
     return super.toPayload(projectModel, {
       ...UserDefinedFieldsTransform.toPayload(projectModel),
-      ...ProjectModelRelationshipsTransform.toPayload(projectModel)
+      ...ProjectModelRelationshipsTransform.toPayload(projectModel),
+      ...ProjectModelRelationshipsTransform.toPayload(projectModel, 'inverse_project_model_relationships')
     });
   }
 }
