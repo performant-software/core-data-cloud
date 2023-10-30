@@ -12,6 +12,7 @@ import CurrentRecordContext from '../context/CurrentRecord';
 import PeopleUtils from '../utils/People';
 import ProjectContext from '../context/Project';
 import { Types } from '../utils/ProjectModels';
+import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 
 type Props = {
   children: Node
@@ -23,6 +24,7 @@ const CurrentRecordContextProvider = (props: Props) => {
   const [record, setRecord] = useState();
 
   const { projectModel } = useContext(ProjectContext);
+  const { projectModelRelationship } = useProjectModelRelationship();
   const classView = useMemo(() => projectModel?.model_class_view, [projectModel]);
 
   const { pathname } = useLocation();
@@ -36,7 +38,7 @@ const CurrentRecordContextProvider = (props: Props) => {
    * @type {*}
    */
   const name = useMemo(() => {
-    if (isNewRecord) {
+    if (isNewRecord && !projectModelRelationship) {
       return t('CurrentRecordContextProvider.labels.new', { name: projectModel?.name_singular });
     }
 
@@ -57,7 +59,7 @@ const CurrentRecordContextProvider = (props: Props) => {
     }
 
     return null;
-  }, [classView, isNewRecord, record]);
+  }, [classView, isNewRecord, projectModelRelationship, record]);
 
   /**
    * Memo-izes the value to set on the context.

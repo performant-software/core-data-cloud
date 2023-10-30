@@ -10,6 +10,7 @@ import PeopleUtils from '../utils/People';
 import PersonTransform from '../transforms/Person';
 import type { Relationship as RelationshipType } from '../types/Relationship';
 import useParams from '../hooks/ParsedParams';
+import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 import { useRelationship, withRelationshipEditPage } from '../hooks/Relationship';
 
 type Props = EditContainerProps & {
@@ -17,7 +18,8 @@ type Props = EditContainerProps & {
 };
 
 const RelatedPersonForm = (props: Props) => {
-  const { projectId, projectModelRelationshipId } = useParams();
+  const { projectModelRelationshipId } = useParams();
+  const { foreignProjectModelId } = useProjectModelRelationship();
 
   const {
     foreignKey,
@@ -46,7 +48,7 @@ const RelatedPersonForm = (props: Props) => {
         >
           <AssociatedDropdown
             collectionName='people'
-            onSearch={(search) => PeopleService.fetchAll({ search, project_id: projectId })}
+            onSearch={(search) => PeopleService.fetchAll({ search, project_model_id: foreignProjectModelId })}
             onSelection={props.onAssociationInputChange.bind(this, foreignKey, foreignObjectName)}
             renderOption={PersonTransform.toDropdown.bind(this)}
             searchQuery={PeopleUtils.getNameView(foreignObject)}

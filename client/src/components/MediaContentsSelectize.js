@@ -6,16 +6,15 @@ import { Card } from 'semantic-ui-react';
 import _ from 'underscore';
 import type { MediaContent as MediaContentType } from '../types/MediaContent';
 import MediaContentsService from '../services/MediaContents';
-import useParams from '../hooks/ParsedParams';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
   onClose: () => void,
-  onSave: (items: Array<MediaContentType>) => Promise<any>
+  onSave: (items: Array<MediaContentType>) => Promise<any>,
+  projectModelId: number
 };
 
 const MediaContentsSelectize = (props: Props) => {
-  const { projectId } = useParams();
   const { t } = useTranslation();
 
   const onLoad = useCallback((params) => (
@@ -23,9 +22,9 @@ const MediaContentsSelectize = (props: Props) => {
       ...params,
       per_page: 5,
       sort_by: 'name',
-      project_id: projectId
+      project_model_id: props.projectModelId
     })
-  ), [projectId]);
+  ), [props.projectModelId]);
 
   return (
     <Selectize

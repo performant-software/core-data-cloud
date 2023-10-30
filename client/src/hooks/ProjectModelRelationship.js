@@ -17,6 +17,17 @@ const useProjectModelRelationship = () => {
   }), [projectModel, projectModelRelationshipId]);
 
   /**
+   * Sets the project model ID for the "foreign" model.
+   *
+   * @type {number}
+   */
+  const foreignProjectModelId = useMemo(() => (
+    projectModelRelationship?.inverse
+      ? projectModelRelationship.primary_model_id
+      : projectModelRelationship.related_model_id
+  ), [projectModelRelationship]);
+
+  /**
    * Parameters to send on a fetch request for `relationships` records.
    *
    * @type {{
@@ -38,6 +49,7 @@ const useProjectModelRelationship = () => {
   }), [projectModel, projectModelRelationship, itemId]);
 
   return {
+    foreignProjectModelId,
     parameters,
     projectModelRelationship
   };

@@ -9,6 +9,7 @@ import PlacesService from '../services/Places';
 import PlaceTransform from '../transforms/Place';
 import type { Relationship as RelationshipType } from '../types/Relationship';
 import useParams from '../hooks/ParsedParams';
+import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 import { useRelationship, withRelationshipEditPage } from '../hooks/Relationship';
 
 type Props = EditContainerProps & {
@@ -16,7 +17,8 @@ type Props = EditContainerProps & {
 };
 
 const RelatedPlaceForm = (props: Props) => {
-  const { projectId, projectModelRelationshipId } = useParams();
+  const { projectModelRelationshipId } = useParams();
+  const { foreignProjectModelId } = useProjectModelRelationship();
 
   const {
     foreignKey,
@@ -45,7 +47,7 @@ const RelatedPlaceForm = (props: Props) => {
         >
           <AssociatedDropdown
             collectionName='places'
-            onSearch={(search) => PlacesService.fetchAll({ search, project_id: projectId })}
+            onSearch={(search) => PlacesService.fetchAll({ search, project_model_id: foreignProjectModelId })}
             onSelection={props.onAssociationInputChange.bind(this, foreignKey, foreignObjectName)}
             renderOption={PlaceTransform.toDropdown.bind(this)}
             searchQuery={foreignObject?.name}

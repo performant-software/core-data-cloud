@@ -24,7 +24,7 @@ const RelatedMediaContents = () => {
   const { projectModel } = useContext(ProjectContext);
   const navigate = useNavigate();
   const { itemId } = useParams();
-  const { parameters, projectModelRelationship } = useProjectModelRelationship();
+  const { foreignProjectModelId, parameters, projectModelRelationship } = useProjectModelRelationship();
   const { resolveAttributeValue } = useRelationships();
   const { t } = useTranslation();
 
@@ -151,6 +151,7 @@ const RelatedMediaContents = () => {
       )}
       { modal === Modal.link && (
         <MediaContentsSelectize
+          projectModelId={foreignProjectModelId}
           onClose={() => setModal(null)}
           onSave={onSave}
         />
