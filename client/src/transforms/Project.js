@@ -14,7 +14,7 @@ class Project extends BaseTransform {
    * @returns {string}
    */
   getParameterName(): string {
-    return 'project'
+    return 'project';
   }
 
   /**
@@ -25,7 +25,8 @@ class Project extends BaseTransform {
   getPayloadKeys(): Array<string> {
     return [
       'name',
-      'description'
+      'description',
+      'discoverable'
     ];
   }
 

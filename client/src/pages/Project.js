@@ -2,13 +2,22 @@
 
 import { SimpleEditPage } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
+import cx from 'classnames';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { IoSearchOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
-import { Button, Confirm, Form } from 'semantic-ui-react';
+import {
+  Button,
+  Confirm,
+  Form,
+  Icon,
+  Message
+} from 'semantic-ui-react';
 import PermissionsService from '../services/Permissions';
 import { type Project as ProjectType } from '../types/Project';
 import ProjectsService from '../services/Projects';
+import styles from './Project.module.css';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
 
 type Props = EditContainerProps & {
@@ -36,6 +45,7 @@ const ProjectForm = (props: Props) => {
   return (
     <SimpleEditPage
       {...props}
+      className={cx(props.className, styles.project)}
       editable={PermissionsService.canEditProject(props.item.id)}
       menuProps={{
         text: true
@@ -60,6 +70,30 @@ const ProjectForm = (props: Props) => {
           onChange={props.onTextInputChange.bind(this, 'description')}
           value={props.item.description}
         />
+        <Message
+          className={cx(styles.ui, styles.message)}
+          color='blue'
+          icon
+        >
+          <Icon>
+            <IoSearchOutline />
+          </Icon>
+          <Message.Content
+            className={styles.content}
+          >
+            <Message.Header
+              className={styles.header}
+              content={t('Project.messages.share.header')}
+            />
+            <Form.Checkbox
+              checked={props.item.discoverable}
+              className={styles.field}
+              label={t('Project.messages.share.content')}
+              error={props.isError('discoverable')}
+              onChange={props.onCheckboxInputChange.bind(this, 'discoverable')}
+            />
+          </Message.Content>
+        </Message>
         { PermissionsService.canDeleteProject(props.item.id) && (
           <>
             <Button

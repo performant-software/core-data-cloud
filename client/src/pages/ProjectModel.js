@@ -3,19 +3,28 @@
 import {
   BooleanIcon,
   EmbeddedList,
+  Selectize,
   SimpleEditPage
 } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsEmbeddedList } from '@performant-software/user-defined-fields';
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 import { useTranslation } from 'react-i18next';
+import uuid from 'react-uuid';
 import { Form } from 'semantic-ui-react';
+import _ from 'underscore';
 import ModelClassDropdown from '../components/ModelClassDropdown';
 import type { ProjectModel as ProjectModelType } from '../types/ProjectModel';
 import ProjectModelRelationshipModal from '../components/ProjectModelRelationshipModal';
 import ProjectModelsService from '../services/ProjectModels';
 import ProjectModelsUtils from '../utils/ProjectModels';
 import ProjectSettingsContext from '../context/ProjectSettings';
+import ProjectsService from '../services/Projects';
 import useParams from '../hooks/ParsedParams';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
 
@@ -27,8 +36,10 @@ type Props = EditContainerProps & {
 };
 
 const ProjectModelForm = (props: Props) => {
+  const [shareModal, setShareModal] = useState(false);
+
   const { setProjectModel } = useContext(ProjectSettingsContext);
-  const params = useParams();
+  const { projectId } = useParams();
   const { t } = useTranslation();
 
   /**
@@ -84,8 +95,8 @@ const ProjectModelForm = (props: Props) => {
    * For a new record, set the foreign key ID based on the route parameters.
    */
   useEffect(() => {
-    if (!props.item.id && params.projectId) {
-      props.onSetState({ project_id: params.projectId });
+    if (!props.item.id && projectId) {
+      props.onSetState({ project_id: projectId });
     }
 
     setProjectModel(props.item);
@@ -177,6 +188,57 @@ const ProjectModelForm = (props: Props) => {
           onDelete={onDeleteRelationship}
           onSave={onSaveRelationship}
         />
+      </SimpleEditPage.Tab>
+      <SimpleEditPage.Tab
+        key='sharing'
+        name={t('ProjectModel.tabs.sharing')}
+      >
+        <EmbeddedList
+          actions={[{
+            name: 'delete'
+          }]}
+          addButton={{
+            basic: false,
+            color: 'blue',
+            location: 'top',
+            onClick: () => setShareModal(true)
+          }}
+          columns={[{
+            name: 'project_name',
+            label: t('ProjectModel.accesses.columns.name'),
+            resolve: (projectModelAccess) => projectModelAccess.project.name
+          }]}
+          items={props.item.project_model_accesses}
+          onDelete={props.onDeleteChildAssociation.bind(this, 'project_model_accesses')}
+          onSave={props.onSaveChildAssociation.bind(this, 'project_model_accesses')}
+        />
+        { shareModal && (
+          <Selectize
+            collectionName='projects'
+            onClose={() => setShareModal(false)}
+            onLoad={(params) => ProjectsService.fetchAll({
+              ...params,
+              discoverable: true,
+              project_id: props.item.project_id,
+              sort_by: 'name'
+            })}
+            onSave={(projects) => {
+              const find = (project) => _.findWhere(props.item.project_model_accesses, { project_id: project.id });
+              const create = (project) => ({ uid: uuid(), project_id: project.id, project });
+
+              props.onMultiAddChildAssociations(
+                'project_model_accesses',
+                _.map(projects, (project) => find(project) || create(project))
+              );
+
+              setShareModal(false);
+            }}
+            renderItem={(project) => project.name}
+            selectedItems={_.map(props.item.project_model_accesses, (projectModelAccess) => projectModelAccess.project)}
+            title={t('ProjectModel.accesses.title')}
+            width='60%'
+          />
+        )}
       </SimpleEditPage.Tab>
     </SimpleEditPage>
   );

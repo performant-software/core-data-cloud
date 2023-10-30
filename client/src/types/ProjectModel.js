@@ -1,5 +1,7 @@
 // @flow
 
+import type { ProjectModelAccess } from './ProjectModelAccess';
+
 export type ProjectModelRelationship = {
   id: number,
   primary_model_id: number,
@@ -25,5 +27,6 @@ export type ProjectModel = {
   slug: string,
   project_model_relationships: Array<ProjectModelRelationship>,
   inverse_project_model_relationships: Array<ProjectModelRelationship>,
-  all_project_model_relationships: Array<ProjectModelRelationship>
+  all_project_model_relationships: Array<ProjectModelRelationship>,
+  project_model_accesses: Array<ProjectModelAccess>
 };

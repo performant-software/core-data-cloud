@@ -144,6 +144,10 @@
       "delete": {
         "content": "Do you really want to delete this project? This action cannot be undone.",
         "header": "Are you sure?"
+      },
+      "share": {
+        "content": "Allow other projects to discover this project and share data",
+        "header": "Project Discovery"
       }
     }
   },
@@ -166,6 +170,12 @@
     }
   },
   "ProjectModel": {
+    "accesses": {
+      "columns": {
+        "name": "Name"
+      },
+      "title": "Select Projects"
+    },
     "errors": {
       "invalidType": "\"{{type}}\" is not a valid type."
     },
@@ -183,7 +193,8 @@
     "tabs": {
       "details": "Details",
       "fields": "Fields",
-      "relationships": "Relationships"
+      "relationships": "Relationships",
+      "sharing": "Sharing"
     }
   },
   "ProjectModelRelationshipModal": {
