@@ -28,6 +28,11 @@
       "fields": "Fields"
     }
   },
+  "CurrentRecordContextProvider": {
+    "labels": {
+      "new": "Add New {{name}}"
+    }
+  },
   "Home": {
     "header": "Welcome to Rails-React Template <1>Edit <1>src/App.js</1> and save to reload.</1>"
   },
@@ -183,6 +188,9 @@
   },
   "ProjectModelRelationshipModal": {
     "labels": {
+      "allowInverse": "Allow inverse",
+      "inverseMultiple": "Inverse multiple",
+      "inverseName": "Inverse name",
       "multiple": "Multiple",
       "name": "Name",
       "related": "Related type"
@@ -200,9 +208,13 @@
   },
   "ProjectSettingsMenu": {
     "labels": {
+      "allModels": "All Models",
       "allProjects": "All Projects",
+      "allUsers": "All Users",
       "configure": "Configure",
       "details": "Details",
+      "newModel": "New Model",
+      "newUser": "New User",
       "users": "Users"
     }
   },

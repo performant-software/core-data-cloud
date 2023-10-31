@@ -6,10 +6,12 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import RelationshipsService from '../services/Relationships';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
+import useRelationships from '../hooks/Relationships';
 
 const RelatedOrganizations = () => {
   const navigate = useNavigate();
   const { parameters } = useProjectModelRelationship();
+  const { resolveAttributeValue } = useRelationships();
   const { t } = useTranslation();
 
   return (
@@ -30,7 +32,7 @@ const RelatedOrganizations = () => {
       columns={[{
         name: 'core_data_connector_organization_names.name',
         label: t('RelatedOrganizations.columns.name'),
-        resolve: (relationship) => relationship.related_record?.name,
+        resolve: resolveAttributeValue.bind(this, 'name'),
         sortable: true
       }]}
       onDelete={(relationship) => RelationshipsService.delete(relationship)}

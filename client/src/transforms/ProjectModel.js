@@ -3,6 +3,7 @@
 import { BaseTransform } from '@performant-software/shared-components';
 import { UserDefinedFieldsTransform } from '@performant-software/user-defined-fields';
 import ProjectModelRelationshipsTransform from './ProjectModelRelationships';
+import _ from 'underscore';
 
 /**
  * Class responsible for transforming project model records for POST/PUT requests.
@@ -31,6 +32,67 @@ class ProjectModel extends BaseTransform {
   }
 
   /**
+   * Transforms the project model payload after the record has been loaded.
+   *
+   * @param data
+   *
+   * @returns {{ data: {
+   *   project_model: (*&{
+   *    inverse_project_model_relationships: *,
+   *    project_model_relationships: *,
+   *    all_project_model_relationships: *
+   *   }
+   *  )
+   * }}}
+   */
+  onLoad({ data }) {
+    const { project_model: projectModel } = data;
+
+    // Set the "url" property on all relationships.
+    const relationships = _.map(
+      projectModel.project_model_relationships,
+      (relationship) => ({
+        ...relationship,
+        url: `/projects/${projectModel.project_id}/${relationship.related_model_id}`
+      })
+    );
+
+    // Add the "inverse" property to all inverse relationships
+    const inverseRelationships = _.map(
+      projectModel.inverse_project_model_relationships,
+      (relationship) => ({
+        ...relationship,
+        inverse: true,
+        url: `/projects/${projectModel.project_id}/${relationship.primary_model_id}`
+      })
+    );
+
+    // Sort all relationships by name
+    const sortProjectModelRelationships = (relationship) => (
+      relationship.inverse
+        ? relationship.inverse_name
+        : relationship.name
+    );
+
+    // Add a collection containing all of the relationships
+    const allRelationships = _.sortBy([
+      ...relationships,
+      ...inverseRelationships
+    ], sortProjectModelRelationships);
+
+    return {
+      data: {
+        project_model: {
+          ...projectModel,
+          project_model_relationships: relationships,
+          inverse_project_model_relationships: inverseRelationships,
+          all_project_model_relationships: allRelationships
+        }
+      }
+    };
+  }
+
+  /**
    * Returns the passed project model as a dropdown option.
    *
    * @param projectModel
@@ -55,7 +117,8 @@ class ProjectModel extends BaseTransform {
   toPayload(projectModel) {
     return super.toPayload(projectModel, {
       ...UserDefinedFieldsTransform.toPayload(projectModel),
-      ...ProjectModelRelationshipsTransform.toPayload(projectModel)
+      ...ProjectModelRelationshipsTransform.toPayload(projectModel),
+      ...ProjectModelRelationshipsTransform.toPayload(projectModel, 'inverse_project_model_relationships')
     });
   }
 }

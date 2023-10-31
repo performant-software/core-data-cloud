@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: fedfcd083ef6fea491768b1f905f3bb8d5172076
-  tag: v0.1.4
+  revision: 06d41facad11aaafb525ee8defb3afd43b5237dc
+  tag: v0.1.5
   specs:
     core_data_connector (0.1.0)
       faker

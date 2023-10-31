@@ -1,13 +1,15 @@
 // @flow
 
 import { DropdownButton, ItemList, LazyMedia } from '@performant-software/semantic-components';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import _ from 'underscore';
 import MediaContentsSelectize from '../components/MediaContentsSelectize';
 import MediaContentsUploadModal from '../components/MediaContentsUploadModal';
 import RelationshipsService from '../services/Relationships';
+import ProjectContext from '../context/Project';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
+import useRelationships from '../hooks/Relationships';
 import { useTranslation } from 'react-i18next';
 
 const Modal = {
@@ -19,10 +21,52 @@ const RelatedMediaContents = () => {
   const [modal, setModal] = useState(null);
   const [saved, setSaved] = useState(false);
 
+  const { projectModel } = useContext(ProjectContext);
   const navigate = useNavigate();
-  const { itemId, projectModelRelationshipId } = useParams();
-  const { parameters, primaryClass } = useProjectModelRelationship();
+  const { itemId } = useParams();
+  const { foreignProjectModelId, parameters, projectModelRelationship } = useProjectModelRelationship();
+  const { resolveAttributeValue } = useRelationships();
   const { t } = useTranslation();
+
+  /**
+   * Returns the relationship props for the passed media content record.
+   *
+   * @type {function(*): {
+   *  project_model_relationship_id: *,
+   *  primary_record_id: string,
+   *  primary_record_type: *,
+   *  related_record_id: *,
+   *  related_record_type: string
+   *  }
+   * }
+   */
+  const createRelationship = useCallback((mediaContent) => ({
+    project_model_relationship_id: projectModelRelationship.id,
+    primary_record_id: itemId,
+    primary_record_type: projectModel?.model_class,
+    related_record_id: mediaContent.id,
+    related_record_type: 'CoreDataConnector::MediaContent'
+  }), [projectModel, projectModelRelationship]);
+
+  /**
+   * Returns the relationship props for the passed media content record.
+   *
+   * @type {function(*): {
+   *  project_model_relationship_id: *,
+   *  primary_record_id: string,
+   *  primary_record_type: *,
+   *  related_record_id: *,
+   *  related_record_type: string
+   *  }
+   * }
+   */
+  const createInverseRelationship = useCallback((mediaContent) => ({
+    project_model_relationship_id: projectModelRelationship.id,
+    primary_record_id: mediaContent.id,
+    primary_record_type: 'CoreDataConnector::MediaContent',
+    related_record_id: itemId,
+    related_record_type: projectModel?.model_class
+  }), [projectModel, projectModelRelationship]);
 
   /**
    * Uploads the passed media contents as related record relationships.
@@ -30,13 +74,11 @@ const RelatedMediaContents = () => {
    * @type {(function(*): void)|*}
    */
   const onSave = useCallback((mediaContents) => {
-    const relationships = _.map(mediaContents, (mediaContent) => ({
-      project_model_relationship_id: projectModelRelationshipId,
-      primary_record_id: itemId,
-      primary_record_type: primaryClass,
-      related_record_id: mediaContent.id,
-      related_record_type: 'CoreDataConnector::MediaContent'
-    }));
+    const relationships = _.map(mediaContents, (mediaContent) => (
+      projectModelRelationship.inverse
+        ? createInverseRelationship(mediaContent)
+        : createRelationship(mediaContent)
+    ));
 
     RelationshipsService
       .upload(relationships)
@@ -44,7 +86,7 @@ const RelatedMediaContents = () => {
         setModal(null);
         setSaved(true);
       });
-  }, [itemId, primaryClass, projectModelRelationshipId]);
+  }, [createInverseRelationship, createRelationship, projectModelRelationship]);
 
   return (
     <>
@@ -85,12 +127,12 @@ const RelatedMediaContents = () => {
         onDelete={(relationship) => RelationshipsService.delete(relationship)}
         onLoad={(params) => RelationshipsService.fetchAll({ ...params, ...parameters })}
         renderEmptyList={() => null}
-        renderHeader={(relationship) => relationship.related_record?.name}
+        renderHeader={resolveAttributeValue.bind(this, 'name')}
         renderImage={(relationship) => (
           <LazyMedia
             dimmable={false}
-            contentType={relationship.related_record?.content_type}
-            preview={relationship.related_record?.content_thumbnail_url}
+            contentType={resolveAttributeValue('content_type', relationship)}
+            preview={resolveAttributeValue('content_thumbnail_url', relationship)}
           />
         )}
         renderMeta={() => ''}
@@ -109,6 +151,7 @@ const RelatedMediaContents = () => {
       )}
       { modal === Modal.link && (
         <MediaContentsSelectize
+          projectModelId={foreignProjectModelId}
           onClose={() => setModal(null)}
           onSave={onSave}
         />

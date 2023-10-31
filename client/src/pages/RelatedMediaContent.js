@@ -11,8 +11,8 @@ import { Button, Header } from 'semantic-ui-react';
 import type { Relationship as RelationshipType } from '../types/Relationship';
 import styles from './RelatedMediaContent.module.css';
 import useParams from '../hooks/ParsedParams';
-import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 import { useRelationship, withRelationshipEditPage } from '../hooks/Relationship';
+import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 
 type Props = EditContainerProps & {
   item: RelationshipType
@@ -20,8 +20,8 @@ type Props = EditContainerProps & {
 
 const RelatedMediaContentForm = (props: Props) => {
   const { projectModelRelationshipId } = useParams();
-  const { relatedClassUrl } = useProjectModelRelationship();
-  const { onNewRecord } = useRelationship(props);
+  const { projectModelRelationship } = useProjectModelRelationship();
+  const { foreignObject, onNewRecord } = useRelationship(props);
   const { t } = useTranslation();
 
   /**
@@ -29,14 +29,12 @@ const RelatedMediaContentForm = (props: Props) => {
    *
    * @type {string|string|*}
    */
-  const manifest = useMemo(() => (
-    IIIFUtils.createManifestURL(props.item?.related_record?.manifest)
-  ), [props.item?.related_record?.manifest]);
+  const manifest = useMemo(() => (IIIFUtils.createManifestURL(foreignObject?.manifest)), [foreignObject?.manifest]);
 
   /**
    * For a new record, set the foreign keys.
    */
-  useEffect(() => onNewRecord(), [onNewRecord]);
+  useEffect(() => onNewRecord(), []);
 
   return (
     <SimpleEditPage
@@ -51,23 +49,23 @@ const RelatedMediaContentForm = (props: Props) => {
         >
           <LazyIIIF
             color='teal'
-            contentType={props.item?.related_record?.content_type}
-            downloadUrl={props.item?.related_record?.content_download_url}
+            contentType={foreignObject?.content_type}
+            downloadUrl={foreignObject?.content_download_url}
             manifest={manifest}
-            preview={props.item.related_record?.content_preview_url}
-            src={props.item?.related_record?.content_url}
+            preview={foreignObject?.content_preview_url}
+            src={foreignObject?.content_url}
           >
             <Button
               as={Link}
               color='orange'
               content={t('Common.buttons.edit')}
               icon='edit'
-              to={`${relatedClassUrl}/${props.item?.related_record?.id}`}
+              to={`${projectModelRelationship?.url}/${foreignObject?.id}`}
             />
           </LazyIIIF>
           <Header
             className={styles.header}
-            content={props.item?.related_record?.name}
+            content={foreignObject?.name}
           />
         </div>
         <UserDefinedFieldsForm

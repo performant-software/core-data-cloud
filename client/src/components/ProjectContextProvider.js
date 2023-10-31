@@ -55,7 +55,7 @@ const ProjectContextProvider = (props: Props) => {
   useEffect(() => {
     if (projectId) {
       ProjectModelsService
-        .fetchAll({ project_id: projectId })
+        .fetchAll({ project_id: projectId, sort_by: 'name' })
         .then(({ data }) => setProjectModels(data.project_models))
         .finally(() => setLoadedProjectModels(true));
     } else {

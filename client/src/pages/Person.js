@@ -15,7 +15,6 @@ import PeopleService from '../services/People';
 import type { Person as PersonType } from '../types/Place';
 import PersonNameModal from '../components/PersonNameModal';
 import styles from './Person.module.css';
-import { Types } from '../utils/ProjectModels';
 import useParams from '../hooks/ParsedParams';
 import Validation from '../utils/Validation';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
@@ -41,7 +40,7 @@ const PlaceForm = (props: Props) => {
   /**
    * Sets the current record on the context.
    */
-  useEffect(() => setCurrentRecord(props.item, Types.Person), [props.item]);
+  useEffect(() => setCurrentRecord(props.item), [props.item]);
 
   return (
     <SimpleEditPage

@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import _ from 'underscore';
 import RelatedMediaContents from '../pages/RelatedMediaContents';
@@ -15,7 +15,28 @@ const ProjectModelRelationshipsFactory = () => {
   const [loaded, setLoaded] = useState(false);
   const [relationships, setRelationships] = useState();
 
-  const { parameters, projectModelRelationship, relatedClassView } = useProjectModelRelationship();
+  const { parameters, projectModelRelationship } = useProjectModelRelationship();
+
+  /**
+   * Sets the class view prop based on the relationship's inverse status.
+   *
+   * @type {string}
+   */
+  const classView = useMemo(() => (
+    projectModelRelationship.inverse
+      ? projectModelRelationship?.primary_model?.model_class_view
+      : projectModelRelationship?.related_model?.model_class_view
+  ), [projectModelRelationship]);
+
+  /**
+   * Sets the multiple prop based on the relationship's inverse status.
+   * @type {boolean|*}
+   */
+  const multiple = useMemo(() => (
+    projectModelRelationship.inverse
+      ? projectModelRelationship.inverse_multiple
+      : projectModelRelationship.multiple
+  ), [projectModelRelationship]);
 
   /**
    * For a relationship that only allows a single value, load the relationships. We'll need the ID value
@@ -26,7 +47,7 @@ const ProjectModelRelationshipsFactory = () => {
      * If the model allows multiple relationships, there's no need to load the relationships here. That will
      * be handled in the relationships page.
      */
-    if (!projectModelRelationship || projectModelRelationship.multiple) {
+    if (!projectModelRelationship || multiple) {
       return;
     }
 
@@ -34,32 +55,32 @@ const ProjectModelRelationshipsFactory = () => {
       .fetchAll(parameters)
       .then(({ data }) => setRelationships(data.relationships))
       .finally(() => setLoaded(true));
-  }, [parameters, projectModelRelationship?.multiple]);
+  }, [multiple, parameters, projectModelRelationship]);
 
   if (!projectModelRelationship) {
     return null;
   }
 
-  if (projectModelRelationship.multiple) {
-    if (relatedClassView === Types.MediaContent) {
+  if (multiple) {
+    if (classView === Types.MediaContent) {
       return (
         <RelatedMediaContents />
       );
     }
 
-    if (relatedClassView === Types.Organization) {
+    if (classView === Types.Organization) {
       return (
         <RelatedOrganizations />
       );
     }
 
-    if (relatedClassView === Types.Person) {
+    if (classView === Types.Person) {
       return (
         <RelatedPeople />
       );
     }
 
-    if (relatedClassView === Types.Place) {
+    if (classView === Types.Place) {
       return (
         <RelatedPlaces />
       );

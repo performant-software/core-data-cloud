@@ -11,7 +11,6 @@ import CurrentRecord from '../context/CurrentRecord';
 import type { MediaContent as MediaContentType } from '../types/MediaContent';
 import MediaContentsService from '../services/MediaContents';
 import Validation from '../utils/Validation';
-import { Types } from '../utils/ProjectModels';
 import useParams from '../hooks/ParsedParams';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
 
@@ -36,7 +35,7 @@ const MediaContentForm = (props: Props) => {
   /**
    * Sets the current record on the context.
    */
-  useEffect(() => setCurrentRecord(props.item, Types.MediaContent), [props.item]);
+  useEffect(() => setCurrentRecord(props.item), [props.item]);
 
   /**
    * Sets the manifest URL.
