@@ -5,6 +5,7 @@ import { UserDefinedFieldsTransform } from '@performant-software/user-defined-fi
 import _ from 'underscore';
 import ProjectModelAccessesTransform from './ProjectModelAccesses';
 import ProjectModelRelationshipsTransform from './ProjectModelRelationships';
+import ProjectModelSharesTransform from './ProjectModelShares';
 
 /**
  * Class responsible for transforming project model records for POST/PUT requests.
@@ -120,7 +121,8 @@ class ProjectModel extends BaseTransform {
       ...UserDefinedFieldsTransform.toPayload(projectModel),
       ...ProjectModelRelationshipsTransform.toPayload(projectModel),
       ...ProjectModelRelationshipsTransform.toPayload(projectModel, 'inverse_project_model_relationships'),
-      ...ProjectModelAccessesTransform.toPayload(projectModel)
+      ...ProjectModelAccessesTransform.toPayload(projectModel),
+      ...ProjectModelSharesTransform.toPayload(projectModel)
     });
   }
 }
