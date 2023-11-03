@@ -36,6 +36,13 @@
   "Home": {
     "header": "Welcome to Rails-React Template <1>Edit <1>src/App.js</1> and save to reload.</1>"
   },
+  "ListViewMenu": {
+    "labels": {
+      "all": "All {{name}}",
+      "owned": "My {{name}}",
+      "shared": "Shared {{name}}"
+    }
+  },
   "Login": {
     "buttons": {
       "login": "Login"
@@ -269,6 +276,13 @@
   "RelatedPlaces": {
     "columns": {
       "name": "Name"
+    }
+  },
+  "RelatedViewMenu": {
+    "labels": {
+      "all": "All {{name}}",
+      "owned": "My {{name}}",
+      "shared": "Shared {{name}}"
     }
   },
   "Sidebar": {
