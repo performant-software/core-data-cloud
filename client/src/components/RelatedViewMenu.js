@@ -3,8 +3,7 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Checkbox, Dropdown, Form } from 'semantic-ui-react';
-import _ from 'underscore';
-import styles from './RelatedViewMenu.css';
+import styles from './RelatedViewMenu.module.css';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 import Views from '../constants/ListViews';
 
@@ -33,8 +32,8 @@ const RelatedViewMenu = (props: Props) => {
    */
   const hidden = useMemo(() => (
     projectModelRelationship.inverse
-      ? _.isEmpty(projectModelRelationship.primary_model.has_shares)
-      : _.isEmpty(projectModelRelationship.related_model.has_shares)
+      ? !projectModelRelationship.primary_model.has_shares
+      : !projectModelRelationship.related_model.has_shares
   ), [projectModelRelationship]);
 
   /**
