@@ -3,10 +3,12 @@
 import { ItemList, ItemViews } from '@performant-software/semantic-components';
 import React, { type AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
+import { IoSearchOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import ProjectsService from '../services/Projects';
 import ProjectHeader from '../components/ProjectHeader';
 import ProjectDescription from '../components/ProjectDescription';
+import { Icon } from 'semantic-ui-react';
 
 const Projects: AbstractComponent<any> = () => {
   const navigate = useNavigate();
@@ -38,6 +40,15 @@ const Projects: AbstractComponent<any> = () => {
         />
       )}
       renderEmptyList={() => null}
+      renderExtra={(project) => (
+        <Icon
+          color='blue'
+        >
+          { project.discoverable && (
+            <IoSearchOutline />
+          )}
+        </Icon>
+      )}
       onLoad={(params) => ProjectsService.fetchAll(params)}
       sort={[{
         key: 'name',

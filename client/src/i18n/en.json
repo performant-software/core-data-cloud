@@ -36,6 +36,13 @@
   "Home": {
     "header": "Welcome to Rails-React Template <1>Edit <1>src/App.js</1> and save to reload.</1>"
   },
+  "ListViewMenu": {
+    "labels": {
+      "all": "All {{name}}",
+      "owned": "My {{name}}",
+      "shared": "Shared {{name}}"
+    }
+  },
   "Login": {
     "buttons": {
       "login": "Login"
@@ -144,6 +151,10 @@
       "delete": {
         "content": "Do you really want to delete this project? This action cannot be undone.",
         "header": "Are you sure?"
+      },
+      "share": {
+        "content": "Allow other projects to discover this project and share data",
+        "header": "Project Discovery"
       }
     }
   },
@@ -166,6 +177,13 @@
     }
   },
   "ProjectModel": {
+    "accesses": {
+      "columns": {
+        "name": "Name"
+      },
+      "message": "Grant other projects access to your \"{{name}}\".",
+      "title": "Select Projects"
+    },
     "errors": {
       "invalidType": "\"{{type}}\" is not a valid type."
     },
@@ -180,10 +198,20 @@
         "name": "Name"
       }
     },
+    "shares": {
+      "columns": {
+        "modelName": "Model name",
+        "projectName": "Project name"
+      },
+      "message": "Discover \"{{name}}\" added by other projects.",
+      "title": "Select Resource"
+    },
     "tabs": {
+      "access": "Access",
       "details": "Details",
       "fields": "Fields",
-      "relationships": "Relationships"
+      "relationships": "Relationships",
+      "share": "Share"
     }
   },
   "ProjectModelRelationshipModal": {
@@ -248,6 +276,13 @@
   "RelatedPlaces": {
     "columns": {
       "name": "Name"
+    }
+  },
+  "RelatedViewMenu": {
+    "labels": {
+      "all": "All {{name}}",
+      "owned": "My {{name}}",
+      "shared": "Shared {{name}}"
     }
   },
   "Sidebar": {

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_22_110901) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_31_101607) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -94,6 +94,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_110901) do
     t.index ["user_defined"], name: "index_core_data_connector_places_on_user_defined", using: :gin
   end
 
+  create_table "core_data_connector_project_model_accesses", force: :cascade do |t|
+    t.bigint "project_model_id"
+    t.bigint "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_cdc_project_model_accesses_on_project_id"
+    t.index ["project_model_id"], name: "index_cdc_project_model_accesses_on_project_model_id"
+  end
+
   create_table "core_data_connector_project_model_relationships", force: :cascade do |t|
     t.bigint "primary_model_id", null: false
     t.bigint "related_model_id", null: false
@@ -107,6 +116,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_110901) do
     t.boolean "inverse_multiple", default: false
     t.index ["primary_model_id"], name: "index_cdc_project_model_relationships_on_primary_model_id"
     t.index ["related_model_id"], name: "index_cdc_project_model_relationships_on_related_model_id"
+  end
+
+  create_table "core_data_connector_project_model_shares", force: :cascade do |t|
+    t.bigint "project_model_access_id"
+    t.bigint "project_model_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_model_access_id"], name: "index_cdc_project_model_shares_on_project_model_access_id"
+    t.index ["project_model_id"], name: "index_cdc_project_model_shares_on_project_model_id"
   end
 
   create_table "core_data_connector_project_models", force: :cascade do |t|
@@ -124,6 +142,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_110901) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "discoverable", default: false, null: false
   end
 
   create_table "core_data_connector_relationships", force: :cascade do |t|

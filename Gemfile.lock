@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: 06d41facad11aaafb525ee8defb3afd43b5237dc
-  tag: v0.1.5
+  revision: 368a96418c7d517b41281f0412641f8bad7855b5
+  tag: v0.1.6
   specs:
     core_data_connector (0.1.0)
       faker
@@ -130,7 +130,7 @@ GEM
       dotenv (= 2.8.1)
       railties (>= 3.2)
     erubi (1.12.0)
-    faker (3.2.1)
+    faker (3.2.2)
       i18n (>= 1.8.11, < 2)
     globalid (1.1.0)
       activesupport (>= 5.0)

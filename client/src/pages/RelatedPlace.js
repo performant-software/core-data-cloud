@@ -3,10 +3,12 @@
 import { AssociatedDropdown, SimpleEditPage } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form } from 'semantic-ui-react';
+import ListViews from '../constants/ListViews';
 import PlacesService from '../services/Places';
 import PlaceTransform from '../transforms/Place';
+import RelatedViewMenu from '../components/RelatedViewMenu';
 import type { Relationship as RelationshipType } from '../types/Relationship';
 import useParams from '../hooks/ParsedParams';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
@@ -17,6 +19,8 @@ type Props = EditContainerProps & {
 };
 
 const RelatedPlaceForm = (props: Props) => {
+  const [view, setView] = useState(ListViews.all);
+
   const { projectModelRelationshipId } = useParams();
   const { foreignProjectModelId } = useProjectModelRelationship();
 
@@ -47,7 +51,13 @@ const RelatedPlaceForm = (props: Props) => {
         >
           <AssociatedDropdown
             collectionName='places'
-            onSearch={(search) => PlacesService.fetchAll({ search, project_model_id: foreignProjectModelId })}
+            header={(
+              <RelatedViewMenu
+                onChange={(value) => setView(value)}
+                value={view}
+              />
+            )}
+            onSearch={(search) => PlacesService.fetchAll({ search, project_model_id: foreignProjectModelId, view })}
             onSelection={props.onAssociationInputChange.bind(this, foreignKey, foreignObjectName)}
             renderOption={PlaceTransform.toDropdown.bind(this)}
             searchQuery={foreignObject?.name}

@@ -11,9 +11,9 @@
     "flow": "flow"
   },
   "dependencies": {
-    "@performant-software/semantic-components": "^1.0.24",
-    "@performant-software/shared-components": "^1.0.24",
-    "@performant-software/user-defined-fields": "^1.0.24",
+    "@performant-software/semantic-components": "^1.0.26",
+    "@performant-software/shared-components": "^1.0.26",
+    "@performant-software/user-defined-fields": "^1.0.26",
     "boring-avatars": "^1.10.1",
     "classnames": "^2.3.1",
     "i18next": "^21.9.1",
@@ -23,6 +23,7 @@
     "react-icons": "^4.10.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "react-uuid": "^2.0.0",
     "semantic-ui-react": "^2.1.2",
     "underscore": "^1.13.3"
   },

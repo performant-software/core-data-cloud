@@ -2,6 +2,8 @@
 
 import _ from 'underscore';
 import type { User as UserType } from '../types/User';
+import type { Ownable as OwnableType } from '../types/Ownable';
+import type { ProjectModel as ProjectModelType } from '../types/ProjectModel';
 import SessionService from './Session';
 import UserProjectRoles from '../utils/UserProjectRoles';
 
@@ -23,6 +25,36 @@ class Permissions {
     }
 
     return this.isAdmin() || this.isOwner(projectId);
+  }
+
+  /**
+   * Returns true if the passed record can be deleted.
+   *
+   * @param projectModel
+   * @param record
+   *
+   * @returns {boolean}
+   */
+  canDeleteRecord(projectModel: ProjectModelType, record: OwnableType) {
+    if (!(projectModel && record)) {
+      return false;
+    }
+
+    /**
+     * If the current record is shared by another model, it cannot be deleted.
+     */
+    if (projectModel.id !== record.project_model_id) {
+      return false;
+    }
+
+    /**
+     * If the current model is shared with another project, records cannot be deleted.
+     */
+    if (!_.isEmpty(projectModel.project_model_accesses)) {
+      return false;
+    }
+
+    return true;
   }
 
   /**

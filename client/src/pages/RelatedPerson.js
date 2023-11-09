@@ -3,11 +3,13 @@
 import { AssociatedDropdown, SimpleEditPage } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Form } from 'semantic-ui-react';
+import ListViews from '../constants/ListViews';
 import PeopleService from '../services/People';
 import PeopleUtils from '../utils/People';
 import PersonTransform from '../transforms/Person';
+import RelatedViewMenu from '../components/RelatedViewMenu';
 import type { Relationship as RelationshipType } from '../types/Relationship';
 import useParams from '../hooks/ParsedParams';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
@@ -18,6 +20,8 @@ type Props = EditContainerProps & {
 };
 
 const RelatedPersonForm = (props: Props) => {
+  const [view, setView] = useState(ListViews.all);
+
   const { projectModelRelationshipId } = useParams();
   const { foreignProjectModelId } = useProjectModelRelationship();
 
@@ -34,6 +38,14 @@ const RelatedPersonForm = (props: Props) => {
    */
   useEffect(() => onNewRecord(), []);
 
+  const onSearch = useCallback((search) => (
+    PeopleService.fetchAll({
+      search,
+      project_model_id: foreignProjectModelId,
+      view
+    })
+  ), [foreignProjectModelId, view]);
+
   return (
     <SimpleEditPage
       {...props}
@@ -48,7 +60,13 @@ const RelatedPersonForm = (props: Props) => {
         >
           <AssociatedDropdown
             collectionName='people'
-            onSearch={(search) => PeopleService.fetchAll({ search, project_model_id: foreignProjectModelId })}
+            header={(
+              <RelatedViewMenu
+                onChange={(value) => setView(value)}
+                value={view}
+              />
+            )}
+            onSearch={onSearch}
             onSelection={props.onAssociationInputChange.bind(this, foreignKey, foreignObjectName)}
             renderOption={PersonTransform.toDropdown.bind(this)}
             searchQuery={PeopleUtils.getNameView(foreignObject)}

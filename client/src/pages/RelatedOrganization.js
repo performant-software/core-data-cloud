@@ -3,11 +3,13 @@
 import { AssociatedDropdown, SimpleEditPage } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form } from 'semantic-ui-react';
+import ListViews from '../constants/ListViews';
 import OrganizationsService from '../services/Organizations';
 import OrganizationTransform from '../transforms/Organization';
 import type { Relationship as RelationshipType } from '../types/Relationship';
+import RelatedViewMenu from '../components/RelatedViewMenu';
 import useParams from '../hooks/ParsedParams';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 import { useRelationship, withRelationshipEditPage } from '../hooks/Relationship';
@@ -17,6 +19,8 @@ type Props = EditContainerProps & {
 };
 
 const RelatedOrganizationForm = (props: Props) => {
+  const [view, setView] = useState(ListViews.all);
+
   const { projectModelRelationshipId } = useParams();
   const { foreignProjectModelId } = useProjectModelRelationship();
 
@@ -47,7 +51,17 @@ const RelatedOrganizationForm = (props: Props) => {
         >
           <AssociatedDropdown
             collectionName='organizations'
-            onSearch={(search) => OrganizationsService.fetchAll({ search, project_model_id: foreignProjectModelId })}
+            header={(
+              <RelatedViewMenu
+                onChange={(value) => setView(value)}
+                value={view}
+              />
+            )}
+            onSearch={(search) => OrganizationsService.fetchAll({
+              search,
+              project_model_id: foreignProjectModelId,
+              view
+            })}
             onSelection={props.onAssociationInputChange.bind(this, foreignKey, foreignObjectName)}
             renderOption={OrganizationTransform.toDropdown.bind(this)}
             searchQuery={foreignObject?.name}
