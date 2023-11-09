@@ -12,6 +12,7 @@ import './i18n/i18n';
 import '@performant-software/shared-components/build/main.css';
 import '@performant-software/semantic-components/build/main.css';
 import '@performant-software/semantic-components/build/semantic-ui.css';
+import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

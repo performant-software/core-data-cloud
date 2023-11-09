@@ -2,6 +2,7 @@
 
 import { BaseTransform } from '@performant-software/shared-components';
 import type { Place as PlaceType } from '../types/Place';
+import PlaceGeometry from './PlaceGeometry';
 import PlaceNames from './PlaceNames';
 
 /**
@@ -53,7 +54,8 @@ class Place extends BaseTransform {
    */
   toPayload(place: PlaceType): any {
     return super.toPayload(place, {
-      ...PlaceNames.toPayload(place)
+      ...PlaceNames.toPayload(place),
+      ...PlaceGeometry.toPayload(place)
     });
   }
 }

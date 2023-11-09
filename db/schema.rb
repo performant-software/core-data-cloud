@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_31_101607) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_06_205335) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "postgis"
 
   create_table "core_data_connector_locations", force: :cascade do |t|
     t.bigint "place_id", null: false
@@ -73,6 +74,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_31_101607) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["person_id"], name: "index_core_data_connector_person_names_on_person_id"
+  end
+
+  create_table "core_data_connector_place_geometries", force: :cascade do |t|
+    t.bigint "place_id", null: false
+    t.geometry "geometry", limit: {:srid=>0, :type=>"geometry"}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["place_id"], name: "index_core_data_connector_place_geometries_on_place_id"
   end
 
   create_table "core_data_connector_place_names", force: :cascade do |t|
