@@ -1,5 +1,6 @@
 // @flow
 
+import { MapDraw } from '@performant-software/geospatial';
 import {
   BooleanIcon,
   EmbeddedList,
@@ -18,7 +19,6 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import { Header } from 'semantic-ui-react';
 import CurrentRecordContext from '../context/CurrentRecord';
-import MapDraw from '../components/MapDraw';
 import type { Place as PlaceType } from '../types/Place';
 import PlaceNameModal from '../components/PlaceNameModal';
 import PlacesService from '../services/Places';

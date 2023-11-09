@@ -2048,12 +2048,24 @@
     "@stitches/react" "^1.2.7"
     react "^18.2.0"
 
-"@performant-software/semantic-components@^1.0.26-beta.1":
-  version "1.0.26-beta.1"
-  resolved "https://registry.yarnpkg.com/@performant-software/semantic-components/-/semantic-components-1.0.26-beta.1.tgz#e888b3f9267dcfada8b4e225a299cbf95dddad1e"
-  integrity sha512-ZDOkBaGlZlqDm1V36m65ciEJLTY9DxwQZkDhKxliqBDoGHJMQRK9G0CjWXV4a73s0jeuAMOyH69q4vKP3lHRow==
+"@performant-software/geospatial@^1.1.0-beta.0":
+  version "1.1.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@performant-software/geospatial/-/geospatial-1.1.0-beta.0.tgz#7be03df9d7d49aea254c60629c6f68ad224c0dd3"
+  integrity sha512-bzL7mENsUba3QrCUL2q1HTdyADYbZ0/2T7oti6y72sBJ5B1Zb2ZIfitPBEhXvCQFOVIKAUZfCeRq26SGtXGs1Q==
   dependencies:
-    "@performant-software/shared-components" "^1.0.26-beta.1"
+    "@mapbox/mapbox-gl-draw" "^1.4.3"
+    "@turf/turf" "^6.5.0"
+    mapbox-gl "npm:empty-npm-package@1.0.0"
+    maplibre-gl "^3.5.2"
+    react-map-gl "^7.1.6"
+    underscore "^1.13.6"
+
+"@performant-software/semantic-components@^1.1.0-beta.0":
+  version "1.1.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@performant-software/semantic-components/-/semantic-components-1.1.0-beta.0.tgz#9f2c2120bf363e24b14ad966f6e63636e1749993"
+  integrity sha512-9O3l22dZbTCbUyx7NLhLbf3C/9VALiIIL1X5qeuE5YxK8I2PZ3bxzqjO1AYcX04+AsVc0zPyJ1FHtoODiNwZcw==
+  dependencies:
+    "@performant-software/shared-components" "^1.1.0-beta.0"
     "@react-google-maps/api" "^2.8.1"
     axios "^0.26.1"
     i18next "^19.4.4"
@@ -2072,10 +2084,10 @@
     zotero-api-client "^0.40.0"
     zotero-translation-client "^5.0.1"
 
-"@performant-software/shared-components@^1.0.26-beta.1":
-  version "1.0.26-beta.1"
-  resolved "https://registry.yarnpkg.com/@performant-software/shared-components/-/shared-components-1.0.26-beta.1.tgz#31ef7e4179d7c3ce4c21e6afe8c960ff8d0a58bc"
-  integrity sha512-lSWeUK31lEIzQmalVjuRBxnheS0cbRxL159w3ADRsR7rdCBokJ2fAp0/gMZ1yYp+gnBf5uxEt0wzX8zKFklNWA==
+"@performant-software/shared-components@^1.1.0-beta.0":
+  version "1.1.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@performant-software/shared-components/-/shared-components-1.1.0-beta.0.tgz#1c91e6974c611e6d3ba8fa07b22c258ef09f6984"
+  integrity sha512-kY9bnToaYWAiQAt+2Q98Asv0x94Niwk0Ypeb2Op7pmKXsE9W5Mq58+dAO0AGDWsahtgU7St7jbdgBBjmrCGnuw==
   dependencies:
     "@react-google-maps/api" "^2.8.1"
     "@samvera/clover-iiif" "^1.10.3"
@@ -2095,13 +2107,13 @@
     underscore "^1.13.2"
     zotero-translation-client "^5.0.1"
 
-"@performant-software/user-defined-fields@^1.0.26-beta.1":
-  version "1.0.26-beta.1"
-  resolved "https://registry.yarnpkg.com/@performant-software/user-defined-fields/-/user-defined-fields-1.0.26-beta.1.tgz#41094c4fc2bdc6d6fca0774af3cc7f1164003a45"
-  integrity sha512-/X5Vo2XIzrtuxDWUBg4UanHgszImElnQbsVDooKOP6gG/EO8kXolzqiNeCtXJ6USc/zdzCtjxAxdi9/DHbH40Q==
+"@performant-software/user-defined-fields@^1.1.0-beta.0":
+  version "1.1.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@performant-software/user-defined-fields/-/user-defined-fields-1.1.0-beta.0.tgz#696fbbb9a1be6b9ffd2ba23c51df200641666c75"
+  integrity sha512-fL3DZg0S6cuRoypPE1elv620/EMouI5Coihogg95pYKcim9HiSqd4FEmBczNVe4UMhmXmjN261RNWE9taDY0NQ==
   dependencies:
-    "@performant-software/semantic-components" "^1.0.26-beta.1"
-    "@performant-software/shared-components" "^1.0.26-beta.1"
+    "@performant-software/semantic-components" "^1.1.0-beta.0"
+    "@performant-software/shared-components" "^1.1.0-beta.0"
     i18next "^21.9.1"
     semantic-ui-react "^2.1.2"
     underscore "^1.13.2"
@@ -11896,6 +11908,11 @@ underscore@^1.13.2, underscore@^1.13.3:
   version "1.13.3"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.3.tgz#54bc95f7648c5557897e5e968d0f76bc062c34ee"
   integrity sha512-QvjkYpiD+dJJraRA8+dGAU4i7aBbb2s0S3jA45TFOvg2VgqvdCDd/3N6CqA8gluk1W91GLoXg5enMUx560QzuA==
+
+underscore@^1.13.6:
+  version "1.13.6"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.6.tgz#04786a1f589dc6c09f761fc5f45b89e935136441"
+  integrity sha512-+A5Sja4HP1M08MaXya7p5LvjuM7K6q/2EaC0+iovj/wOcMsTzMvDFbasi/oSapiwOlt252IqsKqPjCl7huKS0A==
 
 unicode-canonical-property-names-ecmascript@^2.0.0:
   version "2.0.0"
