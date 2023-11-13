@@ -26,3 +26,7 @@ default: &default
 development:
   <<: *default
   database: <%= ENV['DATABASE_NAME'] %>
+
+production:
+  <<: *default
+  url: <%= ENV.fetch("DATABASE_URL") { '' }.gsub(/postgres/, 'postgis') %>
