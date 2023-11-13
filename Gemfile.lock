@@ -1,18 +1,4 @@
 GIT
-  remote: https://github.com/performant-software/core-data-connector.git
-  revision: f2cc453169e9c324a01b9d62f55f1e4e81424834
-  tag: v0.1.7
-  specs:
-    core_data_connector (0.1.0)
-      activerecord-postgis-adapter (~> 8.0)
-      faker
-      rails (>= 6.0.3.2, < 8)
-      resource_api
-      rgeo-geojson (~> 2.1)
-      triple_eye_effable
-      user_defined_fields
-
-GIT
   remote: https://github.com/performant-software/jwt-auth.git
   revision: fa54af0cdcad6122fad10d9ad745b814c2918853
   tag: v0.1.2
@@ -48,6 +34,18 @@ GIT
     user_defined_fields (0.1.0)
       rails (>= 6.0.3.2, < 8)
       resource_api
+
+PATH
+  remote: ../core-data-connector
+  specs:
+    core_data_connector (0.1.0)
+      activerecord-postgis-adapter (~> 8.0)
+      faker
+      rails (>= 6.0.3.2, < 8)
+      resource_api
+      rgeo-geojson (~> 2.1)
+      triple_eye_effable
+      user_defined_fields
 
 GEM
   remote: https://rubygems.org/
