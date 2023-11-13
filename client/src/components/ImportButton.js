@@ -4,7 +4,12 @@ import { FileInputButton } from '@performant-software/semantic-components';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaFileImport } from 'react-icons/fa';
-import { Button, Icon, Modal } from 'semantic-ui-react';
+import {
+  Button,
+  Header,
+  Icon,
+  Modal
+} from 'semantic-ui-react';
 
 type Props = {
   onImport: (file: File) => Promise<any>
@@ -55,8 +60,15 @@ const ImportButton = (props: Props) => {
           open
         >
           <Modal.Header
-            content={t('ImportButton.header')}
-          />
+            as={Header}
+          >
+            <Icon>
+              <FaFileImport />
+            </Icon>
+            <Header.Content
+              content={t('ImportButton.header')}
+            />
+          </Modal.Header>
           <Modal.Content
             content={t('ImportButton.content')}
           />
