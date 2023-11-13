@@ -29,4 +29,4 @@ development:
 
 production:
   <<: *default
-  url: <%= ENV.fetch("DATABASE_URL").gsub(/postgres/, 'postgis') %>
+  url: <%= ENV.fetch("DATABASE_URL") { '' }.gsub(/postgres/, 'postgis') %>
