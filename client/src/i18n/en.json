@@ -121,6 +121,9 @@
     }
   },
   "Place": {
+    "buttons": {
+      "upload": "Upload"
+    },
     "labels": {
       "names": "Names"
     },

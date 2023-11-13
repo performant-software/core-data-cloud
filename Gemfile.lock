@@ -1,12 +1,14 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: 368a96418c7d517b41281f0412641f8bad7855b5
-  tag: v0.1.6
+  revision: f2cc453169e9c324a01b9d62f55f1e4e81424834
+  tag: v0.1.7
   specs:
     core_data_connector (0.1.0)
+      activerecord-postgis-adapter (~> 8.0)
       faker
       rails (>= 6.0.3.2, < 8)
       resource_api
+      rgeo-geojson (~> 2.1)
       triple_eye_effable
       user_defined_fields
 
@@ -103,6 +105,9 @@ GEM
     activerecord (7.0.7)
       activemodel (= 7.0.7)
       activesupport (= 7.0.7)
+    activerecord-postgis-adapter (8.0.3)
+      activerecord (~> 7.0.0)
+      rgeo-activerecord (~> 7.0.0)
     activestorage (7.0.7)
       actionpack (= 7.0.7)
       activejob (= 7.0.7)
@@ -220,6 +225,12 @@ GEM
     rake (13.0.6)
     reline (0.3.8)
       io-console (~> 0.5)
+    rgeo (3.0.0)
+    rgeo-activerecord (7.0.1)
+      activerecord (>= 5.0)
+      rgeo (>= 1.0.0)
+    rgeo-geojson (2.1.1)
+      rgeo (>= 1.0.0)
     thor (1.2.2)
     timeout (0.4.0)
     tzinfo (2.0.6)
