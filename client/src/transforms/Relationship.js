@@ -1,6 +1,6 @@
 // @flow
 
-import { Attachments, BaseTransform, String } from '@performant-software/shared-components';
+import { BaseTransform, String } from '@performant-software/shared-components';
 import _ from 'underscore';
 import type { Relationship as RelationshipType } from '../types/Relationship';
 
