@@ -46,6 +46,22 @@ class Place extends BaseTransform {
   }
 
   /**
+   * Returns the form data for the passed import.
+   *
+   * @param projectModelId
+   * @param file
+   *
+   * @returns {FormData}
+   */
+  toImport(projectModelId: number, file: File) {
+    const formData = new FormData();
+    formData.append('project_model_id', projectModelId);
+    formData.append('file', file);
+
+    return formData;
+  }
+
+  /**
    * Returns the place for POST/PUT requests as a plain Javascript object.
    *
    * @param place

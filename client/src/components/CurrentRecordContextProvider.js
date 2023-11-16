@@ -71,7 +71,7 @@ const CurrentRecordContextProvider = (props: Props) => {
     name,
     isNewRecord,
     setCurrentRecord: setRecord
-  }), [record, name, setRecord]);
+  }), [isNewRecord, record, name, setRecord]);
 
   return (
     <CurrentRecordContext.Provider

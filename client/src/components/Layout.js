@@ -48,7 +48,7 @@ const Layout: AbstractComponent<any> = () => {
         className={styles.contentContainer}
         fluid
         style={{
-          height: `calc(100vh - ${menuBarHeight}px)`
+          minHeight: `calc(100vh - ${menuBarHeight}px)`
         }}
       >
         <ProjectItemMenu />

@@ -17,8 +17,9 @@
   "Common": {
     "buttons": {
       "add": "Add",
-      "edit": "Edit",
-      "delete": "Delete"
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "edit": "Edit"
     },
     "labels": {
       "project": "Project"
@@ -35,6 +36,14 @@
   },
   "Home": {
     "header": "Welcome to Rails-React Template <1>Edit <1>src/App.js</1> and save to reload.</1>"
+  },
+  "ImportButton": {
+    "buttons": {
+      "confirm": "Confirm",
+      "import": "Import"
+    },
+    "content": "This action will import all of the records in the selected file and cannot be undone.",
+    "header": "Confirm Import"
   },
   "ListViewMenu": {
     "labels": {
