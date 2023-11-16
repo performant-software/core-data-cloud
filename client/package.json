@@ -11,7 +11,6 @@
     "flow": "flow"
   },
   "dependencies": {
-    "@mapbox/mapbox-gl-draw": "^1.4.3",
     "@performant-software/geospatial": "^1.1.0",
     "@performant-software/semantic-components": "^1.1.0",
     "@performant-software/shared-components": "^1.1.0",
