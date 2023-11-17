@@ -317,6 +317,11 @@
       "name": "Name"
     }
   },
+  "RelatedTaxonomyItems": {
+    "columns": {
+      "name": "Name"
+    }
+  },
   "RelatedViewMenu": {
     "labels": {
       "all": "All {{name}}",
@@ -334,6 +339,17 @@
       "projects": "Projects",
       "settings": "Settings",
       "users": "Users"
+    }
+  },
+  "TaxonomyItemModal": {
+    "title": "Add Taxonomy Item"
+  },
+  "TaxonomyItems": {
+    "columns": {
+      "name": "Name"
+    },
+    "labels": {
+      "name": "Name"
     }
   },
   "UserEditMenu": {

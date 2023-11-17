@@ -16,6 +16,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_29_024358) do
   enable_extension "plpgsql"
   enable_extension "postgis"
 
+  create_table "core_data_connector_locations", force: :cascade do |t|
+    t.bigint "place_id", null: false
+    t.string "locateable_type", null: false
+    t.bigint "locateable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["locateable_type", "locateable_id"], name: "index_core_data_connector_locations_on_locateable"
+    t.index ["place_id"], name: "index_core_data_connector_locations_on_place_id"
+  end
+
   create_table "core_data_connector_media_contents", force: :cascade do |t|
     t.bigint "project_model_id"
     t.string "name"
@@ -111,11 +121,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_29_024358) do
   create_table "core_data_connector_project_model_relationships", force: :cascade do |t|
     t.bigint "primary_model_id", null: false
     t.bigint "related_model_id", null: false
+    t.string "name"
+    t.boolean "multiple"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
-    t.boolean "multiple"
-    t.string "name"
     t.boolean "allow_inverse", default: false, null: false
     t.string "inverse_name"
     t.boolean "inverse_multiple", default: false
@@ -164,6 +174,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_29_024358) do
     t.index ["project_model_relationship_id"], name: "index_cdc_relationships_on_project_model_relationship_id"
     t.index ["related_record_type", "related_record_id"], name: "index_core_data_connector_relationships_on_related_record"
     t.index ["user_defined"], name: "index_core_data_connector_relationships_on_user_defined", using: :gin
+  end
+
+  create_table "core_data_connector_taxonomies", force: :cascade do |t|
+    t.bigint "project_model_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_model_id"], name: "index_core_data_connector_taxonomies_on_project_model_id"
   end
 
   create_table "core_data_connector_user_projects", force: :cascade do |t|

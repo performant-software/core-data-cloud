@@ -6,6 +6,7 @@ import Organizations from '../pages/Organizations';
 import People from '../pages/People';
 import Places from '../pages/Places';
 import ProjectContext from '../context/Project';
+import TaxonomyItems from '../pages/TaxonomyItems';
 import { Types } from '../utils/ProjectModels';
 
 const ProjectModelsFactory = () => {
@@ -33,6 +34,10 @@ const ProjectModelsFactory = () => {
 
     case Types.Place:
       component = <Places />;
+      break;
+
+    case Types.Taxonomy:
+      component = <TaxonomyItems />;
       break;
 
     default:

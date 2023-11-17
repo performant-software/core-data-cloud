@@ -7,6 +7,7 @@ import RelatedMediaContents from '../pages/RelatedMediaContents';
 import RelatedOrganizations from '../pages/RelatedOrganizations';
 import RelatedPeople from '../pages/RelatedPeople';
 import RelatedPlaces from '../pages/RelatedPlaces';
+import RelatedTaxonomyItems from '../pages/RelatedTaxonomyItems';
 import RelationshipsService from '../services/Relationships';
 import { Types } from '../utils/ProjectModels';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
@@ -83,6 +84,12 @@ const ProjectModelRelationshipsFactory = () => {
     if (classView === Types.Place) {
       return (
         <RelatedPlaces />
+      );
+    }
+
+    if (classView === Types.Taxonomy) {
+      return (
+        <RelatedTaxonomyItems />
       );
     }
 

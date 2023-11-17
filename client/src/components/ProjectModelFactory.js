@@ -7,6 +7,7 @@ import Person from '../pages/Person';
 import Place from '../pages/Place';
 import ProjectContext from '../context/Project';
 import { Types } from '../utils/ProjectModels';
+import TaxonomyItem from '../pages/TaxonomyItem';
 
 const ProjectModelFactory = () => {
   const { projectModel } = useContext(ProjectContext);
@@ -33,6 +34,10 @@ const ProjectModelFactory = () => {
 
     case Types.Place:
       component = <Place />;
+      break;
+
+    case Types.Taxonomy:
+      component = <TaxonomyItem />;
       break;
 
     default:
