@@ -16,6 +16,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_12_111940) do
   enable_extension "plpgsql"
   enable_extension "postgis"
 
+  create_table "core_data_connector_instances", force: :cascade do |t|
+    t.bigint "project_model_id"
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "user_defined", default: {}
+    t.index ["project_model_id"], name: "index_core_data_connector_instances_on_project_model_id"
+    t.index ["user_defined"], name: "index_core_data_connector_instances_on_user_defined", using: :gin
+  end
+
+  create_table "core_data_connector_items", force: :cascade do |t|
+    t.bigint "project_model_id"
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "user_defined", default: {}
+    t.index ["project_model_id"], name: "index_core_data_connector_items_on_project_model_id"
+    t.index ["user_defined"], name: "index_core_data_connector_items_on_user_defined", using: :gin
+  end
+
   create_table "core_data_connector_media_contents", force: :cascade do |t|
     t.bigint "project_model_id"
     t.string "name"
@@ -25,6 +45,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_12_111940) do
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.index ["project_model_id"], name: "index_core_data_connector_media_contents_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_media_contents_on_user_defined", using: :gin
+  end
+
+  create_table "core_data_connector_names", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "core_data_connector_organization_names", force: :cascade do |t|
@@ -175,6 +201,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_12_111940) do
     t.index ["project_model_id"], name: "index_core_data_connector_taxonomies_on_project_model_id"
   end
 
+  create_table "core_data_connector_source_titles", force: :cascade do |t|
+    t.string "nameable_type"
+    t.bigint "nameable_id"
+    t.bigint "name_id"
+    t.boolean "primary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name_id"], name: "index_core_data_connector_source_titles_on_name_id"
+    t.index ["nameable_type", "nameable_id"], name: "index_core_data_connector_source_titles_on_nameable"
+  end
+
   create_table "core_data_connector_user_projects", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "project_id", null: false
@@ -192,6 +229,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_12_111940) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false
+  end
+
+  create_table "core_data_connector_works", force: :cascade do |t|
+    t.bigint "project_model_id"
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "user_defined", default: {}
+    t.index ["project_model_id"], name: "index_core_data_connector_works_on_project_model_id"
+    t.index ["user_defined"], name: "index_core_data_connector_works_on_user_defined", using: :gin
   end
 
   create_table "triple_eye_effable_resource_descriptions", force: :cascade do |t|

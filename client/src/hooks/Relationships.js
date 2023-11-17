@@ -2,6 +2,7 @@
 
 import { useCallback } from 'react';
 import useProjectModelRelationship from './ProjectModelRelationship';
+import _ from 'underscore';
 
 const useRelationships = () => {
   const { projectModelRelationship } = useProjectModelRelationship();
@@ -12,17 +13,16 @@ const useRelationships = () => {
    * @type {function(*, *): *}
    */
   const resolveAttributeValue = useCallback((attribute, relationship) => {
-    let value;
-
     const record = projectModelRelationship.inverse
       ? relationship.primary_record
       : relationship.related_record;
 
     if (record) {
-      value = record[attribute];
+      const attributeArray = attribute.split('.');
+      return _.get(record, attributeArray);
     }
 
-    return value;
+    return null;
   }, [projectModelRelationship.inverse]);
 
   return {

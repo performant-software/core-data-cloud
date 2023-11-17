@@ -1,11 +1,14 @@
 // flow
 
 import React, { useMemo } from 'react';
+import RelatedInstance from '../pages/RelatedInstance';
+import RelatedItem from '../pages/RelatedItem';
 import RelatedMediaContent from '../pages/RelatedMediaContent';
 import RelatedOrganization from '../pages/RelatedOrganization';
 import RelatedPerson from '../pages/RelatedPerson';
 import RelatedPlace from '../pages/RelatedPlace';
 import RelatedTaxonomyItem from '../pages/RelatedTaxonomyItem';
+import RelatedWork from '../pages/RelatedWork';
 import { Types } from '../utils/ProjectModels';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 
@@ -26,6 +29,14 @@ const ProjectModelRelationshipFactory = () => {
   let component;
 
   switch (classView) {
+    case Types.Instance:
+      component = <RelatedInstance />;
+      break;
+
+    case Types.Item:
+      component = <RelatedItem />;
+      break;
+
     case Types.MediaContent:
       component = <RelatedMediaContent />;
       break;
@@ -44,6 +55,10 @@ const ProjectModelRelationshipFactory = () => {
 
     case Types.Taxonomy:
       component = <RelatedTaxonomyItem />;
+      break;
+
+    case Types.Work:
+      component = <RelatedWork />;
       break;
 
     default:

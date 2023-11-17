@@ -8,11 +8,14 @@ const ERROR_INVALID_TYPE = 'is not included in the list';
 const KEY_MODEL_CLASS = 'model_class';
 
 const Types = {
+  Instance: 'Instance',
+  Item: 'Item',
   MediaContent: 'Media Content',
   Organization: 'Organization',
   Person: 'Person',
   Place: 'Place',
-  Taxonomy: 'Taxonomy'
+  Taxonomy: 'Taxonomy',
+  Work: 'Work'
 };
 
 /**
