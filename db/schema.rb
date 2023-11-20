@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_10_152814) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_15_114846) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -213,29 +213,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_10_152814) do
     t.integer "order", default: 0, null: false
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.index ["defineable_type", "defineable_id"], name: "index_user_defined_fields_on_defineable"
-  end
-
-  create_table "z_places", id: false, force: :cascade do |t|
-    t.serial "id", null: false
-    t.string "name"
-    t.decimal "latitude"
-    t.decimal "longitude"
-    t.string "udf_item_id"
-    t.string "udf_item_uri"
-    t.string "udf_subject"
-    t.string "udf_description"
-    t.string "udf_creator"
-    t.string "udf_source"
-    t.string "udf_publisher"
-    t.string "udf_date"
-    t.string "udf_contributor"
-    t.string "udf_rights"
-    t.string "udf_relation"
-    t.string "udf_format"
-    t.string "udf_language"
-    t.string "udf_type"
-    t.string "udf_identifier"
-    t.string "udf_coverage"
   end
 
 end
