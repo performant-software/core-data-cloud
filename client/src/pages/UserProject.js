@@ -2,7 +2,12 @@
 
 import { AssociatedDropdown, SimpleEditPage } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
-import React, { useEffect, useMemo, type AbstractComponent, useContext } from 'react';
+import React, {
+  useEffect,
+  useMemo,
+  type AbstractComponent,
+  useContext
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
 import PermissionsService from '../services/Permissions';
