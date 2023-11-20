@@ -17,6 +17,7 @@ const OrganizationNameModal: AbstractComponent<any> = (props: Props) => {
     <Modal
       as={Form}
       centered={false}
+      noValidate
       open
     >
       <Modal.Header

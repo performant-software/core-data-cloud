@@ -3,17 +3,18 @@
 import { AssociatedDropdown, SimpleEditPage } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Form } from 'semantic-ui-react';
+import { initialize, useRelationship, withRelationshipEditPage } from '../hooks/Relationship';
 import ListViews from '../constants/ListViews';
 import PeopleService from '../services/People';
 import PeopleUtils from '../utils/People';
+import PersonModal from '../components/PersonModal';
 import PersonTransform from '../transforms/Person';
 import RelatedViewMenu from '../components/RelatedViewMenu';
 import type { Relationship as RelationshipType } from '../types/Relationship';
 import useParams from '../hooks/ParsedParams';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
-import { useRelationship, withRelationshipEditPage } from '../hooks/Relationship';
 
 type Props = EditContainerProps & {
   item: RelationshipType
@@ -29,15 +30,19 @@ const RelatedPersonForm = (props: Props) => {
     foreignKey,
     foreignObject,
     foreignObjectName,
-    label,
-    onNewRecord
+    label
   } = useRelationship(props);
 
   /**
-   * For a new record, set the foreign keys.
+   * Sets the required foreign keys on the state.
    */
-  useEffect(() => onNewRecord(), []);
+  initialize(props);
 
+  /**
+   * Calls the GET API endpoint for people.
+   *
+   * @type {function(*): Promise<AxiosResponse<T>>|*}
+   */
   const onSearch = useCallback((search) => (
     PeopleService.fetchAll({
       search,
@@ -66,6 +71,14 @@ const RelatedPersonForm = (props: Props) => {
                 value={view}
               />
             )}
+            modal={{
+              component: PersonModal,
+              onSave: (person) => (
+                PeopleService
+                  .save(person)
+                  .then(({ data }) => data.person)
+              )
+            }}
             onSearch={onSearch}
             onSelection={props.onAssociationInputChange.bind(this, foreignKey, foreignObjectName)}
             renderOption={PersonTransform.toDropdown.bind(this)}

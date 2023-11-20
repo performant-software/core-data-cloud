@@ -4,14 +4,14 @@ import { LazyIIIF, SimpleEditPage } from '@performant-software/semantic-componen
 import { IIIF as IIIFUtils } from '@performant-software/shared-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Button, Header } from 'semantic-ui-react';
+import { initialize, useRelationship, withRelationshipEditPage } from '../hooks/Relationship';
 import type { Relationship as RelationshipType } from '../types/Relationship';
 import styles from './RelatedMediaContent.module.css';
 import useParams from '../hooks/ParsedParams';
-import { useRelationship, withRelationshipEditPage } from '../hooks/Relationship';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 
 type Props = EditContainerProps & {
@@ -21,7 +21,7 @@ type Props = EditContainerProps & {
 const RelatedMediaContentForm = (props: Props) => {
   const { projectModelRelationshipId } = useParams();
   const { projectModelRelationship } = useProjectModelRelationship();
-  const { foreignObject, onNewRecord } = useRelationship(props);
+  const { foreignObject } = useRelationship(props);
   const { t } = useTranslation();
 
   /**
@@ -32,9 +32,9 @@ const RelatedMediaContentForm = (props: Props) => {
   const manifest = useMemo(() => (IIIFUtils.createManifestURL(foreignObject?.manifest)), [foreignObject?.manifest]);
 
   /**
-   * For a new record, set the foreign keys.
+   * Sets the required foreign keys on the state.
    */
-  useEffect(() => onNewRecord(), []);
+  initialize(props);
 
   return (
     <SimpleEditPage
