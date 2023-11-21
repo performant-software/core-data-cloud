@@ -47,15 +47,17 @@ const PlaceForm = (props: Props) => {
         onSave={props.onSaveChildAssociation.bind(this, 'place_names')}
         onDelete={props.onDeleteChildAssociation.bind(this, 'place_names')}
       />
-      <UserDefinedFieldsForm
-        data={props.item.user_defined}
-        defineableId={props.item.project_model_id}
-        defineableType='CoreDataConnector::ProjectModel'
-        isError={props.isError}
-        onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
-        onClearValidationError={props.onClearValidationError}
-        tableName='CoreDataConnector::Place'
-      />
+      { props.item.project_model_id && (
+        <UserDefinedFieldsForm
+          data={props.item.user_defined}
+          defineableId={props.item.project_model_id}
+          defineableType='CoreDataConnector::ProjectModel'
+          isError={props.isError}
+          onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
+          onClearValidationError={props.onClearValidationError}
+          tableName='CoreDataConnector::Place'
+        />
+      )}
     </>
   );
 };

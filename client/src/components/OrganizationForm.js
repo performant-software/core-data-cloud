@@ -54,15 +54,17 @@ const OrganizationForm = (props: Props) => {
         required={props.isRequired('description')}
         value={props.item.description}
       />
-      <UserDefinedFieldsForm
-        data={props.item.user_defined}
-        defineableId={props.item.project_model_id}
-        defineableType='CoreDataConnector::ProjectModel'
-        isError={props.isError}
-        onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
-        onClearValidationError={props.onClearValidationError}
-        tableName='CoreDataConnector::Organization'
-      />
+      { props.item.project_model_id && (
+        <UserDefinedFieldsForm
+          data={props.item.user_defined}
+          defineableId={props.item.project_model_id}
+          defineableType='CoreDataConnector::ProjectModel'
+          isError={props.isError}
+          onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
+          onClearValidationError={props.onClearValidationError}
+          tableName='CoreDataConnector::Organization'
+        />
+      )}
     </>
   );
 };

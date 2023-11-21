@@ -10,8 +10,7 @@ import type { Person as PersonType } from '../types/Person';
 import PersonNameModal from './PersonNameModal';
 
 type Props = EditContainerProps & {
-  item: PersonType,
-  projectModelId: number
+  item: PersonType
 };
 
 const PersonForm = (props: Props) => {
@@ -58,15 +57,17 @@ const PersonForm = (props: Props) => {
         required={props.isRequired('biography')}
         value={props.item.biography}
       />
-      <UserDefinedFieldsForm
-        data={props.item.user_defined}
-        defineableId={props.projectModelId}
-        defineableType='CoreDataConnector::ProjectModel'
-        isError={props.isError}
-        onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
-        onClearValidationError={props.onClearValidationError}
-        tableName='CoreDataConnector::Person'
-      />
+      { props.item.project_model_id && (
+        <UserDefinedFieldsForm
+          data={props.item.user_defined}
+          defineableId={props.item.project_model_id}
+          defineableType='CoreDataConnector::ProjectModel'
+          isError={props.isError}
+          onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
+          onClearValidationError={props.onClearValidationError}
+          tableName='CoreDataConnector::Person'
+        />
+      )}
     </>
   );
 };
