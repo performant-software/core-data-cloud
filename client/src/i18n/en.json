@@ -74,7 +74,7 @@
   "MediaContentsSelectize": {
     "title": "Select Media"
   },
-  "Organization": {
+  "OrganizationForm": {
     "labels": {
       "description": "Description",
       "names": "Names"
@@ -86,10 +86,17 @@
       }
     }
   },
+  "OrganizationModal": {
+    "title": "Add Organization"
+  },
   "OrganizationNameModal": {
     "labels": {
       "name": "Name",
       "primary": "Primary"
+    },
+    "title": {
+      "add": "Add Organization Name",
+      "edit": "Edit Organization Name"
     }
   },
   "Organizations": {
@@ -104,7 +111,7 @@
       "project": "Project"
     }
   },
-  "Person": {
+  "PersonForm": {
     "labels": {
       "biography": "Biography",
       "names": "Names"
@@ -116,6 +123,9 @@
         "primary": "Primary"
       }
     }
+  },
+  "PersonModal": {
+    "title": "Add Person"
   },
   "PersonNameModal": {
     "labels": {
@@ -132,7 +142,9 @@
   "Place": {
     "buttons": {
       "upload": "Upload"
-    },
+    }
+  },
+  "PlaceForm": {
     "labels": {
       "names": "Names"
     },
@@ -143,10 +155,17 @@
       }
     }
   },
+  "PlaceModal": {
+    "title": "Add Place"
+  },
   "PlaceNameModal": {
     "labels": {
       "name": "Name",
       "primary": "Primary"
+    },
+    "title": {
+      "add": "Add Place Name",
+      "edit": "Edit Place Name"
     }
   },
   "Places": {

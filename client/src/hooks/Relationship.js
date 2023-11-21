@@ -1,16 +1,66 @@
 // @flow
 
-import { useCallback, useContext, useMemo } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
+import ProjectContext from '../context/Project';
 import RelationshipsService from '../services/Relationships';
 import useParams from './ParsedParams';
 import useProjectModelRelationship from './ProjectModelRelationship';
 import Validation from '../utils/Validation';
 import withReactRouterEditPage from './ReactRouterEditPage';
-import ProjectContext from '../context/Project';
 
-const useRelationship = ({ item, onSetState }) => {
+/**
+ * Sets the required foreign keys on the state when creating a relationships record.
+ *
+ * @param item
+ * @param onSetState
+ */
+const initialize = ({ item, onSetState }) => {
   const { projectModel } = useContext(ProjectContext);
   const { itemId } = useParams();
+  const { projectModelRelationship } = useProjectModelRelationship();
+
+  useEffect(() => {
+    if (onSetState && !item?.id) {
+      if (projectModelRelationship.inverse) {
+        onSetState({
+          project_model_relationship_id: projectModelRelationship?.id,
+          primary_record_type: projectModelRelationship?.primary_model?.model_class,
+          related_record_id: itemId,
+          related_record_type: projectModel?.model_class
+        });
+      } else {
+        onSetState({
+          project_model_relationship_id: projectModelRelationship?.id,
+          primary_record_id: itemId,
+          primary_record_type: projectModel?.model_class,
+          related_record_type: projectModelRelationship?.related_model?.model_class
+        });
+      }
+    }
+  }, [item.id, itemId, projectModel, projectModelRelationship]);
+};
+
+/**
+ * Sets the required foreign keys on the state when creating a primary record from within a relationship.
+ *
+ * @param item
+ * @param onSetState
+ */
+const initializeRelated = ({ item, onSetState }) => {
+  const { projectModelRelationship } = useProjectModelRelationship();
+
+  useEffect(() => {
+    if (onSetState && !item.id) {
+      onSetState({
+        project_model_id: projectModelRelationship.inverse
+          ? projectModelRelationship.primary_model_id
+          : projectModelRelationship.related_model_id
+      });
+    }
+  }, [item.id, projectModelRelationship]);
+};
+
+const useRelationship = ({ item }) => {
   const { projectModelRelationship } = useProjectModelRelationship();
 
   /**
@@ -57,37 +107,11 @@ const useRelationship = ({ item, onSetState }) => {
       : projectModelRelationship.related_model.name_singular
   ), [projectModelRelationship]);
 
-  /**
-   * Sets the required fields on the state for a new record.
-   *
-   * @type {(function(): void)|*}
-   */
-  const onNewRecord = useCallback(() => {
-    if (onSetState && !item?.id) {
-      if (projectModelRelationship.inverse) {
-        onSetState({
-          project_model_relationship_id: projectModelRelationship?.id,
-          primary_record_type: projectModelRelationship?.primary_model?.model_class,
-          related_record_id: itemId,
-          related_record_type: projectModel?.model_class
-        });
-      } else {
-        onSetState({
-          project_model_relationship_id: projectModelRelationship?.id,
-          primary_record_id: itemId,
-          primary_record_type: projectModel?.model_class,
-          related_record_type: projectModelRelationship?.related_model?.model_class
-        });
-      }
-    }
-  }, [item, onSetState, projectModel, projectModelRelationship]);
-
   return {
-    label,
-    onNewRecord,
     foreignKey,
     foreignObject,
-    foreignObjectName
+    foreignObjectName,
+    label
   };
 };
 
@@ -108,6 +132,8 @@ const withRelationshipEditPage = (RelationshipForm) => withReactRouterEditPage(R
 });
 
 export {
+  initialize,
+  initializeRelated,
   useRelationship,
   withRelationshipEditPage
 };

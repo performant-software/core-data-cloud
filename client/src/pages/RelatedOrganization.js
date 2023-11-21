@@ -3,16 +3,17 @@
 import { AssociatedDropdown, SimpleEditPage } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Form } from 'semantic-ui-react';
+import { initialize, useRelationship, withRelationshipEditPage } from '../hooks/Relationship';
 import ListViews from '../constants/ListViews';
+import OrganizationModal from '../components/OrganizationModal';
 import OrganizationsService from '../services/Organizations';
 import OrganizationTransform from '../transforms/Organization';
 import type { Relationship as RelationshipType } from '../types/Relationship';
 import RelatedViewMenu from '../components/RelatedViewMenu';
 import useParams from '../hooks/ParsedParams';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
-import { useRelationship, withRelationshipEditPage } from '../hooks/Relationship';
 
 type Props = EditContainerProps & {
   item: RelationshipType
@@ -28,14 +29,26 @@ const RelatedOrganizationForm = (props: Props) => {
     foreignKey,
     foreignObject,
     foreignObjectName,
-    label,
-    onNewRecord
+    label
   } = useRelationship(props);
 
   /**
-   * For a new record, set the foreign keys.
+   * Sets the required foreign keys on the state.
    */
-  useEffect(() => onNewRecord(), []);
+  initialize(props);
+
+  /**
+   * Calls the GET API endpoint for organizations.
+   *
+   * @type {function(*): Promise<AxiosResponse<T>>|*}
+   */
+  const onSearch = useCallback((search) => (
+    OrganizationsService.fetchAll({
+      search,
+      project_model_id: foreignProjectModelId,
+      view
+    })
+  ), [foreignProjectModelId, view]);
 
   return (
     <SimpleEditPage
@@ -57,11 +70,15 @@ const RelatedOrganizationForm = (props: Props) => {
                 value={view}
               />
             )}
-            onSearch={(search) => OrganizationsService.fetchAll({
-              search,
-              project_model_id: foreignProjectModelId,
-              view
-            })}
+            modal={{
+              component: OrganizationModal,
+              onSave: (organization) => (
+                OrganizationsService
+                  .save(organization)
+                  .then(({ data }) => data.organization)
+              )
+            }}
+            onSearch={onSearch}
             onSelection={props.onAssociationInputChange.bind(this, foreignKey, foreignObjectName)}
             renderOption={OrganizationTransform.toDropdown.bind(this)}
             searchQuery={foreignObject?.name}

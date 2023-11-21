@@ -3,16 +3,17 @@
 import { AssociatedDropdown, SimpleEditPage } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Form } from 'semantic-ui-react';
+import { initialize, useRelationship, withRelationshipEditPage } from '../hooks/Relationship';
 import ListViews from '../constants/ListViews';
-import PlacesService from '../services/Places';
+import PlaceModal from '../components/PlaceModal';
 import PlaceTransform from '../transforms/Place';
+import PlacesService from '../services/Places';
 import RelatedViewMenu from '../components/RelatedViewMenu';
 import type { Relationship as RelationshipType } from '../types/Relationship';
 import useParams from '../hooks/ParsedParams';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
-import { useRelationship, withRelationshipEditPage } from '../hooks/Relationship';
 
 type Props = EditContainerProps & {
   item: RelationshipType
@@ -28,14 +29,26 @@ const RelatedPlaceForm = (props: Props) => {
     foreignKey,
     foreignObject,
     foreignObjectName,
-    label,
-    onNewRecord
+    label
   } = useRelationship(props);
 
   /**
-   * For a new record, set the foreign keys.
+   * Sets the required foreign keys on the state.
    */
-  useEffect(() => onNewRecord(), []);
+  initialize(props);
+
+  /**
+   * Calls the GET API endpoint for places.
+   *
+   * @type {function(*): Promise<AxiosResponse<T>>|*}
+   */
+  const onSearch = useCallback((search) => (
+    PlacesService.fetchAll({
+      search,
+      project_model_id: foreignProjectModelId,
+      view
+    })
+  ), [foreignProjectModelId, view]);
 
   return (
     <SimpleEditPage
@@ -57,8 +70,16 @@ const RelatedPlaceForm = (props: Props) => {
                 value={view}
               />
             )}
-            onSearch={(search) => PlacesService.fetchAll({ search, project_model_id: foreignProjectModelId, view })}
+            onSearch={onSearch}
             onSelection={props.onAssociationInputChange.bind(this, foreignKey, foreignObjectName)}
+            modal={{
+              component: PlaceModal,
+              onSave: (place) => (
+                PlacesService
+                  .save(place)
+                  .then(({ data }) => data.place)
+              )
+            }}
             renderOption={PlaceTransform.toDropdown.bind(this)}
             searchQuery={foreignObject?.name}
             value={props.item[foreignKey]}

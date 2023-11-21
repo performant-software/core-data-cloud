@@ -44,7 +44,22 @@ textarea {
   border-bottom: 1px solid rgba(34, 36, 38, 0.1);
 }
 
-.dropdown-button.ui.buttons>.ui.dropdown:last-child .menu.right {
+.dropdown-button.ui.buttons > .ui.dropdown:last-child .menu.right {
   left: 0;
   right: auto;
+}
+
+.association-dropdown > .ui.buttons > .ui.basic.button:hover {
+  background: unset !important;
+}
+
+.ui.modals > .ui.modal > .actions,
+.ui.modals > .ui.modal > .content,
+.ui.modals > .ui.modal > .header {
+  background-color: #f6f6f6;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+.embedded-list {
+  margin-bottom: 1em;
 }

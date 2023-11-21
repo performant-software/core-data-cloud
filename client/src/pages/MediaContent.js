@@ -4,38 +4,28 @@ import { LazyIIIF, SimpleEditPage } from '@performant-software/semantic-componen
 import { IIIF as IIIFUtils } from '@performant-software/shared-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
-import React, { useContext, useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useMemo } from 'react';
 import { Form } from 'semantic-ui-react';
-import CurrentRecord from '../context/CurrentRecord';
+import initialize from '../hooks/Item';
 import type { MediaContent as MediaContentType } from '../types/MediaContent';
 import MediaContentsService from '../services/MediaContents';
 import Validation from '../utils/Validation';
-import useParams from '../hooks/ParsedParams';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
+import useParams from '../hooks/ParsedParams';
+import { useTranslation } from 'react-i18next';
 
 type Props = EditContainerProps & {
   item: MediaContentType
 };
 
-const MediaContentForm = (props: Props) => {
-  const { setCurrentRecord } = useContext(CurrentRecord);
+const MediaContentPage = (props: Props) => {
   const { projectModelId } = useParams();
   const { t } = useTranslation();
 
   /**
-   * Sets the project model ID on the state from the route parameters.
+   * Sets the required foreign keys on the state.
    */
-  useEffect(() => {
-    if (!props.item.id) {
-      props.onSetState({ project_model_id: projectModelId });
-    }
-  }, [projectModelId, props.item.id]);
-
-  /**
-   * Sets the current record on the context.
-   */
-  useEffect(() => setCurrentRecord(props.item), [props.item]);
+  initialize(props);
 
   /**
    * Sets the manifest URL.
@@ -49,8 +39,7 @@ const MediaContentForm = (props: Props) => {
       {...props}
     >
       <SimpleEditPage.Tab
-        key='details'
-        name={t('Common.tabs.details')}
+        key='default'
       >
         <Form.Input
           label={t('MediaContent.labels.content')}
@@ -89,7 +78,7 @@ const MediaContentForm = (props: Props) => {
   );
 };
 
-const MediaContent = withReactRouterEditPage(MediaContentForm, {
+const MediaContent = withReactRouterEditPage(MediaContentPage, {
   id: 'itemId',
   onInitialize: (id) => (
     MediaContentsService

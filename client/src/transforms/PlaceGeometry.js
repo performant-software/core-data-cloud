@@ -42,7 +42,7 @@ class PlaceGeometry extends BaseTransform {
     return {
       [this.getParameterName()]: {
         ..._.pick(placeGeometry, this.getPayloadKeys()),
-        geometry_json: JSON.stringify(placeGeometry.geometry_json)
+        geometry_json: JSON.stringify(placeGeometry?.geometry_json)
       }
     };
   }
