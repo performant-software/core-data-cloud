@@ -37,14 +37,6 @@
   "Home": {
     "header": "Welcome to Rails-React Template <1>Edit <1>src/App.js</1> and save to reload.</1>"
   },
-  "ImportButton": {
-    "buttons": {
-      "confirm": "Confirm",
-      "import": "Import"
-    },
-    "content": "This action will import all of the records in the selected file and cannot be undone.",
-    "header": "Confirm Import"
-  },
   "ListViewMenu": {
     "labels": {
       "all": "All {{name}}",
@@ -195,6 +187,18 @@
       "settings": "Settings"
     }
   },
+  "ProjectImport": {
+    "errors": {
+      "file": {
+        "content": "You may only upload a single zip file.",
+        "header": "An error occurred processing the file"
+      },
+      "import": {
+        "header": "An error occurred importing the file"
+      }
+    },
+    "title": "Import"
+  },
   "ProjectItemMenu": {
     "labels": {
       "backToAll": "All {{name}}",
@@ -272,6 +276,7 @@
       "allUsers": "All Users",
       "configure": "Configure",
       "details": "Details",
+      "import": "Import",
       "newModel": "New Model",
       "newUser": "New User",
       "users": "Users"

@@ -24,22 +24,6 @@ class Places extends BaseService {
   getTransform(): typeof PlaceTransform {
     return PlaceTransform;
   }
-
-  /**
-   * Imports the passed file.
-   *
-   * @param projectModelId
-   * @param file
-   *
-   * @returns {*}
-   */
-  import(projectModelId: number, file: File) {
-    const config = this.getConfig();
-    const transform = this.getTransform();
-    const payload = transform.toImport(projectModelId, file);
-
-    return this.getAxios().post(`${this.getBaseUrl()}/import`, payload, config);
-  }
 }
 
 const PlacesService: Places = new Places();

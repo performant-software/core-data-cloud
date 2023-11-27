@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_15_114846) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_27_192812) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -51,6 +51,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_15_114846) do
     t.datetime "updated_at", null: false
     t.bigint "project_model_id"
     t.jsonb "user_defined", default: {}
+    t.integer "z_organization_id"
     t.index ["project_model_id"], name: "index_core_data_connector_organizations_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_organizations_on_user_defined", using: :gin
   end
@@ -61,6 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_15_114846) do
     t.datetime "updated_at", null: false
     t.bigint "project_model_id"
     t.jsonb "user_defined", default: {}
+    t.integer "z_person_id"
     t.index ["project_model_id"], name: "index_core_data_connector_people_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_people_on_user_defined", using: :gin
   end

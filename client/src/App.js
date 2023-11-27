@@ -11,6 +11,7 @@ import Logout from './pages/Logout';
 import Project from './pages/Project';
 import ProjectContextProvider from './components/ProjectContextProvider';
 import ProjectEdit from './pages/ProjectEdit';
+import ProjectImport from './pages/ProjectImport';
 import ProjectModel from './pages/ProjectModel';
 import ProjectModelFactory from './components/ProjectModelFactory';
 import ProjectModelRelationshipFactory from './components/ProjectModelRelationshipFactory';
@@ -106,6 +107,10 @@ const App: ComponentType<any> = useDragDrop(() => (
                 element={<ProjectModel />}
               />
             </Route>
+            <Route
+              path='import'
+              element={<ProjectImport />}
+            />
             <Route
               path=':projectModelId'
             >

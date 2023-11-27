@@ -7,6 +7,7 @@ import { Header, Icon, Menu } from 'semantic-ui-react';
 import _ from 'underscore';
 import MenuLink from './MenuLink';
 import ProjectSettingsContext from '../context/ProjectSettings';
+import PermissionsService from '../services/Permissions';
 
 const PROJECT_MODEL_EDIT_PATHS = [
   '/projects/:projectId/project_models/new',
@@ -15,6 +16,7 @@ const PROJECT_MODEL_EDIT_PATHS = [
 
 const PROJECT_SETTINGS_PATHS = [
   '/projects/:projectId',
+  '/projects/:projectId/import',
   '/projects/:projectId/project_models',
   '/projects/:projectId/user_projects'
 ];
@@ -104,6 +106,13 @@ const ProjectSettingsMenu = () => {
             parent
             to={`/projects/${projectId}/user_projects`}
           />
+          { PermissionsService.canImport() && (
+            <MenuLink
+              content={t('ProjectSettingsMenu.labels.import')}
+              parent
+              to={`/projects/${projectId}/import`}
+            />
+          )}
         </>
       )}
     </Menu>

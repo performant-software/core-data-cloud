@@ -44,6 +44,20 @@ class Project extends BaseTransform {
       text: project.name
     };
   }
+
+  /**
+   * Returns the form data for the passed import.
+   *
+   * @param file
+   *
+   * @returns {FormData}
+   */
+  toImport(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return formData;
+  }
 }
 
 const ProjectTransform: Project = new Project();
