@@ -10,21 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_27_192812) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_28_021609) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
-
-  create_table "core_data_connector_locations", force: :cascade do |t|
-    t.bigint "place_id", null: false
-    t.string "locateable_type", null: false
-    t.bigint "locateable_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["locateable_type", "locateable_id"], name: "index_core_data_connector_locations_on_locateable"
-    t.index ["place_id"], name: "index_core_data_connector_locations_on_place_id"
-  end
 
   create_table "core_data_connector_media_contents", force: :cascade do |t|
     t.bigint "project_model_id"
@@ -32,6 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_27_192812) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.index ["project_model_id"], name: "index_core_data_connector_media_contents_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_media_contents_on_user_defined", using: :gin
   end
@@ -52,6 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_27_192812) do
     t.bigint "project_model_id"
     t.jsonb "user_defined", default: {}
     t.integer "z_organization_id"
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.index ["project_model_id"], name: "index_core_data_connector_organizations_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_organizations_on_user_defined", using: :gin
   end
@@ -63,6 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_27_192812) do
     t.bigint "project_model_id"
     t.jsonb "user_defined", default: {}
     t.integer "z_person_id"
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.index ["project_model_id"], name: "index_core_data_connector_people_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_people_on_user_defined", using: :gin
   end
@@ -96,12 +89,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_27_192812) do
   end
 
   create_table "core_data_connector_places", force: :cascade do |t|
-    t.string "uid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "project_model_id"
     t.jsonb "user_defined", default: {}
     t.integer "z_place_id"
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.index ["project_model_id"], name: "index_core_data_connector_places_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_places_on_user_defined", using: :gin
   end

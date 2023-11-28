@@ -62,6 +62,11 @@ const People: AbstractComponent<any> = () => {
           name: 'first_name',
           label: t('People.columns.firstName'),
           sortable: true
+        }, {
+          name: 'uuid',
+          label: t('Common.columns.uuid'),
+          sortable: true,
+          hidden: true
         }]}
         key={view}
         onDelete={(place) => PeopleService.delete(place)}

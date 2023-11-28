@@ -59,6 +59,11 @@ const Places: AbstractComponent<any> = () => {
           name: 'name',
           label: t('Places.columns.name'),
           sortable: true
+        }, {
+          name: 'uuid',
+          label: t('Common.columns.uuid'),
+          sortable: true,
+          hidden: true
         }]}
         key={view}
         onDelete={(place) => PlacesService.delete(place)}

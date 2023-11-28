@@ -21,6 +21,9 @@
       "delete": "Delete",
       "edit": "Edit"
     },
+    "columns":{
+      "uuid": "Identifier"
+    },
     "labels": {
       "project": "Project"
     },
