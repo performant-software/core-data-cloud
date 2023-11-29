@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_28_021609) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_29_024358) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -159,6 +159,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_28_021609) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
+    t.integer "z_relationship_id"
     t.index ["primary_record_type", "primary_record_id"], name: "index_core_data_connector_relationships_on_primary_record"
     t.index ["project_model_relationship_id"], name: "index_cdc_relationships_on_project_model_relationship_id"
     t.index ["related_record_type", "related_record_id"], name: "index_core_data_connector_relationships_on_related_record"
