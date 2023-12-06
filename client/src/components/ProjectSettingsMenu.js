@@ -6,8 +6,8 @@ import { matchPath, useLocation, useParams } from 'react-router-dom';
 import { Header, Icon, Menu } from 'semantic-ui-react';
 import _ from 'underscore';
 import MenuLink from './MenuLink';
-import ProjectSettingsContext from '../context/ProjectSettings';
 import PermissionsService from '../services/Permissions';
+import ProjectSettingsContext from '../context/ProjectSettings';
 
 const PROJECT_MODEL_EDIT_PATHS = [
   '/projects/:projectId/project_models/new',
