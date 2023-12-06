@@ -15,6 +15,7 @@ export type Place = {
   id: number,
   project_model_id: number,
   name: string,
+  uuid: string
   place_names: Array<PlaceName>,
   place_geometry: PlaceGeometry
 };

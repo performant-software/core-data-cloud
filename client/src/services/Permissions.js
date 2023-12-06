@@ -83,14 +83,12 @@ class Permissions {
   }
 
   /**
-   * An admin user or a project owner can import data.
-   *
-   * @param projectModel
+   * An admin user can import data.
    *
    * @returns {boolean}
    */
-  canImport(projectModel: ProjectModelType): boolean {
-    return this.isAdmin() || this.isOwner(projectModel.project_id);
+  canImport(): boolean {
+    return this.isAdmin();
   }
 
   /**

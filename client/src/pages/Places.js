@@ -1,18 +1,12 @@
 // @flow
 
 import { ListTable } from '@performant-software/semantic-components';
-import React, {
-  useCallback,
-  useContext,
-  useState,
-  type AbstractComponent
-} from 'react';
+import React, { useContext, useState, type AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BiWorld } from 'react-icons/bi';
 import { TfiMapAlt } from 'react-icons/tfi';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
-import ImportButton from '../components/ImportButton';
 import ListViewMenu from '../components/ListViewMenu';
 import PlacesService from '../services/Places';
 import PermissionsService from '../services/Permissions';
@@ -22,23 +16,11 @@ import Views from '../constants/ListViews';
 
 const Places: AbstractComponent<any> = () => {
   const [view, setView] = useState(Views.all);
-  const [saved, setSaved] = useState(false);
 
   const { projectModel } = useContext(ProjectContext);
   const navigate = useNavigate();
   const { projectModelId } = useParams();
   const { t } = useTranslation();
-
-  /**
-   * Imports the passed file, then sets the "saved" attribute on the state.
-   *
-   * @type {function(*): *}
-   */
-  const onImport = useCallback((file) => (
-    PlacesService
-      .import(projectModelId, file)
-      .then(() => setSaved(true))
-  ), [projectModelId]);
 
   return (
     <>
@@ -72,16 +54,16 @@ const Places: AbstractComponent<any> = () => {
           location: 'top',
           onClick: () => navigate('new')
         }}
-        buttons={[{
-          accept: () => PermissionsService.canImport(projectModel),
-          as: ImportButton,
-          onImport
-        }]}
         collectionName='places'
         columns={[{
           name: 'name',
           label: t('Places.columns.name'),
           sortable: true
+        }, {
+          name: 'uuid',
+          label: t('Common.columns.uuid'),
+          sortable: true,
+          hidden: true
         }]}
         key={view}
         onDelete={(place) => PlacesService.delete(place)}
@@ -92,7 +74,6 @@ const Places: AbstractComponent<any> = () => {
           defineable_type: 'CoreDataConnector::ProjectModel',
           view
         })}
-        saved={saved}
         searchable
       />
     </>

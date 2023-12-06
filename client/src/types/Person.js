@@ -15,5 +15,6 @@ export type Person = {
   person_names: Array<PersonName>,
   first_name: string,
   middle_name: string,
-  last_name: string
+  last_name: string,
+  uuid: string
 };

@@ -11,5 +11,6 @@ export type Organization = {
   project_model_id: number,
   description: string,
   name: string,
+  uuid: string,
   organization_names: Array<OrganizationName>
 };

@@ -1,7 +1,7 @@
 // @flow
 
 import { ListTable } from '@performant-software/semantic-components';
-import React, { type AbstractComponent, useContext, useState } from 'react';
+import React, { useContext, useState, type AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaUsers } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -62,6 +62,11 @@ const People: AbstractComponent<any> = () => {
           name: 'first_name',
           label: t('People.columns.firstName'),
           sortable: true
+        }, {
+          name: 'uuid',
+          label: t('Common.columns.uuid'),
+          sortable: true,
+          hidden: true
         }]}
         key={view}
         onDelete={(place) => PeopleService.delete(place)}
