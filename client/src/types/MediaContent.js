@@ -8,5 +8,6 @@ export type MediaContent = {
   content_iiif_url: string,
   content_inline_url: string,
   content_preview_url: string,
-  content_thumbnail_url: string
+  content_thumbnail_url: string,
+  uuid: string
 };

@@ -58,6 +58,11 @@ const Organizations: AbstractComponent<any> = () => {
           name: 'name',
           label: t('Organizations.columns.name'),
           sortable: true
+        }, {
+          name: 'uuid',
+          label: t('Common.columns.uuid'),
+          sortable: true,
+          hidden: true
         }]}
         key={view}
         onDelete={(organization) => OrganizationsService.delete(organization)}

@@ -6,6 +6,7 @@ import { matchPath, useLocation, useParams } from 'react-router-dom';
 import { Header, Icon, Menu } from 'semantic-ui-react';
 import _ from 'underscore';
 import MenuLink from './MenuLink';
+import PermissionsService from '../services/Permissions';
 import ProjectSettingsContext from '../context/ProjectSettings';
 
 const PROJECT_MODEL_EDIT_PATHS = [
@@ -15,6 +16,7 @@ const PROJECT_MODEL_EDIT_PATHS = [
 
 const PROJECT_SETTINGS_PATHS = [
   '/projects/:projectId',
+  '/projects/:projectId/import',
   '/projects/:projectId/project_models',
   '/projects/:projectId/user_projects'
 ];
@@ -104,6 +106,13 @@ const ProjectSettingsMenu = () => {
             parent
             to={`/projects/${projectId}/user_projects`}
           />
+          { PermissionsService.canImport() && (
+            <MenuLink
+              content={t('ProjectSettingsMenu.labels.import')}
+              parent
+              to={`/projects/${projectId}/import`}
+            />
+          )}
         </>
       )}
     </Menu>

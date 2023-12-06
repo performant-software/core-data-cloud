@@ -39,6 +39,22 @@ class Projects extends BaseService {
   getTransform(): typeof ProjectTransform {
     return ProjectTransform;
   }
+
+  /**
+   * Imports the passed file.
+   *
+   * @param id
+   * @param file
+   *
+   * @returns {*}
+   */
+  import(id: number, file: File) {
+    const config = this.getConfig();
+    const transform = this.getTransform();
+    const payload = transform.toImport(file);
+
+    return this.getAxios().post(`${this.getBaseUrl()}/${id}/import`, payload, config);
+  }
 }
 
 const ProjectsService: Projects = new Projects();
