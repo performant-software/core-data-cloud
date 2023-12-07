@@ -16,16 +16,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_29_024358) do
   enable_extension "plpgsql"
   enable_extension "postgis"
 
-  create_table "core_data_connector_locations", force: :cascade do |t|
-    t.bigint "place_id", null: false
-    t.string "locateable_type", null: false
-    t.bigint "locateable_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["locateable_type", "locateable_id"], name: "index_core_data_connector_locations_on_locateable"
-    t.index ["place_id"], name: "index_core_data_connector_locations_on_place_id"
-  end
-
   create_table "core_data_connector_media_contents", force: :cascade do |t|
     t.bigint "project_model_id"
     t.string "name"
