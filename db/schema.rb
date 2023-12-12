@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_29_024358) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_12_111940) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -164,6 +164,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_29_024358) do
     t.index ["project_model_relationship_id"], name: "index_cdc_relationships_on_project_model_relationship_id"
     t.index ["related_record_type", "related_record_id"], name: "index_core_data_connector_relationships_on_related_record"
     t.index ["user_defined"], name: "index_core_data_connector_relationships_on_user_defined", using: :gin
+  end
+
+  create_table "core_data_connector_taxonomies", force: :cascade do |t|
+    t.bigint "project_model_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.index ["project_model_id"], name: "index_core_data_connector_taxonomies_on_project_model_id"
   end
 
   create_table "core_data_connector_user_projects", force: :cascade do |t|

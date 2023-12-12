@@ -31,10 +31,12 @@ PATH
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 8.0)
       faker
+      jwt (~> 2.7.1)
       jwt_auth
       rails (>= 6.0.3.2, < 8)
       resource_api
       rgeo-geojson (~> 2.1)
+      rubyzip (~> 2.3.2)
       triple_eye_effable
       typesense (~> 0.14)
       user_defined_fields
@@ -233,6 +235,7 @@ GEM
       rgeo (>= 1.0.0)
     rgeo-geojson (2.1.1)
       rgeo (>= 1.0.0)
+    rubyzip (2.3.2)
     thor (1.2.2)
     timeout (0.4.0)
     typesense (0.15.0)
