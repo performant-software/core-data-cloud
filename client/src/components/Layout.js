@@ -9,8 +9,9 @@ import React, {
 import { Outlet } from 'react-router-dom';
 import { Container, Ref } from 'semantic-ui-react';
 import MenuBar from './MenuBar';
-import ProjectSettingsMenu from './ProjectSettingsMenu';
 import ProjectItemMenu from './ProjectItemMenu';
+import ProjectMenuBar from './ProjectMenuBar';
+import ProjectSettingsMenu from './ProjectSettingsMenu';
 import styles from './Layout.module.css';
 import UserEditMenu from './UserEditMenu';
 
@@ -38,10 +39,10 @@ const Layout: AbstractComponent<any> = () => {
         innerRef={menuBarRef}
       >
         <Container
-          className={styles.menuBarContainer}
           fluid
         >
           <MenuBar />
+          <ProjectMenuBar />
         </Container>
       </Ref>
       <Container

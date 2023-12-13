@@ -1,0 +1,17 @@
+.projectMenuBar.ui.menu.secondary {
+  background-color: #1d77bb;
+  padding: 0.5em 4em 0.5em 4em;
+  margin-top: 0px;
+}
+
+.projectMenuBar.ui.menu.secondary > .item {
+  color: #FFFFFF;
+}
+
+.projectMenuBar.ui.menu.secondary > .item:first-child {
+  padding-left: 0px;
+}
+
+.projectMenuBar.ui.menu.secondary > .item:last-child {
+  padding-right: 0px;
+}

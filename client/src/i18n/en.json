@@ -285,6 +285,11 @@
       "users": "Users"
     }
   },
+  "ProjectTitle": {
+    "labels": {
+      "allProjects": "All Projects"
+    }
+  },
   "Projects": {
     "sort": {
       "created": "Date created",

@@ -1,3 +1,12 @@
+.menuBar.ui.grid {
+  padding: 0.75em 4em 0.75em 4em;
+  margin: 0px;
+}
+
+.menuBar.ui.grid .column:not(.row) {
+  padding: 0px;
+}
+
 .menuBar.ui.grid .column.centered {
   display: flex;
   align-items: center;
