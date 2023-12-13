@@ -1,12 +1,13 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: e7dcaa6b828c13244e8905efd1c212b3463dc9e8
-  tag: v0.1.12
+  revision: a61d02ec7a05f2d5cd9be38c9f9f392374975c1f
+  tag: v0.1.13
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 8.0)
       faker
       jwt (~> 2.7.1)
+      jwt_auth
       rails (>= 6.0.3.2, < 8)
       resource_api
       rgeo-geojson (~> 2.1)
@@ -26,8 +27,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/resource-api.git
-  revision: f1092734efc2f1e86c9d7bd3a0c5b70e57c3b3ca
-  tag: v0.5.3
+  revision: f2a4956bd6ee1f33c664e5fe381d296d3dbf4f80
+  tag: v0.5.4
   specs:
     resource_api (0.1.0)
       pagy (~> 5.10)
@@ -124,6 +125,7 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
     bcrypt (3.1.19)
+    bigdecimal (3.1.4)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -187,7 +189,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.15.4-x86_64-linux)
       racc (~> 1.4)
-    oj (3.16.1)
+    oj (3.16.3)
+      bigdecimal (>= 3.0)
     pagy (5.10.1)
       activesupport
     pg (1.5.3)
