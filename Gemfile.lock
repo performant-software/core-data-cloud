@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: a61d02ec7a05f2d5cd9be38c9f9f392374975c1f
-  tag: v0.1.13
+  revision: 75b316f80be8d38b1f87c83f95c1b8f6bf1bd9b0
+  tag: v0.1.14
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 8.0)
@@ -27,8 +27,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/resource-api.git
-  revision: f2a4956bd6ee1f33c664e5fe381d296d3dbf4f80
-  tag: v0.5.4
+  revision: c71d89adb4f4b1e040bc419f50443e3bd9b18ccd
+  tag: v0.5.5
   specs:
     resource_api (0.1.0)
       pagy (~> 5.10)
