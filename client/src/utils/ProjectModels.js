@@ -11,7 +11,8 @@ const Types = {
   MediaContent: 'Media Content',
   Organization: 'Organization',
   Person: 'Person',
-  Place: 'Place'
+  Place: 'Place',
+  Taxonomy: 'Taxonomy'
 };
 
 /**

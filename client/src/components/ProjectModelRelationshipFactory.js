@@ -5,6 +5,7 @@ import RelatedMediaContent from '../pages/RelatedMediaContent';
 import RelatedOrganization from '../pages/RelatedOrganization';
 import RelatedPerson from '../pages/RelatedPerson';
 import RelatedPlace from '../pages/RelatedPlace';
+import RelatedTaxonomyItem from '../pages/RelatedTaxonomyItem';
 import { Types } from '../utils/ProjectModels';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 
@@ -39,6 +40,10 @@ const ProjectModelRelationshipFactory = () => {
 
     case Types.Place:
       component = <RelatedPlace />;
+      break;
+
+    case Types.Taxonomy:
+      component = <RelatedTaxonomyItem />;
       break;
 
     default:
