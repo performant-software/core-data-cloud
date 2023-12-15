@@ -22,23 +22,6 @@ const NameRelationModal: AbstractComponent<any> = (props: Props) => {
 
   const { projectId } = useParams();
 
-  const onSearch = (search) => NamesService.fetchAll({
-    nameable_model: props.nameableModel,
-    project_id: projectId,
-    search,
-    sort_by: 'name'
-  }).then((res) => {
-    if (newName) {
-      return {
-        data: {
-          names: [newName, ...res.data.names]
-        }
-      };
-    }
-
-    return res;
-  });
-
   return (
     <Modal
       as={Form}
@@ -74,7 +57,12 @@ const NameRelationModal: AbstractComponent<any> = (props: Props) => {
                 )
               }}
               onChange={props.onTextInputChange.bind(this, 'name')}
-              onSearch={onSearch}
+              onSearch={(search) => NamesService.fetchAll({
+                nameable_model: props.nameableModel,
+                project_id: projectId,
+                search,
+                sort_by: 'name'
+              })}
               onSelection={props.onAssociationInputChange.bind(this, 'name_id', 'name')}
               renderOption={NamesTransform.toDropdown.bind(this)}
               searchQuery={props.item.name && props.item.name.name}
