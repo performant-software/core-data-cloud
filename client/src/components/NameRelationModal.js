@@ -12,8 +12,7 @@ import { Name as NameType } from '../types/Name';
 import useParams from '../hooks/ParsedParams';
 
 type Props = EditContainerProps & {
-  item: any,
-  nameableModel: string
+  item: any
 };
 
 const NameRelationModal: AbstractComponent<any> = (props: Props) => {
@@ -58,7 +57,6 @@ const NameRelationModal: AbstractComponent<any> = (props: Props) => {
               }}
               onChange={props.onTextInputChange.bind(this, 'name')}
               onSearch={(search) => NamesService.fetchAll({
-                nameable_model: props.nameableModel,
                 project_id: projectId,
                 search,
                 sort_by: 'name'

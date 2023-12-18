@@ -11,7 +11,6 @@ import useParams from '../hooks/ParsedParams';
 
 type Props = EditContainerProps & {
   idsToFilter?: Array<number>,
-  nameableModel: string,
   onClose: () => void,
   onSetName: (items: Array<NameType>) => any,
   projectId: number,
@@ -32,8 +31,7 @@ const NamesSelectize = (props: Props) => {
     NamesService
       .fetchAll({
         ...params,
-        project_id: projectId,
-        nameable_model: props.nameableModel
+        project_id: projectId
       })
       .then((res) => {
         let newData = res.data?.names;

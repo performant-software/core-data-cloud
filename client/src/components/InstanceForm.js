@@ -52,10 +52,7 @@ const InstanceForm = (props: Props) => {
         items={props.item.source_titles}
         modal={{
           component: NameRelationModal,
-          onSave: (sourceTitle: SourceTitleType) => SourcesUtils.insertSourceTitle(props, sourceTitle),
-          props: {
-            nameableModel: 'instances'
-          }
+          onSave: (sourceTitle: SourceTitleType) => SourcesUtils.insertSourceTitle(props, sourceTitle)
         }}
         onSave={props.onSaveChildAssociation.bind(this, 'source_titles')}
         onDelete={props.onDeleteChildAssociation.bind(this, 'source_titles')}
