@@ -1,12 +1,13 @@
 // @flow
 
-import { SimpleEditPage } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import React, { type AbstractComponent } from 'react';
 import initialize from '../hooks/Item';
 import type { Organization as OrganizationType } from '../types/Organization';
 import OrganizationForm from '../components/OrganizationForm';
 import OrganizationService from '../services/Organizations';
+import Relationships from '../components/Relationships';
+import SaveButton from '../components/SaveButton';
 import Validation from '../utils/Validation';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
 
@@ -21,17 +22,15 @@ const OrganizationPage = (props: Props) => {
   initialize(props);
 
   return (
-    <SimpleEditPage
-      {...props}
-    >
-      <SimpleEditPage.Tab
-        key='default'
-      >
-        <OrganizationForm
-          {...props}
-        />
-      </SimpleEditPage.Tab>
-    </SimpleEditPage>
+    <>
+      <OrganizationForm
+        {...props}
+      />
+      <SaveButton
+        onClick={props.onSave}
+      />
+      <Relationships />
+    </>
   );
 };
 

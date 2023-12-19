@@ -1,12 +1,12 @@
 // @flow
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { Navigate } from 'react-router-dom';
 import _ from 'underscore';
-import RelatedMediaContents from '../pages/RelatedMediaContents';
-import RelatedOrganizations from '../pages/RelatedOrganizations';
-import RelatedPeople from '../pages/RelatedPeople';
-import RelatedPlaces from '../pages/RelatedPlaces';
+import ProjectModelRelationshipFactory from './ProjectModelRelationshipFactory';
+import RelatedMediaContents from './RelatedMediaContents';
+import RelatedOrganizations from './RelatedOrganizations';
+import RelatedPeople from './RelatedPeople';
+import RelatedPlaces from './RelatedPlaces';
 import RelationshipsService from '../services/Relationships';
 import { Types } from '../utils/ProjectModels';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
@@ -97,23 +97,12 @@ const ProjectModelRelationshipsFactory = () => {
     return null;
   }
 
-  /**
-   * If a relationship exists, navigate to the edit page for that record.
-   */
   const relationship = _.first(relationships);
 
-  if (relationship) {
-    return (
-      <Navigate to={`${relationship.id}`} />
-
-    );
-  }
-
-  /**
-   * If no relationship exists, navigate to the edit page for a new relationship record.
-   */
   return (
-    <Navigate to='new' />
+    <ProjectModelRelationshipFactory
+      relationshipId={relationship?.id}
+    />
   );
 };
 

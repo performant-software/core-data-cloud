@@ -1,12 +1,13 @@
 // @flow
 
-import { SimpleEditPage } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import React, { type AbstractComponent } from 'react';
 import initialize from '../hooks/Item';
 import PeopleService from '../services/People';
 import type { Person as PersonType } from '../types/Place';
 import PersonForm from '../components/PersonForm';
+import Relationships from '../components/Relationships';
+import SaveButton from '../components/SaveButton';
 import Validation from '../utils/Validation';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
 
@@ -21,17 +22,15 @@ const PersonPage = (props: Props) => {
   initialize(props);
 
   return (
-    <SimpleEditPage
-      {...props}
-    >
-      <SimpleEditPage.Tab
-        key='default'
-      >
-        <PersonForm
-          {...props}
-        />
-      </SimpleEditPage.Tab>
-    </SimpleEditPage>
+    <>
+      <PersonForm
+        {...props}
+      />
+      <SaveButton
+        onClick={props.onSave}
+      />
+      <Relationships />
+    </>
   );
 };
 

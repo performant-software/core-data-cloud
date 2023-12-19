@@ -1,41 +1,39 @@
 // @flow
 
-import { AssociatedDropdown, SimpleEditPage } from '@performant-software/semantic-components';
+import { AssociatedDropdown } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
-import React, { useCallback, useState } from 'react';
-import { Form } from 'semantic-ui-react';
-import { initialize, useRelationship, withRelationshipEditPage } from '../hooks/Relationship';
+import React, { useCallback, useContext, useState } from 'react';
+import { Form, Modal } from 'semantic-ui-react';
 import ListViews from '../constants/ListViews';
-import PlaceModal from '../components/PlaceModal';
+import PlaceModal from './PlaceModal';
 import PlaceTransform from '../transforms/Place';
 import PlacesService from '../services/Places';
-import RelatedViewMenu from '../components/RelatedViewMenu';
+import ProjectModelRelationshipContext from '../context/ProjectModelRelationship';
+import RelatedViewMenu from './RelatedViewMenu';
 import type { Relationship as RelationshipType } from '../types/Relationship';
-import useParams from '../hooks/ParsedParams';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
+import { useRelationship } from '../hooks/Relationship';
+import { useTranslation } from 'react-i18next';
 
 type Props = EditContainerProps & {
   item: RelationshipType
 };
 
-const RelatedPlaceForm = (props: Props) => {
+const RelatedPlaceModal = (props: Props) => {
   const [view, setView] = useState(ListViews.all);
 
-  const { projectModelRelationshipId } = useParams();
+  const { projectModelRelationship } = useContext(ProjectModelRelationshipContext);
   const { foreignProjectModelId } = useProjectModelRelationship();
 
   const {
     foreignKey,
     foreignObject,
     foreignObjectName,
-    label
+    label: name
   } = useRelationship(props);
 
-  /**
-   * Sets the required foreign keys on the state.
-   */
-  initialize(props);
+  const { t } = useTranslation();
 
   /**
    * Calls the GET API endpoint for places.
@@ -51,15 +49,21 @@ const RelatedPlaceForm = (props: Props) => {
   ), [foreignProjectModelId, view]);
 
   return (
-    <SimpleEditPage
-      {...props}
+    <Modal
+      as={Form}
+      centered={false}
+      noValidate
+      open
     >
-      <SimpleEditPage.Tab
-        key='default'
-      >
+      <Modal.Header
+        content={props.item.id
+          ? t('Common.labels.related.edit', { name })
+          : t('Common.labels.related.add', { name })}
+      />
+      <Modal.Content>
         <Form.Input
           error={props.isError(foreignKey)}
-          label={label}
+          label={name}
           required={props.isRequired(foreignKey)}
         >
           <AssociatedDropdown
@@ -85,19 +89,21 @@ const RelatedPlaceForm = (props: Props) => {
             value={props.item[foreignKey]}
           />
         </Form.Input>
-        <UserDefinedFieldsForm
-          data={props.item.user_defined}
-          defineableId={projectModelRelationshipId}
-          defineableType='CoreDataConnector::ProjectModelRelationship'
-          isError={props.isError}
-          onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
-          onClearValidationError={props.onClearValidationError}
-          tableName='CoreDataConnector::Relationship'
-        />
-      </SimpleEditPage.Tab>
-    </SimpleEditPage>
+        { projectModelRelationship && (
+          <UserDefinedFieldsForm
+            data={props.item.user_defined}
+            defineableId={projectModelRelationship.id}
+            defineableType='CoreDataConnector::ProjectModelRelationship'
+            isError={props.isError}
+            onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
+            onClearValidationError={props.onClearValidationError}
+            tableName='CoreDataConnector::Relationship'
+          />
+        )}
+      </Modal.Content>
+      { props.children }
+    </Modal>
   );
 };
 
-const RelatedPlace = withRelationshipEditPage(RelatedPlaceForm);
-export default RelatedPlace;
+export default RelatedPlaceModal;

@@ -3,30 +3,32 @@
 import { ListTable } from '@performant-software/semantic-components';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
-import RelationshipsService from '../services/Relationships';
-import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
+import RelatedPersonModal from './RelatedPersonModal';
 import useRelationships from '../hooks/Relationships';
 
-const RelatedOrganizations = () => {
-  const navigate = useNavigate();
-  const { parameters } = useProjectModelRelationship();
-  const { resolveAttributeValue } = useRelationships();
+const RelatedPeople = () => {
+  const {
+    foreignKey,
+    onDelete,
+    onInitialize,
+    onLoad,
+    onSave,
+    resolveAttributeValue
+  } = useRelationships();
+
   const { t } = useTranslation();
 
   return (
     <ListTable
       actions={[{
-        name: 'edit',
-        onClick: (relationship) => navigate(`${relationship.id}`)
+        name: 'edit'
       }, {
         name: 'delete'
       }]}
       addButton={{
         basic: false,
         color: 'blue',
-        location: 'top',
-        onClick: () => navigate('new')
+        location: 'top'
       }}
       collectionName='relationships'
       columns={[{
@@ -40,11 +42,19 @@ const RelatedOrganizations = () => {
         resolve: resolveAttributeValue.bind(this, 'first_name'),
         sortable: true
       }]}
-      onDelete={(relationship) => RelationshipsService.delete(relationship)}
-      onLoad={(params) => RelationshipsService.fetchAll({ ...params, ...parameters })}
+      modal={{
+        component: RelatedPersonModal,
+        props: {
+          onInitialize,
+          required: [foreignKey]
+        }
+      }}
+      onDelete={onDelete}
+      onLoad={onLoad}
+      onSave={onSave}
       searchable
     />
   );
 };
 
-export default RelatedOrganizations;
+export default RelatedPeople;

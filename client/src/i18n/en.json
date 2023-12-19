@@ -19,13 +19,18 @@
       "add": "Add",
       "cancel": "Cancel",
       "delete": "Delete",
-      "edit": "Edit"
+      "edit": "Edit",
+      "upload": "Upload"
     },
     "columns":{
       "uuid": "Identifier"
     },
     "labels": {
-      "project": "Project"
+      "project": "Project",
+      "related": {
+        "add": "Add {{name}}",
+        "edit": "Edit {{name}}"
+      }
     },
     "tabs": {
       "details": "Details",

@@ -17,7 +17,7 @@ const OrganizationForm = (props: Props) => {
   const { t } = useTranslation();
 
   return (
-    <>
+    <Form>
       <Header
         content={t('OrganizationForm.labels.names')}
       />
@@ -65,7 +65,7 @@ const OrganizationForm = (props: Props) => {
           tableName='CoreDataConnector::Organization'
         />
       )}
-    </>
+    </Form>
   );
 };
 

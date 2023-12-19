@@ -2,15 +2,16 @@
 
 import { DropdownButton, ItemList, LazyMedia } from '@performant-software/semantic-components';
 import React, { useCallback, useContext, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import _ from 'underscore';
-import MediaContentsSelectize from '../components/MediaContentsSelectize';
-import MediaContentsUploadModal from '../components/MediaContentsUploadModal';
-import RelationshipsService from '../services/Relationships';
+import MediaContentsSelectize from './MediaContentsSelectize';
+import MediaContentsUploadModal from './MediaContentsUploadModal';
 import ProjectContext from '../context/Project';
+import RelatedMediaContentModal from './RelatedMediaContentModal';
+import RelationshipsService from '../services/Relationships';
+import useParams from '../hooks/ParsedParams';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 import useRelationships from '../hooks/Relationships';
-import { useTranslation } from 'react-i18next';
 
 const Modal = {
   upload: 0,
@@ -22,10 +23,17 @@ const RelatedMediaContents = () => {
   const [saved, setSaved] = useState(false);
 
   const { projectModel } = useContext(ProjectContext);
-  const navigate = useNavigate();
   const { itemId } = useParams();
-  const { foreignProjectModelId, parameters, projectModelRelationship } = useProjectModelRelationship();
-  const { resolveAttributeValue } = useRelationships();
+  const { foreignProjectModelId, projectModelRelationship } = useProjectModelRelationship();
+
+  const {
+    onDelete,
+    onInitialize,
+    onLoad,
+    onSave,
+    resolveAttributeValue
+  } = useRelationships();
+
   const { t } = useTranslation();
 
   /**
@@ -73,7 +81,7 @@ const RelatedMediaContents = () => {
    *
    * @type {(function(*): void)|*}
    */
-  const onSave = useCallback((mediaContents) => {
+  const onModalSave = useCallback((mediaContents) => {
     const relationships = _.map(mediaContents, (mediaContent) => (
       projectModelRelationship.inverse
         ? createInverseRelationship(mediaContent)
@@ -93,13 +101,12 @@ const RelatedMediaContents = () => {
       <ItemList
         actions={[{
           basic: false,
-          name: 'edit',
-          onClick: (item) => navigate(`${item.id}`)
+          name: 'edit'
         }, {
           basic: false,
           name: 'delete'
         }]}
-        addButton={undefined}
+        addButton={{}}
         buttons={[{
           render: () => (
             <DropdownButton
@@ -124,8 +131,15 @@ const RelatedMediaContents = () => {
           )
         }]}
         collectionName='relationships'
-        onDelete={(relationship) => RelationshipsService.delete(relationship)}
-        onLoad={(params) => RelationshipsService.fetchAll({ ...params, ...parameters })}
+        modal={{
+          component: RelatedMediaContentModal,
+          props: {
+            onInitialize
+          }
+        }}
+        onDelete={onDelete}
+        onLoad={onLoad}
+        onSave={onSave}
         renderEmptyList={() => null}
         renderHeader={resolveAttributeValue.bind(this, 'name')}
         renderImage={(relationship) => (
@@ -146,14 +160,14 @@ const RelatedMediaContents = () => {
       { modal === Modal.upload && (
         <MediaContentsUploadModal
           onClose={() => setModal(null)}
-          onSave={onSave}
+          onSave={onModalSave}
         />
       )}
       { modal === Modal.link && (
         <MediaContentsSelectize
           projectModelId={foreignProjectModelId}
           onClose={() => setModal(null)}
-          onSave={onSave}
+          onSave={onModalSave}
         />
       )}
     </>

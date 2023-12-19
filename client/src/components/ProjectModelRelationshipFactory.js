@@ -1,14 +1,14 @@
 // flow
 
 import React, { useMemo } from 'react';
-import RelatedMediaContent from '../pages/RelatedMediaContent';
-import RelatedOrganization from '../pages/RelatedOrganization';
-import RelatedPerson from '../pages/RelatedPerson';
-import RelatedPlace from '../pages/RelatedPlace';
+import RelatedMediaContent from './RelatedMediaContent';
+import RelatedOrganization from './RelatedOrganization';
+import RelatedPerson from './RelatedPerson';
+import RelatedPlace from './RelatedPlace';
 import { Types } from '../utils/ProjectModels';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 
-const ProjectModelRelationshipFactory = () => {
+const ProjectModelRelationshipFactory = (props) => {
   const { projectModelRelationship } = useProjectModelRelationship();
 
   /**
@@ -26,19 +26,35 @@ const ProjectModelRelationshipFactory = () => {
 
   switch (classView) {
     case Types.MediaContent:
-      component = <RelatedMediaContent />;
+      component = (
+        <RelatedMediaContent
+          relationshipId={props.relationshipId}
+        />
+      );
       break;
 
     case Types.Organization:
-      component = <RelatedOrganization />;
+      component = (
+        <RelatedOrganization
+          relationshipId={props.relationshipId}
+        />
+      );
       break;
 
     case Types.Person:
-      component = <RelatedPerson />;
+      component = (
+        <RelatedPerson
+          relationshipId={props.relationshipId}
+        />
+      );
       break;
 
     case Types.Place:
-      component = <RelatedPlace />;
+      component = (
+        <RelatedPlace
+          relationshipId={props.relationshipId}
+        />
+      );
       break;
 
     default:

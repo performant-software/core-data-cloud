@@ -1,44 +1,16 @@
 // @flow
 
-import { useContext, useEffect, useMemo } from 'react';
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import ProjectContext from '../context/Project';
 import RelationshipsService from '../services/Relationships';
 import useParams from './ParsedParams';
 import useProjectModelRelationship from './ProjectModelRelationship';
-import Validation from '../utils/Validation';
-import withReactRouterEditPage from './ReactRouterEditPage';
-
-/**
- * Sets the required foreign keys on the state when creating a relationships record.
- *
- * @param item
- * @param onSetState
- */
-const initialize = ({ item, onSetState }) => {
-  const { projectModel } = useContext(ProjectContext);
-  const { itemId } = useParams();
-  const { projectModelRelationship } = useProjectModelRelationship();
-
-  useEffect(() => {
-    if (onSetState && !item?.id) {
-      if (projectModelRelationship.inverse) {
-        onSetState({
-          project_model_relationship_id: projectModelRelationship?.id,
-          primary_record_type: projectModelRelationship?.primary_model?.model_class,
-          related_record_id: itemId,
-          related_record_type: projectModel?.model_class
-        });
-      } else {
-        onSetState({
-          project_model_relationship_id: projectModelRelationship?.id,
-          primary_record_id: itemId,
-          primary_record_type: projectModel?.model_class,
-          related_record_type: projectModelRelationship?.related_model?.model_class
-        });
-      }
-    }
-  }, [item.id, itemId, projectModel, projectModelRelationship]);
-};
 
 /**
  * Sets the required foreign keys on the state when creating a primary record from within a relationship.
@@ -60,8 +32,33 @@ const initializeRelated = ({ item, onSetState }) => {
   }, [item.id, projectModelRelationship]);
 };
 
-const useRelationship = ({ item }) => {
+/**
+ * Hook to provide helpers to relationship edit forms.
+ *
+ * @param props
+ *
+ * @returns {{
+ *  onSave: (function(*): Promise<Awaited<*>>),
+ *  foreignObject: (Types.Organization|PackageJson.Person|google.maps.Place),
+ *  foreignObjectName: string,
+ *  label: string,
+ *  foreignKey: string,
+ *  onSelection: (function(*): (void|*))
+*  }}
+ */
+const useRelationship = (props) => {
+  const [save, setSave] = useState();
+
+  const { projectModel } = useContext(ProjectContext);
+  const { itemId } = useParams();
   const { projectModelRelationship } = useProjectModelRelationship();
+
+  const {
+    item,
+    onAssociationInputChange,
+    onSave: onRecordSave,
+    onSetState
+  } = props;
 
   /**
    * Returns the foreign key for the current relationship.
@@ -107,33 +104,90 @@ const useRelationship = ({ item }) => {
       : projectModelRelationship.related_model.name_singular
   ), [projectModelRelationship]);
 
+  /**
+   * Resets the state with the passed relationship and returns a Promise resolving the related record.
+   *
+   * @type {function(*): Promise<Awaited<*>>}
+   */
+  const onSave = useCallback((relationship) => {
+    onSetState({ ...relationship });
+    return Promise.resolve({ ...relationship[foreignObjectName] });
+  }, [foreignObjectName, onSetState]);
+
+  /**
+   * Sets the new value on the state.
+   *
+   * @type {(function(*): void)|*}
+   */
+  const onChange = useCallback((value) => {
+    // Set the new value on the state
+    onAssociationInputChange(foreignKey, foreignObjectName, value);
+
+    // Trigger an auto-save
+    setSave(true);
+  }, [foreignKey, foreignObjectName]);
+
+  /**
+   * Deletes the current item.
+   *
+   * @type {function(): Promise<AxiosResponse<T>>|*}
+   */
+  const onDelete = useCallback(() => RelationshipsService.delete(item), [item]);
+
+  /**
+   * Calls the onChange or onDelete function based on the passed value.
+   *
+   * @type {function(*): void|*}
+   */
+  const onSelection = useCallback((value) => (
+    value ? onChange(value) : onDelete()
+  ), [onChange, onDelete]);
+
+  /**
+   * Saves the record after a related record has been changed. We only want to do this when the user makes a
+   * manual selection on the form.
+   */
+  useEffect(() => {
+    if (save) {
+      onRecordSave();
+      setSave(false);
+    }
+  }, [save, onRecordSave]);
+
+  /**
+   * Sets the required foreign keys on the state.
+   */
+  useEffect(() => {
+    if (onSetState && !item?.id) {
+      if (projectModelRelationship.inverse) {
+        onSetState({
+          project_model_relationship_id: projectModelRelationship?.id,
+          primary_record_type: projectModelRelationship?.primary_model?.model_class,
+          related_record_id: itemId,
+          related_record_type: projectModel?.model_class
+        });
+      } else {
+        onSetState({
+          project_model_relationship_id: projectModelRelationship?.id,
+          primary_record_id: itemId,
+          primary_record_type: projectModel?.model_class,
+          related_record_type: projectModelRelationship?.related_model?.model_class
+        });
+      }
+    }
+  }, [item.id, itemId, projectModel, projectModelRelationship]);
+
   return {
     foreignKey,
     foreignObject,
     foreignObjectName,
-    label
+    label,
+    onSave,
+    onSelection
   };
 };
 
-const withRelationshipEditPage = (RelationshipForm) => withReactRouterEditPage(RelationshipForm, {
-  id: 'relationshipId',
-  onInitialize: (id) => (
-    RelationshipsService
-      .fetchOne(id)
-      .then(({ data }) => data.relationship)
-  ),
-  onSave: (relationship) => (
-    RelationshipsService
-      .save(relationship)
-      .then(({ data }) => data.relationship)
-  ),
-  required: ['related_record_id'],
-  resolveValidationError: Validation.resolveUpdateError.bind(this)
-});
-
 export {
-  initialize,
   initializeRelated,
-  useRelationship,
-  withRelationshipEditPage
+  useRelationship
 };

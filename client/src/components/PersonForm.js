@@ -17,7 +17,7 @@ const PersonForm = (props: Props) => {
   const { t } = useTranslation();
 
   return (
-    <>
+    <Form>
       <Header
         content={t('PersonForm.labels.names')}
       />
@@ -68,7 +68,7 @@ const PersonForm = (props: Props) => {
           tableName='CoreDataConnector::Person'
         />
       )}
-    </>
+    </Form>
   );
 };
 

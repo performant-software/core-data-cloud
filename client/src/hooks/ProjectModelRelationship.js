@@ -1,20 +1,14 @@
 // @flow
 
 import { useContext, useMemo } from 'react';
-import _ from 'underscore';
 import ProjectContext from '../context/Project';
+import ProjectModelRelationshipContext from '../context/ProjectModelRelationship';
 import useParams from './ParsedParams';
 
 const useProjectModelRelationship = () => {
   const { projectModel } = useContext(ProjectContext);
-  const { itemId, projectModelRelationshipId } = useParams();
-
-  /**
-   * Set the current relationship based on the current project model's relationships.
-   */
-  const projectModelRelationship = useMemo(() => ({
-    ..._.findWhere(projectModel?.all_project_model_relationships, { id: projectModelRelationshipId })
-  }), [projectModel, projectModelRelationshipId]);
+  const { projectModelRelationship } = useContext(ProjectModelRelationshipContext);
+  const { itemId } = useParams();
 
   /**
    * Sets the project model ID for the "foreign" model.
@@ -23,8 +17,8 @@ const useProjectModelRelationship = () => {
    */
   const foreignProjectModelId = useMemo(() => (
     projectModelRelationship?.inverse
-      ? projectModelRelationship.primary_model_id
-      : projectModelRelationship.related_model_id
+      ? projectModelRelationship?.primary_model_id
+      : projectModelRelationship?.related_model_id
   ), [projectModelRelationship]);
 
   /**

@@ -14,8 +14,6 @@ import ProjectEdit from './pages/ProjectEdit';
 import ProjectImport from './pages/ProjectImport';
 import ProjectModel from './pages/ProjectModel';
 import ProjectModelFactory from './components/ProjectModelFactory';
-import ProjectModelRelationshipFactory from './components/ProjectModelRelationshipFactory';
-import ProjectModelRelationshipsFactory from './components/ProjectModelRelationshipsFactory';
 import ProjectModels from './pages/ProjectModels';
 import ProjectModelsFactory from './components/ProjectModelsFactory';
 import ProjectSettingsContextProvider from './components/ProjectSettingsContextProvider';
@@ -129,22 +127,6 @@ const App: ComponentType<any> = useDragDrop(() => (
                   index
                   element={<ProjectModelFactory />}
                 />
-                <Route
-                  path=':projectModelRelationshipId'
-                >
-                  <Route
-                    index
-                    element={<ProjectModelRelationshipsFactory />}
-                  />
-                  <Route
-                    path='new'
-                    element={<ProjectModelRelationshipFactory />}
-                  />
-                  <Route
-                    path=':relationshipId'
-                    element={<ProjectModelRelationshipFactory />}
-                  />
-                </Route>
               </Route>
             </Route>
           </Route>
