@@ -37,7 +37,6 @@ class Item extends BaseTransform {
    * @returns {{text: string, value: number, key: number}}
    */
   toDropdown(item: ItemType) {
-    console.log(item);
     return {
       key: item.id,
       value: item.id,

@@ -126,12 +126,6 @@
       "edit": "Edit Name"
     }
   },
-  "NamesSelectize": {
-    "title": "Add Name",
-    "labels": {
-      "primary": "Primary"
-    }
-  },
   "OrganizationForm": {
     "labels": {
       "description": "Description",

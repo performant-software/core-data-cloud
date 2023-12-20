@@ -1,10 +1,9 @@
 // @flow
 
 import { BaseService } from '@performant-software/shared-components';
-import NamesTransform from '../transforms/Names';
 
 /**
- * Class responsible for handling all work API requests.
+ * Class responsible for handling all name API requests.
  */
 class Names extends BaseService {
   /**
@@ -14,15 +13,6 @@ class Names extends BaseService {
    */
   getBaseUrl(): string {
     return '/core_data/names';
-  }
-
-  /**
-   * Returns the name transform object.
-   *
-   * @returns {NamesTransform}
-   */
-  getTransform() {
-    return NamesTransform;
   }
 }
 

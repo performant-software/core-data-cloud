@@ -21,7 +21,6 @@ import { useTranslation } from 'react-i18next';
 
 const Items: AbstractComponent<any> = () => {
   const [view, setView] = useState(Views.all);
-  const [saved] = useState(false);
 
   const { t } = useTranslation();
 
@@ -53,8 +52,7 @@ const Items: AbstractComponent<any> = () => {
           onClick: (item) => navigate(`${item.id}`)
         }, {
           accept: (item) => PermissionsService.canDeleteRecord(projectModel, item),
-          name: 'delete',
-          label: t('Items.columnsid')
+          name: 'delete'
         }]}
         addButton={{
           basic: false,
@@ -75,7 +73,6 @@ const Items: AbstractComponent<any> = () => {
           project_model_id: projectModelId,
           view
         })}
-        saved={saved}
         searchable
       />
     </>

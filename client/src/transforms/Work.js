@@ -5,10 +5,20 @@ import type { Work as WorkType } from '../types/Work';
 import SourceTitles from './SourceTitles';
 
 class Work extends BaseTransform {
+  /**
+   * Returns the work parameter name.
+   *
+   * @returns {string}
+   */
   getParameterName(): string {
     return 'work';
   }
 
+  /**
+   * Returns the work payload keys.
+   *
+   * @returns {string[]}
+   */
   getPayloadKeys(): string[] {
     return [
       'project_model_id',

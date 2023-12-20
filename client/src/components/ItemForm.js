@@ -3,7 +3,7 @@
 import { BooleanIcon, EmbeddedList } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Header } from 'semantic-ui-react';
 import type { Item as ItemType } from '../types/Item';
@@ -17,12 +17,6 @@ type Props = EditContainerProps & {
 
 const ItemForm = (props: Props) => {
   const { t } = useTranslation();
-
-  const sourceTitlesRef = useRef<Array<SourceTitleType>>([]);
-
-  useEffect(() => {
-    sourceTitlesRef.current = { ...props.item.source_titles || [] };
-  }, [props.item]);
 
   return (
     <>
