@@ -63,8 +63,9 @@ const Works: AbstractComponent<any> = () => {
         collectionName='works'
         columns={[{
           label: t('Works.columns.name'),
-          name: 'primary_name',
-          resolve: (work) => work.primary_name?.name?.name
+          name: 'core_data_connector_names.name',
+          resolve: (work) => work.primary_name?.name?.name,
+          sortable: true
         }]}
         key={view}
         onDelete={(work) => WorksService.delete(work)}

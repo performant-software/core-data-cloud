@@ -63,8 +63,9 @@ const Items: AbstractComponent<any> = () => {
         collectionName='items'
         columns={[{
           label: t('Items.columns.name'),
-          name: 'primary_name',
-          resolve: (item) => item.primary_name?.name?.name
+          name: 'core_data_connector_names.name',
+          resolve: (item) => item.primary_name?.name?.name,
+          sortable: true
         }]}
         key={view}
         onDelete={(item) => ItemsService.delete(item)}
