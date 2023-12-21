@@ -81,7 +81,7 @@ const RelatedWorkForm = (props: Props) => {
               )
             }}
             renderOption={WorkTransform.toDropdown.bind(this)}
-            searchQuery={foreignObject?.name}
+            searchQuery={foreignObject?.primary_name?.name.name}
             value={props.item[foreignKey]}
           />
         </Form.Input>
