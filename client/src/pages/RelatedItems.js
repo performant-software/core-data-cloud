@@ -30,9 +30,10 @@ const RelatedItems = () => {
       }}
       collectionName='relationships'
       columns={[{
-        name: 'primary_name',
+        name: 'core_data_connector_names.name',
         label: t('RelatedItems.columns.name'),
-        resolve: (resolveAttributeValue.bind(this, 'primary_name.name.name'))
+        resolve: (resolveAttributeValue.bind(this, 'primary_name.name.name')),
+        sortable: true
       }]}
       onDelete={(relationship) => RelationshipsService.delete(relationship)}
       onLoad={(params) => RelationshipsService.fetchAll({ ...params, ...parameters })}
