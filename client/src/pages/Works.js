@@ -7,8 +7,7 @@ import React, {
 } from 'react';
 
 import { Icon } from 'semantic-ui-react';
-import { IoDocumentsSharp } from 'react-icons/io5';
-import { IoMdDocument } from 'react-icons/io';
+import { IoBulb, IoBulbOutline } from 'react-icons/io5';
 import WorksService from '../services/Works';
 import { ListTable } from '@performant-software/semantic-components';
 import ListViewMenu from '../components/ListViewMenu';
@@ -34,12 +33,12 @@ const Works: AbstractComponent<any> = () => {
         icons={{
           all: (
             <Icon>
-              <IoDocumentsSharp />
+              <IoBulb />
             </Icon>
           ),
           owned: (
             <Icon>
-              <IoMdDocument />
+              <IoBulbOutline />
             </Icon>
           )
         }}

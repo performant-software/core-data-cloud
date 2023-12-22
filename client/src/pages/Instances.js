@@ -7,11 +7,11 @@ import React, {
 } from 'react';
 
 import { Icon } from 'semantic-ui-react';
-import { IoDocumentsSharp } from 'react-icons/io5';
-import { IoMdDocument } from 'react-icons/io';
 import InstancesService from '../services/Instances';
+import { IoMdChatbubbles } from 'react-icons/io';
 import { ListTable } from '@performant-software/semantic-components';
 import ListViewMenu from '../components/ListViewMenu';
+import { MdChatBubble } from 'react-icons/md';
 import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
@@ -34,12 +34,12 @@ const Instances: AbstractComponent<any> = () => {
         icons={{
           all: (
             <Icon>
-              <IoDocumentsSharp />
+              <IoMdChatbubbles />
             </Icon>
           ),
           owned: (
             <Icon>
-              <IoMdDocument />
+              <MdChatBubble />
             </Icon>
           )
         }}
