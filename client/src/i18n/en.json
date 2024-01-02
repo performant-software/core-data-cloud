@@ -40,6 +40,44 @@
   "Home": {
     "header": "Welcome to Rails-React Template <1>Edit <1>src/App.js</1> and save to reload.</1>"
   },
+  "InstanceForm": {
+    "labels": {
+      "names": "Names"
+    },
+    "instanceNames": {
+      "columns": {
+        "name": "Name",
+        "primary": "Primary"
+      }
+    }
+  },
+  "InstanceModal": {
+    "title": "New Instance"
+  },
+  "Instances": {
+    "columns": {
+      "name": "Name"
+    }
+  },
+  "ItemForm": {
+    "labels": {
+      "names": "Names"
+    },
+    "itemNames": {
+      "columns": {
+        "name": "Name",
+        "primary": "Primary"
+      }
+    }
+  },
+  "ItemModal": {
+    "title": "New Item"
+  },
+  "Items": {
+    "columns": {
+      "name": "Name"
+    }
+  },
   "ListViewMenu": {
     "labels": {
       "all": "All {{name}}",
@@ -68,6 +106,25 @@
   },
   "MediaContentsSelectize": {
     "title": "Select Media"
+  },
+  "NameModal": {
+    "labels": {
+      "name": "Name"
+    },
+    "title": {
+      "add": "Add Name",
+      "edit": "Edit Name"
+    }
+  },
+  "NameRelationModal": {
+    "labels": {
+      "name": "Name",
+      "primary": "Primary"
+    },
+    "title": {
+      "add": "Add Name",
+      "edit": "Edit Name"
+    }
   },
   "OrganizationForm": {
     "labels": {
@@ -292,6 +349,16 @@
       "updated": "Last modified"
     }
   },
+  "RelatedInstances": {
+    "columns": {
+      "name": "Name"
+    }
+  },
+  "RelatedItems": {
+    "columns": {
+      "name": "Name"
+    }
+  },
   "RelatedMediaContents": {
     "options": {
       "link": "Link existing record",
@@ -327,6 +394,11 @@
       "all": "All {{name}}",
       "owned": "My {{name}}",
       "shared": "Shared {{name}}"
+    }
+  },
+  "RelatedWorks": {
+    "columns": {
+      "name": "Name"
     }
   },
   "Sidebar": {
@@ -411,6 +483,25 @@
   "Users": {
     "columns": {
       "email": "Email",
+      "name": "Name"
+    }
+  },
+  "WorkForm": {
+    "labels": {
+      "names": "Names"
+    },
+    "workNames": {
+      "columns": {
+        "name": "Name",
+        "primary": "Primary"
+      }
+    }
+  },
+  "WorkModal": {
+    "title": "New Work"
+  },
+  "Works": {
+    "columns": {
       "name": "Name"
     }
   }

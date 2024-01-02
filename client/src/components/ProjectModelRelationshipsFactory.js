@@ -11,6 +11,9 @@ import RelatedTaxonomyItems from '../pages/RelatedTaxonomyItems';
 import RelationshipsService from '../services/Relationships';
 import { Types } from '../utils/ProjectModels';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
+import RelatedInstances from '../pages/RelatedInstances';
+import RelatedItems from '../pages/RelatedItems';
+import RelatedWorks from '../pages/RelatedWorks';
 
 const ProjectModelRelationshipsFactory = () => {
   const [loaded, setLoaded] = useState(false);
@@ -63,6 +66,18 @@ const ProjectModelRelationshipsFactory = () => {
   }
 
   if (multiple) {
+    if (classView === Types.Instance) {
+      return (
+        <RelatedInstances />
+      );
+    }
+
+    if (classView === Types.Item) {
+      return (
+        <RelatedItems />
+      );
+    }
+
     if (classView === Types.MediaContent) {
       return (
         <RelatedMediaContents />
@@ -90,6 +105,12 @@ const ProjectModelRelationshipsFactory = () => {
     if (classView === Types.Taxonomy) {
       return (
         <RelatedTaxonomyItems />
+      );
+    }
+
+    if (classView === Types.Work) {
+      return (
+        <RelatedWorks />
       );
     }
 

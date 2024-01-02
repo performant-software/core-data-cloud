@@ -11,6 +11,7 @@ import _ from 'underscore';
 import CurrentRecordContext from '../context/CurrentRecord';
 import PeopleUtils from '../utils/People';
 import ProjectContext from '../context/Project';
+import SourceUtils from '../utils/Sources';
 import { Types } from '../utils/ProjectModels';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 
@@ -44,6 +45,10 @@ const CurrentRecordContextProvider = (props: Props) => {
 
     if (!record) {
       return null;
+    }
+
+    if ([Types.Instance, Types.Item, Types.Work].includes(classView)) {
+      return SourceUtils.getNameView(record);
     }
 
     if (classView === Types.Organization) {
