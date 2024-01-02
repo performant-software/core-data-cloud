@@ -28,8 +28,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/resource-api.git
-  revision: c71d89adb4f4b1e040bc419f50443e3bd9b18ccd
-  tag: v0.5.5
+  revision: 4ebb021cb1c411e8796bb9a201867333fea3634f
+  tag: v0.5.6
   specs:
     resource_api (0.1.0)
       pagy (~> 5.10)
@@ -126,7 +126,7 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
     bcrypt (3.1.19)
-    bigdecimal (3.1.4)
+    bigdecimal (3.1.5)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
