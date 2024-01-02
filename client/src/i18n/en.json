@@ -26,6 +26,7 @@
       "uuid": "Identifier"
     },
     "labels": {
+      "all": "All {{name}}",
       "project": "Project",
       "related": {
         "add": "Add {{name}}",
@@ -209,7 +210,6 @@
   },
   "ProjectItemMenu": {
     "labels": {
-      "backToAll": "All {{name}}",
       "details": "Details"
     }
   },
@@ -231,6 +231,7 @@
       "invalidType": "\"{{type}}\" is not a valid type."
     },
     "labels": {
+      "all": "All Models",
       "name": "Name",
       "type": "Type"
     },
@@ -346,6 +347,11 @@
       "users": "Users"
     }
   },
+  "User": {
+    "labels": {
+      "allUsers": "All Users"
+    }
+  },
   "UserEditMenu": {
     "labels": {
       "details": "Details",
@@ -384,6 +390,8 @@
   },
   "UserProject": {
     "labels": {
+      "allProjects": "All Projects",
+      "allUsers": "All Users",
       "project": "Project",
       "role": "Role",
       "user": "User"
@@ -400,6 +408,9 @@
       "project": "Project",
       "role": "Role",
       "user": "User"
+    },
+    "labels": {
+      "allUsers": "All Users"
     }
   },
   "Users": {

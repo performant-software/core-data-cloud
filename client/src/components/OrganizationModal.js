@@ -2,11 +2,11 @@
 
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import React from 'react';
-import { Form, Modal } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
+import { Modal } from 'semantic-ui-react';
 import { initializeRelated } from '../hooks/Relationship';
 import type { Organization as OrganizationType } from '../types/Organization';
 import OrganizationForm from './OrganizationForm';
-import { useTranslation } from 'react-i18next';
 
 type Props = EditContainerProps & {
   item: OrganizationType
@@ -22,7 +22,6 @@ const OrganizationModal = (props: Props) => {
 
   return (
     <Modal
-      as={Form}
       centered={false}
       noValidate
       open

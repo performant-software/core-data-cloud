@@ -3,7 +3,7 @@
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Modal } from 'semantic-ui-react';
+import { Modal } from 'semantic-ui-react';
 import { initializeRelated } from '../hooks/Relationship';
 import type { Person as PersonType } from '../types/Person';
 import PersonForm from './PersonForm';
@@ -22,7 +22,6 @@ const PersonModal = (props: Props) => {
 
   return (
     <Modal
-      as={Form}
       centered={false}
       noValidate
       open

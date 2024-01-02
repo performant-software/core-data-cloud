@@ -7,6 +7,7 @@ import React, { useCallback, useContext, useState } from 'react';
 import { Form, Modal } from 'semantic-ui-react';
 import ListViews from '../constants/ListViews';
 import PeopleService from '../services/People';
+import PeopleUtils from '../utils/People';
 import PersonModal from './PersonModal';
 import PersonTransform from '../transforms/Person';
 import ProjectModelRelationshipContext from '../context/ProjectModelRelationship';
@@ -85,7 +86,7 @@ const RelatedPersonModal = (props: Props) => {
               )
             }}
             renderOption={PersonTransform.toDropdown.bind(this)}
-            searchQuery={foreignObject?.name}
+            searchQuery={PeopleUtils.getNameView(foreignObject)}
             value={props.item[foreignKey]}
           />
         </Form.Input>

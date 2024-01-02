@@ -9,12 +9,7 @@ import {
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsEmbeddedList } from '@performant-software/user-defined-fields';
 import cx from 'classnames';
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useState
-} from 'react';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaUnlockAlt } from 'react-icons/fa';
 import { FaShareFromSquare } from 'react-icons/fa6';
@@ -26,13 +21,14 @@ import {
   Message
 } from 'semantic-ui-react';
 import _ from 'underscore';
+import ItemHeader from '../components/ItemHeader';
+import ItemLayout from '../components/ItemLayout';
 import ModelClassDropdown from '../components/ModelClassDropdown';
 import type { ProjectModel as ProjectModelType } from '../types/ProjectModel';
 import ProjectModelRelationshipModal from '../components/ProjectModelRelationshipModal';
 import ProjectModelAccessesService from '../services/ProjectModelAccesses';
 import ProjectModelsService from '../services/ProjectModels';
 import ProjectModelsUtils from '../utils/ProjectModels';
-import ProjectSettingsContext from '../context/ProjectSettings';
 import ProjectsService from '../services/Projects';
 import styles from './ProjectModel.module.css';
 import useParams from '../hooks/ParsedParams';
@@ -49,7 +45,6 @@ const ProjectModelForm = (props: Props) => {
   const [accessModal, setAccessModal] = useState(false);
   const [shareModal, setShareModal] = useState(false);
 
-  const { setProjectModel } = useContext(ProjectSettingsContext);
   const { projectId } = useParams();
   const { t } = useTranslation();
 
@@ -102,258 +97,255 @@ const ProjectModelForm = (props: Props) => {
     props.onDeleteChildAssociation('all_project_model_relationships', relationship);
   }, []);
 
-  /*
-   * For a new record, set the foreign key ID based on the route parameters.
-   */
-  useEffect(() => {
-    if (!props.item.id && projectId) {
-      props.onSetState({ project_id: projectId });
-    }
-
-    setProjectModel(props.item);
-  }, []);
-
-  /**
-   * Sets the current project model on the ProjectSettings context.
-   */
-  useEffect(() => setProjectModel(props.item), [props.item]);
-
   return (
-    <SimpleEditPage
-      {...props}
-      className={styles.projectModel}
-    >
-      <SimpleEditPage.Tab
-        key='details'
-        name={t('ProjectModel.tabs.details')}
-      >
-        <Form.Input
-          error={props.isError('model_class')}
-          label={t('ProjectModel.labels.type')}
-          required={props.isRequired('model_class')}
+    <ItemLayout>
+      <ItemLayout.Header>
+        <ItemHeader
+          back={{
+            label: t('ProjectModel.labels.all'),
+            url: `/projects/${projectId}/project_models`
+          }}
+          name={props.item.name}
+        />
+      </ItemLayout.Header>
+      <ItemLayout.Content>
+        <SimpleEditPage
+          {...props}
+          className={styles.projectModel}
         >
-          <ModelClassDropdown
-            fluid
-            onChange={props.onTextInputChange.bind(this, 'model_class')}
-            value={props.item.model_class}
-          />
-        </Form.Input>
-        <Form.Input
-          error={props.isError('name')}
-          label={t('ProjectModel.labels.name')}
-          required={props.isRequired('name')}
-          onChange={props.onTextInputChange.bind(this, 'name')}
-          value={props.item.name}
-        />
-      </SimpleEditPage.Tab>
-      <SimpleEditPage.Tab
-        key='fields'
-        name={t('ProjectModel.tabs.fields')}
-      >
-        <UserDefinedFieldsEmbeddedList
-          addButton={{
-            basic: false,
-            color: 'blue',
-            location: 'top'
-          }}
-          defaults={{
-            table_name: props.item.model_class
-          }}
-          excludeColumns={['table_name']}
-          items={props.item.user_defined_fields}
-          onDelete={props.onDeleteChildAssociation.bind(this, 'user_defined_fields')}
-          onSave={props.onSaveChildAssociation.bind(this, 'user_defined_fields')}
-        />
-      </SimpleEditPage.Tab>
-      <SimpleEditPage.Tab
-        key='relationships'
-        name={t('ProjectModel.tabs.relationships')}
-      >
-        <EmbeddedList
-          actions={[{
-            name: 'edit'
-          }, {
-            name: 'delete'
-          }]}
-          addButton={{
-            basic: false,
-            color: 'blue',
-            location: 'top'
-          }}
-          columns={[{
-            name: 'model_name',
-            label: t('ProjectModel.relationships.columns.related'),
-            resolve: resolveModelName
-          }, {
-            name: 'name',
-            label: t('ProjectModel.relationships.columns.name'),
-            resolve: resolveName
-          }, {
-            name: 'multiple',
-            label: t('ProjectModel.relationships.columns.multiple'),
-            render: (relationship) => <BooleanIcon value={resolveMultiple(relationship)} />
-          }]}
-          items={props.item.all_project_model_relationships}
-          modal={{
-            component: ProjectModelRelationshipModal
-          }}
-          onDelete={onDeleteRelationship}
-          onSave={onSaveRelationship}
-        />
-      </SimpleEditPage.Tab>
-      <SimpleEditPage.Tab
-        key='access'
-        name={t('ProjectModel.tabs.access')}
-      >
-        <Message
-          className={cx(styles.ui, styles.icon, styles.message)}
-          color='blue'
-          icon
-        >
-          <Icon
-            className={styles.icon}
+          <SimpleEditPage.Tab
+            key='details'
+            name={t('ProjectModel.tabs.details')}
           >
-            <FaUnlockAlt
-              size='1rem'
+            <Form.Input
+              error={props.isError('model_class')}
+              label={t('ProjectModel.labels.type')}
+              required={props.isRequired('model_class')}
+            >
+              <ModelClassDropdown
+                fluid
+                onChange={props.onTextInputChange.bind(this, 'model_class')}
+                value={props.item.model_class}
+              />
+            </Form.Input>
+            <Form.Input
+              error={props.isError('name')}
+              label={t('ProjectModel.labels.name')}
+              required={props.isRequired('name')}
+              onChange={props.onTextInputChange.bind(this, 'name')}
+              value={props.item.name}
             />
-          </Icon>
-          { t('ProjectModel.accesses.message', { name: props.item.name }) }
-        </Message>
-        <EmbeddedList
-          actions={[{
-            name: 'delete'
-          }]}
-          addButton={{
-            basic: false,
-            color: 'blue',
-            location: 'top',
-            onClick: () => setAccessModal(true)
-          }}
-          columns={[{
-            name: 'project_name',
-            label: t('ProjectModel.accesses.columns.name'),
-            resolve: (projectModelAccess) => projectModelAccess.project.name
-          }]}
-          items={props.item.project_model_accesses}
-          onDelete={props.onDeleteChildAssociation.bind(this, 'project_model_accesses')}
-          onSave={props.onSaveChildAssociation.bind(this, 'project_model_accesses')}
-        />
-        { accessModal && (
-          <Selectize
-            collectionName='projects'
-            onClose={() => setAccessModal(false)}
-            onLoad={(params) => ProjectsService.fetchAll({
-              ...params,
-              discoverable: true,
-              project_id: props.item.project_id,
-              sort_by: 'name'
-            })}
-            onSave={(projects) => {
-              const find = (project) => _.findWhere(props.item.project_model_accesses, { project_id: project.id });
-              const create = (project) => ({ uid: uuid(), project_id: project.id, project });
-
-              props.onMultiAddChildAssociations(
-                'project_model_accesses',
-                _.map(projects, (project) => find(project) || create(project))
-              );
-
-              setAccessModal(false);
-            }}
-            renderItem={(project) => project.name}
-            selectedItems={_.pluck(props.item.project_model_accesses, 'project')}
-            title={t('ProjectModel.accesses.title')}
-            width='60%'
-          />
-        )}
-      </SimpleEditPage.Tab>
-      <SimpleEditPage.Tab
-        key='share'
-        name={t('ProjectModel.tabs.share')}
-      >
-        <Message
-          className={cx(styles.ui, styles.icon, styles.message)}
-          color='blue'
-          icon
-        >
-          <Icon
-            className={styles.icon}
+          </SimpleEditPage.Tab>
+          <SimpleEditPage.Tab
+            key='fields'
+            name={t('ProjectModel.tabs.fields')}
           >
-            <FaShareFromSquare
-              size='1rem'
+            <UserDefinedFieldsEmbeddedList
+              addButton={{
+                basic: false,
+                color: 'blue',
+                location: 'top'
+              }}
+              defaults={{
+                table_name: props.item.model_class
+              }}
+              excludeColumns={['table_name']}
+              items={props.item.user_defined_fields}
+              onDelete={props.onDeleteChildAssociation.bind(this, 'user_defined_fields')}
+              onSave={props.onSaveChildAssociation.bind(this, 'user_defined_fields')}
             />
-          </Icon>
-          { t('ProjectModel.shares.message', { name: props.item.name }) }
-        </Message>
-        <EmbeddedList
-          actions={[{
-            name: 'delete'
-          }]}
-          addButton={{
-            basic: false,
-            color: 'blue',
-            location: 'top',
-            onClick: () => setShareModal(true)
-          }}
-          columns={[{
-            name: 'project_name',
-            label: t('ProjectModel.shares.columns.projectName'),
-            resolve: (projectModelShare) => projectModelShare.project_model_access?.project_model?.project?.name
-          }, {
-            name: 'model_name',
-            label: t('ProjectModel.shares.columns.modelName'),
-            resolve: (projectModelShare) => projectModelShare.project_model_access?.project_model?.name
-          }]}
-          items={props.item.project_model_shares}
-          onDelete={props.onDeleteChildAssociation.bind(this, 'project_model_shares')}
-          onSave={props.onSaveChildAssociation.bind(this, 'project_model_shares')}
-        />
-        { shareModal && (
-          <Selectize
-            collectionName='project_model_accesses'
-            onClose={() => setShareModal(false)}
-            onLoad={(params) => ProjectModelAccessesService.fetchAll({
-              ...params,
-              project_id: props.item.project_id,
-              model_class: props.item.model_class,
-              sort_by: [
-                'core_data_connector_projects.name',
-                'core_data_connector_project_models.name'
-              ]
-            })}
-            onSave={(projectModelAccesses) => {
-              const find = (projectModelAccess) => _.findWhere(props.item.project_model_shares, {
-                project_model_access_id: projectModelAccess.id
-              });
+          </SimpleEditPage.Tab>
+          <SimpleEditPage.Tab
+            key='relationships'
+            name={t('ProjectModel.tabs.relationships')}
+          >
+            <EmbeddedList
+              actions={[{
+                name: 'edit'
+              }, {
+                name: 'delete'
+              }]}
+              addButton={{
+                basic: false,
+                color: 'blue',
+                location: 'top'
+              }}
+              columns={[{
+                name: 'model_name',
+                label: t('ProjectModel.relationships.columns.related'),
+                resolve: resolveModelName
+              }, {
+                name: 'name',
+                label: t('ProjectModel.relationships.columns.name'),
+                resolve: resolveName
+              }, {
+                name: 'multiple',
+                label: t('ProjectModel.relationships.columns.multiple'),
+                render: (relationship) => <BooleanIcon value={resolveMultiple(relationship)} />
+              }]}
+              items={props.item.all_project_model_relationships}
+              modal={{
+                component: ProjectModelRelationshipModal
+              }}
+              onDelete={onDeleteRelationship}
+              onSave={onSaveRelationship}
+            />
+          </SimpleEditPage.Tab>
+          <SimpleEditPage.Tab
+            key='access'
+            name={t('ProjectModel.tabs.access')}
+          >
+            <Message
+              className={cx(styles.ui, styles.icon, styles.message)}
+              color='blue'
+              icon
+            >
+              <Icon
+                className={styles.icon}
+              >
+                <FaUnlockAlt
+                  size='1rem'
+                />
+              </Icon>
+              { t('ProjectModel.accesses.message', { name: props.item.name }) }
+            </Message>
+            <EmbeddedList
+              actions={[{
+                name: 'delete'
+              }]}
+              addButton={{
+                basic: false,
+                color: 'blue',
+                location: 'top',
+                onClick: () => setAccessModal(true)
+              }}
+              columns={[{
+                name: 'project_name',
+                label: t('ProjectModel.accesses.columns.name'),
+                resolve: (projectModelAccess) => projectModelAccess.project.name
+              }]}
+              items={props.item.project_model_accesses}
+              onDelete={props.onDeleteChildAssociation.bind(this, 'project_model_accesses')}
+              onSave={props.onSaveChildAssociation.bind(this, 'project_model_accesses')}
+            />
+            { accessModal && (
+              <Selectize
+                collectionName='projects'
+                onClose={() => setAccessModal(false)}
+                onLoad={(params) => ProjectsService.fetchAll({
+                  ...params,
+                  discoverable: true,
+                  project_id: props.item.project_id,
+                  sort_by: 'name'
+                })}
+                onSave={(projects) => {
+                  const find = (project) => _.findWhere(props.item.project_model_accesses, { project_id: project.id });
+                  const create = (project) => ({ uid: uuid(), project_id: project.id, project });
 
-              const create = (projectModelAccess) => ({
-                uid: uuid(),
-                project_model_access_id: projectModelAccess.id,
-                project_model_access: projectModelAccess
-              });
+                  props.onMultiAddChildAssociations(
+                    'project_model_accesses',
+                    _.map(projects, (project) => find(project) || create(project))
+                  );
 
-              props.onMultiAddChildAssociations(
-                'project_model_shares',
-                _.map(
-                  projectModelAccesses,
-                  (projectModelAccess) => find(projectModelAccess) || create(projectModelAccess)
-                )
-              );
-
-              setShareModal(false);
-            }}
-            renderItem={(projectModelAccess) => (
-              <Header
-                content={projectModelAccess.project_model.project.name}
-                subheader={projectModelAccess.project_model.name}
+                  setAccessModal(false);
+                }}
+                renderItem={(project) => project.name}
+                selectedItems={_.pluck(props.item.project_model_accesses, 'project')}
+                title={t('ProjectModel.accesses.title')}
+                width='60%'
               />
             )}
-            selectedItems={_.pluck(props.item.project_model_shares, 'project_model_access')}
-            title={t('ProjectModel.shares.title')}
-            width='60%'
-          />
-        )}
-      </SimpleEditPage.Tab>
-    </SimpleEditPage>
+          </SimpleEditPage.Tab>
+          <SimpleEditPage.Tab
+            key='share'
+            name={t('ProjectModel.tabs.share')}
+          >
+            <Message
+              className={cx(styles.ui, styles.icon, styles.message)}
+              color='blue'
+              icon
+            >
+              <Icon
+                className={styles.icon}
+              >
+                <FaShareFromSquare
+                  size='1rem'
+                />
+              </Icon>
+              { t('ProjectModel.shares.message', { name: props.item.name }) }
+            </Message>
+            <EmbeddedList
+              actions={[{
+                name: 'delete'
+              }]}
+              addButton={{
+                basic: false,
+                color: 'blue',
+                location: 'top',
+                onClick: () => setShareModal(true)
+              }}
+              columns={[{
+                name: 'project_name',
+                label: t('ProjectModel.shares.columns.projectName'),
+                resolve: (projectModelShare) => projectModelShare.project_model_access?.project_model?.project?.name
+              }, {
+                name: 'model_name',
+                label: t('ProjectModel.shares.columns.modelName'),
+                resolve: (projectModelShare) => projectModelShare.project_model_access?.project_model?.name
+              }]}
+              items={props.item.project_model_shares}
+              onDelete={props.onDeleteChildAssociation.bind(this, 'project_model_shares')}
+              onSave={props.onSaveChildAssociation.bind(this, 'project_model_shares')}
+            />
+            { shareModal && (
+              <Selectize
+                collectionName='project_model_accesses'
+                onClose={() => setShareModal(false)}
+                onLoad={(params) => ProjectModelAccessesService.fetchAll({
+                  ...params,
+                  project_id: props.item.project_id,
+                  model_class: props.item.model_class,
+                  sort_by: [
+                    'core_data_connector_projects.name',
+                    'core_data_connector_project_models.name'
+                  ]
+                })}
+                onSave={(projectModelAccesses) => {
+                  const find = (projectModelAccess) => _.findWhere(props.item.project_model_shares, {
+                    project_model_access_id: projectModelAccess.id
+                  });
+
+                  const create = (projectModelAccess) => ({
+                    uid: uuid(),
+                    project_model_access_id: projectModelAccess.id,
+                    project_model_access: projectModelAccess
+                  });
+
+                  props.onMultiAddChildAssociations(
+                    'project_model_shares',
+                    _.map(
+                      projectModelAccesses,
+                      (projectModelAccess) => find(projectModelAccess) || create(projectModelAccess)
+                    )
+                  );
+
+                  setShareModal(false);
+                }}
+                renderItem={(projectModelAccess) => (
+                  <Header
+                    content={projectModelAccess.project_model.project.name}
+                    subheader={projectModelAccess.project_model.name}
+                  />
+                )}
+                selectedItems={_.pluck(props.item.project_model_shares, 'project_model_access')}
+                title={t('ProjectModel.shares.title')}
+                width='60%'
+              />
+            )}
+          </SimpleEditPage.Tab>
+        </SimpleEditPage>
+      </ItemLayout.Content>
+    </ItemLayout>
   );
 };
 

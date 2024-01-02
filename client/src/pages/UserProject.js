@@ -2,18 +2,14 @@
 
 import { AssociatedDropdown, SimpleEditPage } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
-import React, {
-  useEffect,
-  useMemo,
-  type AbstractComponent,
-  useContext
-} from 'react';
+import React, { useEffect, useMemo, type AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
+import ItemHeader from '../components/ItemHeader';
+import ItemLayout from '../components/ItemLayout';
 import PermissionsService from '../services/Permissions';
 import Project from '../transforms/Project';
 import ProjectsService from '../services/Projects';
-import ProjectSettingsContext from '../context/ProjectSettings';
 import User from '../transforms/User';
 import type { UserProject as UserProjectType } from '../types/UserProject';
 import UserForm from '../components/UserForm';
@@ -31,7 +27,6 @@ type Props = EditContainerProps & {
 };
 
 const UserProjectForm = (props: Props) => {
-  const { setUserProject } = useContext(ProjectSettingsContext);
   const params = useParams();
   const { t } = useTranslation();
 
@@ -51,81 +46,100 @@ const UserProjectForm = (props: Props) => {
     }
   }, []);
 
-  /**
-   * Sets the current user project on the ProjectSettings context.
-   */
-  useEffect(() => setUserProject(props.item), [props.item]);
-
   return (
-    <SimpleEditPage
-      {...props}
-      editable={editable}
-    >
-      <SimpleEditPage.Tab
-        key='default'
-      >
-        { PermissionsService.canEditUsers() && params.userId && (
-          <Form.Input
-            error={props.isError('project_id')}
-            label={t('UserProject.labels.project')}
-            required
-          >
-            <AssociatedDropdown
-              collectionName='projects'
-              onSearch={(search) => ProjectsService.fetchAll({ search })}
-              onSelection={props.onAssociationInputChange.bind(this, 'project_id', 'project')}
-              renderOption={(project) => Project.toDropdown(project)}
-              searchQuery={props.item.project?.name}
-              value={props.item.project_id}
-            />
-          </Form.Input>
-        )}
-        { PermissionsService.canEditUsers() && params.projectId && (
-          <Form.Input
-            error={props.isError('user_id')}
-            label={t('UserProject.labels.user')}
-            required
-          >
-            <AssociatedDropdown
-              collectionName='users'
-              modal={{
-                component: UserModal,
-                onSave: (user) => (
-                  UsersService
-                    .save(user)
-                    .then(({ data }) => data.user)
-                )
-              }}
-              onSearch={(search) => UsersService.fetchAll({ search })}
-              onSelection={props.onAssociationInputChange.bind(this, 'user_id', 'user')}
-              renderOption={(user) => User.toDropdown(user)}
-              searchQuery={props.item.user?.name}
-              value={props.item.user_id}
-            />
-          </Form.Input>
-        )}
-        { PermissionsService.isOwner(props.item.project_id) && isNew && (
-          <UserForm
-            {...props}
+    <ItemLayout>
+      <ItemLayout.Header>
+        { params.projectId && (
+          <ItemHeader
+            back={{
+              label: t('UserProject.labels.allUsers'),
+              url: `/projects/${params.projectId}/user_projects`
+            }}
+            name={props.item.user?.name}
           />
         )}
-        { PermissionsService.isOwner(props.item.project_id) && !isNew && (
-          <UserPassword
-            {...props}
+        { params.userId && (
+          <ItemHeader
+            back={{
+              label: t('UserProject.labels.allProjects'),
+              url: `/users/${params.userId}/user_projects`
+            }}
+            name={props.item.project?.name}
           />
         )}
-        <Form.Dropdown
-          error={props.isError('role')}
-          label={t('UserProject.labels.role')}
-          onChange={props.onTextInputChange.bind(this, 'role')}
-          options={UserProjectRoles.getRoleOptions()}
-          required={props.isRequired('role')}
-          selection
-          selectOnBlur={false}
-          value={props.item.role}
-        />
-      </SimpleEditPage.Tab>
-    </SimpleEditPage>
+      </ItemLayout.Header>
+      <ItemLayout.Content>
+        <SimpleEditPage
+          {...props}
+          editable={editable}
+        >
+          <SimpleEditPage.Tab
+            key='default'
+          >
+            { PermissionsService.canEditUsers() && params.userId && (
+              <Form.Input
+                error={props.isError('project_id')}
+                label={t('UserProject.labels.project')}
+                required
+              >
+                <AssociatedDropdown
+                  collectionName='projects'
+                  onSearch={(search) => ProjectsService.fetchAll({ search })}
+                  onSelection={props.onAssociationInputChange.bind(this, 'project_id', 'project')}
+                  renderOption={(project) => Project.toDropdown(project)}
+                  searchQuery={props.item.project?.name}
+                  value={props.item.project_id}
+                />
+              </Form.Input>
+            )}
+            { PermissionsService.canEditUsers() && params.projectId && (
+              <Form.Input
+                error={props.isError('user_id')}
+                label={t('UserProject.labels.user')}
+                required
+              >
+                <AssociatedDropdown
+                  collectionName='users'
+                  modal={{
+                    component: UserModal,
+                    onSave: (user) => (
+                      UsersService
+                        .save(user)
+                        .then(({ data }) => data.user)
+                    )
+                  }}
+                  onSearch={(search) => UsersService.fetchAll({ search })}
+                  onSelection={props.onAssociationInputChange.bind(this, 'user_id', 'user')}
+                  renderOption={(user) => User.toDropdown(user)}
+                  searchQuery={props.item.user?.name}
+                  value={props.item.user_id}
+                />
+              </Form.Input>
+            )}
+            { PermissionsService.isOwner(props.item.project_id) && isNew && (
+              <UserForm
+                {...props}
+              />
+            )}
+            { PermissionsService.isOwner(props.item.project_id) && !isNew && (
+              <UserPassword
+                {...props}
+              />
+            )}
+            <Form.Dropdown
+              error={props.isError('role')}
+              label={t('UserProject.labels.role')}
+              onChange={props.onTextInputChange.bind(this, 'role')}
+              options={UserProjectRoles.getRoleOptions()}
+              required={props.isRequired('role')}
+              selection
+              selectOnBlur={false}
+              value={props.item.role}
+            />
+          </SimpleEditPage.Tab>
+        </SimpleEditPage>
+      </ItemLayout.Content>
+    </ItemLayout>
   );
 };
 

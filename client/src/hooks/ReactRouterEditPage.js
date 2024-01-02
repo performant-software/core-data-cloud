@@ -5,56 +5,50 @@ import { type EditPageConfig } from '@performant-software/shared-components/type
 import React, { useCallback, type AbstractComponent } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-type Config = {
-  ...EditPageConfig,
-  onCancel?: any
-};
+const withReactRouterEditPage = (WrappedComponent: AbstractComponent<any>, config: EditPageConfig): any => (
+  (props: any) => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const params = useParams();
 
-const withReactRouterEditPage = (WrappedComponent: AbstractComponent<any>, config: Config): any => (props: any) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const params = useParams();
+    const { pathname } = location;
+    const url = pathname.substring(0, pathname.lastIndexOf('/'));
 
-  const { pathname } = location;
-  const url = pathname.substring(0, pathname.lastIndexOf('/'));
+    const id = params[config.id];
 
-  const id = params[config.id];
+    const { state } = location;
+    const { saved, tab: defaultTab } = state || {};
 
-  const { state } = location;
-  const { saved, tab: defaultTab } = state || {};
+    /**
+     * After save, navigate to the newly created record. We'll also add the "saved" attribute to indicate a message
+     * should be displayed to the user.
+     *
+     * @type {function(*, string): *}
+     */
+    const afterSave = useCallback((item: any) => navigate(`${url}/${item.id}`), [navigate, url]);
 
-  /**
-   * After save, navigate to the newly created record. We'll also add the "saved" attribute to indicate a message
-   * should be displayed to the user.
-   *
-   * @type {function(*, string): *}
-   */
-  const afterSave = useCallback((item: any, tab: string) => (
-    navigate(`${url}/${item.id}`, { state: { saved: true, tab } })
-  ), [navigate, url]);
+    /**
+     * Navigates to the previous route.
+     *
+     * @type {function(): *}
+     */
+    const onCancel = useCallback(() => navigate(-1), [navigate]);
 
-  /**
-   * Navigates to the previous route.
-   *
-   * @type {function(): *}
-   */
-  const onCancel = useCallback(() => navigate(-1), [navigate]);
+    const EditPage = withEditPage(WrappedComponent, {
+      ...config,
+      afterSave,
+      onCancel,
+      id,
+      defaultTab,
+      saved
+    });
 
-  const EditPage = withEditPage(WrappedComponent, {
-    ...config,
-    afterSave,
-    onCancel,
-    id,
-    defaultTab,
-    saved
-  });
-
-  return (
-    <EditPage
-      {...props}
-      saved={saved}
-    />
-  );
-};
+    return (
+      <EditPage
+        {...props}
+      />
+    );
+  }
+);
 
 export default withReactRouterEditPage;

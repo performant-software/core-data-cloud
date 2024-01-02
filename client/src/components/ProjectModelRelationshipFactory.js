@@ -12,57 +12,59 @@ const ProjectModelRelationshipFactory = (props) => {
   const { projectModelRelationship } = useProjectModelRelationship();
 
   /**
-   * Sets the class view string based on the relationship's inverse status.
+   * Memo-izes the component to render based on the current project model relationship.
    *
-   * @type {string}
+   * @type {any}
    */
-  const classView = useMemo(() => (
-    projectModelRelationship.inverse
+  const value = useMemo(() => {
+    let component;
+
+    const classView = projectModelRelationship.inverse
       ? projectModelRelationship?.primary_model?.model_class_view
-      : projectModelRelationship?.related_model?.model_class_view
-  ), [projectModelRelationship]);
+      : projectModelRelationship?.related_model?.model_class_view;
 
-  let component;
+    switch (classView) {
+      case Types.MediaContent:
+        component = (
+          <RelatedMediaContent
+            relationshipId={props.relationshipId}
+          />
+        );
+        break;
 
-  switch (classView) {
-    case Types.MediaContent:
-      component = (
-        <RelatedMediaContent
-          relationshipId={props.relationshipId}
-        />
-      );
-      break;
+      case Types.Organization:
+        component = (
+          <RelatedOrganization
+            relationshipId={props.relationshipId}
+          />
+        );
+        break;
 
-    case Types.Organization:
-      component = (
-        <RelatedOrganization
-          relationshipId={props.relationshipId}
-        />
-      );
-      break;
+      case Types.Person:
+        component = (
+          <RelatedPerson
+            relationshipId={props.relationshipId}
+          />
+        );
+        break;
 
-    case Types.Person:
-      component = (
-        <RelatedPerson
-          relationshipId={props.relationshipId}
-        />
-      );
-      break;
+      case Types.Place:
+        component = (
+          <RelatedPlace
+            relationshipId={props.relationshipId}
+          />
+        );
+        break;
 
-    case Types.Place:
-      component = (
-        <RelatedPlace
-          relationshipId={props.relationshipId}
-        />
-      );
-      break;
+      default:
+        component = null;
+        break;
+    }
 
-    default:
-      component = null;
-      break;
-  }
+    return component;
+  }, [projectModelRelationship]);
 
-  return component;
+  return value;
 };
 
 export default ProjectModelRelationshipFactory;

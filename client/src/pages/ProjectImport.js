@@ -10,6 +10,7 @@ import {
   Message
 } from 'semantic-ui-react';
 import _ from 'underscore';
+import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import ProjectsService from '../services/Projects';
 import styles from './ProjectImport.module.css';
 import useParams from '../hooks/ParsedParams';
@@ -82,54 +83,57 @@ const ProjectImport = () => {
   }, [file]);
 
   return (
-    <div
-      className={styles.projectImport}
-    >
-      <Header
-        content={t('ProjectImport.title')}
-      />
-      { error && (
-        <Message
-          content={error.content}
-          error
-          header={error.header}
+    <>
+      <ProjectSettingsMenu />
+      <div
+        className={styles.projectImport}
+      >
+        <Header
+          content={t('ProjectImport.title')}
         />
-      )}
-      { !file && (
-        <FileUpload
-          onFilesAdded={onFilesAdded}
-        />
-      )}
-      { file && !error && (
-        <List
-          className={styles.fileList}
-          divided
-          verticalAlign='middle'
-        >
-          <List.Item
-            className={styles.listItem}
+        { error && (
+          <Message
+            content={error.content}
+            error
+            header={error.header}
+          />
+        )}
+        { !file && (
+          <FileUpload
+            onFilesAdded={onFilesAdded}
+          />
+        )}
+        { file && !error && (
+          <List
+            className={styles.fileList}
+            divided
+            verticalAlign='middle'
           >
-            <List.Content
-              className={styles.content}
+            <List.Item
+              className={styles.listItem}
             >
-              <div>{ file.name }</div>
-              <div>
-                <Button
-                  color={success ? 'green' : undefined}
-                  icon={success ? 'checkmark' : 'cloud upload'}
-                  loading={loading}
-                  onClick={onUpload}
-                />
-                <Button
-                  icon='times'
-                  onClick={() => setFile(null)}
-                />
-              </div>
-            </List.Content>
-          </List.Item>
-        </List>
-      )}
-    </div>
+              <List.Content
+                className={styles.content}
+              >
+                <div>{ file.name }</div>
+                <div>
+                  <Button
+                    color={success ? 'green' : undefined}
+                    icon={success ? 'checkmark' : 'cloud upload'}
+                    loading={loading}
+                    onClick={onUpload}
+                  />
+                  <Button
+                    icon='times'
+                    onClick={() => setFile(null)}
+                  />
+                </div>
+              </List.Content>
+            </List.Item>
+          </List>
+        )}
+      </div>
+    </>
   );
 };
 

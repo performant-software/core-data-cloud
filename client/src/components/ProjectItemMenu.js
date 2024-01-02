@@ -1,70 +1,143 @@
 // @flow
 
 import cx from 'classnames';
-import React, { useContext } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import { useTranslation } from 'react-i18next';
-import { Icon, Menu } from 'semantic-ui-react';
+import { Menu } from 'semantic-ui-react';
 import _ from 'underscore';
-import CurrentRecordContext from '../context/CurrentRecord';
-import CurrentRecordHeader from './CurrentRecordHeader';
-import MenuLink from './MenuLink';
 import ProjectContext from '../context/Project';
+import ScrollableContext from '../context/Scrollable';
 import styles from './ProjectItemMenu.module.css';
 import useParams from '../hooks/ParsedParams';
 
+const SECTION_ID_DETAILS = 'details';
+
 const ProjectItemMenu = () => {
-  const { isNewRecord } = useContext(CurrentRecordContext);
+  const [activeSection, setActiveSection] = useState();
+
   const { projectModel } = useContext(ProjectContext);
-  const { projectId, projectModelId, itemId } = useParams();
+  const { sections, scrollContext } = useContext(ScrollableContext);
+
+  const { itemId } = useParams();
   const { t } = useTranslation();
 
-  // Hide the menu if we're outside the context of a single record
-  if (!(isNewRecord || itemId)) {
-    return null;
-  }
+  /**
+   * Scrolls the clicked section into view.
+   *
+   * @type {(function(*): void)|*}
+   */
+  const onSectionClick = useCallback((id) => {
+    const section = _.findWhere(sections.current, { id: id?.toString() });
+
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [sections]);
+
+  /**
+   * Adds the passed section to the list of items.
+   *
+   * @type {(function(*, *, *): void)|*}
+   */
+  const addSection = useCallback((items, id, name) => {
+    items.push({
+      active: activeSection && activeSection === id?.toString(),
+      content: name,
+      onClick: () => onSectionClick(id)
+    });
+  }, [activeSection, onSectionClick]);
+
+  /**
+   * Builds the list of menu items based on the relationships for the current project model.
+   *
+   * @type {[]}
+   */
+  const menuItems = useMemo(() => {
+    const items = [];
+
+    // Add the details sections
+    addSection(items, SECTION_ID_DETAILS, t('ProjectItemMenu.labels.details'));
+
+    // Relationships are only available if the record has been saved
+    if (itemId) {
+      _.each(projectModel?.all_project_model_relationships, (projectModelRelationship) => {
+        const name = projectModelRelationship.inverse
+          ? projectModelRelationship.inverse_name
+          : projectModelRelationship.name;
+
+        addSection(items, projectModelRelationship.id, name);
+      });
+    }
+
+    return items;
+  }, [addSection, itemId, projectModel]);
+
+  /**
+   * Determines the active section on container scroll.
+   */
+  const onScroll = useCallback(() => {
+    const instance = scrollContext?.current;
+
+    if (instance) {
+      let active;
+
+      const { scrollTop, offsetTop: scrollOffset } = instance;
+
+      _.each(sections.current, (section) => {
+        const { offsetTop } = section;
+
+        if (scrollTop >= offsetTop - scrollOffset) {
+          active = section.getAttribute('id');
+        }
+      });
+
+      setActiveSection(active);
+    }
+  }, [sections, scrollContext]);
+
+  /**
+   * Adds the scroll listener to the window object.
+   */
+  useEffect(() => {
+    const instance = scrollContext?.current;
+
+    // Add the scroll listener
+    if (instance) {
+      instance.addEventListener('scroll', onScroll);
+    }
+
+    // Initial call
+    onScroll();
+
+    // Cleanup
+    return () => {
+      if (instance) {
+        instance.removeEventListener('scroll', onScroll);
+      }
+    };
+  }, [onScroll]);
 
   return (
     <Menu
       className={cx(
         styles.projectItemMenu,
         styles.ui,
+        styles.menu,
+        styles.pointing,
         styles.secondary,
-        styles.menu
+        styles.vertical
       )}
+      pointing
       secondary
-    >
-      <Menu.Item
-        className={cx(styles.item)}
-      >
-        <CurrentRecordHeader />
-      </Menu.Item>
-      <MenuLink
-        to={`/projects/${projectId}/${projectModelId}`}
-      >
-        <Icon
-          name='arrow left'
-        />
-        { t('ProjectItemMenu.labels.backToAll', { name: projectModel?.name }) }
-      </MenuLink>
-      { itemId && (
-        <>
-          <MenuLink
-            content={t('ProjectItemMenu.labels.details')}
-            to={`/projects/${projectId}/${projectModelId}/${itemId}`}
-          />
-          { _.map(projectModel?.all_project_model_relationships, (relationship) => (
-            <MenuLink
-              content={relationship.inverse
-                ? relationship.inverse_name
-                : relationship.name}
-              parent
-              to={`/projects/${projectId}/${projectModelId}/${itemId}/${relationship.id}`}
-            />
-          ))}
-        </>
-      )}
-
-    </Menu>
+      vertical
+      items={menuItems}
+    />
   );
 };
 
