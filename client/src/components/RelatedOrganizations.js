@@ -27,9 +27,10 @@ const RelatedOrganizations = () => {
       }]}
       addButton={{
         basic: false,
-        color: 'blue',
+        color: 'dark gray',
         location: 'top'
       }}
+      className='compact'
       collectionName='relationships'
       columns={[{
         name: 'core_data_connector_organization_names.name',
@@ -37,6 +38,7 @@ const RelatedOrganizations = () => {
         resolve: resolveAttributeValue.bind(this, 'name'),
         sortable: true
       }]}
+      configurable={false}
       modal={{
         component: RelatedOrganizationModal,
         props: {
@@ -47,7 +49,6 @@ const RelatedOrganizations = () => {
       onDelete={onDelete}
       onLoad={onLoad}
       onSave={onSave}
-      searchable
     />
   );
 };

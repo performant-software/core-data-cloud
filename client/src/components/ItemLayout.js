@@ -17,6 +17,7 @@ import ScrollableContext from '../context/Scrollable';
 import styles from './ItemLayout.module.css';
 
 type Props = {
+  className?: string,
   children: Node
 };
 
@@ -33,6 +34,21 @@ const ItemLayout = (props: Props) => {
   const content = useMemo(() => _.first(Element.findByType(props.children, ItemLayout.Content)), [props.children]);
   const header = useMemo(() => _.first(Element.findByType(props.children, ItemLayout.Header)), [props.children]);
   const sidebar = useMemo(() => _.first(Element.findByType(props.children, ItemLayout.Sidebar)), [props.children]);
+
+  /**
+   * Sets the classname value for the root element.
+   *
+   * @type {string}
+   */
+  const className = useMemo(() => {
+    const value = [styles.itemLayout, styles.ui, styles.container];
+
+    if (props.className) {
+      value.push(props.className);
+    }
+
+    return cx(value);
+  }, [props.className]);
 
   /**
    * Sets the content container class names.
@@ -109,7 +125,7 @@ const ItemLayout = (props: Props) => {
       value={value}
     >
       <Container
-        className={cx(styles.itemLayout, styles.ui, styles.container)}
+        className={className}
         fluid
       >
         { header && (

@@ -110,7 +110,7 @@ const RelatedMediaContents = () => {
         buttons={[{
           render: () => (
             <DropdownButton
-              color='blue'
+              color='dark gray'
               direction='right'
               icon='plus'
               onChange={(e, { value }) => setModal(value)}

@@ -46,6 +46,20 @@ const RelatedPlaceForm = (props: Props) => {
     <Form>
       <Form.Input>
         <AssociatedDropdown
+          buttons={[{
+            accept: () => !!props.item[foreignKey],
+            content: null,
+            icon: 'pencil',
+            name: 'edit'
+          }, {
+            accept: () => !props.item[foreignKey],
+            content: null,
+            icon: 'pencil',
+            name: 'add'
+          }, {
+            content: null,
+            name: 'clear'
+          }]}
           collectionName='places'
           header={(
             <RelatedViewMenu

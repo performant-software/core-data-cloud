@@ -20,6 +20,7 @@ const PersonForm = (props: Props) => {
     <Form>
       <Header
         content={t('PersonForm.labels.names')}
+        size='tiny'
       />
       <EmbeddedList
         actions={[{
@@ -29,9 +30,11 @@ const PersonForm = (props: Props) => {
         }]}
         addButton={{
           basic: false,
-          color: 'blue',
-          location: 'top'
+          color: 'dark gray',
+          content: t('Common.buttons.addName'),
+          location: 'bottom'
         }}
+        className='compact'
         columns={[{
           name: 'last_name',
           label: t('PersonForm.personNames.columns.lastName')
@@ -43,6 +46,7 @@ const PersonForm = (props: Props) => {
           label: t('PersonForm.personNames.columns.primary'),
           render: (personName) => <BooleanIcon value={personName.primary} />
         }]}
+        configurable={false}
         items={props.item.person_names}
         modal={{
           component: PersonNameModal

@@ -17,6 +17,7 @@
   "Common": {
     "buttons": {
       "add": "Add",
+      "addName": "Add Name",
       "cancel": "Cancel",
       "delete": "Delete",
       "edit": "Edit",
@@ -45,6 +46,11 @@
   },
   "Home": {
     "header": "Welcome to Rails-React Template <1>Edit <1>src/App.js</1> and save to reload.</1>"
+  },
+  "ItemPage": {
+    "labels": {
+      "details": "Details"
+    }
   },
   "ListViewMenu": {
     "labels": {

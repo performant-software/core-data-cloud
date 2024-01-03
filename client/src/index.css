@@ -16,6 +16,12 @@ textarea {
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 
+.ui.buttons.dark.gray > .ui.button,
+.ui.button.dark.gray {
+  background-color: #616161;
+  color: #FFFFFF;
+}
+
 .list > .header > .ui.grid .row > .column > .ui.menu input {
   background: transparent;
 }
@@ -62,5 +68,21 @@ textarea {
 }
 
 .embedded-list {
-  margin-bottom: 1em;
+  margin-bottom: 1.5em;
+}
+
+.list.compact.data-table-column-selector > table.ui.sortable > thead > tr > th {
+  color: #616161;
+  font-size: 12px;
+  padding: 0.5em;
+}
+
+.list.compact.data-table-column-selector > table.ui.sortable > tbody > tr > td {
+  font-size: 13px;
+  padding: 0.4em;
+}
+
+.list.compact.data-table-column-selector > table.ui.sortable > tbody > tr > td.actions-cell > .ui.button {
+  border: none;
+  box-shadow: none;
 }

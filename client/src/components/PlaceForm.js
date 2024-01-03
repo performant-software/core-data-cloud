@@ -36,6 +36,7 @@ const PlaceForm = (props: Props) => {
     >
       <Header
         content={t('PlaceForm.labels.names')}
+        size='tiny'
       />
       <EmbeddedList
         actions={[{
@@ -45,9 +46,11 @@ const PlaceForm = (props: Props) => {
         }]}
         addButton={{
           basic: false,
-          color: 'blue',
-          location: 'top'
+          color: 'dark gray',
+          content: t('Common.buttons.addName'),
+          location: 'bottom'
         }}
+        className='compact'
         columns={[{
           name: 'name',
           label: t('PlaceForm.placeNames.columns.name')
@@ -56,19 +59,13 @@ const PlaceForm = (props: Props) => {
           label: t('PlaceForm.placeNames.columns.primary'),
           render: (placeName) => <BooleanIcon value={placeName.primary} />
         }]}
+        configurable={false}
         items={props.item.place_names}
         modal={{
           component: PlaceNameModal
         }}
         onSave={props.onSaveChildAssociation.bind(this, 'place_names')}
         onDelete={props.onDeleteChildAssociation.bind(this, 'place_names')}
-      />
-      <FileInputButton
-        className={cx(styles.uploadButton, styles.ui, styles.button)}
-        color='blue'
-        content={t('Place.buttons.upload')}
-        icon='upload'
-        onSelection={onUpload}
       />
       <MapDraw
         data={props.item.place_geometry?.geometry_json}
@@ -77,6 +74,13 @@ const PlaceForm = (props: Props) => {
         style={{
           marginBottom: '4em'
         }}
+      />
+      <FileInputButton
+        className={cx(styles.uploadButton, styles.ui, styles.button)}
+        color='dark gray'
+        content={t('Place.buttons.upload')}
+        icon='upload'
+        onSelection={onUpload}
       />
       { props.item.project_model_id && (
         <UserDefinedFieldsForm

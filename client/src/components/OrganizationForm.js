@@ -20,6 +20,7 @@ const OrganizationForm = (props: Props) => {
     <Form>
       <Header
         content={t('OrganizationForm.labels.names')}
+        size='tiny'
       />
       <EmbeddedList
         actions={[{
@@ -29,9 +30,11 @@ const OrganizationForm = (props: Props) => {
         }]}
         addButton={{
           basic: false,
-          color: 'blue',
-          location: 'top'
+          color: 'dark gray',
+          content: t('Common.buttons.addName'),
+          location: 'bottom'
         }}
+        className='compact'
         columns={[{
           name: 'name',
           label: t('OrganizationForm.organizationNames.columns.name')
@@ -40,6 +43,7 @@ const OrganizationForm = (props: Props) => {
           label: t('OrganizationForm.organizationNames.columns.primary'),
           render: (organizationName) => <BooleanIcon value={organizationName.primary} />
         }]}
+        configurable={false}
         items={props.item.organization_names}
         modal={{
           component: OrganizationNameModal

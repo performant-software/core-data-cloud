@@ -2048,10 +2048,10 @@
     "@stitches/react" "^1.2.7"
     react "^18.2.0"
 
-"@performant-software/geospatial@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@performant-software/geospatial/-/geospatial-1.1.0.tgz#90dd4441da41e1818f6686150cb70d85c9002b24"
-  integrity sha512-GhaD1ohKLxAHDuUlaf1CBviqaFsTKFVJjr4uijBZL7I1hU9/I9fIxnVxbatE82hGbVpgTGV6ADgHB6vk6tLNHg==
+"@performant-software/geospatial@^1.1.1-beta.1":
+  version "1.1.1-beta.1"
+  resolved "https://registry.yarnpkg.com/@performant-software/geospatial/-/geospatial-1.1.1-beta.1.tgz#e3973b80551811c76dbca0bc9148d2ee34caf0b8"
+  integrity sha512-iahnXs6gr40MSqGt9Flgend/DFfoPy9ycbVwIFjjvFkGTVxwFf5RbxRx0Ms85H5na4hXXTeF7bQvI8cbr2y/Xg==
   dependencies:
     "@mapbox/mapbox-gl-draw" "^1.4.3"
     "@turf/turf" "^6.5.0"
@@ -2060,12 +2060,12 @@
     react-map-gl "^7.1.6"
     underscore "^1.13.6"
 
-"@performant-software/semantic-components@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@performant-software/semantic-components/-/semantic-components-1.1.0.tgz#547fead480ac193d2b3ead80f16116ef1d68f821"
-  integrity sha512-Y/AS5LNpvW4lYqOCoDmq/HaRUCHeGINfCK/RdMS1r71+uT++3b1QSDlz+0o7xCx73sDyTDP6v3dfAeVEN+3Lxg==
+"@performant-software/semantic-components@^1.1.1-beta.1":
+  version "1.1.1-beta.1"
+  resolved "https://registry.yarnpkg.com/@performant-software/semantic-components/-/semantic-components-1.1.1-beta.1.tgz#932da723ddc5448c081087f06d171051769b5a0f"
+  integrity sha512-MxqHvFkWVYqB2+oboU82uC0+Iotxa40cFae40pkdjwtUTWNsBXGrY6qkCoFJArjQaC5hdMSK3K70GfuQIglY1g==
   dependencies:
-    "@performant-software/shared-components" "^1.1.0"
+    "@performant-software/shared-components" "^1.1.1-beta.1"
     "@react-google-maps/api" "^2.8.1"
     axios "^0.26.1"
     i18next "^19.4.4"
@@ -2084,10 +2084,10 @@
     zotero-api-client "^0.40.0"
     zotero-translation-client "^5.0.1"
 
-"@performant-software/shared-components@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@performant-software/shared-components/-/shared-components-1.1.0.tgz#0565e8ee52d48feb4cbd2dd921f2cc3676cc8b59"
-  integrity sha512-/0n0iAf4K26CYFf6d2LLG1rhOnj23okb4rqI1lmJH7PW/r1mrTXjxmRAZBUDLjXyar8ProopbFEImqFc4feSLw==
+"@performant-software/shared-components@^1.1.1-beta.1":
+  version "1.1.1-beta.1"
+  resolved "https://registry.yarnpkg.com/@performant-software/shared-components/-/shared-components-1.1.1-beta.1.tgz#eec41d63839c498148d7805dafa02cf98523af54"
+  integrity sha512-OAigNWDXJ1vpOJhLQ63Uvp3J7s+POeDi9YfWtPn9pGIuVhch0ALSZlX32alm6McAjwidYSn8HxNg1f/UMf4evA==
   dependencies:
     "@react-google-maps/api" "^2.8.1"
     "@samvera/clover-iiif" "^1.10.3"
@@ -2107,13 +2107,13 @@
     underscore "^1.13.2"
     zotero-translation-client "^5.0.1"
 
-"@performant-software/user-defined-fields@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@performant-software/user-defined-fields/-/user-defined-fields-1.1.0.tgz#46e1591f42fcb60746b452db9a91f59555641451"
-  integrity sha512-pCvIPYd33HXBmlaGuKybbmseFTPEYCc3Dp/Khupr3Nu9w1oT2SVeucqBelaiXLLoUNJA2uQJLomcXvtDjgur1g==
+"@performant-software/user-defined-fields@^1.1.1-beta.1":
+  version "1.1.1-beta.1"
+  resolved "https://registry.yarnpkg.com/@performant-software/user-defined-fields/-/user-defined-fields-1.1.1-beta.1.tgz#80ba8634cbe8e3ad369e66f717f28727a23a900f"
+  integrity sha512-OCt+Diw5yEsasFf30/DEaHmF74Fyw3JZDWfLMjOQgB+Zj7IgKrZRlJVTqxu7jaPJVXL44SfmJnrsAqYO3YiWCw==
   dependencies:
-    "@performant-software/semantic-components" "^1.1.0"
-    "@performant-software/shared-components" "^1.1.0"
+    "@performant-software/semantic-components" "^1.1.1-beta.1"
+    "@performant-software/shared-components" "^1.1.1-beta.1"
     i18next "^21.9.1"
     semantic-ui-react "^2.1.2"
     underscore "^1.13.2"

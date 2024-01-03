@@ -26,9 +26,10 @@ const RelatedPlaces = () => {
       }]}
       addButton={{
         basic: false,
-        color: 'blue',
+        color: 'dark gray',
         location: 'top'
       }}
+      className='compact'
       collectionName='relationships'
       columns={[{
         name: 'core_data_connector_place_names.name',
@@ -36,6 +37,7 @@ const RelatedPlaces = () => {
         resolve: resolveAttributeValue.bind(this, 'name'),
         sortable: true
       }]}
+      configurable={false}
       modal={{
         component: RelatedPlaceModal,
         props: {
@@ -46,7 +48,6 @@ const RelatedPlaces = () => {
       onDelete={onDelete}
       onLoad={onLoad}
       onSave={onSave}
-      searchable
     />
   );
 };

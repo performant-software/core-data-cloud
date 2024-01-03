@@ -27,9 +27,10 @@ const RelatedPeople = () => {
       }]}
       addButton={{
         basic: false,
-        color: 'blue',
+        color: 'dark gray',
         location: 'top'
       }}
+      className='compact'
       collectionName='relationships'
       columns={[{
         name: 'core_data_connector_person_names.last_name',
@@ -42,6 +43,7 @@ const RelatedPeople = () => {
         resolve: resolveAttributeValue.bind(this, 'first_name'),
         sortable: true
       }]}
+      configurable={false}
       modal={{
         component: RelatedPersonModal,
         props: {
@@ -52,7 +54,6 @@ const RelatedPeople = () => {
       onDelete={onDelete}
       onLoad={onLoad}
       onSave={onSave}
-      searchable
     />
   );
 };
