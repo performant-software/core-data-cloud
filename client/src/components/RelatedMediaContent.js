@@ -23,7 +23,7 @@ const RelatedMediaContentForm = (props: Props) => {
   const [editModal, setEditModal] = useState(false);
 
   const { foreignProjectModelId } = useProjectModelRelationship();
-  const { foreignObject, onSelection } = useRelationship(props);
+  const { error, foreignObject, onSelection } = useRelationship(props);
   const { t } = useTranslation();
 
   /**
@@ -73,7 +73,9 @@ const RelatedMediaContentForm = (props: Props) => {
 
   return (
     <Form>
-      <Form.Input>
+      <Form.Input
+        error={error}
+      >
         <LazyIIIF
           color='teal'
           contentType={foreignObject?.content_type}
@@ -84,28 +86,28 @@ const RelatedMediaContentForm = (props: Props) => {
           src={foreignObject?.content_url}
         >
           { !props.item.id && (
-            <FileInputButton
-              color='yellow'
-              content={t('Common.buttons.upload')}
-              icon='cloud upload'
-              onSelection={onUpload}
-            />
-          )}
-          { props.item.id && (
             <>
+              <FileInputButton
+                color='yellow'
+                content={t('Common.buttons.upload')}
+                icon='cloud upload'
+                onSelection={onUpload}
+              />
               <Button
                 color='orange'
                 content={t('Common.buttons.edit')}
                 icon='edit'
                 onClick={() => setEditModal(true)}
               />
-              <Button
-                color='red'
-                content={t('Common.buttons.delete')}
-                icon='trash'
-                onClick={onDelete}
-              />
             </>
+          )}
+          { props.item.id && (
+            <Button
+              color='red'
+              content={t('Common.buttons.delete')}
+              icon='trash'
+              onClick={onDelete}
+            />
           )}
         </LazyIIIF>
       </Form.Input>

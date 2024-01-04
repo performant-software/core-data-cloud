@@ -23,6 +23,7 @@ const RelatedOrganizationForm = (props: Props) => {
   const { foreignProjectModelId } = useProjectModelRelationship();
 
   const {
+    error,
     foreignKey,
     foreignObject,
     onSave,
@@ -44,7 +45,9 @@ const RelatedOrganizationForm = (props: Props) => {
 
   return (
     <Form>
-      <Form.Input>
+      <Form.Input
+        error={error}
+      >
         <AssociatedDropdown
           buttons={[{
             accept: () => !!props.item[foreignKey],

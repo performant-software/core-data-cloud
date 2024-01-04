@@ -7,10 +7,13 @@ import {
   useMemo,
   useState
 } from 'react';
+import _ from 'underscore';
 import ProjectContext from '../context/Project';
 import RelationshipsService from '../services/Relationships';
 import useParams from './ParsedParams';
 import useProjectModelRelationship from './ProjectModelRelationship';
+
+const ERROR_SEPARATOR = '. ';
 
 /**
  * Sets the required foreign keys on the state when creating a primary record from within a relationship.
@@ -105,6 +108,22 @@ const useRelationship = (props) => {
   ), [projectModelRelationship]);
 
   /**
+   * Sets the error value based on the "errors" in the passed props.
+   *
+   * @type {*}
+   */
+  const error = useMemo(() => {
+    let value;
+
+    if (!_.isEmpty(props.errors)) {
+      const content = props.errors.join(ERROR_SEPARATOR);
+      value = { content };
+    }
+
+    return value;
+  }, [props.errors]);
+
+  /**
    * Resets the state with the passed relationship and returns a Promise resolving the related record.
    *
    * @type {function(*): Promise<Awaited<*>>}
@@ -178,6 +197,7 @@ const useRelationship = (props) => {
   }, [item.id, itemId, projectModel, projectModelRelationship]);
 
   return {
+    error,
     foreignKey,
     foreignObject,
     foreignObjectName,
