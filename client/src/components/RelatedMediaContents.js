@@ -1,14 +1,16 @@
 // @flow
 
-import { DropdownButton, ItemList, LazyMedia } from '@performant-software/semantic-components';
+import { DropdownButton, ItemList, ItemViews } from '@performant-software/semantic-components';
 import React, { useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Image } from 'semantic-ui-react';
 import _ from 'underscore';
 import MediaContentsSelectize from './MediaContentsSelectize';
 import MediaContentsUploadModal from './MediaContentsUploadModal';
 import ProjectContext from '../context/Project';
 import RelatedMediaContentModal from './RelatedMediaContentModal';
 import RelationshipsService from '../services/Relationships';
+import styles from './RelatedMediaContents.module.css';
 import useParams from '../hooks/ParsedParams';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 import useRelationships from '../hooks/Relationships';
@@ -130,7 +132,11 @@ const RelatedMediaContents = () => {
             />
           )
         }]}
+        className={styles.relatedMediaContents}
         collectionName='relationships'
+        defaultView={ItemViews.grid}
+        hideToggle
+        itemsPerRow={5}
         modal={{
           component: RelatedMediaContentModal,
           props: {
@@ -141,21 +147,21 @@ const RelatedMediaContents = () => {
         onLoad={onLoad}
         onSave={onSave}
         renderEmptyList={() => null}
-        renderHeader={resolveAttributeValue.bind(this, 'name')}
+        renderHeader={(relationship) => (
+          <div
+            className={styles.header}
+          >
+            { resolveAttributeValue('name', relationship) }
+          </div>
+        )}
         renderImage={(relationship) => (
-          <LazyMedia
-            dimmable={false}
-            contentType={resolveAttributeValue('content_type', relationship)}
-            preview={resolveAttributeValue('content_thumbnail_url', relationship)}
+          <Image
+            src={resolveAttributeValue('content_thumbnail_url', relationship)}
           />
         )}
         renderMeta={() => ''}
         saved={saved}
-        sort={[{
-          key: 'core_data_connector_media_contents.name',
-          value: 'core_data_connector_media_contents.name',
-          text: t('RelatedMediaContents.sort.name')
-        }]}
+        searchable={false}
       />
       { modal === Modal.upload && (
         <MediaContentsUploadModal
