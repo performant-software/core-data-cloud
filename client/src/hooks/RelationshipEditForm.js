@@ -1,7 +1,8 @@
 // @flow
 
 import { withEditPage } from '@performant-software/shared-components';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
+import ItemLayoutContext from '../context/ItemLayout';
 import RelationshipsService from '../services/Relationships';
 import Validation from '../utils/Validation';
 
@@ -11,6 +12,7 @@ type Props = {
 
 const withRelationshipEditForm = (WrappedComponent) => (props: Props) => {
   const [id, setId] = useState(props.relationshipId);
+  const { setSaved } = useContext(ItemLayoutContext);
 
   /**
    * Sets the new ID on the state.
@@ -38,7 +40,10 @@ const withRelationshipEditForm = (WrappedComponent) => (props: Props) => {
   const onSave = useCallback((relationship) => (
     RelationshipsService
       .save(relationship)
-      .then(({ data }) => data.relationship)
+      .then(({ data }) => {
+        setSaved(true);
+        return data.relationship;
+      })
   ), []);
 
   const EditPage = withEditPage(WrappedComponent, {

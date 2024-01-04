@@ -1,6 +1,7 @@
 // @flow
 
 import { Element } from '@performant-software/shared-components';
+import { Toaster } from '@performant-software/semantic-components';
 import cx from 'classnames';
 import React, {
   useContext,
@@ -10,7 +11,8 @@ import React, {
   useState,
   type Node, useCallback
 } from 'react';
-import { Container } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
+import { Container, Message } from 'semantic-ui-react';
 import _ from 'underscore';
 import LayoutContext from '../context/Layout';
 import ScrollableContext from '../context/Scrollable';
@@ -26,6 +28,7 @@ const ItemLayout = (props: Props) => {
   const [scrollContext, setScrollContext] = useState();
 
   const { contentPadding, menuBarHeight } = useContext(LayoutContext);
+  const { t } = useTranslation();
 
   const headerRef = useRef();
   const contentRef = useRef();
@@ -34,6 +37,7 @@ const ItemLayout = (props: Props) => {
   const content = useMemo(() => _.first(Element.findByType(props.children, ItemLayout.Content)), [props.children]);
   const header = useMemo(() => _.first(Element.findByType(props.children, ItemLayout.Header)), [props.children]);
   const sidebar = useMemo(() => _.first(Element.findByType(props.children, ItemLayout.Sidebar)), [props.children]);
+  const toaster = useMemo(() => _.first(Element.findByType(props.children, ItemLayout.Toaster)), [props.children]);
 
   /**
    * Sets the classname value for the root element.
@@ -128,6 +132,19 @@ const ItemLayout = (props: Props) => {
         className={className}
         fluid
       >
+        { toaster && toaster.props.visible && (
+          <Toaster
+            onDismiss={toaster.props.onDismiss}
+            type={Toaster.MessageTypes.positive}
+          >
+            <Message.Header
+              content={t('Common.messages.save.header')}
+            />
+            <Message.Content
+              content={t('Common.messages.save.content')}
+            />
+          </Toaster>
+        )}
         { header && (
           <div
             ref={headerRef}
@@ -168,5 +185,8 @@ ItemLayout.Header = Header;
 
 const Sidebar = (props) => props.children;
 ItemLayout.Sidebar = Sidebar;
+
+const ToasterComponent = (props) => props.children;
+ItemLayout.Toaster = ToasterComponent;
 
 export default ItemLayout;

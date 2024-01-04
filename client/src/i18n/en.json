@@ -34,6 +34,12 @@
         "edit": "Edit {{name}}"
       }
     },
+    "messages": {
+      "save": {
+        "content": "Your changes have been saved.",
+        "header": "Success!"
+      }
+    },
     "tabs": {
       "details": "Details",
       "fields": "Fields"

@@ -25,7 +25,9 @@ const withReactRouterEditPage = (WrappedComponent: AbstractComponent<any>, confi
      *
      * @type {function(*, string): *}
      */
-    const afterSave = useCallback((item: any) => navigate(`${url}/${item.id}`), [navigate, url]);
+    const afterSave = useCallback((item: any) => (
+      navigate(`${url}/${item.id}`, { state: { saved: true } })
+    ), [navigate, url]);
 
     /**
      * Navigates to the previous route.
@@ -46,6 +48,7 @@ const withReactRouterEditPage = (WrappedComponent: AbstractComponent<any>, confi
     return (
       <EditPage
         {...props}
+        saved={saved}
       />
     );
   }
