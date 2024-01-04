@@ -6,7 +6,11 @@ import Organizations from '../pages/Organizations';
 import People from '../pages/People';
 import Places from '../pages/Places';
 import ProjectContext from '../context/Project';
+import TaxonomyItems from '../pages/TaxonomyItems';
+import Works from '../pages/Works';
 import { Types } from '../utils/ProjectModels';
+import Items from '../pages/Items';
+import Instances from '../pages/Instances';
 
 const ProjectModelsFactory = () => {
   const { projectModel } = useContext(ProjectContext);
@@ -19,6 +23,14 @@ const ProjectModelsFactory = () => {
   let component;
 
   switch (className) {
+    case Types.Instance:
+      component = <Instances />;
+      break;
+
+    case Types.Item:
+      component = <Items />;
+      break;
+
     case Types.MediaContent:
       component = <MediaContents />;
       break;
@@ -33,6 +45,14 @@ const ProjectModelsFactory = () => {
 
     case Types.Place:
       component = <Places />;
+      break;
+
+    case Types.Taxonomy:
+      component = <TaxonomyItems />;
+      break;
+
+    case Types.Work:
+      component = <Works />;
       break;
 
     default:

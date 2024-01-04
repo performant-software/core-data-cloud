@@ -22,7 +22,7 @@ gem 'bootsnap', require: false
 gem 'pagy', '~> 5.10'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-gem 'rack-cors', '~> 1.1.1'
+gem 'rack-cors', '~> 2.0.1'
 
 # Use Json Web Token (JWT) for token based authentication
 gem 'jwt', '~> 2.4', '>= 2.4.1'
@@ -31,13 +31,13 @@ gem 'jwt', '~> 2.4', '>= 2.4.1'
 gem 'bcrypt', '~> 3.1.18'
 
 # Resource API
-gem 'resource_api', git: 'https://github.com/performant-software/resource-api.git', tag: 'v0.5.4'
+gem 'resource_api', git: 'https://github.com/performant-software/resource-api.git', tag: 'v0.5.6'
 
 # Authentication
 gem 'jwt_auth', git: 'https://github.com/performant-software/jwt-auth.git', tag: 'v0.1.2'
 
 # Core data
-gem 'core_data_connector', git: 'https://github.com/performant-software/core-data-connector.git', tag: 'v0.1.13'
+gem 'core_data_connector', git: 'https://github.com/performant-software/core-data-connector.git', tag: 'v0.1.18'
 
 # IIIF
 gem 'triple_eye_effable', git: 'https://github.com/performant-software/triple-eye-effable.git', tag: 'v0.1.9'

@@ -3,10 +3,14 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import _ from 'underscore';
 import ProjectModelRelationshipFactory from './ProjectModelRelationshipFactory';
+import RelatedInstances from '../pages/RelatedInstances';
+import RelatedItems from '../pages/RelatedItems';
 import RelatedMediaContents from './RelatedMediaContents';
 import RelatedOrganizations from './RelatedOrganizations';
 import RelatedPeople from './RelatedPeople';
 import RelatedPlaces from './RelatedPlaces';
+import RelatedTaxonomyItems from '../pages/RelatedTaxonomyItems';
+import RelatedWorks from '../pages/RelatedWorks';
 import RelationshipsService from '../services/Relationships';
 import { Types } from '../utils/ProjectModels';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
@@ -62,6 +66,18 @@ const ProjectModelRelationshipsFactory = () => {
   }
 
   if (multiple) {
+    if (classView === Types.Instance) {
+      return (
+        <RelatedInstances />
+      );
+    }
+
+    if (classView === Types.Item) {
+      return (
+        <RelatedItems />
+      );
+    }
+
     if (classView === Types.MediaContent) {
       return (
         <RelatedMediaContents />
@@ -83,6 +99,18 @@ const ProjectModelRelationshipsFactory = () => {
     if (classView === Types.Place) {
       return (
         <RelatedPlaces />
+      );
+    }
+
+    if (classView === Types.Taxonomy) {
+      return (
+        <RelatedTaxonomyItems />
+      );
+    }
+
+    if (classView === Types.Work) {
+      return (
+        <RelatedWorks />
       );
     }
 

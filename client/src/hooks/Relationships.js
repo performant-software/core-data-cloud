@@ -1,8 +1,9 @@
 // @flow
 
 import { useCallback, useMemo } from 'react';
-import useProjectModelRelationship from './ProjectModelRelationship';
+import _ from 'underscore';
 import RelationshipsService from '../services/Relationships';
+import useProjectModelRelationship from './ProjectModelRelationship';
 
 const useRelationships = () => {
   const { parameters, projectModelRelationship } = useProjectModelRelationship();
@@ -70,7 +71,8 @@ const useRelationships = () => {
       : relationship.related_record;
 
     if (record) {
-      value = record[attribute];
+      const attributeArray = attribute.split('.');
+      value = _.get(record, attributeArray);
     }
 
     return value;
