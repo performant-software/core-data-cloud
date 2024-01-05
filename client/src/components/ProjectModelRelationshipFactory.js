@@ -1,14 +1,14 @@
 // flow
 
 import React, { useMemo } from 'react';
-import RelatedInstance from '../pages/RelatedInstance';
-import RelatedItem from '../pages/RelatedItem';
+import RelatedInstance from './RelatedInstance';
+import RelatedItem from './RelatedItem';
 import RelatedMediaContent from './RelatedMediaContent';
 import RelatedOrganization from './RelatedOrganization';
 import RelatedPerson from './RelatedPerson';
 import RelatedPlace from './RelatedPlace';
-import RelatedTaxonomyItem from '../pages/RelatedTaxonomyItem';
-import RelatedWork from '../pages/RelatedWork';
+import RelatedTaxonomyItem from './RelatedTaxonomyItem';
+import RelatedWork from './RelatedWork';
 import { Types } from '../utils/ProjectModels';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 

@@ -31,9 +31,11 @@ const ItemForm = (props: Props) => {
         }]}
         addButton={{
           basic: false,
-          color: 'blue',
-          location: 'top'
+          color: 'dark gray',
+          content: t('Common.buttons.addName'),
+          location: 'bottom'
         }}
+        className='compact'
         columns={[{
           name: 'name',
           label: t('ItemForm.itemNames.columns.name'),
@@ -43,6 +45,7 @@ const ItemForm = (props: Props) => {
           label: t('ItemForm.itemNames.columns.primary'),
           render: (sourceTitle) => <BooleanIcon value={sourceTitle.primary} />
         }]}
+        configurable={false}
         items={props.item.source_titles}
         modal={{
           component: NameRelationModal,

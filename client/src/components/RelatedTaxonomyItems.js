@@ -2,32 +2,35 @@
 
 import { ListTable } from '@performant-software/semantic-components';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import RelationshipsService from '../services/Relationships';
-import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
+import RelatedTaxonomyItemModal from './RelatedTaxonomyItemModal';
 import useRelationships from '../hooks/Relationships';
 import { useTranslation } from 'react-i18next';
 
 const RelatedTaxonomyItems = () => {
-  const navigate = useNavigate();
-  const { parameters } = useProjectModelRelationship();
-  const { resolveAttributeValue } = useRelationships();
+  const {
+    foreignKey,
+    onDelete,
+    onInitialize,
+    onLoad,
+    onSave,
+    resolveAttributeValue
+  } = useRelationships();
+
   const { t } = useTranslation();
 
   return (
     <ListTable
       actions={[{
         name: 'edit',
-        onClick: (relationship) => navigate(`${relationship.id}`)
       }, {
         name: 'delete'
       }]}
       addButton={{
         basic: false,
-        color: 'blue',
-        location: 'top',
-        onClick: () => navigate('new')
+        color: 'dark gray',
+        location: 'top'
       }}
+      className='compact'
       collectionName='relationships'
       columns={[{
         name: 'name',
@@ -35,9 +38,17 @@ const RelatedTaxonomyItems = () => {
         resolve: resolveAttributeValue.bind(this, 'name'),
         sortable: true
       }]}
-      onDelete={(relationship) => RelationshipsService.delete(relationship)}
-      onLoad={(params) => RelationshipsService.fetchAll({ ...params, ...parameters })}
-      searchable
+      configurable={false}
+      modal={{
+        component: RelatedTaxonomyItemModal,
+        props: {
+          onInitialize,
+          required: [foreignKey]
+        }
+      }}
+      onDelete={onDelete}
+      onLoad={onLoad}
+      onSave={onSave}
     />
   );
 };

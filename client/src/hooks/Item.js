@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import _ from 'underscore';
 import ProjectContext from '../context/Project';
 import PeopleUtils from '../utils/People';
+import SourceUtils from '../utils/Sources';
 import { Types } from '../utils/ProjectModels';
 import { useLocation } from 'react-router-dom';
 import useParams from './ParsedParams';
@@ -41,6 +42,14 @@ const initialize = ({ item, onSetState }) => {
       return null;
     }
 
+    if (classView === Types.Instance) {
+      return SourceUtils.getNameView(item);
+    }
+
+    if (classView === Types.Item) {
+      return SourceUtils.getNameView(item);
+    }
+
     if (classView === Types.MediaContent) {
       return item.name;
     }
@@ -55,6 +64,14 @@ const initialize = ({ item, onSetState }) => {
 
     if (classView === Types.Place) {
       return _.findWhere(item.place_names, { primary: true })?.name;
+    }
+
+    if (classView === Types.Taxonomy) {
+      return item.name;
+    }
+
+    if (classView === Types.Work) {
+      return SourceUtils.getNameView(item);
     }
 
     return null;

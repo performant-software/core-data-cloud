@@ -3,14 +3,14 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import _ from 'underscore';
 import ProjectModelRelationshipFactory from './ProjectModelRelationshipFactory';
-import RelatedInstances from '../pages/RelatedInstances';
-import RelatedItems from '../pages/RelatedItems';
+import RelatedInstances from './RelatedInstances';
+import RelatedItems from './RelatedItems';
 import RelatedMediaContents from './RelatedMediaContents';
 import RelatedOrganizations from './RelatedOrganizations';
 import RelatedPeople from './RelatedPeople';
 import RelatedPlaces from './RelatedPlaces';
-import RelatedTaxonomyItems from '../pages/RelatedTaxonomyItems';
-import RelatedWorks from '../pages/RelatedWorks';
+import RelatedTaxonomyItems from './RelatedTaxonomyItems';
+import RelatedWorks from './RelatedWorks';
 import RelationshipsService from '../services/Relationships';
 import { Types } from '../utils/ProjectModels';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';

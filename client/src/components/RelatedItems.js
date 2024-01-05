@@ -2,32 +2,35 @@
 
 import { ListTable } from '@performant-software/semantic-components';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import RelationshipsService from '../services/Relationships';
-import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
-import useRelationships from '../hooks/Relationships';
 import { useTranslation } from 'react-i18next';
+import RelatedItemModal from './RelatedItemModal';
+import useRelationships from '../hooks/Relationships';
 
 const RelatedItems = () => {
-  const navigate = useNavigate();
-  const { parameters } = useProjectModelRelationship();
-  const { resolveAttributeValue } = useRelationships();
+  const {
+    foreignKey,
+    onDelete,
+    onInitialize,
+    onLoad,
+    onSave,
+    resolveAttributeValue
+  } = useRelationships();
+
   const { t } = useTranslation();
 
   return (
     <ListTable
       actions={[{
         name: 'edit',
-        onClick: (relationship) => navigate(`${relationship.id}`)
       }, {
         name: 'delete'
       }]}
       addButton={{
         basic: false,
-        color: 'blue',
+        color: 'dark gray',
         location: 'top',
-        onClick: () => navigate('new')
       }}
+      className='compact'
       collectionName='relationships'
       columns={[{
         name: 'core_data_connector_names.name',
@@ -35,9 +38,17 @@ const RelatedItems = () => {
         resolve: (resolveAttributeValue.bind(this, 'primary_name.name.name')),
         sortable: true
       }]}
-      onDelete={(relationship) => RelationshipsService.delete(relationship)}
-      onLoad={(params) => RelationshipsService.fetchAll({ ...params, ...parameters })}
-      searchable
+      configurable={false}
+      modal={{
+        component: RelatedItemModal,
+        props: {
+          onInitialize,
+          required: [foreignKey]
+        }
+      }}
+      onDelete={onDelete}
+      onLoad={onLoad}
+      onSave={onSave}
     />
   );
 };
