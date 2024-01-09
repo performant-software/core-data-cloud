@@ -8,6 +8,7 @@ import {
   useState
 } from 'react';
 import _ from 'underscore';
+import ItemLayoutContext from '../context/ItemLayout';
 import ProjectContext from '../context/Project';
 import RelationshipsService from '../services/Relationships';
 import useParams from './ParsedParams';
@@ -53,6 +54,8 @@ const useRelationship = (props) => {
   const [save, setSave] = useState();
 
   const { projectModel } = useContext(ProjectContext);
+  const { setSaved } = useContext(ItemLayoutContext);
+
   const { itemId } = useParams();
   const { projectModelRelationship } = useProjectModelRelationship();
 
@@ -151,7 +154,11 @@ const useRelationship = (props) => {
    *
    * @type {function(): Promise<AxiosResponse<T>>|*}
    */
-  const onDelete = useCallback(() => RelationshipsService.delete(item), [item]);
+  const onDelete = useCallback(() => (
+    RelationshipsService
+      .delete(item)
+      .then(() => setSaved(true))
+  ), [item]);
 
   /**
    * Calls the onChange or onDelete function based on the passed value.
