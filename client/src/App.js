@@ -4,7 +4,6 @@ import { useDragDrop } from '@performant-software/shared-components';
 import React, { type ComponentType } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
-import CurrentRecordContextProvider from './components/CurrentRecordContextProvider';
 import Layout from './components/Layout';
 import Login from './pages/Login';
 import Logout from './pages/Logout';
@@ -14,11 +13,8 @@ import ProjectEdit from './pages/ProjectEdit';
 import ProjectImport from './pages/ProjectImport';
 import ProjectModel from './pages/ProjectModel';
 import ProjectModelFactory from './components/ProjectModelFactory';
-import ProjectModelRelationshipFactory from './components/ProjectModelRelationshipFactory';
-import ProjectModelRelationshipsFactory from './components/ProjectModelRelationshipsFactory';
 import ProjectModels from './pages/ProjectModels';
 import ProjectModelsFactory from './components/ProjectModelsFactory';
-import ProjectSettingsContextProvider from './components/ProjectSettingsContextProvider';
 import Projects from './pages/Projects';
 import User from './pages/User';
 import UserProject from './pages/UserProject';
@@ -39,11 +35,7 @@ const App: ComponentType<any> = useDragDrop(() => (
         element={(
           <AuthenticatedRoute>
             <ProjectContextProvider>
-              <ProjectSettingsContextProvider>
-                <CurrentRecordContextProvider>
-                  <Layout />
-                </CurrentRecordContextProvider>
-              </ProjectSettingsContextProvider>
+              <Layout />
             </ProjectContextProvider>
           </AuthenticatedRoute>
         )}
@@ -129,22 +121,6 @@ const App: ComponentType<any> = useDragDrop(() => (
                   index
                   element={<ProjectModelFactory />}
                 />
-                <Route
-                  path=':projectModelRelationshipId'
-                >
-                  <Route
-                    index
-                    element={<ProjectModelRelationshipsFactory />}
-                  />
-                  <Route
-                    path='new'
-                    element={<ProjectModelRelationshipFactory />}
-                  />
-                  <Route
-                    path=':relationshipId'
-                    element={<ProjectModelRelationshipFactory />}
-                  />
-                </Route>
               </Route>
             </Route>
           </Route>

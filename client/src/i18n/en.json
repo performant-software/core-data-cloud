@@ -17,15 +17,28 @@
   "Common": {
     "buttons": {
       "add": "Add",
+      "addName": "Add Name",
       "cancel": "Cancel",
       "delete": "Delete",
-      "edit": "Edit"
+      "edit": "Edit",
+      "upload": "Upload"
     },
     "columns":{
       "uuid": "Identifier"
     },
     "labels": {
-      "project": "Project"
+      "all": "All {{name}}",
+      "project": "Project",
+      "related": {
+        "add": "Add {{name}}",
+        "edit": "Edit {{name}}"
+      }
+    },
+    "messages": {
+      "save": {
+        "content": "Your changes have been saved.",
+        "header": "Success!"
+      }
     },
     "tabs": {
       "details": "Details",
@@ -72,6 +85,11 @@
   },
   "ItemModal": {
     "title": "New Item"
+  },
+  "ItemPage": {
+    "labels": {
+      "details": "Details"
+    }
   },
   "Items": {
     "columns": {
@@ -261,7 +279,6 @@
   },
   "ProjectItemMenu": {
     "labels": {
-      "backToAll": "All {{name}}",
       "details": "Details"
     }
   },
@@ -283,6 +300,7 @@
       "invalidType": "\"{{type}}\" is not a valid type."
     },
     "labels": {
+      "all": "All Models",
       "name": "Name",
       "type": "Type"
     },
@@ -340,6 +358,11 @@
       "newModel": "New Model",
       "newUser": "New User",
       "users": "Users"
+    }
+  },
+  "ProjectTitle": {
+    "labels": {
+      "allProjects": "All Projects"
     }
   },
   "Projects": {
@@ -424,6 +447,11 @@
       "name": "Name"
     }
   },
+  "User": {
+    "labels": {
+      "allUsers": "All Users"
+    }
+  },
   "UserEditMenu": {
     "labels": {
       "details": "Details",
@@ -462,6 +490,8 @@
   },
   "UserProject": {
     "labels": {
+      "allProjects": "All Projects",
+      "allUsers": "All Users",
       "project": "Project",
       "role": "Role",
       "user": "User"
@@ -478,6 +508,9 @@
       "project": "Project",
       "role": "Role",
       "user": "User"
+    },
+    "labels": {
+      "allUsers": "All Users"
     }
   },
   "Users": {

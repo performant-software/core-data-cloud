@@ -1,72 +1,106 @@
 // flow
 
 import React, { useMemo } from 'react';
-import RelatedInstance from '../pages/RelatedInstance';
-import RelatedItem from '../pages/RelatedItem';
-import RelatedMediaContent from '../pages/RelatedMediaContent';
-import RelatedOrganization from '../pages/RelatedOrganization';
-import RelatedPerson from '../pages/RelatedPerson';
-import RelatedPlace from '../pages/RelatedPlace';
-import RelatedTaxonomyItem from '../pages/RelatedTaxonomyItem';
-import RelatedWork from '../pages/RelatedWork';
+import RelatedInstance from './RelatedInstance';
+import RelatedItem from './RelatedItem';
+import RelatedMediaContent from './RelatedMediaContent';
+import RelatedOrganization from './RelatedOrganization';
+import RelatedPerson from './RelatedPerson';
+import RelatedPlace from './RelatedPlace';
+import RelatedTaxonomyItem from './RelatedTaxonomyItem';
+import RelatedWork from './RelatedWork';
 import { Types } from '../utils/ProjectModels';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 
-const ProjectModelRelationshipFactory = () => {
+const ProjectModelRelationshipFactory = (props) => {
   const { projectModelRelationship } = useProjectModelRelationship();
 
   /**
-   * Sets the class view string based on the relationship's inverse status.
+   * Memo-izes the component to render based on the current project model relationship.
    *
-   * @type {string}
+   * @type {any}
    */
-  const classView = useMemo(() => (
-    projectModelRelationship.inverse
+  const value = useMemo(() => {
+    let component;
+
+    const classView = projectModelRelationship.inverse
       ? projectModelRelationship?.primary_model?.model_class_view
-      : projectModelRelationship?.related_model?.model_class_view
-  ), [projectModelRelationship]);
+      : projectModelRelationship?.related_model?.model_class_view;
 
-  let component;
+    switch (classView) {
+      case Types.Instance:
+        component = (
+          <RelatedInstance
+            relationshipId={props.relationshipId}
+          />
+        );
+        break;
 
-  switch (classView) {
-    case Types.Instance:
-      component = <RelatedInstance />;
-      break;
+      case Types.Item:
+        component = (
+          <RelatedItem
+            relationshipId={props.relationshipId}
+          />
+        );
+        break;
 
-    case Types.Item:
-      component = <RelatedItem />;
-      break;
+      case Types.MediaContent:
+        component = (
+          <RelatedMediaContent
+            relationshipId={props.relationshipId}
+          />
+        );
+        break;
 
-    case Types.MediaContent:
-      component = <RelatedMediaContent />;
-      break;
+      case Types.Organization:
+        component = (
+          <RelatedOrganization
+            relationshipId={props.relationshipId}
+          />
+        );
+        break;
 
-    case Types.Organization:
-      component = <RelatedOrganization />;
-      break;
+      case Types.Person:
+        component = (
+          <RelatedPerson
+            relationshipId={props.relationshipId}
+          />
+        );
+        break;
 
-    case Types.Person:
-      component = <RelatedPerson />;
-      break;
+      case Types.Place:
+        component = (
+          <RelatedPlace
+            relationshipId={props.relationshipId}
+          />
+        );
+        break;
 
-    case Types.Place:
-      component = <RelatedPlace />;
-      break;
+      case Types.Taxonomy:
+        component = (
+          <RelatedTaxonomyItem
+            relationshipId={props.relationshipId}
+          />
+        );
+        break;
 
-    case Types.Taxonomy:
-      component = <RelatedTaxonomyItem />;
-      break;
+      case Types.Work:
+        component = (
+          <RelatedWork
+            relationshipId={props.relationshipId}
+          />
+        );
+        break;
 
-    case Types.Work:
-      component = <RelatedWork />;
-      break;
+      default:
+        component = null;
+        break;
+    }
 
-    default:
-      component = null;
-      break;
-  }
+    return component;
+  }, [projectModelRelationship]);
 
-  return component;
+  return value;
 };
 
 export default ProjectModelRelationshipFactory;

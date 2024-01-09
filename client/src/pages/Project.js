@@ -16,6 +16,7 @@ import {
 } from 'semantic-ui-react';
 import PermissionsService from '../services/Permissions';
 import { type Project as ProjectType } from '../types/Project';
+import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import ProjectsService from '../services/Projects';
 import styles from './Project.module.css';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
@@ -43,78 +44,76 @@ const ProjectForm = (props: Props) => {
   ), [navigate, props.item]);
 
   return (
-    <SimpleEditPage
-      {...props}
-      className={cx(props.className, styles.project)}
-      editable={PermissionsService.canEditProject(props.item.id)}
-      menuProps={{
-        text: true
-      }}
-    >
-      <SimpleEditPage.Tab
-        key='default'
+    <>
+      <ProjectSettingsMenu />
+      <SimpleEditPage
+        {...props}
       >
-        <Form.Input
-          autoFocus
-          error={props.isError('name')}
-          label={t('Project.labels.name')}
-          required={props.isRequired('name')}
-          onChange={props.onTextInputChange.bind(this, 'name')}
-          value={props.item.name}
-        />
-        <Form.TextArea
-          error={props.isError('description')}
-          label={t('Project.labels.description')}
-          required={props.isRequired('description')}
-          rows={5}
-          onChange={props.onTextInputChange.bind(this, 'description')}
-          value={props.item.description}
-        />
-        <Message
-          className={cx(styles.ui, styles.message)}
-          color='blue'
-          icon
+        <SimpleEditPage.Tab
+          key='default'
         >
-          <Icon>
-            <IoSearchOutline />
-          </Icon>
-          <Message.Content
-            className={styles.content}
+          <Form.Input
+            autoFocus
+            error={props.isError('name')}
+            label={t('Project.labels.name')}
+            required={props.isRequired('name')}
+            onChange={props.onTextInputChange.bind(this, 'name')}
+            value={props.item.name}
+          />
+          <Form.TextArea
+            error={props.isError('description')}
+            label={t('Project.labels.description')}
+            required={props.isRequired('description')}
+            rows={5}
+            onChange={props.onTextInputChange.bind(this, 'description')}
+            value={props.item.description}
+          />
+          <Message
+            className={cx(styles.ui, styles.message)}
+            color='blue'
+            icon
           >
-            <Message.Header
-              className={styles.header}
-              content={t('Project.messages.share.header')}
-            />
-            <Form.Checkbox
-              checked={props.item.discoverable}
-              className={styles.field}
-              label={t('Project.messages.share.content')}
-              error={props.isError('discoverable')}
-              onChange={props.onCheckboxInputChange.bind(this, 'discoverable')}
-            />
-          </Message.Content>
-        </Message>
-        { PermissionsService.canDeleteProject(props.item.id) && (
-          <>
-            <Button
-              color='red'
-              content={t('Common.buttons.delete')}
-              floated='right'
-              icon='trash'
-              onClick={() => setDeleteModal(true)}
-            />
-            <Confirm
-              centered={false}
-              content={t('Project.messages.delete.content')}
-              header={t('Project.messages.delete.header')}
-              open={deleteModal}
-              onCancel={() => setDeleteModal(false)}
-              onConfirm={onDelete}
-            />
-          </>
-        )}
-      </SimpleEditPage.Tab>
-    </SimpleEditPage>
+            <Icon>
+              <IoSearchOutline />
+            </Icon>
+            <Message.Content
+              className={styles.content}
+            >
+              <Message.Header
+                className={styles.header}
+                content={t('Project.messages.share.header')}
+              />
+              <Form.Checkbox
+                checked={props.item.discoverable}
+                className={styles.field}
+                label={t('Project.messages.share.content')}
+                error={props.isError('discoverable')}
+                onChange={props.onCheckboxInputChange.bind(this, 'discoverable')}
+              />
+            </Message.Content>
+          </Message>
+          { PermissionsService.canDeleteProject(props.item.id) && (
+            <>
+              <Button
+                color='red'
+                content={t('Common.buttons.delete')}
+                floated='right'
+                icon='trash'
+                onClick={() => setDeleteModal(true)}
+              />
+              <Confirm
+                centered={false}
+                content={t('Project.messages.delete.content')}
+                header={t('Project.messages.delete.header')}
+                open={deleteModal}
+                onCancel={() => setDeleteModal(false)}
+                onConfirm={onDelete}
+              />
+            </>
+          )}
+        </SimpleEditPage.Tab>
+      </SimpleEditPage>
+    </>
   );
 };
 const Project: any = withReactRouterEditPage(ProjectForm, {

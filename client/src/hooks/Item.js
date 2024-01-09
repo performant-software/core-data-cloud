@@ -1,12 +1,81 @@
 // @flow
 
-import { useContext, useEffect } from 'react';
-import CurrentRecordContext from '../context/CurrentRecord';
+import { useContext, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import _ from 'underscore';
+import ProjectContext from '../context/Project';
+import PeopleUtils from '../utils/People';
+import SourceUtils from '../utils/Sources';
+import { Types } from '../utils/ProjectModels';
+import { useLocation } from 'react-router-dom';
 import useParams from './ParsedParams';
+import useProjectModelRelationship from './ProjectModelRelationship';
+
+const PATH_NEW = 'new';
 
 const initialize = ({ item, onSetState }) => {
-  const { setCurrentRecord } = useContext(CurrentRecordContext);
-  const { projectModelId } = useParams();
+  const { projectModel } = useContext(ProjectContext);
+
+  const { projectId, projectModelId } = useParams();
+  const { projectModelRelationship } = useProjectModelRelationship();
+
+  const { pathname } = useLocation();
+  const { t } = useTranslation();
+
+  const classView = useMemo(() => projectModel?.model_class_view, [projectModel]);
+  const isNewRecord = useMemo(() => projectModel && pathname?.endsWith(PATH_NEW), [pathname, projectModel]);
+
+  const label = useMemo(() => t('Common.labels.all', { name: projectModel?.name }), [projectModel]);
+  const url = useMemo(() => `/projects/${projectId}/${projectModelId}`, [projectId, projectModelId]);
+
+  /**
+   * Sets the name value based on the record set on the state.
+   *
+   * @type {*}
+   */
+  const name = useMemo(() => {
+    if (isNewRecord && !projectModelRelationship) {
+      return t('CurrentRecordContextProvider.labels.new', { name: projectModel?.name_singular });
+    }
+
+    if (!item) {
+      return null;
+    }
+
+    if (classView === Types.Instance) {
+      return SourceUtils.getNameView(item);
+    }
+
+    if (classView === Types.Item) {
+      return SourceUtils.getNameView(item);
+    }
+
+    if (classView === Types.MediaContent) {
+      return item.name;
+    }
+
+    if (classView === Types.Organization) {
+      return _.findWhere(item.organization_names, { primary: true })?.name;
+    }
+
+    if (classView === Types.Person) {
+      return PeopleUtils.getNameView(item);
+    }
+
+    if (classView === Types.Place) {
+      return _.findWhere(item.place_names, { primary: true })?.name;
+    }
+
+    if (classView === Types.Taxonomy) {
+      return item.name;
+    }
+
+    if (classView === Types.Work) {
+      return SourceUtils.getNameView(item);
+    }
+
+    return null;
+  }, [classView, isNewRecord, projectModelRelationship, item]);
 
   /**
    * Sets the project model ID on the state from the route parameters.
@@ -17,10 +86,11 @@ const initialize = ({ item, onSetState }) => {
     }
   }, [projectModelId, item.id]);
 
-  /**
-   * Sets the current record on the context.
-   */
-  useEffect(() => setCurrentRecord(item), [item]);
+  return {
+    label,
+    name,
+    url
+  };
 };
 
 export default initialize;

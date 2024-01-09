@@ -16,6 +16,7 @@ const MenuBar = () => (
     className={cx(styles.menuBar, styles.ui, styles.grid)}
   >
     <Grid.Column
+      className={styles.column}
       width={4}
     >
       <Logo />
@@ -25,11 +26,9 @@ const MenuBar = () => (
       width={9}
     >
       <AdminMenu />
-      <ProjectTitle />
-      <ProjectModelsMenu />
-      <ProjectModeLink />
     </Grid.Column>
     <Grid.Column
+      className={styles.column}
       textAlign='right'
       width={3}
     >
