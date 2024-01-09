@@ -1,7 +1,12 @@
 // @flow
 
 import { withEditPage } from '@performant-software/shared-components';
-import React, { useCallback, useContext, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useMemo,
+  useState
+} from 'react';
 import ItemLayoutContext from '../context/ItemLayout';
 import RelationshipsService from '../services/Relationships';
 import Validation from '../utils/Validation';
@@ -54,11 +59,9 @@ const withRelationshipEditForm = (WrappedComponent) => (props: Props) => {
     resolveValidationError: Validation.resolveUpdateError.bind(this)
   });
 
-  return (
-    <EditPage
-      {...props}
-    />
-  );
+  const Component = useMemo(() => <EditPage {...props} />, [props]);
+
+  return Component;
 };
 
 export default withRelationshipEditForm;
