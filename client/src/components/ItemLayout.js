@@ -178,15 +178,19 @@ const ItemLayout = (props: Props) => {
 };
 
 const Content = (props) => props.children;
+Content.displayName = 'Content';
 ItemLayout.Content = Content;
 
 const Header = (props) => props.children;
+Header.displayName = 'Header';
 ItemLayout.Header = Header;
 
 const Sidebar = (props) => props.children;
+Sidebar.displayName = 'Sidebar';
 ItemLayout.Sidebar = Sidebar;
 
 const ToasterComponent = (props) => props.children;
+Toaster.displayName = 'Toaster';
 ItemLayout.Toaster = ToasterComponent;
 
 export default ItemLayout;
