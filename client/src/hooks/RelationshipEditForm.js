@@ -51,6 +51,9 @@ const withRelationshipEditForm = (WrappedComponent) => (props: Props) => {
       })
   ), []);
 
+  /**
+   * Create the EditPage component.
+   */
   const EditPage = withEditPage(WrappedComponent, {
     afterSave,
     id,
@@ -59,6 +62,11 @@ const withRelationshipEditForm = (WrappedComponent) => (props: Props) => {
     resolveValidationError: Validation.resolveUpdateError.bind(this)
   });
 
+  /**
+   * Memo-ize the return value.
+   *
+   * @type {unknown}
+   */
   const Component = useMemo(() => <EditPage {...props} />, [props]);
 
   return Component;
