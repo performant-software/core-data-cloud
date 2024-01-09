@@ -103,10 +103,12 @@ const RelatedMediaContents = () => {
       <ItemList
         actions={[{
           basic: false,
-          name: 'edit'
+          name: 'edit',
+          size: 'tiny'
         }, {
           basic: false,
-          name: 'delete'
+          name: 'delete',
+          size: 'tiny'
         }]}
         addButton={{}}
         buttons={[{
