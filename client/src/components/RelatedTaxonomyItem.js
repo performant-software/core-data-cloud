@@ -1,18 +1,16 @@
 // @flow
 
-import { AssociatedDropdown, SimpleEditPage } from '@performant-software/semantic-components';
+import { AssociatedDropdown } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
-import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
 import React, { useCallback, useState } from 'react';
 import { Form } from 'semantic-ui-react';
-import { initialize, useRelationship, withRelationshipEditPage } from '../hooks/Relationship';
+import { useRelationship } from '../hooks/Relationship';
 import ListViews from '../constants/ListViews';
-import TaxonomyItemModal from './TaxonomyItemModal';
-import TaxonomyTransform from '../transforms/Taxonomy';
-import TaxonomiesService from '../services/Taxonomies';
+import RelatedTaxonomyItemModal from './RelatedTaxonomyItemModal';
 import RelatedViewMenu from './RelatedViewMenu';
+import TaxonomiesService from '../services/Taxonomies';
+import TaxonomyTransform from '../transforms/Taxonomy';
 import type { Relationship as RelationshipType } from '../types/Relationship';
-import useParams from '../hooks/ParsedParams';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 import withRelationshipEditForm from '../hooks/RelationshipEditForm';
 
@@ -28,6 +26,7 @@ const RelatedTaxonomyItemForm = (props: Props) => {
     error,
     foreignKey,
     foreignObject,
+    foreignObjectName,
     onSave,
     onSelection
   } = useRelationship(props);
@@ -62,6 +61,7 @@ const RelatedTaxonomyItemForm = (props: Props) => {
             icon: 'pencil',
             name: 'add'
           }, {
+            accept: () => !props.item[foreignKey],
             content: null,
             name: 'clear'
           }]}
@@ -78,7 +78,9 @@ const RelatedTaxonomyItemForm = (props: Props) => {
             component: RelatedTaxonomyItemModal,
             props: {
               item: {
-                id: props.item.id
+                id: props.item.id,
+                [foreignKey]: foreignObject?.id,
+                [foreignObjectName]: foreignObject
               },
               onInitialize: props.onInitialize,
               required: [foreignKey]

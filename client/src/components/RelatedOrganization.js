@@ -26,6 +26,7 @@ const RelatedOrganizationForm = (props: Props) => {
     error,
     foreignKey,
     foreignObject,
+    foreignObjectName,
     onSave,
     onSelection
   } = useRelationship(props);
@@ -60,6 +61,7 @@ const RelatedOrganizationForm = (props: Props) => {
             icon: 'pencil',
             name: 'add'
           }, {
+            accept: () => !props.item[foreignKey],
             content: null,
             name: 'clear'
           }]}
@@ -74,7 +76,9 @@ const RelatedOrganizationForm = (props: Props) => {
             component: RelatedOrganizationModal,
             props: {
               item: {
-                id: props.item.id
+                id: props.item.id,
+                [foreignKey]: foreignObject?.id,
+                [foreignObjectName]: foreignObject
               },
               onInitialize: props.onInitialize,
               required: [foreignKey]

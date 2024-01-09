@@ -26,6 +26,7 @@ const RelatedWorkForm = (props: Props) => {
     error,
     foreignKey,
     foreignObject,
+    foreignObjectName,
     onSave,
     onSelection
   } = useRelationship(props);
@@ -60,6 +61,7 @@ const RelatedWorkForm = (props: Props) => {
             icon: 'pencil',
             name: 'add'
           }, {
+            accept: () => !props.item[foreignKey],
             content: null,
             name: 'clear'
           }]}
@@ -76,7 +78,9 @@ const RelatedWorkForm = (props: Props) => {
             component: RelatedWorkModal,
             props: {
               item: {
-                id: props.item.id
+                id: props.item.id,
+                [foreignKey]: foreignObject?.id,
+                [foreignObjectName]: foreignObject
               },
               onInitialize: props.onInitialize,
               required: [foreignKey]
