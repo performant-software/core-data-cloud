@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_12_111940) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_08_195038) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_12_111940) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
+    t.integer "z_instance_id"
     t.index ["project_model_id"], name: "index_core_data_connector_instances_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_instances_on_user_defined", using: :gin
   end
@@ -32,6 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_12_111940) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
+    t.integer "z_item_id"
     t.index ["project_model_id"], name: "index_core_data_connector_items_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_items_on_user_defined", using: :gin
   end
@@ -51,6 +53,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_12_111940) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "z_source_id"
+    t.string "z_source_type"
   end
 
   create_table "core_data_connector_organization_names", force: :cascade do |t|
@@ -237,6 +241,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_12_111940) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
+    t.integer "z_work_id"
     t.index ["project_model_id"], name: "index_core_data_connector_works_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_works_on_user_defined", using: :gin
   end
