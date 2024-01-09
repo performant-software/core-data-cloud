@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: af56391be8300debb86d8aa883f34f3f2aad6bf9
-  tag: v0.1.18
+  revision: e3dc3b7d5eaadd49012b675195c3d53ac5b83f3e
+  tag: v0.1.19
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 8.0)
@@ -28,8 +28,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/resource-api.git
-  revision: 4ebb021cb1c411e8796bb9a201867333fea3634f
-  tag: v0.5.6
+  revision: 1e4ff2138e74b8e4c3c1a9b1795f2bf0237ae945
+  tag: v0.5.7
   specs:
     resource_api (0.1.0)
       pagy (~> 5.10)
@@ -38,8 +38,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/triple-eye-effable.git
-  revision: 3f914d1035654e260bdc2902e7f0d7909d9e8b49
-  tag: v0.1.9
+  revision: b4f90692c66391133383ce26f36458fde376710c
+  tag: v0.1.10
   specs:
     triple_eye_effable (0.1.0)
       httparty (~> 0.20.0)
