@@ -10,6 +10,17 @@ import SessionService from './Session';
  */
 class Projects extends BaseService {
   /**
+   * Calls the <code>/projects/:id/clear</code> API endpoint to clear all data from the passed project.
+   *
+   * @param project
+   *
+   * @returns {*}
+   */
+  clear(project: ProjectType): Promise<any> {
+    return this.getAxios().post(`${this.getBaseUrl()}/${project.id}/clear`);
+  }
+
+  /**
    * Overrides the parent create method to reset the session user.
    *
    * @param project
