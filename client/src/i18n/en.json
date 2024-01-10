@@ -246,7 +246,7 @@
   "Project": {
     "actions": {
       "clear": {
-        "content": "Removes all of the data from your project. Please be certain this is what you want to do.",
+        "content": "Removes all of the data from your project that is not shared with other projects. Please be certain this is what you want to do.",
         "header": "Clear Data"
       },
       "delete": {
