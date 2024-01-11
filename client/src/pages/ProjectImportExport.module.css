@@ -1,0 +1,10 @@
+.projectImport > .ui.segments > .ui.segment {
+  display: block;
+  text-align: left;
+  width: 100%;
+}
+
+.projectImport > .ui.segments > .ui.segment::before {
+  border: none;
+  margin: 0px;
+}

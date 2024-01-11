@@ -87,7 +87,7 @@ class Permissions {
    *
    * @returns {boolean}
    */
-  canImport(): boolean {
+  canImportData(): boolean {
     return this.isAdmin();
   }
 
