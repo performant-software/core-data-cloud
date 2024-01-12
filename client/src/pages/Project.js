@@ -1,6 +1,6 @@
 // @flow
 
-import { SimpleEditPage } from '@performant-software/semantic-components';
+import { SimpleEditPage, Toaster } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import cx from 'classnames';
 import React, { useCallback, useState } from 'react';
@@ -11,8 +11,12 @@ import {
   Button,
   Confirm,
   Form,
+  Header,
   Icon,
-  Message
+  Message,
+  MessageHeader,
+  Segment,
+  SegmentGroup
 } from 'semantic-ui-react';
 import PermissionsService from '../services/Permissions';
 import { type Project as ProjectType } from '../types/Project';
@@ -26,10 +30,24 @@ type Props = EditContainerProps & {
 };
 
 const ProjectForm = (props: Props) => {
+  const [clearModal, setClearModal] = useState(false);
+  const [cleared, setCleared] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
 
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  /**
+   * Clears all of the data from the current project.
+   *
+   * @type {function(): Promise<void>}
+   */
+  const onClear = useCallback(() => (
+    ProjectsService
+      .clear(props.item)
+      .then(() => setCleared(true))
+      .then(() => setClearModal(false))
+  ), [props.item]);
 
   /**
    * Deletes the current project and navigates back to the list.
@@ -47,6 +65,7 @@ const ProjectForm = (props: Props) => {
     <>
       <ProjectSettingsMenu />
       <SimpleEditPage
+        className={styles.project}
         {...props}
       >
         <SimpleEditPage.Tab
@@ -68,48 +87,112 @@ const ProjectForm = (props: Props) => {
             onChange={props.onTextInputChange.bind(this, 'description')}
             value={props.item.description}
           />
-          <Message
-            className={cx(styles.ui, styles.message)}
-            color='blue'
-            icon
+          <div
+            className={styles.section}
           >
-            <Icon>
-              <IoSearchOutline />
-            </Icon>
-            <Message.Content
-              className={styles.content}
+            <Header
+              content={t('Project.labels.sharing')}
+            />
+            <Message
+              className={cx(styles.ui, styles.message)}
+              color='blue'
+              icon
             >
-              <Message.Header
-                className={styles.header}
-                content={t('Project.messages.share.header')}
-              />
-              <Form.Checkbox
-                checked={props.item.discoverable}
-                className={styles.field}
-                label={t('Project.messages.share.content')}
-                error={props.isError('discoverable')}
-                onChange={props.onCheckboxInputChange.bind(this, 'discoverable')}
-              />
-            </Message.Content>
-          </Message>
+              <Icon>
+                <IoSearchOutline />
+              </Icon>
+              <Message.Content
+                className={styles.content}
+              >
+                <Message.Header
+                  className={styles.header}
+                  content={t('Project.messages.share.header')}
+                />
+                <Form.Checkbox
+                  checked={props.item.discoverable}
+                  className={styles.field}
+                  label={t('Project.messages.share.content')}
+                  error={props.isError('discoverable')}
+                  onChange={props.onCheckboxInputChange.bind(this, 'discoverable')}
+                />
+              </Message.Content>
+            </Message>
+          </div>
           { PermissionsService.canDeleteProject(props.item.id) && (
-            <>
-              <Button
-                color='red'
-                content={t('Common.buttons.delete')}
-                floated='right'
-                icon='trash'
-                onClick={() => setDeleteModal(true)}
+            <div
+              className={styles.section}
+            >
+              <Header
+                content={t('Project.labels.danger')}
               />
-              <Confirm
-                centered={false}
-                content={t('Project.messages.delete.content')}
-                header={t('Project.messages.delete.header')}
-                open={deleteModal}
-                onCancel={() => setDeleteModal(false)}
-                onConfirm={onDelete}
-              />
-            </>
+              <SegmentGroup>
+                <Segment
+                  className={cx(styles.ui, styles.segment)}
+                  color='red'
+                  padded
+                >
+                  <Header
+                    className={cx(styles.ui, styles.small, styles.header)}
+                    content={t('Project.actions.clear.header')}
+                    subheader={t('Project.actions.clear.content')}
+                    size='small'
+                  />
+                  <Button
+                    className={cx(styles.ui, styles.button)}
+                    color='red'
+                    content={t('Project.buttons.clear')}
+                    icon='times'
+                    onClick={() => setClearModal(true)}
+                  />
+                  <Confirm
+                    centered={false}
+                    content={t('Project.messages.clear.content')}
+                    header={t('Project.messages.clear.header')}
+                    open={clearModal}
+                    onCancel={() => setClearModal(false)}
+                    onConfirm={onClear}
+                  />
+                  { cleared && (
+                    <Toaster
+                      onDismiss={() => setCleared(false)}
+                      type='positive'
+                    >
+                      <MessageHeader
+                        content={t('Project.messages.cleared.header')}
+                      />
+                      <p>{ t('Project.messages.cleared.content') }</p>
+                    </Toaster>
+                  )}
+                </Segment>
+                <Segment
+                  className={cx(styles.ui, styles.segment)}
+                  color='red'
+                  padded
+                >
+                  <Header
+                    className={cx(styles.ui, styles.small, styles.header)}
+                    content={t('Project.actions.delete.header')}
+                    subheader={t('Project.actions.delete.content')}
+                    size='small'
+                  />
+                  <Button
+                    className={cx(styles.ui, styles.button)}
+                    color='red'
+                    content={t('Project.buttons.delete')}
+                    icon='trash'
+                    onClick={() => setDeleteModal(true)}
+                  />
+                  <Confirm
+                    centered={false}
+                    content={t('Project.messages.delete.content')}
+                    header={t('Project.messages.delete.header')}
+                    open={deleteModal}
+                    onCancel={() => setDeleteModal(false)}
+                    onConfirm={onDelete}
+                  />
+                </Segment>
+              </SegmentGroup>
+            </div>
           )}
         </SimpleEditPage.Tab>
       </SimpleEditPage>
