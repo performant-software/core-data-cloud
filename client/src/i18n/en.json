@@ -244,11 +244,35 @@
     }
   },
   "Project": {
+    "actions": {
+      "clear": {
+        "content": "Removes all of the data from your project that is not shared with other projects. Please be certain this is what you want to do.",
+        "header": "Clear Data"
+      },
+      "delete": {
+        "content": "Deletes your project. Once a project is deleted, it cannot be restored.",
+        "header": "Delete Project"
+      }
+    },
+    "buttons": {
+      "clear": "Clear Data",
+      "delete": "Delete Project"
+    },
     "labels": {
+      "danger": "Danger Zone",
       "description": "Description",
-      "name": "Name"
+      "name": "Name",
+      "sharing": "Sharing"
     },
     "messages": {
+      "clear": {
+        "content": "Do you really want to clear all data from this project? This action cannot be undone.",
+        "header": "Are you sure?"
+      },
+      "cleared": {
+        "content": "All of the data has been cleared from your project.",
+        "header": "Success!"
+      },
       "delete": {
         "content": "Do you really want to delete this project? This action cannot be undone.",
         "header": "Are you sure?"
