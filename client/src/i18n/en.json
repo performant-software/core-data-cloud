@@ -289,7 +289,25 @@
       "settings": "Settings"
     }
   },
-  "ProjectImport": {
+  "ProjectImportExport": {
+    "actions": {
+      "configuration": {
+        "export": {
+          "content": "Download your project configuration file as JSON",
+          "header": "Export"
+        },
+        "import": {
+          "content": "Import a JSON file containing your project configuration",
+          "header": "Import"
+        }
+      },
+      "data": {
+        "import": {
+          "content": "Import a ZIP archive of CSV files to populate your project with data",
+          "header": "Import"
+        }
+      }
+    },
     "errors": {
       "file": {
         "content": "You may only upload a single zip file.",
@@ -297,6 +315,16 @@
       },
       "import": {
         "header": "An error occurred importing the file"
+      }
+    },
+    "labels": {
+      "configuration": "Configuration",
+      "data": "Data"
+    },
+    "messages": {
+      "import": {
+        "content": "Your file has been imported.",
+        "header": "Success!"
       }
     },
     "title": "Import"
@@ -378,7 +406,7 @@
       "allUsers": "All Users",
       "configure": "Configure",
       "details": "Details",
-      "import": "Import",
+      "import": "Import / Export",
       "newModel": "New Model",
       "newUser": "New User",
       "users": "Users"

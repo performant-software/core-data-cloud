@@ -31,13 +31,11 @@ const ProjectSettingsMenu = () => {
             parent
             to={`/projects/${projectId}/user_projects`}
           />
-          { PermissionsService.canImport() && (
-            <MenuLink
-              content={t('ProjectSettingsMenu.labels.import')}
-              parent
-              to={`/projects/${projectId}/import`}
-            />
-          )}
+          <MenuLink
+            content={t('ProjectSettingsMenu.labels.import')}
+            parent
+            to={`/projects/${projectId}/import`}
+          />
         </>
       )}
     </Menu>
