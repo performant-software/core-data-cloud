@@ -9,7 +9,7 @@ import {
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsEmbeddedList } from '@performant-software/user-defined-fields';
 import cx from 'classnames';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaUnlockAlt } from 'react-icons/fa';
 import { FaShareFromSquare } from 'react-icons/fa6';
@@ -95,6 +95,15 @@ const ProjectModelForm = (props: Props) => {
     const association = relationship.inverse ? INVERSE_RELATIONSHIP_KEY : RELATIONSHIP_KEY;
     props.onDeleteChildAssociation(association, relationship);
     props.onDeleteChildAssociation('all_project_model_relationships', relationship);
+  }, []);
+
+ /*
+  * For a new record, set the foreign key ID based on the route parameters.
+  */
+  useEffect(() => {
+    if (!props.item.id && projectId) {
+      props.onSetState({ project_id: projectId });
+    }
   }, []);
 
   return (
