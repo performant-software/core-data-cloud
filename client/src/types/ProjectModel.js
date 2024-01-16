@@ -27,6 +27,7 @@ export type ProjectModel = {
   model_class_view: string,
   slug: string,
   has_shares: boolean,
+  allow_identifiers: boolean,
   project_model_relationships: Array<ProjectModelRelationship>,
   inverse_project_model_relationships: Array<ProjectModelRelationship>,
   all_project_model_relationships: Array<ProjectModelRelationship>,

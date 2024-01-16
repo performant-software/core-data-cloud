@@ -3,17 +3,20 @@
 import cx from 'classnames';
 import React, {
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useState
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Header } from 'semantic-ui-react';
+import { Divider, Header } from 'semantic-ui-react';
 import ItemHeader from './ItemHeader';
 import ItemLayout from './ItemLayout';
 import ItemLayoutContext from '../context/ItemLayout';
 import initialize from '../hooks/Item';
+import ProjectContext from '../context/Project';
 import ProjectItemMenu from './ProjectItemMenu';
+import RelatedIdentifiers from './RelatedIdentifiers';
 import Relationships from './Relationships';
 import SaveButton from './SaveButton';
 import Section from './Section';
@@ -38,6 +41,7 @@ const ItemPage = ({ form: Form, onInitialize, onSave }: Props) => {
   const Component = useCallback((props: ComponentProps) => {
     const [saved, setSaved] = useState(false);
     const { label, name, url } = initialize(props);
+    const { projectModel } = useContext(ProjectContext);
 
     /**
      * Memo-izes the ItemLayoutContext value.
@@ -94,6 +98,19 @@ const ItemPage = ({ form: Form, onInitialize, onSave }: Props) => {
               />
             </Section>
             <Relationships />
+            { projectModel?.allow_identifiers && (
+              <Section
+                id='identifiers'
+              >
+                <Divider
+                  section
+                />
+                <Header
+                  content={t('ItemPage.labels.identifiers')}
+                />
+                <RelatedIdentifiers />
+              </Section>
+            )}
           </ItemLayout.Content>
         </ItemLayout>
       </ItemLayoutContext.Provider>

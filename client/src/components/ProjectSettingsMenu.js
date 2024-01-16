@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 import MenuLink from './MenuLink';
-import PermissionsService from '../services/Permissions';
 
 const ProjectSettingsMenu = () => {
   const { projectId } = useParams();
@@ -35,6 +34,11 @@ const ProjectSettingsMenu = () => {
             content={t('ProjectSettingsMenu.labels.import')}
             parent
             to={`/projects/${projectId}/import`}
+          />
+          <MenuLink
+            content={t('ProjectSettingsMenu.labels.authorities')}
+            parent
+            to={`/projects/${projectId}/web_authorities`}
           />
         </>
       )}

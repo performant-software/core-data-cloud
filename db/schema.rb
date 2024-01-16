@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_08_195038) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_15_153449) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -169,6 +169,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_08_195038) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
+    t.boolean "allow_identifiers", default: false
     t.index ["project_id"], name: "index_core_data_connector_project_models_on_project_id"
   end
 
@@ -233,6 +234,26 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_08_195038) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false
+  end
+
+  create_table "core_data_connector_web_authorities", force: :cascade do |t|
+    t.bigint "project_id"
+    t.string "source_type"
+    t.jsonb "access"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_core_data_connector_web_authorities_on_project_id"
+  end
+
+  create_table "core_data_connector_web_identifiers", force: :cascade do |t|
+    t.bigint "web_authority_id"
+    t.string "identifiable_type"
+    t.bigint "identifiable_id"
+    t.string "identifier"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identifiable_type", "identifiable_id"], name: "index_core_data_connector_web_identifiers_on_identifiable"
+    t.index ["web_authority_id"], name: "index_core_data_connector_web_identifiers_on_web_authority_id"
   end
 
   create_table "core_data_connector_works", force: :cascade do |t|

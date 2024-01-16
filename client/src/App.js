@@ -20,6 +20,8 @@ import User from './pages/User';
 import UserProject from './pages/UserProject';
 import UserProjects from './pages/UserProjects';
 import Users from './pages/Users';
+import WebAuthorities from './pages/WebAuthorities';
+import WebAuthority from './pages/WebAuthority';
 
 const App: ComponentType<any> = useDragDrop(() => (
   <Router>
@@ -103,6 +105,22 @@ const App: ComponentType<any> = useDragDrop(() => (
               path='import'
               element={<ProjectImportExport />}
             />
+            <Route
+              path='web_authorities'
+            >
+              <Route
+                index
+                element={<WebAuthorities />}
+              />
+              <Route
+                path='new'
+                element={<WebAuthority />}
+              />
+              <Route
+                path=':webAuthorityId'
+                element={<WebAuthority />}
+              />
+            </Route>
             <Route
               path=':projectModelId'
             >

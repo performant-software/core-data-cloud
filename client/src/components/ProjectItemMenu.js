@@ -17,6 +17,7 @@ import styles from './ProjectItemMenu.module.css';
 import useParams from '../hooks/ParsedParams';
 
 const SECTION_ID_DETAILS = 'details';
+const SECTION_ID_IDENTIFIERS = 'identifiers';
 
 const ProjectItemMenu = () => {
   const [activeSection, setActiveSection] = useState();
@@ -73,6 +74,11 @@ const ProjectItemMenu = () => {
 
         addSection(items, projectModelRelationship.id, name);
       });
+    }
+
+    // Add web identifiers
+    if (projectModel?.allow_identifiers) {
+      addSection(items, SECTION_ID_IDENTIFIERS, t('ProjectItemMenu.labels.identifiers'));
     }
 
     return items;

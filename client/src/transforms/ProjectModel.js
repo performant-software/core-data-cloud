@@ -29,7 +29,8 @@ class ProjectModel extends BaseTransform {
     return [
       'project_id',
       'name',
-      'model_class'
+      'model_class',
+      'allow_identifiers'
     ];
   }
 
