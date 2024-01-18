@@ -8,5 +8,6 @@ export type WebIdentifier = {
   web_authority: WebAuthorityType,
   identifiable_id: number,
   identifiable_type: string,
-  identifier: string
+  identifier: string,
+  extra: { [key: string]: string }
 };

@@ -20,6 +20,13 @@
       "url": "URL"
     }
   },
+  "AtomIdentifierForm": {
+    "labels": {
+      "geographic": "Geographic Access Points",
+      "language": "Language",
+      "subject": "Subject Access Points"
+    }
+  },
   "Common": {
     "buttons": {
       "add": "Add",
@@ -37,6 +44,7 @@
     },
     "labels": {
       "all": "All {{name}}",
+      "identifier": "Identifier",
       "project": "Project",
       "related": {
         "add": "Add {{name}}",
@@ -439,8 +447,7 @@
   },
   "RelatedIdentifierModal": {
     "labels": {
-      "authority": "Authority",
-      "identifier": "Identifier"
+      "authority": "Authority"
     },
     "title": {
       "add": "Add Identifier",

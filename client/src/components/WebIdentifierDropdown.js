@@ -22,10 +22,11 @@ import WebAuthoritiesService from '../services/WebAuthorities';
 type Props = {
   id?: string,
   authorityId: number,
-  onChange: (identifier: number | string) => void,
+  onLoad: (data: any) => void,
   onSearch: (data: any) => Array<any>,
+  onSelection: (identifier: any) => void,
   renderOption: (item: any) => ComponentType,
-  resolveLabel: (item: any) => string,
+  text: ?string,
   value: ?number | ?string
 };
 
@@ -89,11 +90,18 @@ const WebIdentifierDropdown = (props: Props) => {
   }, [props.value]);
 
   /**
+   * Calls the onSelection prop with the passed item ID.
+   *
+   * @type {function(*): *}
+   */
+  const onSelection = useCallback((item) => props.onSelection(item?.id), [props.onSelection]);
+
+  /**
    * Calls the onChange prop with no value, indicating the value has been removed.
    *
    * @type {function(): *}
    */
-  const onClear = useCallback(() => props.onChange(), [props.onChange]);
+  const onClear = useCallback(() => onSelection(), [onSelection]);
 
   /**
    * Calls the /web_authorities/:id/search API endpoint and sets the results on the state.
@@ -121,12 +129,12 @@ const WebIdentifierDropdown = (props: Props) => {
     if (props.value) {
       WebAuthoritiesService
         .find(props.authorityId, props.value)
-        .then(({ data }) => {
-          const label = props.resolveLabel(data);
-          setSearchQuery(label);
-        });
+        .then(props.onLoad);
     } else {
-      // Clear the search query and items from the state.
+      // Call the onLoad prop with an empty object
+      props.onLoad({});
+
+      // Clear the search query and items from the state
       setSearchQuery('');
       setItems([]);
 
@@ -134,6 +142,11 @@ const WebIdentifierDropdown = (props: Props) => {
       inputRef?.current?.focus();
     }
   }, [props.value]);
+
+  /**
+   * Sets the search query based on the text prop.
+   */
+  useEffect(() => setSearchQuery(props.text), [props.text]);
 
   /**
    * Calls the onSearch function after the user has stopped typing.
@@ -178,10 +191,10 @@ const WebIdentifierDropdown = (props: Props) => {
       >
         { _.map(items, (item) => (
           <Dropdown.Item
-            active={props.value === item.id}
+            active={isActive(item)}
             className={getItemClass(item)}
             key={item.id}
-            onClick={() => props.onChange(item.id)}
+            onClick={() => onSelection(item)}
             value={item.id}
           >
             <div

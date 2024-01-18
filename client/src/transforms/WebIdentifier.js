@@ -25,7 +25,8 @@ class WebIdentifier extends BaseTransform {
       'web_authority_id',
       'identifiable_id',
       'identifiable_type',
-      'identifier'
+      'identifier',
+      'extra'
     ];
   }
 }

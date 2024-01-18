@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_15_153449) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_18_163225) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -252,6 +252,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_15_153449) do
     t.string "identifier"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "extra"
     t.index ["identifiable_type", "identifiable_id"], name: "index_core_data_connector_web_identifiers_on_identifiable"
     t.index ["web_authority_id"], name: "index_core_data_connector_web_identifiers_on_web_authority_id"
   end

@@ -5,14 +5,14 @@ import type { EditContainerProps } from '@performant-software/shared-components/
 import React, { useCallback, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Modal } from 'semantic-ui-react';
-import AtomDropdown from './AtomDropdown';
+import AtomIdentifierForm from './AtomIdentifierForm';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
 import WebAuthoritiesService from '../services/WebAuthorities';
 import WebAuthority from '../transforms/WebAuthority';
 import WebAuthorityUtils from '../utils/WebAuthorities';
 import type { WebIdentifier as WebIdentifierType } from '../types/WebIdentifier';
-import WikidataDropdown from './WikidataDropdown';
+import WikidataIdentifierForm from './WikidataIdentifierForm';
 
 type Props = EditContainerProps & {
   item: WebIdentifierType
@@ -72,26 +72,28 @@ const RelatedIdentifierModal = (props: Props) => {
             value={props.item.web_authority_id}
           />
         </Form.Input>
-        { props.item.web_authority && (
-          <Form.Input
+        { props.item.web_authority?.source_type === WebAuthorityUtils.SourceTypes.atom && (
+          <AtomIdentifierForm
+            authorityId={props.item.web_authority_id}
             error={props.isError('identifier')}
-            label={t('RelatedIdentifierModal.labels.identifier')}
-          >
-            { props.item.web_authority.source_type === WebAuthorityUtils.SourceTypes.wikidata && (
-              <WikidataDropdown
-                authorityId={props.item.web_authority_id}
-                onChange={(identifier) => props.onSetState({ identifier })}
-                value={props.item.identifier}
-              />
-            )}
-            { props.item.web_authority.source_type === WebAuthorityUtils.SourceTypes.atom && (
-              <AtomDropdown
-                authorityId={props.item.web_authority_id}
-                onChange={(identifier) => props.onSetState({ identifier })}
-                value={props.item.identifier}
-              />
-            )}
-          </Form.Input>
+            extra={props.item.extra}
+            onExtraSelection={(key, e, { value }) => props.onSetState({
+              extra: {
+                ...props.item.extra || {},
+                [key]: value
+              }
+            })}
+            onSelection={(identifier) => props.onSetState({ identifier, extra: {} })}
+            value={props.item.identifier}
+          />
+        )}
+        { props.item.web_authority?.source_type === WebAuthorityUtils.SourceTypes.wikidata && (
+          <WikidataIdentifierForm
+            authorityId={props.item.web_authority_id}
+            error={props.isError('identifier')}
+            onSelection={(identifier) => props.onSetState({ identifier })}
+            value={props.item.identifier}
+          />
         )}
       </Modal.Content>
       { props.children }
