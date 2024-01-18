@@ -439,7 +439,8 @@
   },
   "RelatedIdentifierModal": {
     "labels": {
-      "authority": "Authority"
+      "authority": "Authority",
+      "identifier": "Identifier"
     },
     "title": {
       "add": "Add Identifier",
@@ -447,6 +448,12 @@
     }
   },
   "RelatedIdentifiers": {
+    "actions": {
+      "open": {
+        "content": "Opens a webpage containing more information about this record",
+        "title": "Open"
+      }
+    },
     "labels": {
       "identifier": "Identifier",
       "sourceType": "Source type"
@@ -614,6 +621,11 @@
       "apiKey": "API key",
       "apiUrl": "API URL",
       "sourceType": "Source type"
+    }
+  },
+  "WebIdentifierDropdown": {
+    "labels": {
+      "search": "Search"
     }
   },
   "WorkForm": {

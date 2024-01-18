@@ -5,11 +5,13 @@ import type { EditContainerProps } from '@performant-software/shared-components/
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Modal } from 'semantic-ui-react';
+import AtomDropdown from './AtomDropdown';
 import useParams from '../hooks/ParsedParams';
+import WebAuthoritiesService from '../services/WebAuthorities';
 import WebAuthority from '../transforms/WebAuthority';
 import WebAuthorityUtils from '../utils/WebAuthorities';
-import WebAuthoritiesService from '../services/WebAuthorities';
 import type { WebIdentifier as WebIdentifierType } from '../types/WebIdentifier';
+import WikidataDropdown from './WikidataDropdown';
 
 type Props = EditContainerProps & {
   item: WebIdentifierType
@@ -56,6 +58,27 @@ const RelatedIdentifierModal = (props: Props) => {
             value={props.item.web_authority_id}
           />
         </Form.Input>
+        { props.item.web_authority && (
+          <Form.Input
+            error={props.isError('identifier')}
+            label={t('RelatedIdentifierModal.labels.identifier')}
+          >
+            { props.item.web_authority.source_type === WebAuthorityUtils.SourceTypes.wikidata && (
+              <WikidataDropdown
+                authorityId={props.item.web_authority_id}
+                onChange={(identifier) => props.onSetState({ identifier })}
+                value={props.item.identifier}
+              />
+            )}
+            { props.item.web_authority.source_type === WebAuthorityUtils.SourceTypes.atom && (
+              <AtomDropdown
+                authorityId={props.item.web_authority_id}
+                onChange={(identifier) => props.onSetState({ identifier })}
+                value={props.item.identifier}
+              />
+            )}
+          </Form.Input>
+        )}
       </Modal.Content>
       { props.children }
     </Modal>

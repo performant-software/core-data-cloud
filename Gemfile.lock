@@ -50,6 +50,7 @@ PATH
       rubyzip (~> 2.3.2)
       triple_eye_effable
       typesense (~> 0.14)
+      typhoeus (~> 1.4)
       user_defined_fields
 
 GEM

@@ -7,6 +7,7 @@ import ProjectContext from '../context/Project';
 import RelatedIdentifierModal from './RelatedIdentifierModal';
 import useParams from '../hooks/ParsedParams';
 import WebAuthorityUtils from '../utils/WebAuthorities';
+import WebIdentifierUtils from '../utils/WebIdentifiers';
 import WebIdentifiersService from '../services/WebIdentifiers';
 
 const RelatedIdentifiers = () => {
@@ -69,6 +70,15 @@ const RelatedIdentifiers = () => {
         name: 'edit'
       }, {
         name: 'delete'
+      }, {
+        accept: (identifier) => !!WebIdentifierUtils.getURL(identifier),
+        icon: 'share square',
+        name: 'open',
+        onClick: (identifier) => window.open(WebIdentifierUtils.getURL(identifier), '_blank'),
+        popup: {
+          title: t('RelatedIdentifiers.actions.open.title'),
+          content: t('RelatedIdentifiers.actions.open.content')
+        }
       }]}
       addButton={{
         basic: false,
@@ -83,7 +93,7 @@ const RelatedIdentifiers = () => {
         resolve: (identifier) => WebAuthorityUtils.getSourceView(identifier.web_authority),
         sortable: true
       }, {
-        name: 'key',
+        name: 'identifier',
         label: t('RelatedIdentifiers.labels.identifier'),
         sortable: true
       }]}

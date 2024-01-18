@@ -1,0 +1,12 @@
+.webIdentifierDropdown.ui.dropdown > .menu > .item {
+  display: flex;
+  align-items: center;
+}
+
+.webIdentifierDropdown.ui.dropdown > .menu > .item.active {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.webIdentifierDropdown.ui.dropdown > .menu > .item > .optionContainer {
+  flex-grow: 1;
+}

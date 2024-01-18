@@ -24,6 +24,30 @@ class WebAuthorities extends BaseService {
   getTransform() {
     return WebAuthorityTransform;
   }
+
+  /**
+   * Calls the /web_authorities/:id/find API endpoint with the passed identifier.
+   *
+   * @param id
+   * @param identifier
+   *
+   * @returns {*}
+   */
+  find(id: number, identifier: string) {
+    return this.getAxios().get(`${this.getBaseUrl()}/${id}/find`, { params: { identifier } });
+  }
+
+  /**
+   * Calls the /web_authorities/:id/search API endpoint with the passed identifier.
+   *
+   * @param id
+   * @param query
+   *
+   * @returns {*}
+   */
+  search(id: number, query: string) {
+    return this.getAxios().get(`${this.getBaseUrl()}/${id}/search`, { params: { query } });
+  }
 }
 
 const WebAuthoritiesService: WebAuthorities = new WebAuthorities();
