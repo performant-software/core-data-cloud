@@ -52,17 +52,11 @@ const RelatedIdentifiers = () => {
    *
    * @type {function(*): Promise<{readonly data?: *}>}
    */
-  const onSave = useCallback((identifier) => {
-    const params = {
-      ...identifier,
-      identifiable_id: itemId,
-      identifiable_type: projectModel?.model_class
-    };
-
-    return WebIdentifiersService
-      .save(params)
-      .then(({ data }) => data.web_identifier);
-  }, [itemId, projectModel]);
+  const onSave = useCallback((identifier) => (
+    WebIdentifiersService
+      .save(identifier)
+      .then(({ data }) => data.web_identifier)
+  ), [itemId, projectModel]);
 
   return (
     <ListTable

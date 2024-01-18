@@ -2,10 +2,11 @@
 
 import { AssociatedDropdown } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Modal } from 'semantic-ui-react';
 import AtomDropdown from './AtomDropdown';
+import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
 import WebAuthoritiesService from '../services/WebAuthorities';
 import WebAuthority from '../transforms/WebAuthority';
@@ -18,7 +19,8 @@ type Props = EditContainerProps & {
 };
 
 const RelatedIdentifierModal = (props: Props) => {
-  const { projectId } = useParams();
+  const { projectModel } = useContext(ProjectContext);
+  const { projectId, itemId } = useParams();
   const { t } = useTranslation();
 
   /**
@@ -30,6 +32,18 @@ const RelatedIdentifierModal = (props: Props) => {
     WebAuthoritiesService
       .fetchAll({ search, project_id: projectId })
   ), [projectId]);
+
+  /**
+   * Set the identifiable ID and identifiable type on the state for new records.
+   */
+  useEffect(() => {
+    if (!props.item.id) {
+      props.onSetState({
+        identifiable_id: itemId,
+        identifiable_type: projectModel?.model_class
+      });
+    }
+  }, []);
 
   return (
     <Modal
