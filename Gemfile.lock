@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: 5cb3a712ccd7258649e6e31295a4400d46fac2bf
-  tag: v0.1.24
+  revision: 0691112b658c2c7980a76e560f1435c682b62b63
+  tag: v0.1.26
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 8.0)
@@ -15,6 +15,7 @@ GIT
       rubyzip (~> 2.3.2)
       triple_eye_effable
       typesense (~> 0.14)
+      typhoeus (~> 1.4)
       user_defined_fields
 
 GIT
@@ -126,7 +127,7 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
     bcrypt (3.1.19)
-    bigdecimal (3.1.5)
+    bigdecimal (3.1.6)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)

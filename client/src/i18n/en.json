@@ -14,6 +14,19 @@
       "users": "Users"
     }
   },
+  "AtomForm": {
+    "labels": {
+      "apiKey": "API key",
+      "url": "URL"
+    }
+  },
+  "AtomIdentifierForm": {
+    "labels": {
+      "geographic": "Geographic Access Points",
+      "language": "Language",
+      "subject": "Subject Access Points"
+    }
+  },
   "Common": {
     "buttons": {
       "add": "Add",
@@ -26,8 +39,12 @@
     "columns":{
       "uuid": "Identifier"
     },
+    "errors": {
+      "required": "{{name}} is required"
+    },
     "labels": {
       "all": "All {{name}}",
+      "identifier": "Identifier",
       "project": "Project",
       "related": {
         "add": "Add {{name}}",
@@ -88,7 +105,8 @@
   },
   "ItemPage": {
     "labels": {
-      "details": "Details"
+      "details": "Details",
+      "identifiers": "Identifiers"
     }
   },
   "Items": {
@@ -331,7 +349,8 @@
   },
   "ProjectItemMenu": {
     "labels": {
-      "details": "Details"
+      "details": "Details",
+      "identifiers": "Identifiers"
     }
   },
   "ProjectModeLink": {
@@ -353,6 +372,7 @@
     },
     "labels": {
       "all": "All Models",
+      "allowIdentifiers": "Allow identifiers",
       "name": "Name",
       "type": "Type"
     },
@@ -404,6 +424,7 @@
       "allModels": "All Models",
       "allProjects": "All Projects",
       "allUsers": "All Users",
+      "authorities": "Authorities",
       "configure": "Configure",
       "details": "Details",
       "import": "Import / Export",
@@ -422,6 +443,27 @@
       "created": "Date created",
       "name": "Name",
       "updated": "Last modified"
+    }
+  },
+  "RelatedIdentifierModal": {
+    "labels": {
+      "authority": "Authority"
+    },
+    "title": {
+      "add": "Add Identifier",
+      "edit": "Edit Identifier"
+    }
+  },
+  "RelatedIdentifiers": {
+    "actions": {
+      "open": {
+        "content": "Opens a webpage containing more information about this record",
+        "title": "Open"
+      }
+    },
+    "labels": {
+      "identifier": "Identifier",
+      "sourceType": "Source type"
     }
   },
   "RelatedInstances": {
@@ -569,6 +611,28 @@
     "columns": {
       "email": "Email",
       "name": "Name"
+    }
+  },
+  "WebAuthorities": {
+    "columns": {
+      "sourceType": "Source type"
+    },
+    "labels": {
+      "atom": "AtoM",
+      "wikidata": "Wikidata"
+    }
+  },
+  "WebAuthority": {
+    "labels": {
+      "all": "All Web Authorities",
+      "apiKey": "API key",
+      "apiUrl": "API URL",
+      "sourceType": "Source type"
+    }
+  },
+  "WebIdentifierDropdown": {
+    "labels": {
+      "search": "Search"
     }
   },
   "WorkForm": {

@@ -97,9 +97,9 @@ const ProjectModelForm = (props: Props) => {
     props.onDeleteChildAssociation('all_project_model_relationships', relationship);
   }, []);
 
- /*
-  * For a new record, set the foreign key ID based on the route parameters.
-  */
+  /*
+   * For a new record, set the foreign key ID based on the route parameters.
+   */
   useEffect(() => {
     if (!props.item.id && projectId) {
       props.onSetState({ project_id: projectId });
@@ -143,6 +143,13 @@ const ProjectModelForm = (props: Props) => {
               required={props.isRequired('name')}
               onChange={props.onTextInputChange.bind(this, 'name')}
               value={props.item.name}
+            />
+            <Form.Checkbox
+              checked={props.item.allow_identifiers}
+              error={props.isError('allow_identifiers')}
+              label={t('ProjectModel.labels.allowIdentifiers')}
+              onChange={props.onCheckboxInputChange.bind(this, 'allow_identifiers')}
+              required={props.isRequired('allow_identifiers')}
             />
           </SimpleEditPage.Tab>
           <SimpleEditPage.Tab
