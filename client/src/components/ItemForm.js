@@ -5,7 +5,7 @@ import type { EditContainerProps } from '@performant-software/shared-components/
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Header } from 'semantic-ui-react';
+import { Form, Header } from 'semantic-ui-react';
 import type { Item as ItemType } from '../types/Item';
 import NameRelationModal from './NameRelationModal';
 import type { SourceTitle as SourceTitleType } from '../types/Source';
@@ -19,7 +19,7 @@ const ItemForm = (props: Props) => {
   const { t } = useTranslation();
 
   return (
-    <>
+    <Form>
       <Header
         content={t('ItemForm.labels.names')}
       />
@@ -65,7 +65,7 @@ const ItemForm = (props: Props) => {
           tableName='CoreDataConnector::Item'
         />
       )}
-    </>
+    </Form>
   );
 };
 
