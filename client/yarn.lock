@@ -2048,10 +2048,10 @@
     "@stitches/react" "^1.2.7"
     react "^18.2.0"
 
-"@performant-software/geospatial@^1.1.2-beta.0":
-  version "1.1.2-beta.0"
-  resolved "https://registry.yarnpkg.com/@performant-software/geospatial/-/geospatial-1.1.2-beta.0.tgz#731da88bc3ac1d65ac2c6c229503cfdbac0284cc"
-  integrity sha512-PnjqmWdQBhoNb4X5l+XI1gu242wxSPDqKYLWDVlCJD27I2an+vpB4G+I3MU3rhOeojQxybkW0qtydhVp9OPU+A==
+"@performant-software/geospatial@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@performant-software/geospatial/-/geospatial-1.1.2.tgz#82ed5d3079a9091ba2d205eb8bd324fa9e91e703"
+  integrity sha512-rAlcQ1jz0snB3FxGRvKbmnZIHQge5AG562FS9nZavyWvoMjH2eUz/WRG57xGUI49oYtK9XNITkgOCodeq+i/Rw==
   dependencies:
     "@mapbox/mapbox-gl-draw" "^1.4.3"
     "@turf/turf" "^6.5.0"
