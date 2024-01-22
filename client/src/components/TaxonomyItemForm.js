@@ -14,13 +14,15 @@ const TaxonomyItemForm = (props: Props) => {
   const { t } = useTranslation();
 
   return (
-    <Form.Input
-      error={props.isError('name')}
-      label={t('TaxonomyItems.labels.name')}
-      onChange={props.onTextInputChange.bind(this, 'name')}
-      required={props.isRequired('name')}
-      value={props.item.name}
-    />
+    <Form>
+      <Form.Input
+        error={props.isError('name')}
+        label={t('TaxonomyItems.labels.name')}
+        onChange={props.onTextInputChange.bind(this, 'name')}
+        required={props.isRequired('name')}
+        value={props.item.name}
+      />
+    </Form>
   );
 };
 
