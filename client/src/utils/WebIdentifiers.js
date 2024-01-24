@@ -2,6 +2,7 @@
 
 import WebAuthorityUtils from './WebAuthorities';
 
+const JISC_BASE_URL = 'https://discover.libraryhub.jisc.ac.uk/search?id=';
 const WIKIDATA_BASE_URL = 'https://www.wikidata.org/wiki';
 const BNF_BASE_URL = 'https://catalogue.bnf.fr';
 const DPLA_BASE_URL = 'https://dp.la/item';
@@ -24,6 +25,8 @@ const getURL = (identifier) => {
     url = `${BNF_BASE_URL}/${identifier.identifier}`;
   } else if (authority.source_type === WebAuthorityUtils.SourceTypes.dpla) {
     url = `${DPLA_BASE_URL}/${identifier.identifier}`;
+  } else if (authority.source_type === WebAuthorityUtils.SourceTypes.jisc) {
+    url = `${JISC_BASE_URL}${identifier.identifier}`;
   } else if (authority.source_type === WebAuthorityUtils.SourceTypes.wikidata) {
     url = `${WIKIDATA_BASE_URL}/${identifier.identifier}`;
   }
