@@ -6,6 +6,7 @@ import React, { useCallback, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Modal } from 'semantic-ui-react';
 import AtomIdentifierForm from './AtomIdentifierForm';
+import BnfIdentifierForm from './BnfIdentifierForm';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
 import WebAuthoritiesService from '../services/WebAuthorities';
@@ -84,6 +85,14 @@ const RelatedIdentifierModal = (props: Props) => {
               }
             })}
             onSelection={(identifier) => props.onSetState({ identifier, extra: {} })}
+            value={props.item.identifier}
+          />
+        )}
+        { props.item.web_authority?.source_type === WebAuthorityUtils.SourceTypes.bnf && (
+          <BnfIdentifierForm
+            authorityId={props.item.web_authority_id}
+            error={props.isError('identifier')}
+            onSelection={(identifier) => props.onSetState({ identifier })}
             value={props.item.identifier}
           />
         )}

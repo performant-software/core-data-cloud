@@ -619,6 +619,7 @@
     },
     "labels": {
       "atom": "AtoM",
+      "bnf": "BnF",
       "wikidata": "Wikidata"
     }
   },
