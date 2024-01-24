@@ -10,12 +10,14 @@ const ERROR_KEY_URL = 'access.url';
 const SourceTypes = {
   atom: 'atom',
   bnf: 'bnf',
+  dpla: 'dpla',
   wikidata: 'wikidata'
 };
 
 const SourceTypeLabels = {
   [SourceTypes.atom]: i18n.t('WebAuthorities.labels.atom'),
   [SourceTypes.bnf]: i18n.t('WebAuthorities.labels.bnf'),
+  [SourceTypes.dpla]: i18n.t('WebAuthorities.labels.dpla'),
   [SourceTypes.wikidata]: i18n.t('WebAuthorities.labels.wikidata')
 };
 
