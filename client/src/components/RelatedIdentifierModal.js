@@ -11,6 +11,7 @@ import DplaIdentifierForm from './DplaIdentifierForm';
 import JiscIdentifierForm from './JiscIdentifierForm';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
+import ViafIdentifierForm from './ViafIdentifierForm';
 import WebAuthoritiesService from '../services/WebAuthorities';
 import WebAuthority from '../transforms/WebAuthority';
 import WebAuthorityUtils from '../utils/WebAuthorities';
@@ -108,6 +109,14 @@ const RelatedIdentifierModal = (props: Props) => {
         )}
         { props.item.web_authority?.source_type === WebAuthorityUtils.SourceTypes.jisc && (
           <JiscIdentifierForm
+            authorityId={props.item.web_authority_id}
+            error={props.isError('identifier')}
+            onSelection={(identifier) => props.onSetState({ identifier })}
+            value={props.item.identifier}
+          />
+        )}
+        { props.item.web_authority?.source_type === WebAuthorityUtils.SourceTypes.viaf && (
+          <ViafIdentifierForm
             authorityId={props.item.web_authority_id}
             error={props.isError('identifier')}
             onSelection={(identifier) => props.onSetState({ identifier })}
