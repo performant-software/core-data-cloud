@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Header } from 'semantic-ui-react';
 import WebIdentifierDropdown from './WebIdentifierDropdown';
@@ -13,23 +13,19 @@ type Props = {
   value: string | number
 };
 
+const BASE_URL = 'https://discover.libraryhub.jisc.ac.uk/search?id=';
+
 const JiscIdentifierForm = (props: Props) => {
   const [selectedItem, setSelectedItem] = useState();
   const { t } = useTranslation();
 
   // For some reason, Jisc's payloads include a URI that
   // contains the unique ID but not the ID itself.
-  const getId = (item: any) => {
-    const uri = item?.uri;
-
-    if (uri) {
-      return uri
-        .replace('https://discover.libraryhub.jisc.ac.uk/search?id=', '')
-        .replace('&rn=1', '');
-    }
-
-    return null;
-  };
+  const resolveId = useCallback(() => (
+    selectedItem?.uri
+      ? selectedItem.uri.replace(BASE_URL, '').replace('&rn=1', '')
+      : null
+  ), [selectedItem]);
 
   return (
     <Form.Input
@@ -49,7 +45,7 @@ const JiscIdentifierForm = (props: Props) => {
             subheader={item?.bibliographic_data?.physical_description}
           />
         )}
-        resolveId={getId}
+        resolveId={resolveId}
         text={selectedItem?.bibliographic_data?.title}
         value={props.value}
       />
