@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: bb352394f305e719592c7d925a9b2c8f5030c245
-  tag: v0.1.27
+  revision: 94e693a718f4dd07bf034c3e926aaafb20d8fbe8
+  tag: v0.1.28
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 8.0)
@@ -11,6 +11,7 @@ GIT
       rack-cors (~> 2.0.1)
       rails (>= 6.0.3.2, < 8)
       resource_api
+      rexml (~> 3.2)
       rgeo-geojson (~> 2.1)
       rubyzip (~> 2.3.2)
       triple_eye_effable
@@ -237,6 +238,7 @@ GEM
     rake (13.0.6)
     reline (0.3.8)
       io-console (~> 0.5)
+    rexml (3.2.6)
     rgeo (3.0.1)
     rgeo-activerecord (7.0.1)
       activerecord (>= 5.0)
