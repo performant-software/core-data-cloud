@@ -6,6 +6,7 @@ import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
 import AtomForm from '../components/AtomForm';
+import DplaForm from '../components/DplaForm';
 import ItemLayout from '../components/ItemLayout';
 import ItemHeader from '../components/ItemHeader';
 import styles from './ProjectModel.module.css';
@@ -85,6 +86,13 @@ const WebAuthorityPage = (props: Props) => {
             />
             { props.item.source_type === WebAuthorityUtils.SourceTypes.atom && (
               <AtomForm
+                isError={props.isError}
+                onChange={onChange}
+                value={props.item.access}
+              />
+            )}
+            { props.item.source_type === WebAuthorityUtils.SourceTypes.dpla && (
+              <DplaForm
                 isError={props.isError}
                 onChange={onChange}
                 value={props.item.access}

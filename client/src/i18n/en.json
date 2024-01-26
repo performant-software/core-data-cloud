@@ -67,6 +67,11 @@
       "new": "Add New {{name}}"
     }
   },
+  "DplaForm": {
+    "labels": {
+      "apiKey": "API key"
+    }
+  },
   "Home": {
     "header": "Welcome to Rails-React Template <1>Edit <1>src/App.js</1> and save to reload.</1>"
   },
@@ -620,6 +625,7 @@
     "labels": {
       "atom": "AtoM",
       "bnf": "BnF",
+      "dpla": "DPLA",
       "wikidata": "Wikidata"
     }
   },
