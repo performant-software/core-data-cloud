@@ -1,9 +1,10 @@
 // @flow
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Header } from 'semantic-ui-react';
 import WebIdentifierDropdown from './WebIdentifierDropdown';
+import _ from 'underscore';
 
 type Props = {
   authorityId: number,
@@ -16,21 +17,9 @@ const DplaIdentifierForm = (props: Props) => {
   const [selectedItem, setSelectedItem] = useState();
   const { t } = useTranslation();
 
-  const getTitle = (item) => {
-    if (item?.sourceResource?.title && item?.sourceResource?.title.length > 0) {
-      return item?.sourceResource?.title[0];
-    }
-
-    return null;
-  };
-
-  const getSelectedItem = (data) => {
-    if (data?.docs && data.docs.length > 0) {
-      return data.docs[0];
-    }
-
-    return undefined;
-  };
+  const selectedItemTitle = useMemo(() => (
+    _.first(selectedItem?.sourceResource?.title)
+  ), [selectedItem]);
 
   return (
     <Form.Input
@@ -39,18 +28,18 @@ const DplaIdentifierForm = (props: Props) => {
     >
       <WebIdentifierDropdown
         authorityId={props.authorityId}
-        onLoad={({ data }) => setSelectedItem(getSelectedItem(data))}
+        onLoad={({ data }) => setSelectedItem(_.first(data?.docs))}
         onSelection={(identifier) => props.onSelection(identifier)}
         onSearch={(data) => data.docs}
         renderOption={(item) => (
           <Header
-            content={getTitle(item)}
+            content={_.first(item?.sourceResource?.title)}
             key={item?.id}
             size='small'
             subheader={item?.sourceResource?.description}
           />
         )}
-        text={getTitle(selectedItem)}
+        text={selectedItemTitle}
         value={props.value}
       />
     </Form.Input>
