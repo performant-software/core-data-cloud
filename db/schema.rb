@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_18_173700) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_30_122627) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -109,6 +109,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_18_173700) do
     t.index ["place_id"], name: "index_core_data_connector_place_geometries_on_place_id"
   end
 
+  create_table "core_data_connector_place_layers", force: :cascade do |t|
+    t.bigint "place_id"
+    t.string "name"
+    t.string "layer_type"
+    t.string "url"
+    t.string "geometry"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["place_id"], name: "index_core_data_connector_place_layers_on_place_id"
+  end
+
   create_table "core_data_connector_place_names", force: :cascade do |t|
     t.bigint "place_id", null: false
     t.string "name"
@@ -141,11 +152,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_18_173700) do
   create_table "core_data_connector_project_model_relationships", force: :cascade do |t|
     t.bigint "primary_model_id", null: false
     t.bigint "related_model_id", null: false
-    t.string "name"
-    t.boolean "multiple"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
+    t.boolean "multiple"
+    t.string "name"
     t.boolean "allow_inverse", default: false, null: false
     t.string "inverse_name"
     t.boolean "inverse_multiple", default: false

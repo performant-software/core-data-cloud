@@ -1,14 +1,23 @@
 // @flow
 
-import { MapDraw } from '@performant-software/geospatial';
+import {
+  GeoJsonLayer,
+  LayerMenu,
+  MapControl,
+  MapDraw,
+  RasterLayer
+} from '@performant-software/geospatial';
 import { BooleanIcon, EmbeddedList, FileInputButton } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
 import cx from 'classnames';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Header } from 'semantic-ui-react';
+import { Form, Header, Icon } from 'semantic-ui-react';
+import _ from 'underscore';
 import type { Place as PlaceType } from '../types/Place';
+import PlaceLayerModal from './PlaceLayerModal';
+import PlaceLayerUtils from '../utils/PlaceLayers';
 import PlaceNameModal from './PlaceNameModal';
 import styles from './PlaceForm.module.css';
 
@@ -16,8 +25,45 @@ type Props = EditContainerProps & {
   item: PlaceType
 };
 
+const { LayerTypes } = PlaceLayerUtils;
+
 const PlaceForm = (props: Props) => {
   const { t } = useTranslation();
+
+  /**
+   * Memo-izes the names of the passed place layers.
+   */
+  const layerNames = useMemo(() => _.pluck(props.item.place_layers, 'name'), [props.item.place_layers]);
+
+  /**
+   * Parses the geometry for the passed layers.
+   */
+  const layers = useMemo(() => _.map(props.item.place_layers, (layer) => ({
+    ...layer,
+    geometry: layer.geometry ? JSON.parse(layer.geometry) : undefined
+  })), [props.item.place_layers]);
+
+  /**
+   * Renders the passed layer.
+   *
+   * @type {(function(*): *)|*}
+   */
+  const renderLayer = useCallback((layer) => {
+    if (layer.layer_type === LayerTypes.geojson) {
+      return (
+        <GeoJsonLayer
+          data={layer.geometry}
+          url={layer.url}
+        />
+      );
+    }
+
+    return (
+      <RasterLayer
+        url={layer.url}
+      />
+    );
+  }, []);
 
   /**
    * Sets the uploaded file as the GeoJSON object.
@@ -71,16 +117,64 @@ const PlaceForm = (props: Props) => {
         data={props.item.place_geometry?.geometry_json}
         mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
         onChange={(data) => props.onSetState({ place_geometry: { geometry_json: data } })}
-        style={{
-          marginBottom: '4em'
-        }}
+      >
+        <MapControl
+          position='top-left'
+        >
+          <FileInputButton
+            className={cx(
+              'mapbox-gl-draw_ctrl-draw-btn',
+              'layer-button',
+              styles.ui,
+              styles.button,
+              styles.uploadButton
+            )}
+            color='white'
+            icon={(
+              <Icon
+                name='cloud upload'
+              />
+            )}
+            onSelection={onUpload}
+          />
+        </MapControl>
+        <LayerMenu
+          names={layerNames}
+        >
+          { _.map(layers, renderLayer) }
+        </LayerMenu>
+      </MapDraw>
+      <Header
+        content={t('PlaceForm.labels.layers')}
+        size='tiny'
       />
-      <FileInputButton
-        className={cx(styles.uploadButton, styles.ui, styles.button)}
-        color='dark gray'
-        content={t('Place.buttons.upload')}
-        icon='upload'
-        onSelection={onUpload}
+      <EmbeddedList
+        actions={[{
+          name: 'edit'
+        }, {
+          name: 'delete'
+        }]}
+        addButton={{
+          basic: false,
+          color: 'dark gray',
+          location: 'bottom'
+        }}
+        className='compact'
+        columns={[{
+          name: 'name',
+          label: t('PlaceForm.placeLayers.columns.name')
+        }]}
+        configurable={false}
+        items={props.item.place_layers}
+        modal={{
+          component: PlaceLayerModal,
+          props: {
+            required: ['name'],
+            validate: PlaceLayerUtils.validate.bind(this)
+          }
+        }}
+        onSave={props.onSaveChildAssociation.bind(this, 'place_layers')}
+        onDelete={props.onDeleteChildAssociation.bind(this, 'place_layers')}
       />
       { props.item.project_model_id && (
         <UserDefinedFieldsForm
