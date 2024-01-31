@@ -75,8 +75,12 @@ textarea {
   padding: 0.5em;
 }
 
-.list.compact.data-table-column-selector > table.ui.sortable > tbody > tr > td {
+.list.compact.data-table-column-selector > table.ui.sortable > tbody > tr > td:not(.actions-cell) {
   padding: 0.4em 0.4em 0.4em 1em;
+}
+
+.list.compact.data-table-column-selector > table.ui.sortable > tbody > tr > td.actions-cell {
+  padding: 0.4em;
 }
 
 .list.compact.data-table-column-selector > table.ui.sortable > tbody > tr > td.actions-cell > .ui.button {
