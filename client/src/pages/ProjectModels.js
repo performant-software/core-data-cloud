@@ -35,8 +35,9 @@ const ProjectModels = () => {
           label: t('ProjectModels.columns.name'),
           sortable: true
         }, {
-          name: 'model_class_view',
+          name: 'model_class',
           label: t('ProjectModels.columns.type'),
+          resolve: (projectModel) => projectModel.model_class_view,
           sortable: true
         }]}
         onDelete={(projectModel) => ProjectModelsService.delete(projectModel)}
