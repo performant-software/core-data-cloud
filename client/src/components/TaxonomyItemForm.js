@@ -16,6 +16,7 @@ const TaxonomyItemForm = (props: Props) => {
   return (
     <Form>
       <Form.Input
+        autoFocus
         error={props.isError('name')}
         label={t('TaxonomyItems.labels.name')}
         onChange={props.onTextInputChange.bind(this, 'name')}
