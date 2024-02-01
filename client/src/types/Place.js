@@ -1,5 +1,13 @@
 // @flow
 
+export type PlaceLayer = {
+  id: number,
+  name: string,
+  layer_type: string,
+  geometry: { [key: string]: any },
+  url: string
+};
+
 export type PlaceName = {
   id: number,
   name: string,
@@ -15,7 +23,8 @@ export type Place = {
   id: number,
   project_model_id: number,
   name: string,
-  uuid: string
+  uuid: string,
   place_names: Array<PlaceName>,
-  place_geometry: PlaceGeometry
+  place_geometry: PlaceGeometry,
+  place_layers: Array<PlaceLayer>
 };

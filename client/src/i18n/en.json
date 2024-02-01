@@ -239,13 +239,49 @@
   },
   "PlaceForm": {
     "labels": {
+      "layers": "Layers",
       "names": "Names"
+    },
+    "placeLayers": {
+      "columns": {
+        "name": "Name"
+      }
     },
     "placeNames": {
       "columns": {
         "name": "Name",
         "primary": "Primary"
       }
+    }
+  },
+  "PlaceLayerModal": {
+    "labels": {
+      "geometry": "GeoJSON",
+      "name": "Name",
+      "type": "Type",
+      "url": "URL"
+    },
+    "layerTypes": {
+      "geometry": "GeoJSON",
+      "url": "URL"
+    },
+    "tabs": {
+      "file": "File",
+      "url": "URL"
+    },
+    "title": {
+      "add": "Add Layer",
+      "edit": "Edit Layer"
+    }
+  },
+  "PlaceLayers": {
+    "errors": {
+      "geojson": "Either a URL or a GeoJSON file is required",
+      "raster": "A URL is required for Raster layers"
+    },
+    "labels": {
+      "geojson": "GeoJSON",
+      "raster": "Raster"
     }
   },
   "PlaceModal": {
