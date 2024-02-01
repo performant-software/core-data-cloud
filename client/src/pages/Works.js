@@ -65,6 +65,11 @@ const Works: AbstractComponent<any> = () => {
           name: 'core_data_connector_names.name',
           resolve: (work) => work.primary_name?.name?.name,
           sortable: true
+        }, {
+          name: 'uuid',
+          label: t('Common.columns.uuid'),
+          sortable: true,
+          hidden: true
         }]}
         key={view}
         onDelete={(work) => WorksService.delete(work)}

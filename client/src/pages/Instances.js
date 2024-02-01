@@ -66,6 +66,11 @@ const Instances: AbstractComponent<any> = () => {
           name: 'core_data_connector_names.name',
           resolve: (instance) => instance.primary_name?.name?.name,
           sortable: true
+        }, {
+          name: 'uuid',
+          label: t('Common.columns.uuid'),
+          sortable: true,
+          hidden: true
         }]}
         key={view}
         onDelete={(instance) => InstancesService.delete(instance)}

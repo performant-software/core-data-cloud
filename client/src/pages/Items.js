@@ -66,6 +66,11 @@ const Items: AbstractComponent<any> = () => {
           name: 'core_data_connector_names.name',
           resolve: (item) => item.primary_name?.name?.name,
           sortable: true
+        }, {
+          name: 'uuid',
+          label: t('Common.columns.uuid'),
+          sortable: true,
+          hidden: true
         }]}
         key={view}
         onDelete={(item) => ItemsService.delete(item)}

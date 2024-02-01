@@ -22,6 +22,7 @@ const ItemForm = (props: Props) => {
     <Form>
       <Header
         content={t('ItemForm.labels.names')}
+        size='tiny'
       />
       <EmbeddedList
         actions={[{
