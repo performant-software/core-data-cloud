@@ -46,6 +46,7 @@ PATH
       rack-cors (~> 2.0.1)
       rails (>= 6.0.3.2, < 8)
       resource_api
+      rexml (~> 3.2)
       rgeo-geojson (~> 2.1)
       rubyzip (~> 2.3.2)
       triple_eye_effable
@@ -235,6 +236,7 @@ GEM
     rake (13.0.6)
     reline (0.3.8)
       io-console (~> 0.5)
+    rexml (3.2.6)
     rgeo (3.0.1)
     rgeo-activerecord (7.0.1)
       activerecord (>= 5.0)
