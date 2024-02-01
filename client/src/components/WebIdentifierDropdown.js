@@ -26,6 +26,7 @@ type Props = {
   onSearch: (data: any) => Array<any>,
   onSelection: (identifier: any) => void,
   renderOption: (item: any) => ComponentType,
+  resolveId?: (item: any) => string | number | null,
   text: ?string,
   value: ?number | ?string
 };
@@ -71,6 +72,10 @@ const WebIdentifierDropdown = (props: Props) => {
   const transformResults = useCallback((results) => {
     if (props.id) {
       return _.map(results, (result) => ({ ...result, id: result[props.id] }));
+    }
+
+    if (props.resolveId) {
+      return _.map(results, (result) => ({ ...result, id: props.resolveId(result) }));
     }
 
     return results;
