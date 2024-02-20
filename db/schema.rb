@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_18_173700) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_15_130018) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -36,6 +36,20 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_18_173700) do
     t.integer "z_item_id"
     t.index ["project_model_id"], name: "index_core_data_connector_items_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_items_on_user_defined", using: :gin
+  end
+
+  create_table "core_data_connector_manifests", force: :cascade do |t|
+    t.string "manifestable_type"
+    t.bigint "manifestable_id"
+    t.bigint "project_model_relationship_id", null: false
+    t.string "identifier"
+    t.string "label"
+    t.string "thumbnail"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["manifestable_type", "manifestable_id"], name: "index_core_data_connector_manifests_on_manifestable"
+    t.index ["project_model_relationship_id"], name: "index_cdc_manifests_on_project_model_relationship_id"
   end
 
   create_table "core_data_connector_media_contents", force: :cascade do |t|
@@ -149,6 +163,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_18_173700) do
     t.boolean "allow_inverse", default: false, null: false
     t.string "inverse_name"
     t.boolean "inverse_multiple", default: false
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.index ["primary_model_id"], name: "index_cdc_project_model_relationships_on_primary_model_id"
     t.index ["related_model_id"], name: "index_cdc_project_model_relationships_on_related_model_id"
   end
@@ -170,6 +185,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_18_173700) do
     t.datetime "updated_at", null: false
     t.string "slug"
     t.boolean "allow_identifiers", default: false
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.index ["project_id"], name: "index_core_data_connector_project_models_on_project_id"
   end
 

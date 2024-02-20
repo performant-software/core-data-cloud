@@ -2048,24 +2048,25 @@
     "@stitches/react" "^1.2.7"
     react "^18.2.0"
 
-"@performant-software/geospatial@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@performant-software/geospatial/-/geospatial-1.1.2.tgz#82ed5d3079a9091ba2d205eb8bd324fa9e91e703"
-  integrity sha512-rAlcQ1jz0snB3FxGRvKbmnZIHQge5AG562FS9nZavyWvoMjH2eUz/WRG57xGUI49oYtK9XNITkgOCodeq+i/Rw==
+"@performant-software/geospatial@^1.1.5-beta.2":
+  version "1.1.5-beta.2"
+  resolved "https://registry.yarnpkg.com/@performant-software/geospatial/-/geospatial-1.1.5-beta.2.tgz#04a10d1585505fa8e02e1bffa1930b8eec9b21c6"
+  integrity sha512-m2EeLr10lJl3D+YwpMXifkA95A8eQ6S6E+AgQxvSMchV+4lTLeyxo1BA5VOt/d7bSLuYAeZ+OqDOhxAvKO+8NA==
   dependencies:
     "@mapbox/mapbox-gl-draw" "^1.4.3"
     "@turf/turf" "^6.5.0"
     mapbox-gl "npm:empty-npm-package@1.0.0"
-    maplibre-gl "^3.5.2"
+    maplibre-gl "^3.6.2"
+    react-icons "^5.0.1"
     react-map-gl "^7.1.6"
     underscore "^1.13.6"
 
-"@performant-software/semantic-components@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@performant-software/semantic-components/-/semantic-components-1.1.2.tgz#9b05ecd8bb6e58d789766d793daee3cca07ae01a"
-  integrity sha512-0y9czJrpU2RdCO8rq57G0s/v2Wzek3vYAJev03DvjaIlc3XAobqNmS3wDK2u0q9g8iLkiXtK8+IdqqLUIqE5Mw==
+"@performant-software/semantic-components@^1.1.5-beta.2":
+  version "1.1.5-beta.2"
+  resolved "https://registry.yarnpkg.com/@performant-software/semantic-components/-/semantic-components-1.1.5-beta.2.tgz#b1994831f021411716b9cdb9ca6ba00f3c714a8e"
+  integrity sha512-/kZr+ipHlLdX/S2WAPvsssBJj+lxesxqWN37D9gl2hfTGF3sJNlZ3Pv54wDLtTvRghm5VsMbJkRYPMw+b+nt6g==
   dependencies:
-    "@performant-software/shared-components" "^1.1.2"
+    "@performant-software/shared-components" "^1.1.5-beta.2"
     "@react-google-maps/api" "^2.8.1"
     axios "^0.26.1"
     i18next "^19.4.4"
@@ -2084,10 +2085,10 @@
     zotero-api-client "^0.40.0"
     zotero-translation-client "^5.0.1"
 
-"@performant-software/shared-components@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@performant-software/shared-components/-/shared-components-1.1.2.tgz#c9e4a4da02d2b84112ace27b9c930f2a96805697"
-  integrity sha512-Uqv6yKvDIqkjtjAhyfs15/24znzcTeLReaMp06+I6OrFUswk+EkXjOCpEn/kzDgelUrFFJHIPZ7GJ5XyawS76Q==
+"@performant-software/shared-components@^1.1.5-beta.2":
+  version "1.1.5-beta.2"
+  resolved "https://registry.yarnpkg.com/@performant-software/shared-components/-/shared-components-1.1.5-beta.2.tgz#3f4b3e28d6477656933596a558febb2ba59b76e8"
+  integrity sha512-ki8qEZos4VRW7IJ9/CLnKmbwmPxH9zI5DsDedThLHLAIlVyT5muzSUtu5jOW4dJHicX0kG2MxB5sHK43/TMYJw==
   dependencies:
     "@react-google-maps/api" "^2.8.1"
     "@samvera/clover-iiif" "^1.10.3"
@@ -2107,13 +2108,13 @@
     underscore "^1.13.2"
     zotero-translation-client "^5.0.1"
 
-"@performant-software/user-defined-fields@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@performant-software/user-defined-fields/-/user-defined-fields-1.1.2.tgz#c74a519c41194d8d0e0268ecd853ab45a706c3a2"
-  integrity sha512-Z3/AB/qVGEmbT8xGChroBTaHzgZLg9yinw4n6ZJrdmY+RtF9PqQBC7x+cMmxYqXquLVh21JpiOsi2hfHp+iAXA==
+"@performant-software/user-defined-fields@^1.1.5-beta.2":
+  version "1.1.5-beta.2"
+  resolved "https://registry.yarnpkg.com/@performant-software/user-defined-fields/-/user-defined-fields-1.1.5-beta.2.tgz#ea90255a4bdd76c41ff76145c1bf2c0638a432fb"
+  integrity sha512-Lg/cCLjpFNk7lSL1I0BkDGQSnQMEQIEZtydILP0p3j8q6yLhqU6MX15lNmEUtc+dVpZvW6XTD+VPXNmx3Q0/Hg==
   dependencies:
-    "@performant-software/semantic-components" "^1.1.2"
-    "@performant-software/shared-components" "^1.1.2"
+    "@performant-software/semantic-components" "^1.1.5-beta.2"
+    "@performant-software/shared-components" "^1.1.5-beta.2"
     i18next "^21.9.1"
     semantic-ui-react "^2.1.2"
     underscore "^1.13.2"
@@ -4035,7 +4036,7 @@
     "@types/qs" "*"
     "@types/serve-static" "*"
 
-"@types/geojson@*", "@types/geojson@^7946.0.12":
+"@types/geojson@*":
   version "7946.0.13"
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.13.tgz#e6e77ea9ecf36564980a861e24e62a095988775e"
   integrity sha512-bmrNrgKMOhM3WsafmbGmC+6dsF2Z308vLFsQ3a/bT8X8Sv5clVYpPars/UPq+sAaJP+5OoLAYgwbkS5QEJdLUQ==
@@ -4044,6 +4045,11 @@
   version "7946.0.8"
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.8.tgz#30744afdb385e2945e22f3b033f897f76b1f12ca"
   integrity sha512-1rkryxURpr6aWP7R786/UQOkJ3PcpQiWkAXBmdWc7ryFWqN6a4xfK7BtjXvFBKO9LjQ+MWQSWxYeZX1OApnArA==
+
+"@types/geojson@^7946.0.13":
+  version "7946.0.14"
+  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.14.tgz#319b63ad6df705ee2a65a73ef042c8271e696613"
+  integrity sha512-WCfD5Ht3ZesJUsONdhvm84dmzWOiOzOAqOncN0++w0lBw1o8OuDNJF2McvvCef/yBqb/HYRahp1BYtODFQ8bRg==
 
 "@types/geojson@^7946.0.7", "@types/geojson@^7946.0.8":
   version "7946.0.10"
@@ -4125,12 +4131,12 @@
   dependencies:
     "@types/geojson" "*"
 
-"@types/mapbox__point-geometry@*", "@types/mapbox__point-geometry@^0.1.3":
+"@types/mapbox__point-geometry@*", "@types/mapbox__point-geometry@^0.1.4":
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/@types/mapbox__point-geometry/-/mapbox__point-geometry-0.1.4.tgz#0ef017b75eedce02ff6243b4189210e2e6d5e56d"
   integrity sha512-mUWlSxAmYLfwnRBmgYV86tgYmMIICX4kza8YnE/eIlywGe2XoOxlpVnXWwir92xRLjwyarqwpu2EJKD2pk0IUA==
 
-"@types/mapbox__vector-tile@^1.3.3":
+"@types/mapbox__vector-tile@^1.3.4":
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/@types/mapbox__vector-tile/-/mapbox__vector-tile-1.3.4.tgz#ad757441ef1d34628d9e098afd9c91423c1f8734"
   integrity sha512-bpd8dRn9pr6xKvuEBQup8pwQfD4VUyqO/2deGjfpe6AwC8YRlyEipvefyRJUSiCJTZuCb8Pl1ciVV5ekqJ96Bg==
@@ -4154,10 +4160,15 @@
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
 
-"@types/pbf@*", "@types/pbf@^3.0.4":
+"@types/pbf@*":
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/@types/pbf/-/pbf-3.0.4.tgz#32f8cd8bb2fb53e5870a5d751210d1dcdce23f85"
   integrity sha512-SOFlLGZkLbEXJRwcWCqeP/Koyaf/uAqLXHUsdo/nMfjLsNd8kqauwHe9GBOljSmpcHp/LC6kOjo3SidGjNirVA==
+
+"@types/pbf@^3.0.5":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@types/pbf/-/pbf-3.0.5.tgz#a9495a58d8c75be4ffe9a0bd749a307715c07404"
+  integrity sha512-j3pOPiEcWZ34R6a6mN07mUkM4o4Lwf6hPNt8eilOeZhTFbxFXmKhvXl9Y28jotFPaI1bpPDJsbCprUoNke6OrA==
 
 "@types/prettier@^2.1.5":
   version "2.6.1"
@@ -4244,10 +4255,10 @@
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-2.0.1.tgz#20f18294f797f2209b5f65c8e3b5c8e8261d127c"
   integrity sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==
 
-"@types/supercluster@^7.1.2":
-  version "7.1.2"
-  resolved "https://registry.yarnpkg.com/@types/supercluster/-/supercluster-7.1.2.tgz#2391a1b22ef108e37d51d4c8bdea7dc04ebf4bcf"
-  integrity sha512-qMhofL945Z4njQUuntadexAgPtpiBC014WvVqU70Prj42LC77Xgmz04us7hSMmwjs7KbgAwGBmje+FSOvDbP0Q==
+"@types/supercluster@^7.1.3":
+  version "7.1.3"
+  resolved "https://registry.yarnpkg.com/@types/supercluster/-/supercluster-7.1.3.tgz#1a1bc2401b09174d9c9e44124931ec7874a72b27"
+  integrity sha512-Z0pOY34GDFl3Q6hUFYf3HkTwKEE02e7QgtJppBt+beEAxnyOpJua+voGFvxINBHa06GwLFFym7gRPY2SiKIfIA==
   dependencies:
     "@types/geojson" "*"
 
@@ -8729,10 +8740,10 @@ makeerror@1.0.12:
   resolved "https://registry.yarnpkg.com/empty-npm-package/-/empty-npm-package-1.0.0.tgz#fda29eb6de5efa391f73d578697853af55f6793a"
   integrity sha512-q4Mq/+XO7UNDdMiPpR/LIBIW1Zl4V0Z6UT9aKGqIAnBCtCb3lvZJM1KbDbdzdC8fKflwflModfjR29Nt0EpcwA==
 
-maplibre-gl@^3.5.2:
-  version "3.5.2"
-  resolved "https://registry.yarnpkg.com/maplibre-gl/-/maplibre-gl-3.5.2.tgz#84a352f1845c6ccf6fe5d86aaa0d0e8b0f18923c"
-  integrity sha512-deqYA/RiEyXMGroZMDbOWNQTLnFsxREC+mDkQnuyCUNdBWm1KHafsXJYZP7rlLa5RLQNq05IAUAizY9aHTpIUw==
+maplibre-gl@^3.6.2:
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/maplibre-gl/-/maplibre-gl-3.6.2.tgz#abc2f34bddecabef8c20028eff06d62e36d75ccc"
+  integrity sha512-krg2KFIdOpLPngONDhP6ixCoWl5kbdMINP0moMSJFVX7wX1Clm2M9hlNKXS8vBGlVWwR5R3ZfI6IPrYz7c+aCQ==
   dependencies:
     "@mapbox/geojson-rewind" "^0.5.2"
     "@mapbox/jsonlint-lines-primitives" "^2.0.2"
@@ -8742,11 +8753,11 @@ maplibre-gl@^3.5.2:
     "@mapbox/vector-tile" "^1.3.1"
     "@mapbox/whoots-js" "^3.1.0"
     "@maplibre/maplibre-gl-style-spec" "^19.3.3"
-    "@types/geojson" "^7946.0.12"
-    "@types/mapbox__point-geometry" "^0.1.3"
-    "@types/mapbox__vector-tile" "^1.3.3"
-    "@types/pbf" "^3.0.4"
-    "@types/supercluster" "^7.1.2"
+    "@types/geojson" "^7946.0.13"
+    "@types/mapbox__point-geometry" "^0.1.4"
+    "@types/mapbox__vector-tile" "^1.3.4"
+    "@types/pbf" "^3.0.5"
+    "@types/supercluster" "^7.1.3"
     earcut "^2.2.4"
     geojson-vt "^3.2.1"
     gl-matrix "^3.4.3"
@@ -10402,6 +10413,11 @@ react-icons@^4.10.1:
   version "4.10.1"
   resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.10.1.tgz#3f3b5eec1f63c1796f6a26174a1091ca6437a500"
   integrity sha512-/ngzDP/77tlCfqthiiGNZeYFACw85fUjZtLbedmJ5DTlNDIwETxhwBzdOJ21zj4iJdvc0J3y7yOsX3PpxAJzrw==
+
+react-icons@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-5.0.1.tgz#1694e11bfa2a2888cab47dcc30154ce90485feee"
+  integrity sha512-WqLZJ4bLzlhmsvme6iFdgO8gfZP17rfjYEJ2m9RsZjZ+cc4k1hTzknEz63YS1MeT50kVzoa1Nz36f4BEx+Wigw==
 
 react-is@^16.12.0, react-is@^16.13.1, react-is@^16.6.3, react-is@^16.7.0:
   version "16.13.1"

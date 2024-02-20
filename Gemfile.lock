@@ -1,25 +1,4 @@
 GIT
-  remote: https://github.com/performant-software/core-data-connector.git
-  revision: 94e693a718f4dd07bf034c3e926aaafb20d8fbe8
-  tag: v0.1.28
-  specs:
-    core_data_connector (0.1.0)
-      activerecord-postgis-adapter (~> 8.0)
-      faker
-      jwt (~> 2.7.1)
-      jwt_auth
-      rack-cors (~> 2.0.1)
-      rails (>= 6.0.3.2, < 8)
-      resource_api
-      rexml (~> 3.2)
-      rgeo-geojson (~> 2.1)
-      rubyzip (~> 2.3.2)
-      triple_eye_effable
-      typesense (~> 0.14)
-      typhoeus (~> 1.4)
-      user_defined_fields
-
-GIT
   remote: https://github.com/performant-software/jwt-auth.git
   revision: fa54af0cdcad6122fad10d9ad745b814c2918853
   tag: v0.1.2
@@ -39,15 +18,6 @@ GIT
       rails (>= 7.0, < 8)
 
 GIT
-  remote: https://github.com/performant-software/triple-eye-effable.git
-  revision: b4f90692c66391133383ce26f36458fde376710c
-  tag: v0.1.10
-  specs:
-    triple_eye_effable (0.1.0)
-      httparty (~> 0.20.0)
-      rails (>= 6.0.3.2, < 8)
-
-GIT
   remote: https://github.com/performant-software/user-defined-fields.git
   revision: 4872b3f1e7c5d4ecf83aedc30202aab91589e5ed
   tag: v0.1.8
@@ -55,6 +25,32 @@ GIT
     user_defined_fields (0.1.0)
       rails (>= 6.0.3.2, < 8)
       resource_api
+
+PATH
+  remote: ../core-data-connector
+  specs:
+    core_data_connector (0.1.0)
+      activerecord-postgis-adapter (~> 8.0)
+      faker
+      jwt (~> 2.7.1)
+      jwt_auth
+      rack-cors (~> 2.0.1)
+      rails (>= 6.0.3.2, < 8)
+      resource_api
+      rexml (~> 3.2)
+      rgeo-geojson (~> 2.1)
+      rubyzip (~> 2.3.2)
+      triple_eye_effable
+      typesense (~> 0.14)
+      typhoeus (~> 1.4)
+      user_defined_fields
+
+PATH
+  remote: ../triple-eye-effable
+  specs:
+    triple_eye_effable (0.1.0)
+      httparty (~> 0.20.0)
+      rails (>= 6.0.3.2, < 8)
 
 GEM
   remote: https://rubygems.org/
@@ -238,7 +234,7 @@ GEM
     rake (13.0.6)
     reline (0.3.8)
       io-console (~> 0.5)
-    rexml (3.2.6)
+    rexml (3.2.5)
     rgeo (3.0.1)
     rgeo-activerecord (7.0.1)
       activerecord (>= 5.0)

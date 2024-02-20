@@ -134,6 +134,21 @@
   "Logo": {
     "title": "Core Data Cloud"
   },
+  "ManifestLimitIcon": {
+    "labels": {
+      "limit": "IIIF manifests are limited to {{limit}} items. Only the first {{limit}} records added to this list will be visible in IIIF manifests."
+    }
+  },
+  "ManifestLimitMessage": {
+    "content": "Only {{limit}} items are allowed in a IIIF manifest. This collection contains {{count}} media records. Please create a new media collection in your project settings to add the additional media.",
+    "header": "IIIF Manifest Limit Exceeded"
+  },
+  "ManifestUrlButton": {
+    "buttons": {
+      "copied": "Copied!",
+      "url": "Manifest URL"
+    }
+  },
   "MediaContent": {
     "labels": {
       "content": "Content",
