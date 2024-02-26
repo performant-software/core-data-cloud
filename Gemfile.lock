@@ -18,6 +18,15 @@ GIT
       rails (>= 7.0, < 8)
 
 GIT
+  remote: https://github.com/performant-software/triple-eye-effable.git
+  revision: 27941317d9153df7317a0103b735356476665cfb
+  tag: v0.1.11
+  specs:
+    triple_eye_effable (0.1.0)
+      httparty (~> 0.20.0)
+      rails (>= 6.0.3.2, < 8)
+
+GIT
   remote: https://github.com/performant-software/user-defined-fields.git
   revision: 4872b3f1e7c5d4ecf83aedc30202aab91589e5ed
   tag: v0.1.8
@@ -44,13 +53,6 @@ PATH
       typesense (~> 0.14)
       typhoeus (~> 1.4)
       user_defined_fields
-
-PATH
-  remote: ../triple-eye-effable
-  specs:
-    triple_eye_effable (0.1.0)
-      httparty (~> 0.20.0)
-      rails (>= 6.0.3.2, < 8)
 
 GEM
   remote: https://rubygems.org/
