@@ -198,6 +198,10 @@ const ProjectModelForm = (props: Props) => {
                 name: 'multiple',
                 label: t('ProjectModel.relationships.columns.multiple'),
                 render: (relationship) => <BooleanIcon value={resolveMultiple(relationship)} />
+              }, {
+                name: 'uuid',
+                label: t('Common.labels.identifier'),
+                hidden: true
               }]}
               items={props.item.all_project_model_relationships}
               modal={{
