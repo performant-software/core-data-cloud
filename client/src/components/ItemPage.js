@@ -10,6 +10,7 @@ import React, {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Divider, Header } from 'semantic-ui-react';
+import ItemContext from '../context/Item';
 import ItemHeader from './ItemHeader';
 import ItemLayout from './ItemLayout';
 import ItemLayoutContext from '../context/ItemLayout';
@@ -31,6 +32,7 @@ type Props = {
 };
 
 type ComponentProps = {
+  item: any,
   onSaved: (item: any) => void,
   saved?: boolean
 };
@@ -48,7 +50,14 @@ const ItemPage = ({ form: Form, onInitialize, onSave }: Props) => {
      *
      * @type {{saved: boolean, setSaved: function(): void}}
      */
-    const value = useMemo(() => ({ saved, setSaved }), [saved, setSaved]);
+    const layoutValue = useMemo(() => ({ saved, setSaved }), [saved, setSaved]);
+
+    /**
+     * Memo-izes the ItemContext value.
+     *
+     * @type {{uuid: *}}
+     */
+    const itemValue = useMemo(() => ({ uuid: props.item.uuid }), [props.item?.uuid]);
 
     /**
      * Sets the saved prop on the state when the component is mounted.
@@ -61,58 +70,62 @@ const ItemPage = ({ form: Form, onInitialize, onSave }: Props) => {
 
     return (
       <ItemLayoutContext.Provider
-        value={value}
+        value={layoutValue}
       >
-        <ItemLayout
-          className={styles.itemPage}
+        <ItemContext.Provider
+          value={itemValue}
         >
-          <ItemLayout.Toaster
-            onDismiss={() => setSaved(false)}
-            visible={saved}
-          />
-          <ItemLayout.Header>
-            <ItemHeader
-              back={{
-                label,
-                url
-              }}
-              name={name}
+          <ItemLayout
+            className={styles.itemPage}
+          >
+            <ItemLayout.Toaster
+              onDismiss={() => setSaved(false)}
+              visible={saved}
             />
-          </ItemLayout.Header>
-          <ItemLayout.Sidebar>
-            <ProjectItemMenu />
-          </ItemLayout.Sidebar>
-          <ItemLayout.Content>
-            <Section
-              id='details'
-            >
-              <Header
-                className={cx(styles.ui, styles.header)}
-                content={t('ItemPage.labels.details')}
+            <ItemLayout.Header>
+              <ItemHeader
+                back={{
+                  label,
+                  url
+                }}
+                name={name}
               />
-              <Form
-                {...props}
-              />
-              <SaveButton
-                onClick={props.onSave}
-              />
-            </Section>
-            <Relationships />
-            { projectModel?.allow_identifiers && (
+            </ItemLayout.Header>
+            <ItemLayout.Sidebar>
+              <ProjectItemMenu />
+            </ItemLayout.Sidebar>
+            <ItemLayout.Content>
               <Section
-                id='identifiers'
+                id='details'
               >
-                <Divider
-                  section
-                />
                 <Header
-                  content={t('ItemPage.labels.identifiers')}
+                  className={cx(styles.ui, styles.header)}
+                  content={t('ItemPage.labels.details')}
                 />
-                <RelatedIdentifiers />
+                <Form
+                  {...props}
+                />
+                <SaveButton
+                  onClick={props.onSave}
+                />
               </Section>
-            )}
-          </ItemLayout.Content>
-        </ItemLayout>
+              <Relationships />
+              { projectModel?.allow_identifiers && (
+                <Section
+                  id='identifiers'
+                >
+                  <Divider
+                    section
+                  />
+                  <Header
+                    content={t('ItemPage.labels.identifiers')}
+                  />
+                  <RelatedIdentifiers />
+                </Section>
+              )}
+            </ItemLayout.Content>
+          </ItemLayout>
+        </ItemContext.Provider>
       </ItemLayoutContext.Provider>
     );
   }, []);

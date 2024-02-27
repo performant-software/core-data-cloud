@@ -2048,10 +2048,10 @@
     "@stitches/react" "^1.2.7"
     react "^18.2.0"
 
-"@performant-software/geospatial@^1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@performant-software/geospatial/-/geospatial-1.1.3.tgz#d09781e3b6fc504aaf600c5caaddce2c3579754d"
-  integrity sha512-C3JTi2Kdcrz4agzd6lNS3V3D4elu7aYUhmaFXNgcoIsqiuoyyQYYh0Q2drUbeJHIubF6biMynOtFpXOawEVTCQ==
+"@performant-software/geospatial@^1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@performant-software/geospatial/-/geospatial-1.1.5.tgz#a2eb25b32efd8ad9d2c3b09e84bcb46e36f5ea62"
+  integrity sha512-puinJatRWJ+uErmm8DmU0poN3H77dR01AMHA8J23tdAAxdcJtrQRBLBaipqVLxgQXXbnOpUUCKgD72Ms2FjquQ==
   dependencies:
     "@mapbox/mapbox-gl-draw" "^1.4.3"
     "@turf/turf" "^6.5.0"
@@ -2061,12 +2061,12 @@
     react-map-gl "^7.1.6"
     underscore "^1.13.6"
 
-"@performant-software/semantic-components@^1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@performant-software/semantic-components/-/semantic-components-1.1.3.tgz#99bfc7a958245d9d68793d419983952323ea4f4e"
-  integrity sha512-00UM3o8C2tX5B1nY9BWYDkJ64Byj9d1pLJdpM5R87MbSXp5h0hfVko5tEMrU+apxnUubbZvDIRRZFJJF4PFH+Q==
+"@performant-software/semantic-components@^1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@performant-software/semantic-components/-/semantic-components-1.1.5.tgz#529a2d4f58488840e4e79dc443155a666b74564a"
+  integrity sha512-pWSOrPQrocK4XE7nWACZ1vxPu6sIlT2+d/+Hm421YQQFM+fFJ/FZ4vH6eKJsaBjURE4xPcvzmyTLg6vRqQNaiw==
   dependencies:
-    "@performant-software/shared-components" "^1.1.3"
+    "@performant-software/shared-components" "^1.1.5"
     "@react-google-maps/api" "^2.8.1"
     axios "^0.26.1"
     i18next "^19.4.4"
@@ -2085,10 +2085,10 @@
     zotero-api-client "^0.40.0"
     zotero-translation-client "^5.0.1"
 
-"@performant-software/shared-components@^1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@performant-software/shared-components/-/shared-components-1.1.3.tgz#d93fe467b8f36ce31882bfa171d279e78a9347c2"
-  integrity sha512-/HSOUZVrZDL2hTfMjPxIgBkiBKvIu1RQvOQQyqdcG+mFjKhejs8j5TsxuJAhGZ1j2rZyWN9zOOazdZ+6Yfct2w==
+"@performant-software/shared-components@^1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@performant-software/shared-components/-/shared-components-1.1.5.tgz#aa0f244dd1e29c1509bfc5e2232ab1bdccb58bbc"
+  integrity sha512-9lLqv20Bo/2RBthxrsYAAdn96W46Mc5ulijSYTkfxroMa2qadC9/qUXw6xUzHumqFGZ72bWvjFsj2kbKJHvz/w==
   dependencies:
     "@react-google-maps/api" "^2.8.1"
     "@samvera/clover-iiif" "^1.10.3"
@@ -2108,13 +2108,13 @@
     underscore "^1.13.2"
     zotero-translation-client "^5.0.1"
 
-"@performant-software/user-defined-fields@^1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@performant-software/user-defined-fields/-/user-defined-fields-1.1.3.tgz#0dccbf1e47b820f76eb268c334b04060578d3d83"
-  integrity sha512-jPpqsfkMHhTpx3xM6qM99tuOeu9ns7iMLBL+mUiECfJNCPFwbPU1KfuQYkI7DOGRYiP2DKmHX7GQ40TkRO4dcw==
+"@performant-software/user-defined-fields@^1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@performant-software/user-defined-fields/-/user-defined-fields-1.1.5.tgz#6162593121b879e23192c4195169dbc6ac14ce9e"
+  integrity sha512-SMStLjzwaOXICTAJYJvBRR0bUrCXN12EVD1Sn3JrF7P8sMF7e/DS3DTLTdn1Gxl9UpuymqjGr8PPl2gAg8FTaA==
   dependencies:
-    "@performant-software/semantic-components" "^1.1.3"
-    "@performant-software/shared-components" "^1.1.3"
+    "@performant-software/semantic-components" "^1.1.5"
+    "@performant-software/shared-components" "^1.1.5"
     i18next "^21.9.1"
     semantic-ui-react "^2.1.2"
     underscore "^1.13.2"
@@ -4036,7 +4036,7 @@
     "@types/qs" "*"
     "@types/serve-static" "*"
 
-"@types/geojson@*", "@types/geojson@^7946.0.13":
+"@types/geojson@*":
   version "7946.0.13"
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.13.tgz#e6e77ea9ecf36564980a861e24e62a095988775e"
   integrity sha512-bmrNrgKMOhM3WsafmbGmC+6dsF2Z308vLFsQ3a/bT8X8Sv5clVYpPars/UPq+sAaJP+5OoLAYgwbkS5QEJdLUQ==
@@ -4045,6 +4045,11 @@
   version "7946.0.8"
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.8.tgz#30744afdb385e2945e22f3b033f897f76b1f12ca"
   integrity sha512-1rkryxURpr6aWP7R786/UQOkJ3PcpQiWkAXBmdWc7ryFWqN6a4xfK7BtjXvFBKO9LjQ+MWQSWxYeZX1OApnArA==
+
+"@types/geojson@^7946.0.13":
+  version "7946.0.14"
+  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.14.tgz#319b63ad6df705ee2a65a73ef042c8271e696613"
+  integrity sha512-WCfD5Ht3ZesJUsONdhvm84dmzWOiOzOAqOncN0++w0lBw1o8OuDNJF2McvvCef/yBqb/HYRahp1BYtODFQ8bRg==
 
 "@types/geojson@^7946.0.7", "@types/geojson@^7946.0.8":
   version "7946.0.10"

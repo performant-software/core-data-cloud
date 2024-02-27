@@ -5,6 +5,11 @@ import React, { useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Image } from 'semantic-ui-react';
 import _ from 'underscore';
+import ItemContext from '../context/Item';
+import ManifestLimitIcon from './ManifestLimitIcon';
+import ManifestLimitMessage from './ManifestLimitMessage';
+import ManifestUrlButton from './ManifestUrlButton';
+import MediaContentUtils from '../utils/MediaContent';
 import MediaContentsSelectize from './MediaContentsSelectize';
 import MediaContentsUploadModal from './MediaContentsUploadModal';
 import ProjectContext from '../context/Project';
@@ -21,9 +26,11 @@ const Modal = {
 };
 
 const RelatedMediaContents = () => {
+  const [count, setCount] = useState(0);
   const [modal, setModal] = useState(null);
   const [saved, setSaved] = useState(false);
 
+  const { uuid } = useContext(ItemContext);
   const { projectModel } = useContext(ProjectContext);
   const { itemId } = useParams();
   const { foreignProjectModelId, projectModelRelationship } = useProjectModelRelationship();
@@ -31,7 +38,7 @@ const RelatedMediaContents = () => {
   const {
     onDelete,
     onInitialize,
-    onLoad,
+    onLoad: onRelationshipLoad,
     onSave,
     resolveAttributeValue
   } = useRelationships();
@@ -79,6 +86,25 @@ const RelatedMediaContents = () => {
   }), [projectModel, projectModelRelationship]);
 
   /**
+   * Sets the count on the state and returns the response.
+   *
+   * @type {function(*): *}
+   */
+  const afterLoad = useCallback((response) => {
+    const { list } = response.data;
+    setCount(list.count);
+
+    return response;
+  }, []);
+
+  /**
+   * Calls the onRelationshipLoad function, then afterLoad.
+   *
+   * @type {function(*): Promise<T>}
+   */
+  const onLoad = useCallback((params) => onRelationshipLoad(params).then(afterLoad), [afterLoad, onRelationshipLoad]);
+
+  /**
    * Uploads the passed media contents as related record relationships.
    *
    * @type {(function(*): void)|*}
@@ -100,6 +126,9 @@ const RelatedMediaContents = () => {
 
   return (
     <>
+      <ManifestLimitMessage
+        count={count}
+      />
       <ItemList
         actions={[{
           basic: false,
@@ -133,6 +162,12 @@ const RelatedMediaContents = () => {
               value={modal}
             />
           )
+        }, {
+          render: () => (
+            <ManifestUrlButton
+              url={MediaContentUtils.getManifestURL(projectModel, uuid, projectModelRelationship.uuid)}
+            />
+          )
         }]}
         className={styles.relatedMediaContents}
         collectionName='relationships'
@@ -161,6 +196,7 @@ const RelatedMediaContents = () => {
             src={resolveAttributeValue('content_thumbnail_url', relationship)}
           />
         )}
+        renderListHeader={() => <ManifestLimitIcon />}
         renderMeta={() => ''}
         saved={saved}
         searchable={false}

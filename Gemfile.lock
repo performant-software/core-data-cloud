@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: 087cee7dee3448862f7c15ac43d3270aea68eeed
-  tag: v0.1.31
+  revision: 42e91a0cc25d48dbaa43e2409840b5e667400ba3
+  tag: v0.1.32
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 8.0)
@@ -40,8 +40,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/triple-eye-effable.git
-  revision: b4f90692c66391133383ce26f36458fde376710c
-  tag: v0.1.10
+  revision: 27941317d9153df7317a0103b735356476665cfb
+  tag: v0.1.11
   specs:
     triple_eye_effable (0.1.0)
       httparty (~> 0.20.0)
