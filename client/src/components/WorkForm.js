@@ -22,6 +22,7 @@ const WorkForm = (props: Props) => {
     <Form>
       <Header
         content={t('WorkForm.labels.names')}
+        size='tiny'
       />
       <EmbeddedList
         actions={[{
