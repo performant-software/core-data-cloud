@@ -4,7 +4,6 @@ import { FileUploadModal } from '@performant-software/semantic-components';
 import React, {
   useCallback,
   useEffect,
-  useMemo,
   useState
 } from 'react';
 import _ from 'underscore';
@@ -18,7 +17,7 @@ type Props = {
 };
 
 const MediaContentsUploadModal = (props: Props) => {
-  const { projectModelRelationship } = useProjectModelRelationship();
+  const { foreignProjectModelId } = useProjectModelRelationship();
   const [complete, setComplete] = useState(false);
   const [mediaContents, setMediaContents] = useState([]);
 
@@ -30,13 +29,6 @@ const MediaContentsUploadModal = (props: Props) => {
   const afterSave = useCallback(({ data }) => (
     setMediaContents((prevMediaContents) => [...prevMediaContents, data.media_content])
   ), []);
-
-  /**
-   * Sets the related project model ID.
-   *
-   * @type {number}
-   */
-  const projectModelId = useMemo(() => projectModelRelationship?.related_model_id, [projectModelRelationship]);
 
   /**
    * Calls the onSave prop with the media contents when the upload has completed.
@@ -52,7 +44,7 @@ const MediaContentsUploadModal = (props: Props) => {
       closeOnComplete={false}
       itemComponent={MediaContentUploadForm}
       onAddFile={(file) => ({
-        project_model_id: projectModelId,
+        project_model_id: foreignProjectModelId,
         name: file.name,
         content: file,
         content_url: URL.createObjectURL(file),
