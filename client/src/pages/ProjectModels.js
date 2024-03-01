@@ -39,6 +39,10 @@ const ProjectModels = () => {
           label: t('ProjectModels.columns.type'),
           resolve: (projectModel) => projectModel.model_class_view,
           sortable: true
+        }, {
+          name: 'uuid',
+          label: t('Common.columns.uuid'),
+          hidden: true
         }]}
         onDelete={(projectModel) => ProjectModelsService.delete(projectModel)}
         onLoad={(params) => ProjectModelsService.fetchAll({ ...params, project_id: projectId })}

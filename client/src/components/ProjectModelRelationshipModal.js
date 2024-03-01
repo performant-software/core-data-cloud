@@ -162,7 +162,7 @@ const ProjectModelRelationshipModal = (props: Props) => {
           defaults={{
             table_name: 'CoreDataConnector::Relationship'
           }}
-          excludeColumns={['table_name']}
+          excludeColumns={['table_name', 'uuid']}
           items={props.item.user_defined_fields}
           onDelete={props.onDeleteChildAssociation.bind(this, 'user_defined_fields')}
           onSave={props.onSaveChildAssociation.bind(this, 'user_defined_fields')}
