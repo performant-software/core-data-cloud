@@ -74,9 +74,17 @@ const ItemLayout = (props: Props) => {
    *
    * @type {{height: string}}
    */
-  const contentStyle = useMemo(() => ({
-    height: `calc(100vh - ${contentPadding + menuBarHeight + headerHeight}px)`
-  }), [contentPadding, menuBarHeight, headerHeight]);
+  const contentStyle = useMemo(() => {
+    const style = {
+      height: `calc(100vh - ${contentPadding + menuBarHeight + headerHeight}px)`
+    };
+
+    if (sidebar) {
+      style.overflow = 'auto';
+    }
+
+    return style;
+  }, [contentPadding, menuBarHeight, headerHeight, sidebar]);
 
   /**
    * Stores the element ref in the <code>sections</code> ref.
