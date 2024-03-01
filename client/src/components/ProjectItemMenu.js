@@ -74,11 +74,11 @@ const ProjectItemMenu = () => {
 
         addSection(items, projectModelRelationship.id, name);
       });
-    }
 
-    // Add web identifiers
-    if (projectModel?.allow_identifiers) {
-      addSection(items, SECTION_ID_IDENTIFIERS, t('ProjectItemMenu.labels.identifiers'));
+      // Add web identifiers
+      if (projectModel?.allow_identifiers) {
+        addSection(items, SECTION_ID_IDENTIFIERS, t('ProjectItemMenu.labels.identifiers'));
+      }
     }
 
     return items;
