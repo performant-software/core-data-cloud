@@ -8,7 +8,6 @@
 
 .itemLayout.ui.container > .mainContainer > .content {
   flex-grow: 1;
-  overflow: auto;
   padding-bottom: 4em;
   width: 100%;
 }
