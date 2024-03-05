@@ -10,22 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_15_130018) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_05_190459) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
-
-  create_table "core_data_connector_iiif_manifests", force: :cascade do |t|
-    t.string "manifestable_type"
-    t.bigint "manifestable_id"
-    t.bigint "project_model_relationship_id", null: false
-    t.text "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["manifestable_type", "manifestable_id"], name: "index_core_data_connector_iiif_manifests_on_manifestable"
-    t.index ["project_model_relationship_id"], name: "index_cdc_iiif_manifests_on_project_model_relationship_id"
-  end
 
   create_table "core_data_connector_instances", force: :cascade do |t|
     t.bigint "project_model_id"
@@ -59,6 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_15_130018) do
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "item_count", default: 0, null: false
     t.index ["manifestable_type", "manifestable_id"], name: "index_core_data_connector_manifests_on_manifestable"
     t.index ["project_model_relationship_id"], name: "index_cdc_manifests_on_project_model_relationship_id"
   end
@@ -177,11 +167,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_15_130018) do
   create_table "core_data_connector_project_model_relationships", force: :cascade do |t|
     t.bigint "primary_model_id", null: false
     t.bigint "related_model_id", null: false
+    t.string "name"
+    t.boolean "multiple"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
-    t.boolean "multiple"
-    t.string "name"
     t.boolean "allow_inverse", default: false, null: false
     t.string "inverse_name"
     t.boolean "inverse_multiple", default: false
