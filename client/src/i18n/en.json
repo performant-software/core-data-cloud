@@ -96,7 +96,8 @@
   },
   "ItemForm": {
     "labels": {
-      "names": "Names"
+      "names": "Names",
+      "faircopyCloudId": "FairCopy.cloud identifier"
     },
     "itemNames": {
       "columns": {
@@ -111,7 +112,8 @@
   "ItemPage": {
     "labels": {
       "details": "Details",
-      "identifiers": "Identifiers"
+      "identifiers": "Identifiers",
+      "faircopyCloudId": "FairCopy.cloud identifier"
     }
   },
   "Items": {
@@ -336,7 +338,8 @@
       "danger": "Danger Zone",
       "description": "Description",
       "name": "Name",
-      "sharing": "Sharing"
+      "sharing": "Sharing",
+      "fairCopyCloudUrl": "FairCopy.cloud URL"
     },
     "messages": {
       "clear": {
@@ -413,7 +416,8 @@
   "ProjectItemMenu": {
     "labels": {
       "details": "Details",
-      "identifiers": "Identifiers"
+      "identifiers": "Identifiers",
+      "faircopyCloudId": "FairCopy.cloud identifier"
     }
   },
   "ProjectModeLink": {
@@ -436,6 +440,7 @@
     "labels": {
       "all": "All Models",
       "allowIdentifiers": "Allow identifiers",
+      "allowFccImport": "Allow FairCopy.cloud import",
       "name": "Name",
       "type": "Type"
     },

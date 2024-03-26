@@ -25,7 +25,8 @@ class Item extends BaseTransform {
   getPayloadKeys(): string[] {
     return [
       'project_model_id',
-      'user_defined'
+      'user_defined',
+      'faircopy_cloud_id'
     ];
   }
 

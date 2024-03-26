@@ -55,6 +55,13 @@ const ItemForm = (props: Props) => {
         onSave={props.onSaveChildAssociation.bind(this, 'source_titles')}
         onDelete={props.onDeleteChildAssociation.bind(this, 'source_titles')}
       />
+      <Form.Input
+        error={props.isError('faircopy_cloud_id')}
+        label={t('ItemForm.labels.faircopyCloudId')}
+        onChange={props.onTextInputChange.bind(this, 'faircopy_cloud_id')}
+        required={props.isRequired('faircopy_cloud_id')}
+        value={props.item.faircopy_cloud_id}
+      />
       { props.item.project_model_id && (
         <UserDefinedFieldsForm
           data={props.item.user_defined}

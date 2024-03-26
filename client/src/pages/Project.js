@@ -87,6 +87,14 @@ const ProjectForm = (props: Props) => {
             onChange={props.onTextInputChange.bind(this, 'description')}
             value={props.item.description}
           />
+          <Form.Input
+            autoFocus
+            error={props.isError('faircopy_cloud_url')}
+            label={t('Project.labels.fairCopyCloudUrl')}
+            required={props.isRequired('faircopy_cloud_url')}
+            onChange={props.onTextInputChange.bind(this, 'faircopy_cloud_url')}
+            value={props.item.faircopy_cloud_url}
+          />
           <div
             className={styles.section}
           >

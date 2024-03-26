@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_05_190459) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_26_195324) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_05_190459) do
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
     t.integer "z_item_id"
+    t.string "faircopy_cloud_id"
     t.index ["project_model_id"], name: "index_core_data_connector_items_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_items_on_user_defined", using: :gin
   end
@@ -198,6 +199,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_05_190459) do
     t.string "slug"
     t.boolean "allow_identifiers", default: false
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.boolean "allow_fcc_import"
     t.index ["project_id"], name: "index_core_data_connector_project_models_on_project_id"
   end
 
@@ -207,6 +209,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_05_190459) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "discoverable", default: false, null: false
+    t.string "faircopy_cloud_url"
   end
 
   create_table "core_data_connector_relationships", force: :cascade do |t|
