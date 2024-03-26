@@ -45,6 +45,17 @@ class Projects extends BaseService {
   }
 
   /**
+   * Calls the /projects/:id/export_variables API endpoint.
+   *
+   * @param id
+   *
+   * @returns {*}
+   */
+  exportVariables(id: number): Promise<any> {
+    return this.getAxios().get(`${this.getBaseUrl()}/${id}/export_variables`);
+  }
+
+  /**
    * Returns the projects base URL.
    *
    * @returns {string}

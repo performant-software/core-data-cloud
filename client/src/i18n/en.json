@@ -380,6 +380,12 @@
           "content": "Import a ZIP archive of CSV files to populate your project with data",
           "header": "Import"
         }
+      },
+      "developer": {
+        "variables": {
+          "content": "Download environment variables for your project configuration",
+          "header": "Environment Variables"
+        }
       }
     },
     "errors": {
@@ -393,7 +399,8 @@
     },
     "labels": {
       "configuration": "Configuration",
-      "data": "Data"
+      "data": "Data",
+      "developer": "Developer"
     },
     "messages": {
       "import": {
