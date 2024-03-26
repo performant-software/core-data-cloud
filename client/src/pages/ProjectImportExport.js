@@ -5,6 +5,7 @@ import cx from 'classnames';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsDatabaseFillUp } from 'react-icons/bs';
+import { FaCode } from 'react-icons/fa';
 import {
   Button,
   Container,
@@ -28,12 +29,20 @@ const DEFAULT_FILENAME = 'project-settings.json';
 const ProjectImportExport = () => {
   const [importConfiguration, setImportConfiguration] = useState(false);
   const [exportConfiguration, setExportConfiguration] = useState(false);
+  const [exportVariables, setExportVariables] = useState(false);
   const [importData, setImportData] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
   const { projectId } = useParams();
   const { t } = useTranslation();
+
+  /**
+   * Transforms the passed data into a string.
+   *
+   * @type {function({data: *}): *}
+   */
+  const transformVariables = useCallback(({ data }) => data.project?.join('\n'), []);
 
   /**
    * Calls the export configuration API endpoint and downloads the resulting file.
@@ -48,6 +57,21 @@ const ProjectImportExport = () => {
       .then(({ data }) => FileUtils.downloadJSON(data.project, DEFAULT_FILENAME))
       .finally(() => setExportConfiguration(false));
   }, [projectId]);
+
+  /**
+   * Calls the export variables API endpoint and opens the content in a new window.
+   *
+   * @type {(function(): void)|*}
+   */
+  const onExportVariables = useCallback(() => {
+    setExportVariables(true);
+
+    ProjectsService
+      .exportVariables(projectId)
+      .then(transformVariables)
+      .then((data) => FileUtils.openText(data))
+      .finally(() => setExportVariables(false));
+  }, [projectId, transformVariables]);
 
   /**
    * Sets the passed import error on the state.
@@ -169,6 +193,31 @@ const ProjectImportExport = () => {
           </SegmentGroup>
         </>
       )}
+      <Header
+        content={t('ProjectImportExport.labels.developer')}
+      />
+      <SegmentGroup
+        className={cx(styles.ui, styles.segments)}
+      >
+        <Segment
+          as={Button}
+          className={cx(styles.ui, styles.segment)}
+          loading={exportVariables}
+          onClick={onExportVariables}
+          padded
+        >
+          <Header
+            content={t('ProjectImportExport.actions.developer.variables.header')}
+            icon={(
+              <Icon>
+                <FaCode />
+              </Icon>
+            )}
+            size='small'
+            subheader={t('ProjectImportExport.actions.developer.variables.content')}
+          />
+        </Segment>
+      </SegmentGroup>
       { error && (
         <Toaster
           onDismiss={() => setError(null)}

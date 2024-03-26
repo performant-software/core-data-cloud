@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: 24a6d8df2b6ae5a392ba44e00d66a6e9879f5f38
-  tag: v0.1.35
+  revision: 353d39c8e54b1fc5fec7bad56d39f29ce2b613aa
+  tag: v0.1.36
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 8.0)
@@ -128,7 +128,7 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
     bcrypt (3.1.19)
-    bigdecimal (3.1.6)
+    bigdecimal (3.1.7)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -145,7 +145,7 @@ GEM
     erubi (1.12.0)
     ethon (0.16.0)
       ffi (>= 1.15.0)
-    faker (3.2.3)
+    faker (3.3.0)
       i18n (>= 1.8.11, < 2)
     ffi (1.16.3)
     globalid (1.1.0)
