@@ -3,11 +3,12 @@
 import { BooleanIcon, EmbeddedList } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Header } from 'semantic-ui-react';
 import type { Item as ItemType } from '../types/Item';
 import NameRelationModal from './NameRelationModal';
+import ProjectContext from '../context/Project';
 import type { SourceTitle as SourceTitleType } from '../types/Source';
 import SourcesUtils from '../utils/Sources';
 
@@ -17,6 +18,8 @@ type Props = EditContainerProps & {
 
 const ItemForm = (props: Props) => {
   const { t } = useTranslation();
+
+  const { project, projectModel } = useContext(ProjectContext);
 
   return (
     <Form>
@@ -55,13 +58,15 @@ const ItemForm = (props: Props) => {
         onSave={props.onSaveChildAssociation.bind(this, 'source_titles')}
         onDelete={props.onDeleteChildAssociation.bind(this, 'source_titles')}
       />
-      <Form.Input
-        error={props.isError('faircopy_cloud_id')}
-        label={t('ItemForm.labels.faircopyCloudId')}
-        onChange={props.onTextInputChange.bind(this, 'faircopy_cloud_id')}
-        required={props.isRequired('faircopy_cloud_id')}
-        value={props.item.faircopy_cloud_id}
-      />
+      { projectModel.id === project.faircopy_cloud_project_model_id && (
+        <Form.Input
+          error={props.isError('faircopy_cloud_id')}
+          label={t('ItemForm.labels.faircopyCloudId')}
+          onChange={props.onTextInputChange.bind(this, 'faircopy_cloud_id')}
+          required={props.isRequired('faircopy_cloud_id')}
+          value={props.item.faircopy_cloud_id}
+        />
+      )}
       { props.item.project_model_id && (
         <UserDefinedFieldsForm
           data={props.item.user_defined}
