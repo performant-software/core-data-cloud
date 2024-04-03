@@ -339,7 +339,8 @@
       "description": "Description",
       "name": "Name",
       "sharing": "Sharing",
-      "fairCopyCloudUrl": "FairCopy.cloud URL"
+      "fairCopyCloudUrl": "FairCopy.cloud URL",
+      "faircopyCloudConnectedModel": "FairCopy.cloud connected model"
     },
     "messages": {
       "clear": {
@@ -440,7 +441,6 @@
     "labels": {
       "all": "All Models",
       "allowIdentifiers": "Allow identifiers",
-      "allowFccImport": "Allow FairCopy.cloud import",
       "name": "Name",
       "type": "Type"
     },

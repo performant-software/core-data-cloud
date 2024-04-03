@@ -1,6 +1,6 @@
 // @flow
 
-import { SimpleEditPage, Toaster } from '@performant-software/semantic-components';
+import { AssociatedDropdown, SimpleEditPage, Toaster } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import cx from 'classnames';
 import React, { useCallback, useState } from 'react';
@@ -19,6 +19,8 @@ import {
   SegmentGroup
 } from 'semantic-ui-react';
 import PermissionsService from '../services/Permissions';
+import ProjectModelsService from '../services/ProjectModels';
+import ProjectModelTransform from '../transforms/ProjectModel';
 import { type Project as ProjectType } from '../types/Project';
 import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import ProjectsService from '../services/Projects';
@@ -95,6 +97,28 @@ const ProjectForm = (props: Props) => {
             onChange={props.onTextInputChange.bind(this, 'faircopy_cloud_url')}
             value={props.item.faircopy_cloud_url}
           />
+          <Form.Input
+            error={props.isError('faircopy_cloud_project_model_id')}
+            label={t('Project.labels.faircopyCloudConnectedModel')}
+            required={props.isRequired('faircopy_cloud_project_model_id')}
+          >
+            <AssociatedDropdown
+              collectionName='project_models'
+              onSearch={(search) => ProjectModelsService.fetchAll({
+                search,
+                project_id: props.item.id,
+                model_class: 'CoreDataConnector::Item'
+              })}
+              onSelection={props.onAssociationInputChange.bind(
+                this,
+                'faircopy_cloud_project_model_id',
+                'faircopy_cloud_project_model'
+              )}
+              renderOption={ProjectModelTransform.toDropdown.bind(this)}
+              searchQuery={props.item.faircopy_cloud_project_model_id?.name}
+              value={props.item.faircopy_cloud_project_model_id}
+            />
+          </Form.Input>
           <div
             className={styles.section}
           >

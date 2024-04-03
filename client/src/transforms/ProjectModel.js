@@ -31,7 +31,6 @@ class ProjectModel extends BaseTransform {
       'name',
       'model_class',
       'allow_identifiers',
-      'allow_fcc_import'
     ];
   }
 

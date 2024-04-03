@@ -151,18 +151,6 @@ const ProjectModelForm = (props: Props) => {
               onChange={props.onCheckboxInputChange.bind(this, 'allow_identifiers')}
               required={props.isRequired('allow_identifiers')}
             />
-            {
-              props.item?.model_class === 'CoreDataConnector::Item'
-              && (
-                <Form.Checkbox
-                  checked={props.item.allow_fcc_import}
-                  error={props.isError('allow_fcc_import')}
-                  label={t('ProjectModel.labels.allowFccImport')}
-                  onChange={props.onCheckboxInputChange.bind(this, 'allow_fcc_import')}
-                  required={props.isRequired('allow_fcc_import')}
-                />
-              )
-            }
           </SimpleEditPage.Tab>
           <SimpleEditPage.Tab
             key='fields'
