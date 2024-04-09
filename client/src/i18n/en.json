@@ -112,8 +112,7 @@
   "ItemPage": {
     "labels": {
       "details": "Details",
-      "identifiers": "Identifiers",
-      "faircopyCloudId": "FairCopy.cloud identifier"
+      "identifiers": "Identifiers"
     }
   },
   "Items": {
@@ -417,8 +416,7 @@
   "ProjectItemMenu": {
     "labels": {
       "details": "Details",
-      "identifiers": "Identifiers",
-      "faircopyCloudId": "FairCopy.cloud identifier"
+      "identifiers": "Identifiers"
     }
   },
   "ProjectModeLink": {
