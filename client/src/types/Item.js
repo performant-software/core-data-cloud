@@ -2,6 +2,4 @@
 
 import type { Source } from './Source';
 
-export type Item = Source & {
-  allowFccImport: boolean
-};
+export type Item = Source;
