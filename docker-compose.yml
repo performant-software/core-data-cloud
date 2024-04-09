@@ -1,0 +1,55 @@
+version: "3"
+services:
+  app:
+    build:
+      args:
+        - RAILS_ENV=docker
+        - REACT_APP_HOSTNAME=$REACT_APP_HOSTNAME
+        - REACT_APP_IIIF_MANIFEST_ITEM_LIMIT=$REACT_APP_IIIF_MANIFEST_ITEM_LIMIT
+        - REACT_APP_MAP_TILER_KEY=$REACT_APP_MAP_TILER_KEY
+      context: .
+    container_name: core-data-cloud-app
+    depends_on:
+      - db
+      - typesense
+    entrypoint: /app/docker-entrypoint.sh
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_USERNAME=$DATABASE_USERNAME
+      - DATABASE_PASSWORD=$DATABASE_PASSWORD
+      - DATABASE_NAME=$DATABASE_NAME
+      - DATABASE_PORT=5432
+      - IIIF_CLOUD_API_KEY=$IIIF_CLOUD_API_KEY
+      - IIIF_CLOUD_URL=$IIIF_CLOUD_URL
+      - IIIF_CLOUD_PROJECT_ID=$IIIF_CLOUD_PROJECT_ID
+      - IIIF_MANIFEST_ITEM_LIMIT=$IIIF_MANIFEST_ITEM_LIMIT
+      - PORT=3000
+      - RAILS_ENV=docker
+      - RAILS_LOG_TO_STDOUT=true
+      - RAILS_SERVE_STATIC_FILES=true
+      - SECRET_KEY_BASE=$SECRET_KEY_BASE
+    ports:
+      - "3000:3000"
+    working_dir: /app
+  db:
+    container_name: core-data-cloud-db
+    image: postgis/postgis:16-3.4-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=$DATABASE_PASSWORD
+      - POSTGRES_USER=$DATABASE_USERNAME
+      - PGDATA=$DATABASE_VOLUME:/var/lib/postgresql/data/pgdata
+    volumes:
+      - $DATABASE_VOLUME:/var/lib/postgresql/data
+    working_dir: /app
+  typesense:
+    container_name: core-data-cloud-typesense
+    environment:
+      TYPESENSE_API_KEY: $TYPESENSE_API_KEY
+      TYPESENSE_DATA_DIR: /data
+    image: typesense/typesense:0.25.1
+    ports:
+      - "8108:8108"
+    volumes:
+      - $TYPESENSE_VOLUME:/data

@@ -37,6 +37,7 @@
 
 # Ignore environment variables
 .env
+.env.docker
 
 # IntelliJ
 .idea
