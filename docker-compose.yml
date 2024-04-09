@@ -1,4 +1,4 @@
-version: "3"
+version: "3.5"
 services:
   app:
     build:
@@ -11,7 +11,6 @@ services:
     container_name: core-data-cloud-app
     depends_on:
       - db
-      - typesense
     entrypoint: /app/docker-entrypoint.sh
     environment:
       - DATABASE_HOST=db
@@ -28,18 +27,21 @@ services:
       - RAILS_LOG_TO_STDOUT=true
       - RAILS_SERVE_STATIC_FILES=true
       - SECRET_KEY_BASE=$SECRET_KEY_BASE
+    networks:
+      - default
+      - shared
     ports:
       - "3000:3000"
     working_dir: /app
   db:
     container_name: core-data-cloud-db
-    image: postgis/postgis:16-3.4-alpine
-    ports:
-      - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=$DATABASE_PASSWORD
       - POSTGRES_USER=$DATABASE_USERNAME
       - PGDATA=$DATABASE_VOLUME:/var/lib/postgresql/data/pgdata
+    image: postgis/postgis:16-3.4-alpine
+    ports:
+      - "54334:5432"
     volumes:
       - $DATABASE_VOLUME:/var/lib/postgresql/data
     working_dir: /app
@@ -53,3 +55,7 @@ services:
       - "8108:8108"
     volumes:
       - $TYPESENSE_VOLUME:/data
+networks:
+  shared:
+    name: pssexternal
+    external: true
