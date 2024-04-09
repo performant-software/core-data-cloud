@@ -26,7 +26,9 @@ class Project extends BaseTransform {
     return [
       'name',
       'description',
-      'discoverable'
+      'discoverable',
+      'faircopy_cloud_url',
+      'faircopy_cloud_project_model_id'
     ];
   }
 

@@ -96,7 +96,8 @@
   },
   "ItemForm": {
     "labels": {
-      "names": "Names"
+      "names": "Names",
+      "faircopyCloudId": "FairCopy.cloud identifier"
     },
     "itemNames": {
       "columns": {
@@ -336,7 +337,9 @@
       "danger": "Danger Zone",
       "description": "Description",
       "name": "Name",
-      "sharing": "Sharing"
+      "sharing": "Sharing",
+      "fairCopyCloudUrl": "FairCopy.cloud URL",
+      "faircopyCloudConnectedModel": "FairCopy.cloud connected model"
     },
     "messages": {
       "clear": {

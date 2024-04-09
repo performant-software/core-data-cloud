@@ -30,7 +30,7 @@ class ProjectModel extends BaseTransform {
       'project_id',
       'name',
       'model_class',
-      'allow_identifiers'
+      'allow_identifiers',
     ];
   }
 

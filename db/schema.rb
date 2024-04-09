@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_05_190459) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_05_133325) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_05_190459) do
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
     t.integer "z_item_id"
+    t.string "faircopy_cloud_id"
     t.index ["project_model_id"], name: "index_core_data_connector_items_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_items_on_user_defined", using: :gin
   end
@@ -167,11 +168,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_05_190459) do
   create_table "core_data_connector_project_model_relationships", force: :cascade do |t|
     t.bigint "primary_model_id", null: false
     t.bigint "related_model_id", null: false
+    t.string "name"
+    t.boolean "multiple"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
-    t.boolean "multiple"
-    t.string "name"
     t.boolean "allow_inverse", default: false, null: false
     t.string "inverse_name"
     t.boolean "inverse_multiple", default: false
@@ -207,6 +208,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_05_190459) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "discoverable", default: false, null: false
+    t.string "faircopy_cloud_url"
+    t.integer "faircopy_cloud_project_model_id"
   end
 
   create_table "core_data_connector_relationships", force: :cascade do |t|

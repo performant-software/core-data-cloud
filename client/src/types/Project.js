@@ -4,5 +4,7 @@ export type Project = {
   id: number,
   name: string,
   description: string,
-  discoverable: boolean
+  discoverable: boolean,
+  faircopy_cloud_url: string,
+  faircopy_cloud_project_model_id: number,
 };
