@@ -1,5 +1,6 @@
 // @flow
 
+import { Toaster } from '@performant-software/semantic-components';
 import cx from 'classnames';
 import React, {
   useCallback,
@@ -9,7 +10,8 @@ import React, {
   useState
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Divider, Header } from 'semantic-ui-react';
+import { Divider, Header, Message } from 'semantic-ui-react';
+import _ from 'underscore';
 import ItemContext from '../context/Item';
 import ItemHeader from './ItemHeader';
 import ItemLayout from './ItemLayout';
@@ -32,6 +34,7 @@ type Props = {
 };
 
 type ComponentProps = {
+  errors?: Array<string>,
   item: any,
   onSaved: (item: any) => void,
   saved?: boolean
@@ -80,8 +83,28 @@ const ItemPage = ({ form: Form, onInitialize, onSave }: Props) => {
           >
             <ItemLayout.Toaster
               onDismiss={() => setSaved(false)}
+              type={Toaster.MessageTypes.positive}
               visible={saved}
-            />
+            >
+              <Message.Header
+                content={t('Common.messages.save.header')}
+              />
+              <Message.Content
+                content={t('Common.messages.save.content')}
+              />
+            </ItemLayout.Toaster>
+            <ItemLayout.Toaster
+              timeout={0}
+              type={Toaster.MessageTypes.negative}
+              visible={!_.isEmpty(props.errors)}
+            >
+              <Message.Header
+                content={t('Common.errors.header')}
+              />
+              <Message.List
+                items={props.errors}
+              />
+            </ItemLayout.Toaster>
             <ItemLayout.Header>
               <ItemHeader
                 back={{
