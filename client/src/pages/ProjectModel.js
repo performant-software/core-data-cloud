@@ -152,25 +152,27 @@ const ProjectModelForm = (props: Props) => {
               required={props.isRequired('allow_identifiers')}
             />
           </SimpleEditPage.Tab>
-          <SimpleEditPage.Tab
-            key='fields'
-            name={t('ProjectModel.tabs.fields')}
-          >
-            <UserDefinedFieldsEmbeddedList
-              addButton={{
-                basic: false,
-                color: 'blue',
-                location: 'top'
-              }}
-              defaults={{
-                table_name: props.item.model_class
-              }}
-              excludeColumns={['table_name', 'uuid']}
-              items={props.item.user_defined_fields}
-              onDelete={props.onDeleteChildAssociation.bind(this, 'user_defined_fields')}
-              onSave={props.onSaveChildAssociation.bind(this, 'user_defined_fields')}
-            />
-          </SimpleEditPage.Tab>
+          { props.item.model_class !== 'CoreDataConnector::Taxonomy' && (
+            <SimpleEditPage.Tab
+              key='fields'
+              name={t('ProjectModel.tabs.fields')}
+            >
+              <UserDefinedFieldsEmbeddedList
+                addButton={{
+                  basic: false,
+                  color: 'blue',
+                  location: 'top'
+                }}
+                defaults={{
+                  table_name: props.item.model_class
+                }}
+                excludeColumns={['table_name', 'uuid']}
+                items={props.item.user_defined_fields}
+                onDelete={props.onDeleteChildAssociation.bind(this, 'user_defined_fields')}
+                onSave={props.onSaveChildAssociation.bind(this, 'user_defined_fields')}
+              />
+            </SimpleEditPage.Tab>
+          )}
           <SimpleEditPage.Tab
             key='relationships'
             name={t('ProjectModel.tabs.relationships')}
