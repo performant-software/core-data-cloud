@@ -4,6 +4,9 @@ import { withEditPage } from '@performant-software/shared-components';
 import { type EditPageConfig } from '@performant-software/shared-components/types';
 import React, { useCallback, type AbstractComponent } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import _ from 'underscore';
+
+const ERROR_USER_DEFINED = 'user_defined';
 
 const withReactRouterEditPage = (WrappedComponent: AbstractComponent<any>, config: EditPageConfig): any => (
   (props: any) => {
@@ -36,12 +39,31 @@ const withReactRouterEditPage = (WrappedComponent: AbstractComponent<any>, confi
      */
     const onCancel = useCallback(() => navigate(-1), [navigate]);
 
+    /**
+     * Resolves the passed validation error.
+     *
+     * @type {function({key: *, error: *}): {}}
+     */
+    const resolveValidationError = useCallback(({ key, error }) => {
+      const errors = {};
+
+      if (key === ERROR_USER_DEFINED) {
+        const [uuid, message] = error;
+        _.extend(errors, { [uuid]: message });
+      } else {
+        _.extend(errors, { [key]: error });
+      }
+
+      return errors;
+    }, []);
+
     const EditPage = withEditPage(WrappedComponent, {
       ...config,
       afterSave,
       onCancel,
       id,
       defaultTab,
+      resolveValidationError,
       saved
     });
 

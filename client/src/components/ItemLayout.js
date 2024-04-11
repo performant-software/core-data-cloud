@@ -11,8 +11,7 @@ import React, {
   useState,
   type Node, useCallback
 } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Container, Message } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 import _ from 'underscore';
 import LayoutContext from '../context/Layout';
 import ScrollableContext from '../context/Scrollable';
@@ -28,7 +27,6 @@ const ItemLayout = (props: Props) => {
   const [scrollContext, setScrollContext] = useState();
 
   const { contentPadding, menuBarHeight } = useContext(LayoutContext);
-  const { t } = useTranslation();
 
   const headerRef = useRef();
   const contentRef = useRef();
@@ -37,7 +35,7 @@ const ItemLayout = (props: Props) => {
   const content = useMemo(() => _.first(Element.findByType(props.children, ItemLayout.Content)), [props.children]);
   const header = useMemo(() => _.first(Element.findByType(props.children, ItemLayout.Header)), [props.children]);
   const sidebar = useMemo(() => _.first(Element.findByType(props.children, ItemLayout.Sidebar)), [props.children]);
-  const toaster = useMemo(() => _.first(Element.findByType(props.children, ItemLayout.Toaster)), [props.children]);
+  const toasters = useMemo(() => Element.findByType(props.children, ItemLayout.Toaster), [props.children]);
 
   /**
    * Sets the classname value for the root element.
@@ -109,6 +107,11 @@ const ItemLayout = (props: Props) => {
   }), [scrollContext, sections, setScrollContext, setSectionRef]);
 
   /**
+   * Memo-izes the list of visible toasters.
+   */
+  const visibleToasters = useMemo(() => _.filter(toasters, (toaster) => toaster.props.visible), [toasters]);
+
+  /**
    * Sets the observer on the header container to reset the height.
    */
   useEffect(() => {
@@ -140,19 +143,15 @@ const ItemLayout = (props: Props) => {
         className={className}
         fluid
       >
-        { toaster && toaster.props.visible && (
+        { _.map(visibleToasters, (toaster) => (
           <Toaster
             onDismiss={toaster.props.onDismiss}
-            type={Toaster.MessageTypes.positive}
+            timeout={toaster.props.timeout}
+            type={toaster.props.type}
           >
-            <Message.Header
-              content={t('Common.messages.save.header')}
-            />
-            <Message.Content
-              content={t('Common.messages.save.content')}
-            />
+            { toaster.props.children }
           </Toaster>
-        )}
+        ))}
         { header && (
           <div
             ref={headerRef}
