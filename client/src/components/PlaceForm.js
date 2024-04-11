@@ -66,6 +66,23 @@ const PlaceForm = (props: Props) => {
   }, []);
 
   /**
+   * Sets the name of the selected place as a place_name record.
+   *
+   * @type {(function({text: *}): void)|*}
+   */
+  const onGeocodingSelection = useCallback(({ text: name }) => {
+    const primary = !_.findWhere(props.item.place_names, { primary: true });
+    props.onSaveChildAssociation('place_names', { name, primary });
+  }, [props.item.place_names]);
+
+  /**
+   * Sets the new map geometries on the state.
+   *
+   * @type {function(*): *}
+   */
+  const onMapChange = useCallback((data) => props.onSetState({ place_geometry: { geometry_json: data } }), []);
+
+  /**
    * Sets the uploaded file as the GeoJSON object.
    *
    * @type {(function([*]): void)|*}
@@ -80,6 +97,40 @@ const PlaceForm = (props: Props) => {
     <Form
       className={styles.placeForm}
     >
+      <MapDraw
+        apiKey={process.env.REACT_APP_MAP_TILER_KEY}
+        data={props.item.place_geometry?.geometry_json}
+        geocoding='point'
+        mapStyle='https://api.maptiler.com/maps/basic-v2/style.json'
+        onChange={onMapChange}
+        onGeocodingSelection={onGeocodingSelection}
+      >
+        <MapControl
+          position='bottom-left'
+        >
+          <FileInputButton
+            className={cx(
+              'mapbox-gl-draw_ctrl-draw-btn',
+              'layer-button',
+              styles.ui,
+              styles.button,
+              styles.uploadButton
+            )}
+            color='white'
+            icon={(
+              <Icon
+                name='cloud upload'
+              />
+            )}
+            onSelection={onUpload}
+          />
+        </MapControl>
+        <LayerMenu
+          names={layerNames}
+        >
+          { _.map(layers, renderLayer) }
+        </LayerMenu>
+      </MapDraw>
       <Header
         content={t('PlaceForm.labels.names')}
         size='tiny'
@@ -113,37 +164,6 @@ const PlaceForm = (props: Props) => {
         onSave={props.onSaveChildAssociation.bind(this, 'place_names')}
         onDelete={props.onDeleteChildAssociation.bind(this, 'place_names')}
       />
-      <MapDraw
-        data={props.item.place_geometry?.geometry_json}
-        mapStyle={`https://api.maptiler.com/maps/basic-v2/style.json?key=${process.env.REACT_APP_MAP_TILER_KEY}`}
-        onChange={(data) => props.onSetState({ place_geometry: { geometry_json: data } })}
-      >
-        <MapControl
-          position='top-left'
-        >
-          <FileInputButton
-            className={cx(
-              'mapbox-gl-draw_ctrl-draw-btn',
-              'layer-button',
-              styles.ui,
-              styles.button,
-              styles.uploadButton
-            )}
-            color='white'
-            icon={(
-              <Icon
-                name='cloud upload'
-              />
-            )}
-            onSelection={onUpload}
-          />
-        </MapControl>
-        <LayerMenu
-          names={layerNames}
-        >
-          { _.map(layers, renderLayer) }
-        </LayerMenu>
-      </MapDraw>
       <Header
         content={t('PlaceForm.labels.layers')}
         size='tiny'
