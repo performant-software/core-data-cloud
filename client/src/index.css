@@ -87,3 +87,7 @@ textarea {
   border: none;
   box-shadow: none;
 }
+
+.ui.form .maplibregl-control-container form .input-group > input {
+  border: none;
+}
