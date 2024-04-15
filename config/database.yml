@@ -15,7 +15,7 @@
 # gem 'pg'
 #
 default: &default
-  adapter: postgresql
+  adapter: postgis
   timeout: 5000
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   host: <%= ENV.fetch('DATABASE_HOST') { 'localhost' } %>
@@ -26,3 +26,11 @@ default: &default
 development:
   <<: *default
   database: <%= ENV['DATABASE_NAME'] %>
+
+docker:
+  <<: *default
+  database: <%= ENV['DATABASE_NAME'] %>
+
+production:
+  <<: *default
+  url: <%= ENV.fetch("DATABASE_URL") { '' }.gsub(/postgres/, 'postgis') %>

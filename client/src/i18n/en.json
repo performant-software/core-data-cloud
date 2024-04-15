@@ -8,12 +8,721 @@
       "success": "You've successfully authenticated"
     }
   },
+  "AdminMenu": {
+    "labels": {
+      "projects": "Projects",
+      "users": "Users"
+    }
+  },
+  "AtomForm": {
+    "labels": {
+      "apiKey": "API key",
+      "url": "URL"
+    }
+  },
+  "AtomIdentifierForm": {
+    "labels": {
+      "geographic": "Geographic Access Points",
+      "language": "Language",
+      "subject": "Subject Access Points"
+    }
+  },
+  "Common": {
+    "buttons": {
+      "add": "Add",
+      "addName": "Add Name",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "edit": "Edit",
+      "upload": "Upload"
+    },
+    "columns":{
+      "uuid": "Identifier"
+    },
+    "errors": {
+      "header": "An error occurred saving the record",
+      "required": "{{name}} is required"
+    },
+    "labels": {
+      "all": "All {{name}}",
+      "identifier": "Identifier",
+      "project": "Project",
+      "related": {
+        "add": "Add {{name}}",
+        "edit": "Edit {{name}}"
+      }
+    },
+    "messages": {
+      "save": {
+        "content": "Your changes have been saved.",
+        "header": "Success!"
+      }
+    },
+    "tabs": {
+      "details": "Details",
+      "fields": "Fields"
+    }
+  },
+  "CurrentRecordContextProvider": {
+    "labels": {
+      "new": "Add New {{name}}"
+    }
+  },
+  "DplaForm": {
+    "labels": {
+      "apiKey": "API key"
+    }
+  },
   "Home": {
     "header": "Welcome to Rails-React Template <1>Edit <1>src/App.js</1> and save to reload.</1>"
+  },
+  "InstanceForm": {
+    "labels": {
+      "names": "Names"
+    },
+    "instanceNames": {
+      "columns": {
+        "name": "Name",
+        "primary": "Primary"
+      }
+    }
+  },
+  "InstanceModal": {
+    "title": "New Instance"
+  },
+  "Instances": {
+    "columns": {
+      "name": "Name"
+    }
+  },
+  "ItemForm": {
+    "labels": {
+      "names": "Names",
+      "faircopyCloudId": "FairCopy.cloud identifier"
+    },
+    "itemNames": {
+      "columns": {
+        "name": "Name",
+        "primary": "Primary"
+      }
+    }
+  },
+  "ItemModal": {
+    "title": "New Item"
+  },
+  "ItemPage": {
+    "labels": {
+      "details": "Details",
+      "identifiers": "Identifiers"
+    }
+  },
+  "Items": {
+    "columns": {
+      "name": "Name"
+    }
+  },
+  "ListViewMenu": {
+    "labels": {
+      "all": "All {{name}}",
+      "owned": "My {{name}}",
+      "shared": "Shared {{name}}"
+    }
   },
   "Login": {
     "buttons": {
       "login": "Login"
+    }
+  },
+  "Logo": {
+    "title": "Core Data Cloud"
+  },
+  "ManifestLimitIcon": {
+    "labels": {
+      "limit": "IIIF manifests are limited to {{limit}} items. Only the first {{limit}} records added to this list will be visible in IIIF manifests."
+    }
+  },
+  "ManifestLimitMessage": {
+    "content": "Only {{limit}} items are allowed in a IIIF manifest. This collection contains {{count}} media records. Please create a new media collection in your project settings to add the additional media.",
+    "header": "IIIF Manifest Limit Exceeded"
+  },
+  "ManifestUrlButton": {
+    "buttons": {
+      "copied": "Copied!",
+      "url": "Manifest URL"
+    }
+  },
+  "MediaContent": {
+    "labels": {
+      "content": "Content",
+      "name": "Name"
+    }
+  },
+  "MediaContentUploadForm": {
+    "labels": {
+      "name": "Name"
+    }
+  },
+  "MediaContentsSelectize": {
+    "title": "Select Media"
+  },
+  "NameModal": {
+    "labels": {
+      "name": "Name"
+    },
+    "title": {
+      "add": "Add Name",
+      "edit": "Edit Name"
+    }
+  },
+  "NameRelationModal": {
+    "labels": {
+      "name": "Name",
+      "primary": "Primary"
+    },
+    "title": {
+      "add": "Add Name",
+      "edit": "Edit Name"
+    }
+  },
+  "OrganizationForm": {
+    "labels": {
+      "description": "Description",
+      "names": "Names"
+    },
+    "organizationNames": {
+      "columns": {
+        "name": "Name",
+        "primary": "Primary"
+      }
+    }
+  },
+  "OrganizationModal": {
+    "title": "Add Organization"
+  },
+  "OrganizationNameModal": {
+    "labels": {
+      "name": "Name",
+      "primary": "Primary"
+    },
+    "title": {
+      "add": "Add Organization Name",
+      "edit": "Edit Organization Name"
+    }
+  },
+  "Organizations": {
+    "columns": {
+      "name": "Name"
+    }
+  },
+  "People": {
+    "columns": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "project": "Project"
+    }
+  },
+  "PersonForm": {
+    "labels": {
+      "biography": "Biography",
+      "names": "Names"
+    },
+    "personNames": {
+      "columns": {
+        "firstName": "First name",
+        "lastName": "Last name",
+        "primary": "Primary"
+      }
+    }
+  },
+  "PersonModal": {
+    "title": "Add Person"
+  },
+  "PersonNameModal": {
+    "labels": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "middleName": "Middle name",
+      "primary": "Primary"
+    },
+    "title": {
+      "add": "Add Person Name",
+      "edit": "Edit Person Name"
+    }
+  },
+  "Place": {
+    "buttons": {
+      "upload": "Upload"
+    }
+  },
+  "PlaceForm": {
+    "labels": {
+      "layers": "Layers",
+      "names": "Names"
+    },
+    "placeLayers": {
+      "columns": {
+        "name": "Name"
+      }
+    },
+    "placeNames": {
+      "columns": {
+        "name": "Name",
+        "primary": "Primary"
+      }
+    }
+  },
+  "PlaceLayerModal": {
+    "labels": {
+      "geometry": "GeoJSON",
+      "name": "Name",
+      "type": "Type",
+      "url": "URL"
+    },
+    "layerTypes": {
+      "geometry": "GeoJSON",
+      "url": "URL"
+    },
+    "tabs": {
+      "file": "File",
+      "url": "URL"
+    },
+    "title": {
+      "add": "Add Layer",
+      "edit": "Edit Layer"
+    }
+  },
+  "PlaceLayers": {
+    "errors": {
+      "geojson": "Either a URL or a GeoJSON file is required",
+      "raster": "A URL is required for Raster layers"
+    },
+    "labels": {
+      "geojson": "GeoJSON",
+      "raster": "Raster"
+    }
+  },
+  "PlaceModal": {
+    "title": "Add Place"
+  },
+  "PlaceNameModal": {
+    "labels": {
+      "name": "Name",
+      "primary": "Primary"
+    },
+    "title": {
+      "add": "Add Place Name",
+      "edit": "Edit Place Name"
+    }
+  },
+  "Places": {
+    "columns": {
+      "name": "Name"
+    }
+  },
+  "Project": {
+    "actions": {
+      "clear": {
+        "content": "Removes all of the data from your project that is not shared with other projects. Please be certain this is what you want to do.",
+        "header": "Clear Data"
+      },
+      "delete": {
+        "content": "Deletes your project. Once a project is deleted, it cannot be restored.",
+        "header": "Delete Project"
+      }
+    },
+    "buttons": {
+      "clear": "Clear Data",
+      "delete": "Delete Project"
+    },
+    "labels": {
+      "danger": "Danger Zone",
+      "description": "Description",
+      "name": "Name",
+      "sharing": "Sharing",
+      "fairCopyCloudUrl": "FairCopy.cloud URL",
+      "faircopyCloudConnectedModel": "FairCopy.cloud connected model"
+    },
+    "messages": {
+      "clear": {
+        "content": "Do you really want to clear all data from this project? This action cannot be undone.",
+        "header": "Are you sure?"
+      },
+      "cleared": {
+        "content": "All of the data has been cleared from your project.",
+        "header": "Success!"
+      },
+      "delete": {
+        "content": "Do you really want to delete this project? This action cannot be undone.",
+        "header": "Are you sure?"
+      },
+      "share": {
+        "content": "Allow other projects to discover this project and share data",
+        "header": "Project Discovery"
+      }
+    }
+  },
+  "ProjectHeader": {
+    "labels": {
+      "edit": "Edit",
+      "settings": "Settings"
+    }
+  },
+  "ProjectImportExport": {
+    "actions": {
+      "configuration": {
+        "export": {
+          "content": "Download your project configuration file as JSON",
+          "header": "Export"
+        },
+        "import": {
+          "content": "Import a JSON file containing your project configuration",
+          "header": "Import"
+        }
+      },
+      "data": {
+        "import": {
+          "content": "Import a ZIP archive of CSV files to populate your project with data",
+          "header": "Import"
+        }
+      },
+      "developer": {
+        "variables": {
+          "content": "Download environment variables for your project configuration",
+          "header": "Environment Variables"
+        }
+      }
+    },
+    "errors": {
+      "file": {
+        "content": "You may only upload a single zip file.",
+        "header": "An error occurred processing the file"
+      },
+      "import": {
+        "header": "An error occurred importing the file"
+      }
+    },
+    "labels": {
+      "configuration": "Configuration",
+      "data": "Data",
+      "developer": "Developer"
+    },
+    "messages": {
+      "import": {
+        "content": "Your file has been imported.",
+        "header": "Success!"
+      }
+    },
+    "title": "Import"
+  },
+  "ProjectItemMenu": {
+    "labels": {
+      "details": "Details",
+      "identifiers": "Identifiers"
+    }
+  },
+  "ProjectModeLink": {
+    "labels": {
+      "edit": "Edit",
+      "settings": "Settings"
+    }
+  },
+  "ProjectModel": {
+    "accesses": {
+      "columns": {
+        "name": "Name"
+      },
+      "message": "Grant other projects access to your \"{{name}}\".",
+      "title": "Select Projects"
+    },
+    "errors": {
+      "invalidType": "\"{{type}}\" is not a valid type."
+    },
+    "labels": {
+      "all": "All Models",
+      "allowIdentifiers": "Allow identifiers",
+      "name": "Name",
+      "type": "Type"
+    },
+    "relationships": {
+      "columns": {
+        "related": "Related type",
+        "multiple": "Multiple",
+        "name": "Name"
+      }
+    },
+    "shares": {
+      "columns": {
+        "modelName": "Model name",
+        "projectName": "Project name"
+      },
+      "message": "Discover \"{{name}}\" added by other projects.",
+      "title": "Select Resource"
+    },
+    "tabs": {
+      "access": "Access",
+      "details": "Details",
+      "fields": "Fields",
+      "relationships": "Relationships",
+      "share": "Share"
+    }
+  },
+  "ProjectModelRelationshipModal": {
+    "labels": {
+      "allowInverse": "Allow inverse",
+      "inverseMultiple": "Inverse multiple",
+      "inverseName": "Inverse name",
+      "multiple": "Multiple",
+      "name": "Name",
+      "related": "Related type"
+    },
+    "title": {
+      "add": "Add Relationship",
+      "edit": "Edit Relationship"
+    }
+  },
+  "ProjectModels": {
+    "columns": {
+      "name": "Name",
+      "type": "Type"
+    }
+  },
+  "ProjectSettingsMenu": {
+    "labels": {
+      "allModels": "All Models",
+      "allProjects": "All Projects",
+      "allUsers": "All Users",
+      "authorities": "Authorities",
+      "configure": "Configure",
+      "details": "Details",
+      "import": "Import / Export",
+      "newModel": "New Model",
+      "newUser": "New User",
+      "users": "Users"
+    }
+  },
+  "ProjectTitle": {
+    "labels": {
+      "allProjects": "All Projects"
+    }
+  },
+  "Projects": {
+    "sort": {
+      "created": "Date created",
+      "name": "Name",
+      "updated": "Last modified"
+    }
+  },
+  "RelatedIdentifierModal": {
+    "labels": {
+      "authority": "Authority"
+    },
+    "title": {
+      "add": "Add Identifier",
+      "edit": "Edit Identifier"
+    }
+  },
+  "RelatedIdentifiers": {
+    "actions": {
+      "open": {
+        "content": "Opens a webpage containing more information about this record",
+        "title": "Open"
+      }
+    },
+    "labels": {
+      "identifier": "Identifier",
+      "sourceType": "Source type"
+    }
+  },
+  "RelatedInstances": {
+    "columns": {
+      "name": "Name"
+    }
+  },
+  "RelatedItems": {
+    "columns": {
+      "name": "Name"
+    }
+  },
+  "RelatedMediaContents": {
+    "options": {
+      "link": "Link existing record",
+      "upload": "Upload from your computer"
+    },
+    "sort": {
+      "name": "Name"
+    }
+  },
+  "RelatedOrganizations": {
+    "columns": {
+      "name": "Name"
+    }
+  },
+  "RelatedPeople": {
+    "columns": {
+      "firstName": "First name",
+      "lastName": "Last name"
+    }
+  },
+  "RelatedPlaces": {
+    "columns": {
+      "name": "Name"
+    }
+  },
+  "RelatedTaxonomyItems": {
+    "columns": {
+      "name": "Name"
+    }
+  },
+  "RelatedViewMenu": {
+    "labels": {
+      "all": "All {{name}}",
+      "owned": "My {{name}}",
+      "shared": "Shared {{name}}"
+    }
+  },
+  "RelatedWorks": {
+    "columns": {
+      "name": "Name"
+    }
+  },
+  "Sidebar": {
+    "labels": {
+      "details": "Details",
+      "logout": "Logout",
+      "organizations": "Organizations",
+      "people": "People",
+      "places": "Places",
+      "projects": "Projects",
+      "settings": "Settings",
+      "users": "Users"
+    }
+  },
+  "TaxonomyItemModal": {
+    "title": "Add Taxonomy Item"
+  },
+  "TaxonomyItems": {
+    "columns": {
+      "name": "Name"
+    },
+    "labels": {
+      "name": "Name"
+    }
+  },
+  "User": {
+    "labels": {
+      "allUsers": "All Users"
+    }
+  },
+  "UserEditMenu": {
+    "labels": {
+      "details": "Details",
+      "projects": "Projects"
+    }
+  },
+  "UserForm": {
+    "labels": {
+      "admin": "Admin",
+      "email": "Email",
+      "name": "Name"
+    }
+  },
+  "UserMenu": {
+    "labels": {
+      "logout": "Logout"
+    }
+  },
+  "UserModal": {
+    "title": {
+      "add": "Add User",
+      "edit": "Edit User"
+    }
+  },
+  "UserPassword": {
+    "labels": {
+      "password": "Password",
+      "passwordConfirmation": "Password confirmation"
+    },
+    "messages": {
+      "password": {
+        "content": "Passwords must be at least eight (8) characters.",
+        "header": "Password Policy"
+      }
+    }
+  },
+  "UserProject": {
+    "labels": {
+      "allProjects": "All Projects",
+      "allUsers": "All Users",
+      "project": "Project",
+      "role": "Role",
+      "user": "User"
+    }
+  },
+  "UserProjectRoles": {
+    "labels": {
+      "editor": "Editor",
+      "owner": "Owner"
+    }
+  },
+  "UserProjects": {
+    "columns": {
+      "project": "Project",
+      "role": "Role",
+      "user": "User"
+    },
+    "labels": {
+      "allUsers": "All Users"
+    }
+  },
+  "Users": {
+    "columns": {
+      "email": "Email",
+      "name": "Name"
+    }
+  },
+  "WebAuthorities": {
+    "columns": {
+      "sourceType": "Source type"
+    },
+    "labels": {
+      "atom": "AtoM",
+      "bnf": "BnF",
+      "dpla": "DPLA",
+      "jisc": "JISC",
+      "viaf": "VIAF",
+      "wikidata": "Wikidata"
+    }
+  },
+  "WebAuthority": {
+    "labels": {
+      "all": "All Web Authorities",
+      "apiKey": "API key",
+      "apiUrl": "API URL",
+      "sourceType": "Source type"
+    }
+  },
+  "WebIdentifierDropdown": {
+    "labels": {
+      "search": "Search"
+    }
+  },
+  "WorkForm": {
+    "labels": {
+      "names": "Names"
+    },
+    "workNames": {
+      "columns": {
+        "name": "Name",
+        "primary": "Primary"
+      }
+    }
+  },
+  "WorkModal": {
+    "title": "New Work"
+  },
+  "Works": {
+    "columns": {
+      "name": "Name"
     }
   }
 }

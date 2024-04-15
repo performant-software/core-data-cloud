@@ -1,0 +1,24 @@
+.projectTitle.ui.breadcrumb {
+  color: #FFFFFF;
+  margin-bottom: 0px;
+  margin-right: 2em;
+}
+
+.projectTitle.ui.breadcrumb a {
+  color: #FFFFFF;
+}
+
+.projectTitle.ui.breadcrumb a:hover {
+  color: #FFFFFF;
+  text-decoration: underline;
+}
+
+.projectTitle.ui.breadcrumb .divider {
+  color: #FFFFFF;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.projectTitle.ui.breadcrumb .section.projectName {
+  font-weight: bold;
+}

@@ -1,7 +1,9 @@
 // @flow
 
 import { BaseService, BaseTransform } from '@performant-software/shared-components';
+import _ from 'underscore';
 import AuthenticationTransform from '../transforms/Authentication';
+import SessionService from './Session';
 
 class Authentication extends BaseService {
   /**
@@ -10,7 +12,7 @@ class Authentication extends BaseService {
    * @returns {string}
    */
   getBaseUrl(): string {
-    return '/api/auth/login';
+    return '/auth/login';
   }
 
   /**
@@ -28,17 +30,15 @@ class Authentication extends BaseService {
    * @returns {*|boolean}
    */
   isAuthenticated(): boolean {
-    if (!localStorage.getItem('user')) {
+    const { token, exp } = SessionService.getSession();
+    if (!(token || exp)) {
       return false;
     }
-
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    const { token, exp } = user;
 
     const expirationDate = new Date(Date.parse(exp));
     const today = new Date();
 
-    return token && token.length && expirationDate.getTime() > today.getTime();
+    return !_.isEmpty(token) && expirationDate.getTime() > today.getTime();
   }
 
   /**
@@ -51,7 +51,7 @@ class Authentication extends BaseService {
   login(params: any): Promise<any> {
     return this
       .create(params)
-      .then((response) => localStorage.setItem('user', JSON.stringify(response.data)));
+      .then(({ data }) => SessionService.createSession(data));
   }
 
   /**
@@ -60,10 +60,13 @@ class Authentication extends BaseService {
    * @returns {Promise<*>}
    */
   logout(): Promise<any> {
-    localStorage.removeItem('user');
+    // Remove the user from the session
+    SessionService.destroySession();
+
+    // Return a promise
     return Promise.resolve();
   }
 }
 
-const Auth: Authentication = new Authentication();
-export default Auth;
+const AuthenticationService: Authentication = new Authentication();
+export default AuthenticationService;

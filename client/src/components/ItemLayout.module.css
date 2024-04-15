@@ -1,0 +1,18 @@
+.itemLayout.ui.container > .mainContainer {
+  display: flex;
+}
+
+.itemLayout.ui.container > .mainContainer > .sidebar {
+  flex-grow: 0;
+}
+
+.itemLayout.ui.container > .mainContainer > .content {
+  flex-grow: 1;
+  padding-bottom: 4em;
+  width: 100%;
+}
+
+.itemLayout.ui.container > .mainContainer > .content.padded {
+  padding-left: 3em;
+  padding-right: 3em;
+}

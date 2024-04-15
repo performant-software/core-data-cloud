@@ -1,0 +1,5 @@
+.env
+.git
+client/node_modules
+client/build
+.dockerignore

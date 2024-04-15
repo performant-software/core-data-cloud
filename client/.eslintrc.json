@@ -16,7 +16,8 @@
     "sourceType": "module",
     "babelOptions": {
       "presets": [
-        "@babel/preset-react"
+        "@babel/preset-react",
+        "@babel/preset-flow"
       ]
     }
   },
@@ -37,10 +38,14 @@
     "no-underscore-dangle": "off",
     "no-use-before-define": "off",
     "react/destructuring-assignment": "off",
-    "react/function-component-definition": [2, { "namedComponents": "arrow-function" }],
+    "react/function-component-definition": [2, {
+      "namedComponents": "arrow-function",
+      "unnamedComponents": "arrow-function"
+    }],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/jsx-no-bind": "off",
     "react/no-did-update-set-state": "off",
+    "react/prefer-exact-props": "off",
     "react/prefer-stateless-function": "off",
     "react/require-default-props": "off",
     "react/jsx-props-no-spreading": "off",

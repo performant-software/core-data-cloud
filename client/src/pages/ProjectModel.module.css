@@ -1,0 +1,7 @@
+.projectModel .ui.message {
+  margin-top: 0px;
+}
+
+.projectModel .ui.icon.message > .icon:not(.close) {
+  font-size: unset;
+}

@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.2'
+ruby '3.2.2'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem 'rails', '~> 7.0.2', '>= 7.0.2.3'
+gem 'rails', '~> 7.0.7'
 
 # Use Postgres as the database for Active Record
-gem 'pg'
+gem 'pg', '~> 1.5.3'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 5.0'
@@ -22,10 +22,7 @@ gem 'bootsnap', require: false
 gem 'pagy', '~> 5.10'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-gem 'rack-cors'
-
-# Resource API
-gem 'resource_api', git: 'https://github.com/performant-software/resource-api.git', tag: 'v0.4.2'
+gem 'rack-cors', '~> 2.0.1'
 
 # Use Json Web Token (JWT) for token based authentication
 gem 'jwt', '~> 2.4', '>= 2.4.1'
@@ -33,8 +30,20 @@ gem 'jwt', '~> 2.4', '>= 2.4.1'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.18'
 
-# Controlled vocabularies
-gem 'controlled_vocabulary', git: 'https://github.com/performant-software/controlled-vocabulary.git', tag: 'v0.1.3'
+# Resource API
+gem 'resource_api', git: 'https://github.com/performant-software/resource-api.git', tag: 'v0.5.7'
+
+# Authentication
+gem 'jwt_auth', git: 'https://github.com/performant-software/jwt-auth.git', tag: 'v0.1.2'
+
+# Core data
+gem 'core_data_connector', git: 'https://github.com/performant-software/core-data-connector.git', tag: 'v0.1.40'
+
+# IIIF
+gem 'triple_eye_effable', git: 'https://github.com/performant-software/triple-eye-effable.git', tag: 'v0.1.11'
+
+# User defined fields
+gem 'user_defined_fields', git: 'https://github.com/performant-software/user-defined-fields.git', tag: 'v0.1.8'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

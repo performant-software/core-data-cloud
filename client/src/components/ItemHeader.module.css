@@ -1,0 +1,13 @@
+.itemHeader {
+  padding-bottom: 1em;
+}
+
+.itemHeader > .ui.header {
+  margin-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.itemHeader a,
+.itemHeader a:hover {
+  color: unset;
+}

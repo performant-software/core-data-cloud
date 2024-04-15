@@ -1,6 +1,7 @@
 // @flow
 
 import { BaseService } from '@performant-software/shared-components';
+import UserTransform from '../transforms/User';
 
 /**
  * Class responsible for handling all users API requests.
@@ -12,7 +13,16 @@ class Users extends BaseService {
    * @returns {string}
    */
   getBaseUrl(): string {
-    return '/api/users';
+    return '/core_data/users';
+  }
+
+  /**
+   * Returns the user transform object.
+   *
+   * @returns {User}
+   */
+  getTransform(): typeof UserTransform {
+    return UserTransform;
   }
 }
 

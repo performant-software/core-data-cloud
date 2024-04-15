@@ -1,0 +1,9 @@
+.layout > .contentContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 1em 4em 1em 4em;
+}
+
+.layout > .contentContainer {
+  height: 100%;
+}

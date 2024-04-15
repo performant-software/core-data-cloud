@@ -1,0 +1,9 @@
+.projectItemMenu.ui.menu.pointing.secondary.vertical {
+  margin-left: 1em;
+  margin-right: 1em;
+  height: 100%;
+}
+
+.projectItemMenu.ui.menu.pointing.secondary.vertical > .item:first-child {
+  padding-left: 0px;
+}
