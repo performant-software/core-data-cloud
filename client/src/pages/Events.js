@@ -69,8 +69,8 @@ const Events: AbstractComponent<any> = () => {
         onLoad={(params) => EventsService.fetchAll({
           ...params,
           project_model_id: projectModelId,
-          // defineable_id: projectModelId,
-          // defineable_type: 'CoreDataConnector::ProjectModel',
+          defineable_id: projectModelId,
+          defineable_type: 'CoreDataConnector::ProjectModel',
           view
         })}
         searchable

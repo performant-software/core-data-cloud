@@ -25,7 +25,8 @@ class Event extends BaseTransform {
     return [
       'project_model_id',
       'name',
-      'description'
+      'description',
+      'user_defined'
     ];
   }
 

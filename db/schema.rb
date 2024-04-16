@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_16_154908) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_16_175904) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -24,7 +24,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_16_154908) do
     t.integer "z_event_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "user_defined", default: {}
     t.index ["project_model_id"], name: "index_core_data_connector_events_on_project_model_id"
+    t.index ["user_defined"], name: "index_core_data_connector_events_on_user_defined", using: :gin
   end
 
   create_table "core_data_connector_instances", force: :cascade do |t|

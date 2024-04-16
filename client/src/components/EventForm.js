@@ -31,17 +31,17 @@ const EventForm = (props: Props) => {
         required={props.isRequired('description')}
         value={props.item.description}
       />
-      {/*{ props.item.project_model_id && (*/}
-      {/*  <UserDefinedFieldsForm*/}
-      {/*    data={props.item.user_defined}*/}
-      {/*    defineableId={props.item.project_model_id}*/}
-      {/*    defineableType='CoreDataConnector::ProjectModel'*/}
-      {/*    isError={props.isError}*/}
-      {/*    onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}*/}
-      {/*    onClearValidationError={props.onClearValidationError}*/}
-      {/*    tableName='CoreDataConnector::Place'*/}
-      {/*  />*/}
-      {/*)}*/}
+      { props.item.project_model_id && (
+        <UserDefinedFieldsForm
+          data={props.item.user_defined}
+          defineableId={props.item.project_model_id}
+          defineableType='CoreDataConnector::ProjectModel'
+          isError={props.isError}
+          onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
+          onClearValidationError={props.onClearValidationError}
+          tableName='CoreDataConnector::Event'
+        />
+      )}
     </Form>
   );
 };
