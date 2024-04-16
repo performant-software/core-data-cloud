@@ -4,6 +4,10 @@
   margin-right: 2em;
 }
 
+.projectTitle.ui.breadcrumb:first-child {
+  margin: unset;
+}
+
 .projectTitle.ui.breadcrumb a {
   color: #FFFFFF;
 }
