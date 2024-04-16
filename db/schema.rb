@@ -10,11 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_05_133325) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_16_154908) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
+
+  create_table "core_data_connector_events", force: :cascade do |t|
+    t.bigint "project_model_id"
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.string "name"
+    t.text "description"
+    t.integer "z_event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_model_id"], name: "index_core_data_connector_events_on_project_model_id"
+  end
 
   create_table "core_data_connector_instances", force: :cascade do |t|
     t.bigint "project_model_id"

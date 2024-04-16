@@ -73,6 +73,20 @@
       "apiKey": "API key"
     }
   },
+  "EventForm": {
+    "labels": {
+      "description": "Description",
+      "name": "Name"
+    }
+  },
+  "EventModal": {
+    "title": "Add Event"
+  },
+  "Events": {
+    "columns": {
+      "name": "Name"
+    }
+  },
   "Home": {
     "header": "Welcome to Rails-React Template <1>Edit <1>src/App.js</1> and save to reload.</1>"
   },
@@ -510,6 +524,11 @@
       "created": "Date created",
       "name": "Name",
       "updated": "Last modified"
+    }
+  },
+  "RelatedEvents": {
+    "columns": {
+      "name": "Name"
     }
   },
   "RelatedIdentifierModal": {

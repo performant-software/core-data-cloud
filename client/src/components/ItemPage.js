@@ -133,7 +133,7 @@ const ItemPage = ({ form: Form, onInitialize, onSave }: Props) => {
                 />
               </Section>
               <Relationships />
-              { projectModel?.allow_identifiers && (
+              { projectModel?.allow_identifiers && props.item.id && (
                 <Section
                   id='identifiers'
                 >
