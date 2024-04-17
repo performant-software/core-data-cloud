@@ -76,7 +76,9 @@
   "EventForm": {
     "labels": {
       "description": "Description",
-      "name": "Name"
+      "endDate": "End date",
+      "name": "Name",
+      "startDate": "Start date"
     }
   },
   "EventModal": {

@@ -1,6 +1,6 @@
 // @flow
 
-import { BaseTransform } from '@performant-software/shared-components';
+import { BaseTransform, FuzzyDateTransform } from '@performant-software/shared-components';
 import type { Event as EventType } from '../types/Event';
 
 /**
@@ -26,6 +26,8 @@ class Event extends BaseTransform {
       'project_model_id',
       'name',
       'description',
+      'start_date',
+      'end_date',
       'user_defined'
     ];
   }
@@ -43,6 +45,22 @@ class Event extends BaseTransform {
       value: event.id,
       text: event.name
     };
+  }
+
+  /**
+   * Returns the passed event object serialized for PUT/POST requests.
+   *
+   * @param event
+   * @param attributes
+   *
+   * @returns {*}
+   */
+  toPayload(event: EventType, attributes: any = {}) {
+    return super.toPayload(event, {
+      ...FuzzyDateTransform.toPayload(event, 'start_date'),
+      ...FuzzyDateTransform.toPayload(event, 'end_date'),
+      ...attributes
+    });
   }
 }
 

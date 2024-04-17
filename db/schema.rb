@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_16_175904) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_17_110055) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -312,6 +312,21 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_16_175904) do
     t.integer "z_work_id"
     t.index ["project_model_id"], name: "index_core_data_connector_works_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_works_on_user_defined", using: :gin
+  end
+
+  create_table "fuzzy_dates_fuzzy_dates", force: :cascade do |t|
+    t.string "dateable_type", null: false
+    t.bigint "dateable_id", null: false
+    t.string "attribute_name"
+    t.integer "accuracy"
+    t.boolean "range"
+    t.date "start_date"
+    t.date "end_date"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dateable_id", "dateable_type", "attribute_name"], name: "index_fuzzy_dates_dateable_id_dateable_type_attribute_name"
+    t.index ["dateable_type", "dateable_id"], name: "index_fuzzy_dates_fuzzy_dates_on_dateable"
   end
 
   create_table "triple_eye_effable_resource_descriptions", force: :cascade do |t|
