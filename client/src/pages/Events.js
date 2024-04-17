@@ -1,6 +1,7 @@
 // @flow
 
 import { ListTable } from '@performant-software/semantic-components';
+import { FuzzyDate as FuzzyDateUtils } from '@performant-software/shared-components';
 import React, { useContext, useState, type AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TbCalendarShare, TbCalendarTime } from 'react-icons/tb';
@@ -57,6 +58,16 @@ const Events: AbstractComponent<any> = () => {
         columns={[{
           name: 'name',
           label: t('Events.columns.name'),
+          sortable: true
+        }, {
+          name: 'start_date.start_date',
+          label: t('Events.columns.startDate'),
+          resolve: (event) => FuzzyDateUtils.getDateView(event.start_date),
+          sortable: true
+        }, {
+          name: 'end_date.start_date',
+          label: t('Events.columns.endDate'),
+          resolve: (event) => FuzzyDateUtils.getDateView(event.end_date),
           sortable: true
         }, {
           name: 'uuid',

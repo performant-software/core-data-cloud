@@ -86,7 +86,9 @@
   },
   "Events": {
     "columns": {
-      "name": "Name"
+      "endDate": "End date",
+      "name": "Name",
+      "startDate": "Start date"
     }
   },
   "Home": {
@@ -530,7 +532,9 @@
   },
   "RelatedEvents": {
     "columns": {
-      "name": "Name"
+      "endDate": "End date",
+      "name": "Name",
+      "startDate": "Start date"
     }
   },
   "RelatedIdentifierModal": {
