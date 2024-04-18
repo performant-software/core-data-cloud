@@ -6,7 +6,7 @@ import cx from 'classnames';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IoSearchOutline } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import {
   Button,
   Confirm,
@@ -26,6 +26,7 @@ import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import ProjectsService from '../services/Projects';
 import styles from './Project.module.css';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
+import useParams from '../hooks/ParsedParams';
 
 type Props = EditContainerProps & {
   item: ProjectType
@@ -37,6 +38,7 @@ const ProjectForm = (props: Props) => {
   const [deleteModal, setDeleteModal] = useState(false);
 
   const navigate = useNavigate();
+  const { projectId } = useParams();
   const { t } = useTranslation();
 
   /**
@@ -62,6 +64,31 @@ const ProjectForm = (props: Props) => {
       .then(() => navigate('/projects'))
       .finally(() => setDeleteModal(false))
   ), [navigate, props.item]);
+
+  /**
+   * Calls the /core_data/project_models API endpoint.
+   *
+   * @type {function(*): Promise<AxiosResponse<T>>}
+   */
+  const onSearch = useCallback((search) => (
+    ProjectModelsService.fetchAll({
+      search,
+      project_id: props.item.id,
+      model_class: 'CoreDataConnector::Item'
+    })
+  ), [props.item.id]);
+
+  /**
+   * Return to the projects list if the user does not have permissions to edit this project.
+   */
+  if (!PermissionsService.canEditProject(projectId)) {
+    return (
+      <Navigate
+        replace
+        to='/projects'
+      />
+    );
+  }
 
   return (
     <>
@@ -90,7 +117,6 @@ const ProjectForm = (props: Props) => {
             value={props.item.description}
           />
           <Form.Input
-            autoFocus
             error={props.isError('faircopy_cloud_url')}
             label={t('Project.labels.fairCopyCloudUrl')}
             required={props.isRequired('faircopy_cloud_url')}
@@ -104,11 +130,7 @@ const ProjectForm = (props: Props) => {
           >
             <AssociatedDropdown
               collectionName='project_models'
-              onSearch={(search) => ProjectModelsService.fetchAll({
-                search,
-                project_id: props.item.id,
-                model_class: 'CoreDataConnector::Item'
-              })}
+              onSearch={onSearch}
               onSelection={props.onAssociationInputChange.bind(
                 this,
                 'faircopy_cloud_project_model_id',
