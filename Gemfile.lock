@@ -1,11 +1,12 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: 716b7895d9d218535f062034c925ea63a6b6d67f
-  tag: v0.1.40
+  revision: 960760fb5df54b54c68e3b619341cdb654c7caea
+  tag: v0.1.41
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 8.0)
       faker
+      fuzzy_dates
       jwt (~> 2.7.1)
       jwt_auth
       rack-cors (~> 2.0.1)
@@ -18,6 +19,15 @@ GIT
       typesense (~> 0.14)
       typhoeus (~> 1.4)
       user_defined_fields
+
+GIT
+  remote: https://github.com/performant-software/fuzzy-dates.git
+  revision: fa3f237882f9c89888f82af41f6fe2b8ff2281a3
+  tag: v0.1.0
+  specs:
+    fuzzy_dates (0.1.0)
+      rails (>= 6.0.3.2, < 8)
+      resource_api
 
 GIT
   remote: https://github.com/performant-software/jwt-auth.git
@@ -271,6 +281,7 @@ DEPENDENCIES
   core_data_connector!
   debug
   dotenv-rails
+  fuzzy_dates!
   jwt (~> 2.4, >= 2.4.1)
   jwt_auth!
   pagy (~> 5.10)

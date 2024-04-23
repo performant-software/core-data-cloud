@@ -73,6 +73,24 @@
       "apiKey": "API key"
     }
   },
+  "EventForm": {
+    "labels": {
+      "description": "Description",
+      "endDate": "End date",
+      "name": "Name",
+      "startDate": "Start date"
+    }
+  },
+  "EventModal": {
+    "title": "Add Event"
+  },
+  "Events": {
+    "columns": {
+      "endDate": "End date",
+      "name": "Name",
+      "startDate": "Start date"
+    }
+  },
   "Home": {
     "header": "Welcome to Rails-React Template <1>Edit <1>src/App.js</1> and save to reload.</1>"
   },
@@ -510,6 +528,13 @@
       "created": "Date created",
       "name": "Name",
       "updated": "Last modified"
+    }
+  },
+  "RelatedEvents": {
+    "columns": {
+      "endDate": "End date",
+      "name": "Name",
+      "startDate": "Start date"
     }
   },
   "RelatedIdentifierModal": {
