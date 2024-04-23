@@ -1,6 +1,9 @@
 // @flow
 
 import React, { useContext } from 'react';
+import Events from '../pages/Events';
+import Instances from '../pages/Instances';
+import Items from '../pages/Items';
 import MediaContents from '../pages/MediaContents';
 import Organizations from '../pages/Organizations';
 import People from '../pages/People';
@@ -9,8 +12,6 @@ import ProjectContext from '../context/Project';
 import TaxonomyItems from '../pages/TaxonomyItems';
 import Works from '../pages/Works';
 import { Types } from '../utils/ProjectModels';
-import Items from '../pages/Items';
-import Instances from '../pages/Instances';
 
 const ProjectModelsFactory = () => {
   const { projectModel } = useContext(ProjectContext);
@@ -23,6 +24,10 @@ const ProjectModelsFactory = () => {
   let component;
 
   switch (className) {
+    case Types.Event:
+      component = <Events />;
+      break;
+
     case Types.Instance:
       component = <Instances />;
       break;

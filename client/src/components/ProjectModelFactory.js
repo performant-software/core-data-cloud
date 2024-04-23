@@ -1,6 +1,7 @@
 // @flow
 
 import React, { useContext } from 'react';
+import Event from '../pages/Event';
 import Instance from '../pages/Instance';
 import Item from '../pages/Item';
 import MediaContent from '../pages/MediaContent';
@@ -23,6 +24,10 @@ const ProjectModelFactory = () => {
   let component;
 
   switch (className) {
+    case Types.Event:
+      component = <Event />;
+      break;
+
     case Types.Instance:
       component = <Instance />;
       break;

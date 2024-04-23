@@ -1,6 +1,7 @@
 // flow
 
 import React, { useMemo } from 'react';
+import RelatedEvent from './RelatedEvent';
 import RelatedInstance from './RelatedInstance';
 import RelatedItem from './RelatedItem';
 import RelatedMediaContent from './RelatedMediaContent';
@@ -28,6 +29,14 @@ const ProjectModelRelationshipFactory = (props) => {
       : projectModelRelationship?.related_model?.model_class_view;
 
     switch (classView) {
+      case Types.Event:
+        component = (
+          <RelatedEvent
+            relationshipId={props.relationshipId}
+          />
+        );
+        break;
+
       case Types.Instance:
         component = (
           <RelatedInstance

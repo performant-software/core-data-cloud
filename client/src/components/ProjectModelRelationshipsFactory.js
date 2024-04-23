@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import _ from 'underscore';
 import ProjectModelRelationshipFactory from './ProjectModelRelationshipFactory';
+import RelatedEvents from './RelatedEvents';
 import RelatedInstances from './RelatedInstances';
 import RelatedItems from './RelatedItems';
 import RelatedMediaContents from './RelatedMediaContents';
@@ -66,6 +67,12 @@ const ProjectModelRelationshipsFactory = () => {
   }
 
   if (multiple) {
+    if (classView === Types.Event) {
+      return (
+        <RelatedEvents />
+      );
+    }
+
     if (classView === Types.Instance) {
       return (
         <RelatedInstances />
