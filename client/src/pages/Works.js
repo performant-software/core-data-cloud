@@ -6,26 +6,26 @@ import React, {
   useContext
 } from 'react';
 
-import { Icon } from 'semantic-ui-react';
-import { IoBulb, IoBulbOutline } from 'react-icons/io5';
-import WorksService from '../services/Works';
 import { ListTable } from '@performant-software/semantic-components';
+import { Icon } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
+import { IoBulb, IoBulbOutline } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 import ListViewMenu from '../components/ListViewMenu';
 import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
 import Views from '../constants/ListViews';
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import WindowUtils from '../utils/Window';
+import WorksService from '../services/Works';
 
 const Works: AbstractComponent<any> = () => {
   const [view, setView] = useState(Views.all);
 
-  const { t } = useTranslation();
-
   const { projectModel } = useContext(ProjectContext);
   const navigate = useNavigate();
   const { projectModelId } = useParams();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -73,11 +73,17 @@ const Works: AbstractComponent<any> = () => {
         }]}
         key={view}
         onDelete={(work) => WorksService.delete(work)}
-        onLoad={(params) => WorksService.fetchAll({
-          ...params,
-          project_model_id: projectModelId,
-          view
-        })}
+        onLoad={(params) => (
+          WorksService
+            .fetchAll({
+              ...params,
+              project_model_id: projectModelId,
+              defineable_id: projectModelId,
+              defineable_type: 'CoreDataConnector::ProjectModel',
+              view
+            })
+            .finally(() => WindowUtils.scrollToTop())
+        )}
         searchable
       />
     </>

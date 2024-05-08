@@ -1,16 +1,17 @@
 // @flow
 
+import { ListTable } from '@performant-software/semantic-components';
 import React, { useContext, useState } from 'react';
+import { FaTag, FaTags } from 'react-icons/fa6';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Icon } from 'semantic-ui-react';
+import ListViewMenu from '../components/ListViewMenu';
 import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';
-import { ListTable } from '@performant-software/semantic-components';
-import { useTranslation } from 'react-i18next';
 import TaxonomiesService from '../services/Taxonomies';
+import { useTranslation } from 'react-i18next';
 import Views from '../constants/ListViews';
-import ListViewMenu from '../components/ListViewMenu';
-import { FaTag, FaTags } from 'react-icons/fa6';
-import { Icon } from 'semantic-ui-react';
+import WindowUtils from '../utils/Window';
 
 const TaxonomyItems = () => {
   const [view, setView] = useState(Views.all);
@@ -61,11 +62,11 @@ const TaxonomyItems = () => {
         }]}
         key={view}
         onDelete={(taxonomy) => TaxonomiesService.delete(taxonomy)}
-        onLoad={(params) => TaxonomiesService.fetchAll({
-          ...params,
-          project_model_id: projectModelId,
-          view
-        })}
+        onLoad={(params) => (
+          TaxonomiesService
+            .fetchAll({ ...params, project_model_id: projectModelId, view })
+            .finally(() => WindowUtils.scrollToTop())
+        )}
         searchable
       />
     </>

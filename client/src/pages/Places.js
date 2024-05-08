@@ -13,6 +13,7 @@ import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
 import Views from '../constants/ListViews';
+import WindowUtils from '../utils/Window';
 
 const Places: AbstractComponent<any> = () => {
   const [view, setView] = useState(Views.all);
@@ -67,13 +68,17 @@ const Places: AbstractComponent<any> = () => {
         }]}
         key={view}
         onDelete={(place) => PlacesService.delete(place)}
-        onLoad={(params) => PlacesService.fetchAll({
-          ...params,
-          project_model_id: projectModelId,
-          defineable_id: projectModelId,
-          defineable_type: 'CoreDataConnector::ProjectModel',
-          view
-        })}
+        onLoad={(params) => (
+          PlacesService
+            .fetchAll({
+              ...params,
+              project_model_id: projectModelId,
+              defineable_id: projectModelId,
+              defineable_type: 'CoreDataConnector::ProjectModel',
+              view
+            })
+            .finally(() => WindowUtils.scrollToTop())
+        )}
         searchable
       />
     </>
