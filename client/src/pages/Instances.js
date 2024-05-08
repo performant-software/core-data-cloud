@@ -18,6 +18,7 @@ import useParams from '../hooks/ParsedParams';
 import Views from '../constants/ListViews';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import WindowUtils from '../utils/Window';
 
 const Instances: AbstractComponent<any> = () => {
   const [view, setView] = useState(Views.all);
@@ -74,11 +75,17 @@ const Instances: AbstractComponent<any> = () => {
         }]}
         key={view}
         onDelete={(instance) => InstancesService.delete(instance)}
-        onLoad={(params) => InstancesService.fetchAll({
-          ...params,
-          project_model_id: projectModelId,
-          view
-        })}
+        onLoad={(params) => (
+          InstancesService
+            .fetchAll({
+              ...params,
+              project_model_id: projectModelId,
+              defineable_id: projectModelId,
+              defineable_type: 'CoreDataConnector::ProjectModel',
+              view
+            })
+            .finally(() => WindowUtils.scrollToTop())
+        )}
         searchable
       />
     </>

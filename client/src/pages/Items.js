@@ -18,6 +18,7 @@ import useParams from '../hooks/ParsedParams';
 import Views from '../constants/ListViews';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import WindowUtils from '../utils/Window';
 
 const Items: AbstractComponent<any> = () => {
   const [view, setView] = useState(Views.all);
@@ -74,11 +75,11 @@ const Items: AbstractComponent<any> = () => {
         }]}
         key={view}
         onDelete={(item) => ItemsService.delete(item)}
-        onLoad={(params) => ItemsService.fetchAll({
-          ...params,
-          project_model_id: projectModelId,
-          view
-        })}
+        onLoad={(params) => (
+          ItemsService
+            .fetchAll({ ...params, project_model_id: projectModelId, view })
+            .finally(() => WindowUtils.scrollToTop())
+        )}
         searchable
       />
     </>
