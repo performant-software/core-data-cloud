@@ -23,8 +23,14 @@ const RelatedMediaContentForm = (props: Props) => {
   const [editModal, setEditModal] = useState(false);
 
   const { foreignProjectModelId } = useProjectModelRelationship();
-  const { error, foreignObject, onSelection } = useRelationship(props);
   const { t } = useTranslation();
+
+  const {
+    error,
+    foreignObject,
+    onNavigate,
+    onSelection
+  } = useRelationship(props);
 
   /**
    * Sets the manifest URL.
@@ -102,12 +108,20 @@ const RelatedMediaContentForm = (props: Props) => {
             </>
           )}
           { props.item.id && (
-            <Button
-              color='red'
-              content={t('Common.buttons.delete')}
-              icon='trash'
-              onClick={onDelete}
-            />
+            <>
+              <Button
+                color='teal'
+                content={t('Common.buttons.edit')}
+                icon='pencil'
+                onClick={onNavigate}
+              />
+              <Button
+                color='red'
+                content={t('Common.buttons.delete')}
+                icon='trash'
+                onClick={onDelete}
+              />
+            </>
           )}
         </LazyIIIF>
       </Form.Input>

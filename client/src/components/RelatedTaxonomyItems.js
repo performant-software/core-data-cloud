@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 const RelatedTaxonomyItems = () => {
   const {
+    actions,
     foreignKey,
     onDelete,
     onInitialize,
@@ -20,11 +21,7 @@ const RelatedTaxonomyItems = () => {
 
   return (
     <ListTable
-      actions={[{
-        name: 'edit',
-      }, {
-        name: 'delete'
-      }]}
+      actions={actions}
       addButton={{
         basic: false,
         color: 'dark gray',

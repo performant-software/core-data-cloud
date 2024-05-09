@@ -50,9 +50,11 @@ const Instances: AbstractComponent<any> = () => {
       <ListTable
         actions={[{
           name: 'edit',
+          icon: 'pencil',
           onClick: (instance) => navigate(`${instance.id}`)
         }, {
           accept: (instance) => PermissionsService.canDeleteRecord(projectModel, instance),
+          icon: 'times',
           name: 'delete'
         }]}
         addButton={{

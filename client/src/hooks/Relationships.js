@@ -1,11 +1,18 @@
 // @flow
 
 import { useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import _ from 'underscore';
 import RelationshipsService from '../services/Relationships';
+import useParams from './ParsedParams';
 import useProjectModelRelationship from './ProjectModelRelationship';
 
 const useRelationships = () => {
+  const navigate = useNavigate();
+  const { projectId } = useParams();
+  const { t } = useTranslation();
+
   const { parameters, projectModelRelationship } = useProjectModelRelationship();
 
   /**
@@ -78,11 +85,44 @@ const useRelationships = () => {
     return value;
   }, [projectModelRelationship.inverse]);
 
+  /**
+   * Navigates to the record on the other side of the passed relationship.
+   *
+   * @type {(function(*): void)|*}
+   */
+  const onNavigate = useCallback((relationship) => {
+    const projectModelId = resolveAttributeValue('project_model_id', relationship);
+    const recordId = resolveAttributeValue('id', relationship);
+
+    navigate(`/projects/${projectId}/${projectModelId}/${recordId}`);
+  }, [resolveAttributeValue]);
+
+  /**
+   * Sets the list of default actions for the related list.
+   */
+  const actions = useMemo(() => [{
+    name: 'edit',
+    icon: 'pencil'
+  }, {
+    name: 'delete',
+    icon: 'times'
+  }, {
+    name: 'navigate',
+    icon: 'arrow right',
+    onClick: onNavigate,
+    popup: {
+      content: t('Common.actions.navigate.content'),
+      title: t('Common.actions.navigate.title')
+    }
+  }], [onNavigate]);
+
   return {
+    actions,
     foreignKey,
     onDelete,
     onInitialize,
     onLoad,
+    onNavigate,
     onSave,
     resolveAttributeValue
   };
