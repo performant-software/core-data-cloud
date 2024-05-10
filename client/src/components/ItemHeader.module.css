@@ -1,10 +1,17 @@
-.itemHeader {
-  padding-bottom: 1em;
+.itemHeader > .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.itemHeader > .ui.header {
-  margin-top: 0.5em;
+.itemHeader > .container > .ui.header {
+  margin: 0;
+  padding-top: 0.5em;
   padding-bottom: 0.5em;
+}
+
+.itemHeader > .container > .ui.header.name {
+  flex-grow: 1;
 }
 
 .itemHeader a,
