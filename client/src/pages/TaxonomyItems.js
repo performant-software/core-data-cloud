@@ -43,9 +43,11 @@ const TaxonomyItems = () => {
       <ListTable
         actions={[{
           name: 'edit',
+          icon: 'pencil',
           onClick: (taxonomy) => navigate(`${taxonomy.id}`)
         }, {
           accept: (taxonomy) => PermissionsService.canDeleteRecord(projectModel, taxonomy),
+          icon: 'times',
           name: 'delete'
         }]}
         addButton={{

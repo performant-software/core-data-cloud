@@ -44,9 +44,11 @@ const Places: AbstractComponent<any> = () => {
       <ListTable
         actions={[{
           name: 'edit',
+          icon: 'pencil',
           onClick: (place) => navigate(`${place.id}`)
         }, {
           accept: (place) => PermissionsService.canDeleteRecord(projectModel, place),
+          icon: 'times',
           name: 'delete'
         }]}
         addButton={{

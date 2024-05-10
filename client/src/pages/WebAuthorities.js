@@ -20,9 +20,11 @@ const WebAuthorities = () => {
       <ListTable
         actions={[{
           name: 'edit',
+          icon: 'pencil',
           onClick: (authority) => navigate(`${authority.id}`)
         }, {
-          name: 'delete'
+          name: 'delete',
+          icon: 'times'
         }]}
         addButton={{
           basic: false,

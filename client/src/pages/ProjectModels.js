@@ -19,9 +19,11 @@ const ProjectModels = () => {
       <ListTable
         actions={[{
           name: 'edit',
+          icon: 'pencil',
           onClick: (projectModel) => navigate(`${projectModel.id}`)
         }, {
-          name: 'delete'
+          name: 'delete',
+          icon: 'times'
         }]}
         addButton={{
           basic: false,

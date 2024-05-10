@@ -28,6 +28,12 @@
     }
   },
   "Common": {
+    "actions": {
+      "navigate": {
+        "content": "Navigates to the edit page for this record",
+        "title": "Navigate"
+      }
+    },
     "buttons": {
       "add": "Add",
       "addName": "Add Name",

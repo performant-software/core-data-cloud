@@ -7,6 +7,7 @@ import {
   useMemo,
   useState
 } from 'react';
+import { useNavigate } from 'react-router-dom';
 import _ from 'underscore';
 import ItemLayoutContext from '../context/ItemLayout';
 import ProjectContext from '../context/Project';
@@ -56,7 +57,8 @@ const useRelationship = (props) => {
   const { projectModel } = useContext(ProjectContext);
   const { setSaved } = useContext(ItemLayoutContext);
 
-  const { itemId } = useParams();
+  const navigate = useNavigate();
+  const { itemId, projectId } = useParams();
   const { projectModelRelationship } = useProjectModelRelationship();
 
   const {
@@ -161,6 +163,18 @@ const useRelationship = (props) => {
   ), [item]);
 
   /**
+   * Navigates to the record on the other side of the current relationship.
+   *
+   * @type {(function(): void)|*}
+   */
+  const onNavigate = useCallback(() => {
+    const projectModelId = foreignObject.project_model_id;
+    const recordId = foreignObject.id;
+
+    navigate(`/projects/${projectId}/${projectModelId}/${recordId}`);
+  }, [foreignObject]);
+
+  /**
    * Calls the onChange or onDelete function based on the passed value.
    *
    * @type {function(*): void|*}
@@ -168,6 +182,30 @@ const useRelationship = (props) => {
   const onSelection = useCallback((value) => (
     value ? onChange(value) : onDelete()
   ), [onChange, onDelete]);
+
+  /**
+   * Sets the available dropdown buttons for the current relationship.
+   */
+  const buttons = useMemo(() => [{
+    accept: () => !!props.item[foreignKey],
+    content: null,
+    icon: 'pencil',
+    name: 'edit'
+  }, {
+    accept: () => !props.item[foreignKey],
+    content: null,
+    icon: 'pencil',
+    name: 'add'
+  }, {
+    accept: () => !!props.item[foreignKey],
+    content: null,
+    name: 'clear'
+  }, {
+    basic: true,
+    icon: 'arrow right',
+    name: 'navigate',
+    onClick: onNavigate
+  }], [foreignKey, onNavigate, props.item]);
 
   /**
    * Saves the record after a related record has been changed. We only want to do this when the user makes a
@@ -204,11 +242,13 @@ const useRelationship = (props) => {
   }, [item.id, itemId, projectModel, projectModelRelationship]);
 
   return {
+    buttons,
     error,
     foreignKey,
     foreignObject,
     foreignObjectName,
     label,
+    onNavigate,
     onSave,
     onSelection
   };

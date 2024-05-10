@@ -69,6 +69,11 @@ textarea {
   margin-bottom: 1.5em;
 }
 
+.list.data-table-column-selector > table.ui.sortable > tbody > tr > td.actions-cell > .ui.button {
+  border: none;
+  box-shadow: none;
+}
+
 .list.compact.data-table-column-selector > table.ui.sortable > thead > tr > th {
   color: #616161;
   font-size: 12px;
@@ -83,11 +88,11 @@ textarea {
   padding: 0.4em;
 }
 
-.list.compact.data-table-column-selector > table.ui.sortable > tbody > tr > td.actions-cell > .ui.button {
-  border: none;
-  box-shadow: none;
-}
-
 .ui.form .maplibregl-control-container form .input-group > input {
   border: none;
+}
+
+.list.compact > .item-list > .ui.cards > .ui.card > .extra > .ui.button {
+  border: none;
+  box-shadow: none !important;
 }

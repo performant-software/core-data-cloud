@@ -158,6 +158,13 @@ const ProjectModelForm = (props: Props) => {
               name={t('ProjectModel.tabs.fields')}
             >
               <UserDefinedFieldsEmbeddedList
+                actions={[{
+                  name: 'edit',
+                  icon: 'pencil'
+                }, {
+                  name: 'delete',
+                  icon: 'times'
+                }]}
                 addButton={{
                   basic: false,
                   color: 'blue',
@@ -179,9 +186,11 @@ const ProjectModelForm = (props: Props) => {
           >
             <EmbeddedList
               actions={[{
-                name: 'edit'
+                name: 'edit',
+                icon: 'pencil'
               }, {
-                name: 'delete'
+                name: 'delete',
+                icon: 'times'
               }]}
               addButton={{
                 basic: false,
@@ -233,7 +242,8 @@ const ProjectModelForm = (props: Props) => {
             </Message>
             <EmbeddedList
               actions={[{
-                name: 'delete'
+                name: 'delete',
+                icon: 'times'
               }]}
               addButton={{
                 basic: false,
@@ -298,7 +308,8 @@ const ProjectModelForm = (props: Props) => {
             </Message>
             <EmbeddedList
               actions={[{
-                name: 'delete'
+                name: 'delete',
+                icon: 'times'
               }]}
               addButton={{
                 basic: false,

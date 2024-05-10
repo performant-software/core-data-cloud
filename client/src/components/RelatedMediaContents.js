@@ -1,6 +1,7 @@
 // @flow
 
 import { DropdownButton, ItemList, ItemViews } from '@performant-software/semantic-components';
+import cx from 'classnames';
 import React, { useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Image } from 'semantic-ui-react';
@@ -36,6 +37,7 @@ const RelatedMediaContents = () => {
   const { foreignProjectModelId, projectModelRelationship } = useProjectModelRelationship();
 
   const {
+    actions,
     onDelete,
     onInitialize,
     onLoad: onRelationshipLoad,
@@ -130,15 +132,7 @@ const RelatedMediaContents = () => {
         count={count}
       />
       <ItemList
-        actions={[{
-          basic: false,
-          name: 'edit',
-          size: 'tiny'
-        }, {
-          basic: false,
-          name: 'delete',
-          size: 'tiny'
-        }]}
+        actions={_.map(actions, (action) => ({ ...action, size: 'tiny' }))}
         addButton={{}}
         buttons={[{
           render: () => (
@@ -169,7 +163,7 @@ const RelatedMediaContents = () => {
             />
           )
         }]}
-        className={styles.relatedMediaContents}
+        className={cx('compact', styles.relatedMediaContents)}
         collectionName='relationships'
         defaultView={ItemViews.grid}
         hideToggle

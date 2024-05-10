@@ -8,6 +8,7 @@ import useRelationships from '../hooks/Relationships';
 
 const RelatedPlaces = () => {
   const {
+    actions,
     foreignKey,
     onDelete,
     onInitialize,
@@ -19,11 +20,7 @@ const RelatedPlaces = () => {
 
   return (
     <ListTable
-      actions={[{
-        name: 'edit'
-      }, {
-        name: 'delete'
-      }]}
+      actions={actions}
       addButton={{
         basic: false,
         color: 'dark gray',
