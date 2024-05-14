@@ -166,6 +166,7 @@ const RelatedMediaContents = () => {
         className={cx('compact', styles.relatedMediaContents)}
         collectionName='relationships'
         defaultView={ItemViews.grid}
+        dimmable={false}
         hideToggle
         itemsPerRow={5}
         modal={{
