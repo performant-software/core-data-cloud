@@ -74,6 +74,15 @@ textarea {
   box-shadow: none;
 }
 
+.list.compact.data-table-column-selector > .header > .ui.grid > .row > .column > .ui.menu > .menu.list-header-menu > .configure-button.ui.button {
+  border: none;
+  box-shadow: none;
+}
+
+.list.compact.data-table-column-selector > .header > .ui.grid > .row > .column > .ui.menu > .menu.list-header-menu > .configure-button.ui.button:hover {
+  background-color: transparent !important;
+}
+
 .list.compact.data-table-column-selector > table.ui.sortable > thead > tr > th {
   color: #616161;
   font-size: 12px;
