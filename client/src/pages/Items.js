@@ -1,23 +1,24 @@
 // @flow
 
-import React, {
-  type AbstractComponent,
-  useState,
-  useContext
-} from 'react';
-
-import { Icon } from 'semantic-ui-react';
-import { IoDocumentsSharp } from 'react-icons/io5';
-import { IoMdDocument } from 'react-icons/io';
-import ItemsService from '../services/Items';
 import { ListTable } from '@performant-software/semantic-components';
+import { useUserDefinedColumns } from '@performant-software/user-defined-fields';
+import React, {
+  useContext,
+  useMemo,
+  useState,
+  type AbstractComponent
+} from 'react';
+import { Icon } from 'semantic-ui-react';
+import { IoMdDocument } from 'react-icons/io';
+import { IoDocumentsSharp } from 'react-icons/io5';
+import ItemsService from '../services/Items';
 import ListViewMenu from '../components/ListViewMenu';
 import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
-import Views from '../constants/ListViews';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import Views from '../constants/ListViews';
 import WindowUtils from '../utils/Window';
 
 const Items: AbstractComponent<any> = () => {
@@ -28,6 +29,27 @@ const Items: AbstractComponent<any> = () => {
   const { projectModel } = useContext(ProjectContext);
   const navigate = useNavigate();
   const { projectModelId } = useParams();
+
+  const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
+
+  /**
+   * Memo-izes the items columns.
+   */
+  const columns = useMemo(() => [{
+    label: t('Items.columns.name'),
+    name: 'core_data_connector_names.name',
+    resolve: (item) => item.primary_name?.name?.name,
+    sortable: true
+  }, {
+    name: 'uuid',
+    label: t('Common.columns.uuid'),
+    sortable: true,
+    hidden: true
+  }, ...userDefinedColumns], [userDefinedColumns]);
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <>
@@ -64,17 +86,7 @@ const Items: AbstractComponent<any> = () => {
           onClick: () => navigate('new')
         }}
         collectionName='items'
-        columns={[{
-          label: t('Items.columns.name'),
-          name: 'core_data_connector_names.name',
-          resolve: (item) => item.primary_name?.name?.name,
-          sortable: true
-        }, {
-          name: 'uuid',
-          label: t('Common.columns.uuid'),
-          sortable: true,
-          hidden: true
-        }]}
+        columns={columns}
         key={view}
         onDelete={(item) => ItemsService.delete(item)}
         onLoad={(params) => (
@@ -83,6 +95,10 @@ const Items: AbstractComponent<any> = () => {
             .finally(() => WindowUtils.scrollToTop())
         )}
         searchable
+        session={{
+          key: `items_${projectModelId}`,
+          storage: localStorage
+        }}
       />
     </>
   );

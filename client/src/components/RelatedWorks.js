@@ -1,7 +1,7 @@
 // @flow
 
 import { ListTable } from '@performant-software/semantic-components';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import RelatedWorkModal from './RelatedWorkModal';
 import useRelationships from '../hooks/Relationships';
@@ -10,14 +10,37 @@ const RelatedWorks = () => {
   const {
     actions,
     foreignKey,
+    loading,
     onDelete,
     onInitialize,
     onLoad,
     onSave,
-    resolveAttributeValue
+    projectModelRelationship,
+    resolveAttributeValue,
+    userDefinedColumns
   } = useRelationships();
 
   const { t } = useTranslation();
+
+  /**
+   * Memo-ize the related works columns.
+   */
+  const columns = useMemo(() => [{
+    name: 'core_data_connector_names.name',
+    label: t('RelatedWorks.columns.name'),
+    resolve: resolveAttributeValue.bind(this, 'primary_name.name.name'),
+    sortable: true
+  }, {
+    name: 'core_data_connector_works.uuid',
+    label: t('Common.columns.uuid'),
+    resolve: resolveAttributeValue.bind(this, 'uuid'),
+    sortable: true,
+    hidden: true
+  }, ...userDefinedColumns], [resolveAttributeValue, userDefinedColumns]);
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <ListTable
@@ -29,13 +52,7 @@ const RelatedWorks = () => {
       }}
       className='compact'
       collectionName='relationships'
-      columns={[{
-        name: 'core_data_connector_names.name',
-        label: t('RelatedWorks.columns.name'),
-        resolve: resolveAttributeValue.bind(this, 'primary_name.name.name'),
-        sortable: true
-      }]}
-      configurable={false}
+      columns={columns}
       modal={{
         component: RelatedWorkModal,
         props: {
@@ -46,6 +63,10 @@ const RelatedWorks = () => {
       onDelete={onDelete}
       onLoad={onLoad}
       onSave={onSave}
+      session={{
+        key: `related_works_${projectModelRelationship?.id}`,
+        storage: localStorage
+      }}
     />
   );
 };

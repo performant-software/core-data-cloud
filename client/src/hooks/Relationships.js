@@ -1,5 +1,6 @@
 // @flow
 
+import { useUserDefinedColumns } from '@performant-software/user-defined-fields';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -25,6 +26,24 @@ const useRelationships = () => {
       ? 'primary_record_id'
       : 'related_record_id'
   ), [projectModelRelationship]);
+
+  /**
+   * Returns the foreign model key for the current relationship.
+   *
+   * @type {string}
+   */
+  const foreignModelKey = useMemo(() => (
+    projectModelRelationship.inverse
+      ? 'primary_model_id'
+      : 'related_model_id'
+  ), [projectModelRelationship]);
+
+  /**
+   * Returns the foreign model ID for the current relationship.
+   */
+  const foreignModelId = useMemo(() => (
+    projectModelRelationship[foreignModelKey]
+  ), [projectModelRelationship, foreignModelKey]);
 
   /**
    * Deletes the passed relationship.
@@ -66,6 +85,17 @@ const useRelationships = () => {
   ), []);
 
   /**
+   * Resolves the related record.
+   *
+   * @type {function(*): Organization|Person|Place}
+   */
+  const resolveRecord = useCallback((relationship) => (
+    projectModelRelationship.inverse
+      ? relationship.primary_record
+      : relationship.related_record
+  ), [projectModelRelationship]);
+
+  /**
    * Returns the attribute value on the related object for the passed relationship.
    *
    * @type {function(*, *): *}
@@ -73,9 +103,7 @@ const useRelationships = () => {
   const resolveAttributeValue = useCallback((attribute, relationship) => {
     let value;
 
-    const record = projectModelRelationship.inverse
-      ? relationship.primary_record
-      : relationship.related_record;
+    const record = resolveRecord(relationship);
 
     if (record) {
       const attributeArray = attribute.split('.');
@@ -83,7 +111,7 @@ const useRelationships = () => {
     }
 
     return value;
-  }, [projectModelRelationship.inverse]);
+  }, [resolveRecord]);
 
   /**
    * Navigates to the record on the other side of the passed relationship.
@@ -100,7 +128,7 @@ const useRelationships = () => {
   /**
    * Sets the list of default actions for the related list.
    */
-  const actions = useMemo(() => [{
+  const actions = [{
     name: 'edit',
     icon: 'pencil'
   }, {
@@ -114,17 +142,36 @@ const useRelationships = () => {
       content: t('Common.actions.navigate.content'),
       title: t('Common.actions.navigate.title')
     }
-  }], [onNavigate]);
+  }];
+
+  /**
+   * Load user-defined fields for the current relationship and related model.
+   */
+  const {
+    loading: loadingRelationshipColumns,
+    userDefinedColumns: relationshipColumns
+  } = useUserDefinedColumns(projectModelRelationship?.id, 'CoreDataConnector::ProjectModelRelationship');
+
+  const {
+    loading: loadingRecordColumns,
+    userDefinedColumns: recordColumns
+  } = useUserDefinedColumns(foreignModelId, 'CoreDataConnector::ProjectModel', { resolveRecord });
 
   return {
     actions,
     foreignKey,
+    loading: loadingRecordColumns || loadingRelationshipColumns,
     onDelete,
     onInitialize,
     onLoad,
     onNavigate,
     onSave,
-    resolveAttributeValue
+    projectModelRelationship,
+    resolveAttributeValue,
+    userDefinedColumns: [
+      ...recordColumns,
+      ...relationshipColumns
+    ]
   };
 };
 

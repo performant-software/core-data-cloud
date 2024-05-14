@@ -1,7 +1,7 @@
 // @flow
 
 import { ListTable } from '@performant-software/semantic-components';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import RelatedInstanceModal from './RelatedInstanceModal';
 import useRelationships from '../hooks/Relationships';
@@ -10,14 +10,37 @@ const RelatedInstances = () => {
   const {
     actions,
     foreignKey,
+    loading,
     onDelete,
     onInitialize,
     onLoad,
     onSave,
-    resolveAttributeValue
+    projectModelRelationship,
+    resolveAttributeValue,
+    userDefinedColumns
   } = useRelationships();
 
   const { t } = useTranslation();
+
+  /**
+   * Memo-ize the related instances columns.
+   */
+  const columns = useMemo(() => [{
+    name: 'core_data_connector_names.name',
+    label: t('RelatedInstances.columns.name'),
+    resolve: resolveAttributeValue.bind(this, 'primary_name.name.name'),
+    sortable: true
+  }, {
+    name: 'core_data_connector_instances.uuid',
+    label: t('Common.columns.uuid'),
+    resolve: resolveAttributeValue.bind(this, 'uuid'),
+    sortable: true,
+    hidden: true
+  }, ...userDefinedColumns], [resolveAttributeValue, userDefinedColumns]);
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <ListTable
@@ -29,13 +52,7 @@ const RelatedInstances = () => {
       }}
       className='compact'
       collectionName='relationships'
-      columns={[{
-        name: 'core_data_connector_names.name',
-        label: t('RelatedInstances.columns.name'),
-        resolve: resolveAttributeValue.bind(this, 'primary_name.name.name'),
-        sortable: true
-      }]}
-      configurable={false}
+      columns={columns}
       modal={{
         component: RelatedInstanceModal,
         props: {
@@ -46,6 +63,10 @@ const RelatedInstances = () => {
       onDelete={onDelete}
       onLoad={onLoad}
       onSave={onSave}
+      session={{
+        key: `related_instances_${projectModelRelationship?.id}`,
+        storage: localStorage
+      }}
     />
   );
 };

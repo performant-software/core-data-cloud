@@ -1,7 +1,8 @@
 // @flow
 
 import { ListTable } from '@performant-software/semantic-components';
-import React, { useContext, useState } from 'react';
+import { useUserDefinedColumns } from '@performant-software/user-defined-fields';
+import React, { useContext, useMemo, useState } from 'react';
 import { FaTag, FaTags } from 'react-icons/fa6';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
@@ -21,6 +22,26 @@ const TaxonomyItems = () => {
 
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
+
+  /**
+   * Memo-izes the taxonomy items columns.
+   */
+  const columns = useMemo(() => [{
+    name: 'name',
+    label: t('TaxonomyItems.columns.name'),
+    sortable: true
+  }, {
+    name: 'uuid',
+    label: t('Common.columns.uuid'),
+    sortable: true,
+    hidden: true
+  }, ...userDefinedColumns], [userDefinedColumns]);
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <>
@@ -57,11 +78,7 @@ const TaxonomyItems = () => {
           onClick: () => navigate('new')
         }}
         collectionName='taxonomies'
-        columns={[{
-          name: 'name',
-          label: t('TaxonomyItems.columns.name'),
-          sortable: true
-        }]}
+        columns={columns}
         key={view}
         onDelete={(taxonomy) => TaxonomiesService.delete(taxonomy)}
         onLoad={(params) => (
@@ -70,6 +87,10 @@ const TaxonomyItems = () => {
             .finally(() => WindowUtils.scrollToTop())
         )}
         searchable
+        session={{
+          key: `taxonomies_${projectModelId}`,
+          storage: localStorage
+        }}
       />
     </>
   );
