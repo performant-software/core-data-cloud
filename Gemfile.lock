@@ -57,8 +57,10 @@ GIT
       httparty (~> 0.20.0)
       rails (>= 6.0.3.2, < 8)
 
-PATH
-  remote: ../user-defined-fields
+GIT
+  remote: https://github.com/performant-software/user-defined-fields.git
+  revision: 91a3731e42f08e84acb60be55e87650c5137c1df
+  tag: v0.1.9
   specs:
     user_defined_fields (0.1.0)
       rails (>= 6.0.3.2, < 8)
