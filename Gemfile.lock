@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: ea4bf44592468da6f6863092490380beb7f79391
-  tag: v0.1.47
+  revision: 6cb493cb7b1fa12a09c0bf95fac3f780389c9cf2
+  tag: v0.1.48
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 8.0)
@@ -59,8 +59,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/user-defined-fields.git
-  revision: 4872b3f1e7c5d4ecf83aedc30202aab91589e5ed
-  tag: v0.1.8
+  revision: 91a3731e42f08e84acb60be55e87650c5137c1df
+  tag: v0.1.9
   specs:
     user_defined_fields (0.1.0)
       rails (>= 6.0.3.2, < 8)

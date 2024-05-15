@@ -37,6 +37,10 @@ const Users: AbstractComponent<any> = () => {
       onDelete={(user) => UsersService.delete(user)}
       onLoad={(params) => UsersService.fetchAll(params)}
       searchable
+      session={{
+        key: 'users',
+        storage: localStorage
+      }}
     />
   );
 };

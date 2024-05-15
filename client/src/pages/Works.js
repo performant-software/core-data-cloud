@@ -3,10 +3,11 @@
 import React, {
   type AbstractComponent,
   useState,
-  useContext
+  useContext, useMemo
 } from 'react';
 
 import { ListTable } from '@performant-software/semantic-components';
+import { useUserDefinedColumns } from '@performant-software/user-defined-fields';
 import { Icon } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { IoBulb, IoBulbOutline } from 'react-icons/io5';
@@ -26,6 +27,27 @@ const Works: AbstractComponent<any> = () => {
   const navigate = useNavigate();
   const { projectModelId } = useParams();
   const { t } = useTranslation();
+
+  const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
+
+  /**
+   * Memo-izes the works columns.
+   */
+  const columns = useMemo(() => [{
+    label: t('Works.columns.name'),
+    name: 'core_data_connector_names.name',
+    resolve: (work) => work.primary_name?.name?.name,
+    sortable: true
+  }, {
+    name: 'uuid',
+    label: t('Common.columns.uuid'),
+    sortable: true,
+    hidden: true
+  }, ...userDefinedColumns], [userDefinedColumns]);
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <>
@@ -62,17 +84,7 @@ const Works: AbstractComponent<any> = () => {
           onClick: () => navigate('new')
         }}
         collectionName='works'
-        columns={[{
-          label: t('Works.columns.name'),
-          name: 'core_data_connector_names.name',
-          resolve: (work) => work.primary_name?.name?.name,
-          sortable: true
-        }, {
-          name: 'uuid',
-          label: t('Common.columns.uuid'),
-          sortable: true,
-          hidden: true
-        }]}
+        columns={columns}
         key={view}
         onDelete={(work) => WorksService.delete(work)}
         onLoad={(params) => (
@@ -87,6 +99,10 @@ const Works: AbstractComponent<any> = () => {
             .finally(() => WindowUtils.scrollToTop())
         )}
         searchable
+        session={{
+          key: `works_${projectModelId}`,
+          storage: localStorage
+        }}
       />
     </>
   );

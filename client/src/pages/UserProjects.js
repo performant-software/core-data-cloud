@@ -99,6 +99,10 @@ const UserProjects: AbstractComponent<any> = () => {
         onLoad={(p) => UserProjectsService.fetchAll({ ...p, ...ids })}
         resolveErrors={Validation.resolveDeleteError.bind(this)}
         searchable
+        session={{
+          key: `user_projects_${projectId}`,
+          storage: localStorage
+        }}
       />
     </>
   );

@@ -1,7 +1,13 @@
 // @flow
 
 import { ListTable } from '@performant-software/semantic-components';
-import React, { useContext, useState, type AbstractComponent } from 'react';
+import { useUserDefinedColumns } from '@performant-software/user-defined-fields';
+import React, {
+  useContext,
+  useMemo,
+  useState,
+  type AbstractComponent
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { BiWorld } from 'react-icons/bi';
 import { TfiMapAlt } from 'react-icons/tfi';
@@ -22,6 +28,26 @@ const Places: AbstractComponent<any> = () => {
   const navigate = useNavigate();
   const { projectModelId } = useParams();
   const { t } = useTranslation();
+
+  const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
+
+  /**
+   * Memo-izes the places columns.
+   */
+  const columns = useMemo(() => [{
+    name: 'name',
+    label: t('Places.columns.name'),
+    sortable: true
+  }, {
+    name: 'uuid',
+    label: t('Common.columns.uuid'),
+    sortable: true,
+    hidden: true
+  }, ...userDefinedColumns], [userDefinedColumns]);
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <>
@@ -58,16 +84,7 @@ const Places: AbstractComponent<any> = () => {
           onClick: () => navigate('new')
         }}
         collectionName='places'
-        columns={[{
-          name: 'name',
-          label: t('Places.columns.name'),
-          sortable: true
-        }, {
-          name: 'uuid',
-          label: t('Common.columns.uuid'),
-          sortable: true,
-          hidden: true
-        }]}
+        columns={columns}
         key={view}
         onDelete={(place) => PlacesService.delete(place)}
         onLoad={(params) => (
@@ -82,6 +99,10 @@ const Places: AbstractComponent<any> = () => {
             .finally(() => WindowUtils.scrollToTop())
         )}
         searchable
+        session={{
+          key: `places_${projectModelId}`,
+          storage: localStorage
+        }}
       />
     </>
   );

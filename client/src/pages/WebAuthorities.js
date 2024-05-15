@@ -42,6 +42,10 @@ const WebAuthorities = () => {
         onDelete={(authority) => WebAuthoritiesService.delete(authority)}
         onLoad={(params) => WebAuthoritiesService.fetchAll({ ...params, project_id: projectId })}
         searchable
+        session={{
+          key: `web_authorities_${projectId}`,
+          storage: localStorage
+        }}
       />
     </>
   );

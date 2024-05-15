@@ -49,6 +49,10 @@ const ProjectModels = () => {
         onDelete={(projectModel) => ProjectModelsService.delete(projectModel)}
         onLoad={(params) => ProjectModelsService.fetchAll({ ...params, project_id: projectId })}
         searchable
+        session={{
+          key: `project_models_${projectId}`,
+          storage: localStorage
+        }}
       />
     </>
   );

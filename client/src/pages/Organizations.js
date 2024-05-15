@@ -1,7 +1,13 @@
 // @flow
 
 import { ListTable } from '@performant-software/semantic-components';
-import React, { type AbstractComponent, useContext, useState } from 'react';
+import { useUserDefinedColumns } from '@performant-software/user-defined-fields';
+import React, {
+  useContext,
+  useMemo,
+  useState,
+  type AbstractComponent
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { HiBuildingOffice, HiBuildingOffice2 } from 'react-icons/hi2';
 import { useNavigate } from 'react-router-dom';
@@ -21,6 +27,26 @@ const Organizations: AbstractComponent<any> = () => {
   const navigate = useNavigate();
   const { projectModelId } = useParams();
   const { t } = useTranslation();
+
+  const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
+
+  /**
+   * Memo-izes the organizations columns.
+   */
+  const columns = useMemo(() => [{
+    name: 'name',
+    label: t('Organizations.columns.name'),
+    sortable: true
+  }, {
+    name: 'uuid',
+    label: t('Common.columns.uuid'),
+    sortable: true,
+    hidden: true
+  }, ...userDefinedColumns], [userDefinedColumns]);
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <>
@@ -57,16 +83,7 @@ const Organizations: AbstractComponent<any> = () => {
           onClick: () => navigate('new')
         }}
         collectionName='organizations'
-        columns={[{
-          name: 'name',
-          label: t('Organizations.columns.name'),
-          sortable: true
-        }, {
-          name: 'uuid',
-          label: t('Common.columns.uuid'),
-          sortable: true,
-          hidden: true
-        }]}
+        columns={columns}
         key={view}
         onDelete={(organization) => OrganizationsService.delete(organization)}
         onLoad={(params) => (
@@ -81,6 +98,10 @@ const Organizations: AbstractComponent<any> = () => {
             .finally(() => WindowUtils.scrollToTop())
         )}
         searchable
+        session={{
+          key: `organizations_${projectModelId}`,
+          storage: localStorage
+        }}
       />
     </>
   );
