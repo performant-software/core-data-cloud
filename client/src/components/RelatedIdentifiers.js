@@ -61,9 +61,11 @@ const RelatedIdentifiers = () => {
   return (
     <ListTable
       actions={[{
-        name: 'edit'
+        name: 'edit',
+        icon: 'pencil'
       }, {
-        name: 'delete'
+        name: 'delete',
+        icon: 'times'
       }, {
         accept: (identifier) => !!WebIdentifierUtils.getURL(identifier),
         icon: 'share square',

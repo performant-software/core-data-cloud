@@ -25,39 +25,39 @@ const ProjectModelsFactory = () => {
 
   switch (className) {
     case Types.Event:
-      component = <Events />;
+      component = <Events key={projectModel?.id} />;
       break;
 
     case Types.Instance:
-      component = <Instances />;
+      component = <Instances key={projectModel?.id} />;
       break;
 
     case Types.Item:
-      component = <Items />;
+      component = <Items key={projectModel?.id} />;
       break;
 
     case Types.MediaContent:
-      component = <MediaContents />;
+      component = <MediaContents key={projectModel?.id} />;
       break;
 
     case Types.Organization:
-      component = <Organizations />;
+      component = <Organizations key={projectModel?.id} />;
       break;
 
     case Types.Person:
-      component = <People />;
+      component = <People key={projectModel?.id} />;
       break;
 
     case Types.Place:
-      component = <Places />;
+      component = <Places key={projectModel?.id} />;
       break;
 
     case Types.Taxonomy:
-      component = <TaxonomyItems />;
+      component = <TaxonomyItems key={projectModel?.id} />;
       break;
 
     case Types.Work:
-      component = <Works />;
+      component = <Works key={projectModel?.id} />;
       break;
 
     default:

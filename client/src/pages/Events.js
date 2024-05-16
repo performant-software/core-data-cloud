@@ -2,7 +2,13 @@
 
 import { ListTable } from '@performant-software/semantic-components';
 import { FuzzyDate as FuzzyDateUtils } from '@performant-software/shared-components';
-import React, { useContext, useState, type AbstractComponent } from 'react';
+import { useUserDefinedColumns } from '@performant-software/user-defined-fields';
+import React, {
+  useContext,
+  useMemo,
+  useState,
+  type AbstractComponent
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { TbCalendarShare, TbCalendarTime } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +19,7 @@ import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
 import Views from '../constants/ListViews';
+import WindowUtils from '../utils/Window';
 
 const Events: AbstractComponent<any> = () => {
   const [view, setView] = useState(Views.all);
@@ -21,6 +28,36 @@ const Events: AbstractComponent<any> = () => {
   const navigate = useNavigate();
   const { projectModelId } = useParams();
   const { t } = useTranslation();
+
+  const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
+
+  /**
+   * Memo-izes the events columns.
+   */
+  const columns = useMemo(() => [{
+    name: 'name',
+    label: t('Events.columns.name'),
+    sortable: true
+  }, {
+    name: 'start_date.start_date',
+    label: t('Events.columns.startDate'),
+    resolve: (event) => FuzzyDateUtils.getDateView(event.start_date),
+    sortable: true
+  }, {
+    name: 'end_date.start_date',
+    label: t('Events.columns.endDate'),
+    resolve: (event) => FuzzyDateUtils.getDateView(event.end_date),
+    sortable: true
+  }, {
+    name: 'uuid',
+    label: t('Common.columns.uuid'),
+    sortable: true,
+    hidden: true
+  }, ...userDefinedColumns], [userDefinedColumns]);
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <>
@@ -43,9 +80,11 @@ const Events: AbstractComponent<any> = () => {
       <ListTable
         actions={[{
           name: 'edit',
+          icon: 'pencil',
           onClick: (event) => navigate(`${event.id}`)
         }, {
           accept: (event) => PermissionsService.canDeleteRecord(projectModel, event),
+          icon: 'times',
           name: 'delete'
         }]}
         addButton={{
@@ -55,36 +94,25 @@ const Events: AbstractComponent<any> = () => {
           onClick: () => navigate('new')
         }}
         collectionName='events'
-        columns={[{
-          name: 'name',
-          label: t('Events.columns.name'),
-          sortable: true
-        }, {
-          name: 'start_date.start_date',
-          label: t('Events.columns.startDate'),
-          resolve: (event) => FuzzyDateUtils.getDateView(event.start_date),
-          sortable: true
-        }, {
-          name: 'end_date.start_date',
-          label: t('Events.columns.endDate'),
-          resolve: (event) => FuzzyDateUtils.getDateView(event.end_date),
-          sortable: true
-        }, {
-          name: 'uuid',
-          label: t('Common.columns.uuid'),
-          sortable: true,
-          hidden: true
-        }]}
+        columns={columns}
         key={view}
         onDelete={(event) => EventsService.delete(event)}
-        onLoad={(params) => EventsService.fetchAll({
-          ...params,
-          project_model_id: projectModelId,
-          defineable_id: projectModelId,
-          defineable_type: 'CoreDataConnector::ProjectModel',
-          view
-        })}
+        onLoad={(params) => (
+          EventsService
+            .fetchAll({
+              ...params,
+              project_model_id: projectModelId,
+              defineable_id: projectModelId,
+              defineable_type: 'CoreDataConnector::ProjectModel',
+              view
+            })
+            .finally(() => WindowUtils.scrollToTop())
+        )}
         searchable
+        session={{
+          key: `events_${projectModelId}`,
+          storage: localStorage
+        }}
       />
     </>
   );

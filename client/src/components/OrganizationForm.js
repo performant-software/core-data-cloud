@@ -24,9 +24,11 @@ const OrganizationForm = (props: Props) => {
       />
       <EmbeddedList
         actions={[{
-          name: 'edit'
+          name: 'edit',
+          icon: 'pencil'
         }, {
-          name: 'delete'
+          name: 'delete',
+          icon: 'times'
         }]}
         addButton={{
           basic: false,

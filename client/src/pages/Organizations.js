@@ -1,7 +1,13 @@
 // @flow
 
 import { ListTable } from '@performant-software/semantic-components';
-import React, { type AbstractComponent, useContext, useState } from 'react';
+import { useUserDefinedColumns } from '@performant-software/user-defined-fields';
+import React, {
+  useContext,
+  useMemo,
+  useState,
+  type AbstractComponent
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { HiBuildingOffice, HiBuildingOffice2 } from 'react-icons/hi2';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +18,7 @@ import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
 import Views from '../constants/ListViews';
+import WindowUtils from '../utils/Window';
 
 const Organizations: AbstractComponent<any> = () => {
   const [view, setView] = useState(Views.all);
@@ -20,6 +27,26 @@ const Organizations: AbstractComponent<any> = () => {
   const navigate = useNavigate();
   const { projectModelId } = useParams();
   const { t } = useTranslation();
+
+  const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
+
+  /**
+   * Memo-izes the organizations columns.
+   */
+  const columns = useMemo(() => [{
+    name: 'name',
+    label: t('Organizations.columns.name'),
+    sortable: true
+  }, {
+    name: 'uuid',
+    label: t('Common.columns.uuid'),
+    sortable: true,
+    hidden: true
+  }, ...userDefinedColumns], [userDefinedColumns]);
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <>
@@ -42,9 +69,11 @@ const Organizations: AbstractComponent<any> = () => {
       <ListTable
         actions={[{
           name: 'edit',
+          icon: 'pencil',
           onClick: (organization) => navigate(`${organization.id}`)
         }, {
           accept: (organization) => PermissionsService.canDeleteRecord(projectModel, organization),
+          icon: 'times',
           name: 'delete'
         }]}
         addButton={{
@@ -54,26 +83,25 @@ const Organizations: AbstractComponent<any> = () => {
           onClick: () => navigate('new')
         }}
         collectionName='organizations'
-        columns={[{
-          name: 'name',
-          label: t('Organizations.columns.name'),
-          sortable: true
-        }, {
-          name: 'uuid',
-          label: t('Common.columns.uuid'),
-          sortable: true,
-          hidden: true
-        }]}
+        columns={columns}
         key={view}
         onDelete={(organization) => OrganizationsService.delete(organization)}
-        onLoad={(params) => OrganizationsService.fetchAll({
-          ...params,
-          project_model_id: projectModelId,
-          defineable_id: projectModelId,
-          defineable_type: 'CoreDataConnector::ProjectModel',
-          view
-        })}
+        onLoad={(params) => (
+          OrganizationsService
+            .fetchAll({
+              ...params,
+              project_model_id: projectModelId,
+              defineable_id: projectModelId,
+              defineable_type: 'CoreDataConnector::ProjectModel',
+              view
+            })
+            .finally(() => WindowUtils.scrollToTop())
+        )}
         searchable
+        session={{
+          key: `organizations_${projectModelId}`,
+          storage: localStorage
+        }}
       />
     </>
   );

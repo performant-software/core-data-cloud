@@ -159,6 +159,13 @@ const ProjectModelRelationshipModal = (props: Props) => {
         name={t('Common.tabs.fields')}
       >
         <UserDefinedFieldsEmbeddedList
+          actions={[{
+            name: 'edit',
+            icon: 'pencil'
+          }, {
+            name: 'delete',
+            icon: 'times'
+          }]}
           defaults={{
             table_name: 'CoreDataConnector::Relationship'
           }}

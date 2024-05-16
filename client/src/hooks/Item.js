@@ -42,6 +42,10 @@ const initialize = ({ item, onSetState }) => {
       return null;
     }
 
+    if (classView === Types.Event) {
+      return item.name;
+    }
+
     if (classView === Types.Instance) {
       return SourceUtils.getNameView(item);
     }

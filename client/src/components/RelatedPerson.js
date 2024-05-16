@@ -24,6 +24,7 @@ const RelatedPersonForm = (props: Props) => {
   const { foreignProjectModelId } = useProjectModelRelationship();
 
   const {
+    buttons,
     error,
     foreignKey,
     foreignObject,
@@ -51,21 +52,7 @@ const RelatedPersonForm = (props: Props) => {
         error={error}
       >
         <AssociatedDropdown
-          buttons={[{
-            accept: () => !!props.item[foreignKey],
-            content: null,
-            icon: 'pencil',
-            name: 'edit'
-          }, {
-            accept: () => !props.item[foreignKey],
-            content: null,
-            icon: 'pencil',
-            name: 'add'
-          }, {
-            accept: () => !props.item[foreignKey],
-            content: null,
-            name: 'clear'
-          }]}
+          buttons={buttons}
           collectionName='people'
           header={(
             <RelatedViewMenu

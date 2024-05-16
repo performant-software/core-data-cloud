@@ -20,9 +20,11 @@ const WebAuthorities = () => {
       <ListTable
         actions={[{
           name: 'edit',
+          icon: 'pencil',
           onClick: (authority) => navigate(`${authority.id}`)
         }, {
-          name: 'delete'
+          name: 'delete',
+          icon: 'times'
         }]}
         addButton={{
           basic: false,
@@ -40,6 +42,10 @@ const WebAuthorities = () => {
         onDelete={(authority) => WebAuthoritiesService.delete(authority)}
         onLoad={(params) => WebAuthoritiesService.fetchAll({ ...params, project_id: projectId })}
         searchable
+        session={{
+          key: `web_authorities_${projectId}`,
+          storage: localStorage
+        }}
       />
     </>
   );

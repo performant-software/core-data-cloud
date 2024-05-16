@@ -1,9 +1,10 @@
 // @flow
 
 import cx from 'classnames';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Header, Icon } from 'semantic-ui-react';
+import ItemContext from '../context/Item';
 import styles from './ItemHeader.module.css';
 
 type Props = {
@@ -14,28 +15,42 @@ type Props = {
   name: string
 };
 
-const ItemHeader = (props: Props) => (
-  <div
-    className={styles.itemHeader}
-  >
-    { props.back?.url && props.back?.label && (
-      <Link
-        to={props.back.url}
+const ItemHeader = (props: Props) => {
+  const { uuid } = useContext(ItemContext);
+
+  return (
+    <div
+      className={styles.itemHeader}
+    >
+      { props.back?.url && props.back?.label && (
+        <Link
+          to={props.back.url}
+        >
+          <Icon
+            name='arrow left'
+          />
+          { props.back.label }
+        </Link>
+      )}
+      <div
+        className={styles.container}
       >
-        <Icon
-          name='arrow left'
-        />
-        { props.back.label }
-      </Link>
-    )}
-    { props.name && (
-      <Header
-        className={cx(styles.ui, styles.header)}
-        content={props.name}
-        size='large'
-      />
-    )}
-  </div>
-);
+        { props.name && (
+          <Header
+            className={cx(styles.ui, styles.header, styles.name)}
+            content={props.name}
+            size='large'
+          />
+        )}
+        { uuid && (
+          <Header
+            className={cx(styles.ui, styles.header)}
+            subheader={uuid}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default ItemHeader;

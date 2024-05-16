@@ -11,6 +11,7 @@ import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
 import Views from '../constants/ListViews';
+import WindowUtils from '../utils/Window';
 
 const MediaContents = () => {
   const [view, setView] = useState(Views.all);
@@ -55,7 +56,17 @@ const MediaContents = () => {
         }}
         collectionName='media_contents'
         key={view}
-        onLoad={(params) => MediaContentsService.fetchAll({ ...params, project_model_id: projectModelId, view })}
+        onLoad={(params) => (
+          MediaContentsService
+            .fetchAll({
+              ...params,
+              project_model_id: projectModelId,
+              defineable_id: projectModelId,
+              defineable_type: 'CoreDataConnector::ProjectModel',
+              view
+            })
+            .finally(() => WindowUtils.scrollToTop())
+        )}
         onDelete={(mediaContent) => MediaContentsService.delete(mediaContent)}
         renderEmptyList={() => null}
         renderHeader={(mediaContent) => mediaContent.name}

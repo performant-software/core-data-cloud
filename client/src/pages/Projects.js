@@ -50,6 +50,10 @@ const Projects: AbstractComponent<any> = () => {
         </Icon>
       )}
       onLoad={(params) => ProjectsService.fetchAll(params)}
+      session={{
+        key: 'projects',
+        storage: localStorage
+      }}
       sort={[{
         key: 'name',
         value: 'core_data_connector_projects.name',

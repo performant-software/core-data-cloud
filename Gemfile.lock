@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: 960760fb5df54b54c68e3b619341cdb654c7caea
-  tag: v0.1.41
+  revision: 9ac975633b0e359c89f30bdb82997963252e7e81
+  tag: v0.1.49
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 8.0)
@@ -50,8 +50,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/triple-eye-effable.git
-  revision: 27941317d9153df7317a0103b735356476665cfb
-  tag: v0.1.11
+  revision: e36a09bb6b182149719cb1e7c3aa8c785886093c
+  tag: v0.2.1
   specs:
     triple_eye_effable (0.1.0)
       httparty (~> 0.20.0)
@@ -59,8 +59,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/user-defined-fields.git
-  revision: 4872b3f1e7c5d4ecf83aedc30202aab91589e5ed
-  tag: v0.1.8
+  revision: 91a3731e42f08e84acb60be55e87650c5137c1df
+  tag: v0.1.9
   specs:
     user_defined_fields (0.1.0)
       rails (>= 6.0.3.2, < 8)
@@ -138,7 +138,7 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
     bcrypt (3.1.19)
-    bigdecimal (3.1.7)
+    bigdecimal (3.1.8)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -179,13 +179,14 @@ GEM
       net-smtp
     marcel (1.0.2)
     method_source (1.0.0)
-    mime-types (3.5.1)
+    mime-types (3.5.2)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2023.1003)
+    mime-types-data (3.2024.0507)
     mini_mime (1.1.5)
     minitest (5.19.0)
     msgpack (1.7.2)
-    multi_xml (0.6.0)
+    multi_xml (0.7.1)
+      bigdecimal (~> 3.1)
     net-imap (0.3.7)
       date
       net-protocol

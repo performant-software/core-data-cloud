@@ -19,9 +19,11 @@ const ProjectModels = () => {
       <ListTable
         actions={[{
           name: 'edit',
+          icon: 'pencil',
           onClick: (projectModel) => navigate(`${projectModel.id}`)
         }, {
-          name: 'delete'
+          name: 'delete',
+          icon: 'times'
         }]}
         addButton={{
           basic: false,
@@ -47,6 +49,10 @@ const ProjectModels = () => {
         onDelete={(projectModel) => ProjectModelsService.delete(projectModel)}
         onLoad={(params) => ProjectModelsService.fetchAll({ ...params, project_id: projectId })}
         searchable
+        session={{
+          key: `project_models_${projectId}`,
+          storage: localStorage
+        }}
       />
     </>
   );
