@@ -13,9 +13,11 @@ import { useTranslation } from 'react-i18next';
 import { IoBulb, IoBulbOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import ListViewMenu from '../components/ListViewMenu';
+import MergeButton from '../components/MergeButton';
 import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
+import useSelectable from '../hooks/Selectable';
 import Views from '../constants/ListViews';
 import WindowUtils from '../utils/Window';
 import WorksService from '../services/Works';
@@ -28,6 +30,7 @@ const Works: AbstractComponent<any> = () => {
   const { projectModelId } = useParams();
   const { t } = useTranslation();
 
+  const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
 
   /**
@@ -83,8 +86,33 @@ const Works: AbstractComponent<any> = () => {
           location: 'top',
           onClick: () => navigate('new')
         }}
+        buttons={[{
+          render: () => (
+            <MergeButton
+              attributes={[{
+                name: 'uuid',
+                label: t('Common.actions.merge.uuid'),
+              }, {
+                name: 'source_titles',
+                label: t('Works.actions.merge.names'),
+                array: true,
+                names: true,
+                resolve: (sourceTitle) => sourceTitle.name?.name
+              }]}
+              ids={selectedItems}
+              onLoad={(id) => (
+                WorksService
+                  .fetchOne(id)
+                  .then(({ data }) => data.work)
+              )}
+              projectModelId={projectModelId}
+              title={t('Works.actions.merge.title')}
+            />
+          )
+        }]}
         collectionName='works'
         columns={columns}
+        isRowSelected={isSelected}
         key={view}
         onDelete={(work) => WorksService.delete(work)}
         onLoad={(params) => (
@@ -98,7 +126,9 @@ const Works: AbstractComponent<any> = () => {
             })
             .finally(() => WindowUtils.scrollToTop())
         )}
+        onRowSelect={onRowSelect}
         searchable
+        selectable
         session={{
           key: `works_${projectModelId}`,
           storage: localStorage

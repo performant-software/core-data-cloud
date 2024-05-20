@@ -7,9 +7,11 @@ import { FaTag, FaTags } from 'react-icons/fa6';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 import ListViewMenu from '../components/ListViewMenu';
+import MergeButton from '../components/MergeButton';
 import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';
 import TaxonomiesService from '../services/Taxonomies';
+import useSelectable from '../hooks/Selectable';
 import { useTranslation } from 'react-i18next';
 import Views from '../constants/ListViews';
 import WindowUtils from '../utils/Window';
@@ -23,6 +25,7 @@ const TaxonomyItems = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
+  const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
 
   /**
@@ -77,8 +80,30 @@ const TaxonomyItems = () => {
           location: 'top',
           onClick: () => navigate('new')
         }}
+        buttons={[{
+          render: () => (
+            <MergeButton
+              attributes={[{
+                name: 'uuid',
+                label: t('Common.actions.merge.uuid'),
+              }, {
+                name: 'name',
+                label: t('TaxonomyItems.actions.merge.name')
+              }]}
+              ids={selectedItems}
+              onLoad={(id) => (
+                TaxonomiesService
+                  .fetchOne(id)
+                  .then(({ data }) => data.taxonomy)
+              )}
+              projectModelId={projectModelId}
+              title={t('TaxonomyItems.actions.merge.title')}
+            />
+          )
+        }]}
         collectionName='taxonomies'
         columns={columns}
+        isRowSelected={isSelected}
         key={view}
         onDelete={(taxonomy) => TaxonomiesService.delete(taxonomy)}
         onLoad={(params) => (
@@ -86,7 +111,9 @@ const TaxonomyItems = () => {
             .fetchAll({ ...params, project_model_id: projectModelId, view })
             .finally(() => WindowUtils.scrollToTop())
         )}
+        onRowSelect={onRowSelect}
         searchable
+        selectable
         session={{
           key: `taxonomies_${projectModelId}`,
           storage: localStorage

@@ -13,10 +13,12 @@ import { IoMdDocument } from 'react-icons/io';
 import { IoDocumentsSharp } from 'react-icons/io5';
 import ItemsService from '../services/Items';
 import ListViewMenu from '../components/ListViewMenu';
+import MergeButton from '../components/MergeButton';
 import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
 import { useNavigate } from 'react-router-dom';
+import useSelectable from '../hooks/Selectable';
 import { useTranslation } from 'react-i18next';
 import Views from '../constants/ListViews';
 import WindowUtils from '../utils/Window';
@@ -30,6 +32,7 @@ const Items: AbstractComponent<any> = () => {
   const navigate = useNavigate();
   const { projectModelId } = useParams();
 
+  const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
 
   /**
@@ -85,8 +88,33 @@ const Items: AbstractComponent<any> = () => {
           location: 'top',
           onClick: () => navigate('new')
         }}
+        buttons={[{
+          render: () => (
+            <MergeButton
+              attributes={[{
+                name: 'uuid',
+                label: t('Common.actions.merge.uuid'),
+              }, {
+                name: 'source_titles',
+                label: t('Items.actions.merge.names'),
+                array: true,
+                names: true,
+                resolve: (sourceTitle) => sourceTitle.name?.name
+              }]}
+              ids={selectedItems}
+              onLoad={(id) => (
+                ItemsService
+                  .fetchOne(id)
+                  .then(({ data }) => data.item)
+              )}
+              projectModelId={projectModelId}
+              title={t('Items.actions.merge.title')}
+            />
+          )
+        }]}
         collectionName='items'
         columns={columns}
+        isRowSelected={isSelected}
         key={view}
         onDelete={(item) => ItemsService.delete(item)}
         onLoad={(params) => (
@@ -94,7 +122,9 @@ const Items: AbstractComponent<any> = () => {
             .fetchAll({ ...params, project_model_id: projectModelId, view })
             .finally(() => WindowUtils.scrollToTop())
         )}
+        onRowSelect={onRowSelect}
         searchable
+        selectable
         session={{
           key: `items_${projectModelId}`,
           storage: localStorage

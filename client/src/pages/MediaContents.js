@@ -1,15 +1,18 @@
 // @flow
 
 import { ItemList, LazyMedia } from '@performant-software/semantic-components';
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { FaImage, FaImages } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 import ListViewMenu from '../components/ListViewMenu';
 import MediaContentsService from '../services/MediaContents';
+import MergeButton from '../components/MergeButton';
 import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
+import useSelectable from '../hooks/Selectable';
+import { useTranslation } from 'react-i18next';
 import Views from '../constants/ListViews';
 import WindowUtils from '../utils/Window';
 
@@ -19,6 +22,24 @@ const MediaContents = () => {
   const { projectModel } = useContext(ProjectContext);
   const navigate = useNavigate();
   const { projectModelId } = useParams();
+  const { t } = useTranslation();
+
+  const { isSelected, onRowSelect, selectedItems } = useSelectable();
+
+  /**
+   * Renders the preview image for the passed media content record.
+   *
+   * @type {unknown}
+   */
+  const resolveMediaContent = useCallback((mediaContent) => mediaContent.content_thumbnail_url && (
+    <LazyMedia
+      contentType={mediaContent.content_type}
+      dimmable={false}
+      preview={mediaContent.content_thumbnail_url}
+      src={mediaContent.content_thumbnail_url}
+      size='tiny'
+    />
+  ), []);
 
   return (
     <>
@@ -54,7 +75,43 @@ const MediaContents = () => {
           location: 'top',
           onClick: () => navigate('new')
         }}
+        buttons={[{
+          render: () => (
+            <MergeButton
+              attributes={[{
+                name: 'uuid',
+                label: t('Common.actions.merge.uuid'),
+              }, {
+                name: 'content',
+                label: t('MediaContents.actions.merge.content'),
+                onRemove: () => ({
+                  content: null,
+                  content_thumbnail_url: null,
+                  content_type: null
+                }),
+                onSelection: (mediaContent) => ({
+                  content: mediaContent.content_url,
+                  content_thumbnail_url: mediaContent.content_thumbnail_url,
+                  content_type: mediaContent.content_type
+                }),
+                resolve: resolveMediaContent
+              }, {
+                name: 'name',
+                label: t('MediaContents.actions.merge.name')
+              }]}
+              ids={selectedItems}
+              onLoad={(id) => (
+                MediaContentsService
+                  .fetchOne(id)
+                  .then(({ data }) => data.media_content)
+              )}
+              projectModelId={projectModelId}
+              title={t('MediaContents.actions.merge.title')}
+            />
+          )
+        }]}
         collectionName='media_contents'
+        isRowSelected={isSelected}
         key={view}
         onLoad={(params) => (
           MediaContentsService
@@ -68,6 +125,7 @@ const MediaContents = () => {
             .finally(() => WindowUtils.scrollToTop())
         )}
         onDelete={(mediaContent) => MediaContentsService.delete(mediaContent)}
+        onRowSelect={onRowSelect}
         renderEmptyList={() => null}
         renderHeader={(mediaContent) => mediaContent.name}
         renderImage={(mediaContent) => (
@@ -78,6 +136,7 @@ const MediaContents = () => {
           />
         )}
         renderMeta={() => ''}
+        selectable
       />
     </>
   );

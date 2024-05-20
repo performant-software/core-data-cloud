@@ -1,0 +1,95 @@
+.mergeModal.ui.modal > .content > .tableContainer {
+  overflow: auto;
+  width: 100%;
+  max-height: 75vh;
+}
+
+.mergeModal.ui.modal > .content > .tableContainer .listButton.ui.button {
+  border: none;
+  box-shadow: none;
+}
+
+.mergeModal.ui.modal > .content > .tableContainer .listButton.ui.button:active,
+.mergeModal.ui.modal > .content > .tableContainer .listButton.ui.button:focus,
+.mergeModal.ui.modal > .content > .tableContainer .listButton.ui.button:hover {
+  background-color: transparent !important;
+}
+
+.mergeModal.ui.modal table {
+  table-layout: auto;
+  position: relative;
+  margin-bottom: 1em;
+}
+
+.mergeModal.ui.modal table > thead > tr > th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.mergeModal.ui.modal table > tbody > tr > td,
+.mergeModal.ui.modal table > thead > tr > th {
+  min-width: 200px;
+}
+
+.mergeModal.ui.modal table > tbody > tr > td:first-child,
+.mergeModal.ui.modal table > thead > tr > th:first-child {
+  position: sticky;
+  left: 0px;
+  z-index: 1;
+}
+
+.mergeModal.ui.modal table > thead > tr > th:first-child {
+  z-index: 3
+}
+
+.mergeModal.ui.modal table > tbody > tr > td:nth-child(2),
+.mergeModal.ui.modal table > thead > tr > th:nth-child(2) {
+  position: sticky;
+  left: 200px;
+  z-index: 1;
+  border-right: solid 2px #f6f6f6;
+}
+
+.mergeModal.ui.modal table > thead > tr > th:nth-child(2) {
+  z-index: 3;
+}
+
+.mergeModal.ui.modal table > thead > tr > th > .mergeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mergeModal.ui.modal table > thead > tr > th > .recordHeader {
+  display: flex;
+  align-items: center;
+}
+
+.mergeModal.ui.modal table > thead > tr > th .ui.header {
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+.mergeModal.ui.modal table > tbody > tr > td .ui.label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5em;
+}
+
+.mergeModal.ui.modal table > tbody > tr > td .ui.label.selectable {
+  cursor: pointer;
+}
+
+.mergeModal.ui.modal table > tbody > tr > td > .attributeValue {
+  display: flex;
+  align-items: flex-start;
+}
+
+.mergeModal.ui.modal table > tbody > tr > td > .attributeValue.selected {
+  justify-content: space-between;
+}
+
+.mergeModal.ui.modal table > tbody > tr > td {
+  background-color: #FFFFFF;
+}

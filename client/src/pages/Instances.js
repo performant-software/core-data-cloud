@@ -13,10 +13,12 @@ import { IoMdChatbubbles } from 'react-icons/io';
 import { ListTable } from '@performant-software/semantic-components';
 import ListViewMenu from '../components/ListViewMenu';
 import { MdChatBubble } from 'react-icons/md';
+import MergeButton from '../components/MergeButton';
 import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';
 import { useNavigate } from 'react-router-dom';
 import useParams from '../hooks/ParsedParams';
+import useSelectable from '../hooks/Selectable';
 import { useTranslation } from 'react-i18next';
 import Views from '../constants/ListViews';
 import WindowUtils from '../utils/Window';
@@ -30,6 +32,7 @@ const Instances: AbstractComponent<any> = () => {
   const navigate = useNavigate();
   const { projectModelId } = useParams();
 
+  const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
 
   /**
@@ -85,8 +88,33 @@ const Instances: AbstractComponent<any> = () => {
           location: 'top',
           onClick: () => navigate('new')
         }}
+        buttons={[{
+          render: () => (
+            <MergeButton
+              attributes={[{
+                name: 'uuid',
+                label: t('Common.actions.merge.uuid'),
+              }, {
+                name: 'source_titles',
+                label: t('Instances.actions.merge.names'),
+                array: true,
+                names: true,
+                resolve: (sourceTitle) => sourceTitle.name?.name
+              }]}
+              ids={selectedItems}
+              onLoad={(id) => (
+                InstancesService
+                  .fetchOne(id)
+                  .then(({ data }) => data.instance)
+              )}
+              projectModelId={projectModelId}
+              title={t('Instances.actions.merge.title')}
+            />
+          )
+        }]}
         collectionName='instances'
         columns={columns}
+        isRowSelected={isSelected}
         key={view}
         onDelete={(instance) => InstancesService.delete(instance)}
         onLoad={(params) => (
@@ -100,7 +128,9 @@ const Instances: AbstractComponent<any> = () => {
             })
             .finally(() => WindowUtils.scrollToTop())
         )}
+        onRowSelect={onRowSelect}
         searchable
+        selectable
         session={{
           key: `instances_${projectModelId}`,
           storage: localStorage
