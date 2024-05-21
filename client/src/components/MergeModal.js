@@ -451,6 +451,6 @@ const MergeModal = (props: Props) => {
 
 export default MergeModal;
 
-export {
+export type {
   MergeAttributeType
 };
