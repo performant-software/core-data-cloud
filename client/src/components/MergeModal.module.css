@@ -75,6 +75,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 0.5em;
+  width: fit-content;
 }
 
 .mergeModal.ui.modal table > tbody > tr > td .ui.label.selectable {
