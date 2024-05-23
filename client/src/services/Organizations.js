@@ -1,12 +1,12 @@
 // @flow
 
-import { BaseService } from '@performant-software/shared-components';
+import MergeableService from './Mergeable';
 import OrganizationTransform from '../transforms/Organization';
 
 /**
  * Class responsible for handling all organization API requests.
  */
-class Organization extends BaseService {
+class Organization extends MergeableService {
   /**
    * Returns the organization base URL.
    *

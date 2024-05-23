@@ -210,6 +210,15 @@
       "name": "Name"
     }
   },
+  "MediaContents": {
+    "actions": {
+      "merge": {
+        "content": "Content",
+        "name": "Name",
+        "title": "Merge Media Contents"
+      }
+    }
+  },
   "MediaContentsSelectize": {
     "title": "Select Media"
   },
@@ -217,11 +226,20 @@
     "buttons": {
       "merge": "Merge",
       "mergeCount": "Merge ({{count}})"
+    },
+    "messages": {
+      "confirm": {
+        "content": "Are you sure you wish to merge these records? This action cannot be undone.",
+        "header": "Confirm Record Merge"
+      }
     }
   },
   "MergeModal": {
     "buttons": {
       "merge": "Merge"
+    },
+    "errors": {
+      "header": "There was an error merging the selected records"
     },
     "labels": {
       "attributes": "Attributes",

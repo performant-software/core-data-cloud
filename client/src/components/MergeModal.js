@@ -11,6 +11,7 @@ import {
   Header,
   Label,
   Loader,
+  Message,
   Modal,
   Table
 } from 'semantic-ui-react';
@@ -29,11 +30,13 @@ type MergeAttributeType = {
 
 type Props = {
   attributes: Array<MergeAttributeType>,
+  errors?: Array<string>,
   ids: Array<number>,
   onClose: () => void,
   onLoad: (id: number) => Promise<any>,
   onSave: () => void,
   projectModelId: number,
+  saving?: boolean,
   title: string
 };
 
@@ -47,6 +50,35 @@ const MergeModal = (props: Props) => {
 
   const { t } = useTranslation();
 
+  const getAttributeValue = useCallback((current, item, attribute) => {
+    let value = item[attribute.name];
+
+    if (attribute.names) {
+      value = _.map(value, (entry) => ({
+        ...entry,
+        primary: !_.findWhere(current[attribute.name], { primary: true }) && entry.primary
+      }));
+    }
+
+    if (attribute.array) {
+      value = [
+        ...(current[attribute.name] || []),
+        ...(value || [])
+      ];
+    }
+
+    if (attribute.name === 'user_defined') {
+      const { field } = attribute;
+
+      value = {
+        ...(current.user_defined || {}),
+        [field.uuid]: value[field.uuid]
+      };
+    }
+
+    return value;
+  }, []);
+
   /**
    * Adds the value for the passed attribute to the merge record.
    * @type {(function(*, *): void)|*}
@@ -58,33 +90,9 @@ const MergeModal = (props: Props) => {
       return;
     }
 
-    let value = item[attribute.name];
-
-    if (attribute.names) {
-      value = _.map(value, (entry) => ({
-        ..._.omit(entry, 'id'),
-        primary: !_.findWhere(record[attribute.name], { primary: true }) && entry.primary
-      }));
-    }
-
-    if (attribute.array) {
-      value = [
-        ...(record[attribute.name] || []),
-        ...(value || [])
-      ];
-    }
-
-    if (attribute.name === 'user_defined') {
-      const { field } = attribute;
-
-      value = {
-        ...(record.user_defined || {}),
-        [field.uuid]: value[field.uuid]
-      };
-    }
-
+    const value = getAttributeValue(record, item, attribute);
     setRecord({ ...record, [attribute.name]: value });
-  }, [record]);
+  }, [getAttributeValue, record]);
 
   /**
    * Resets the merge record.
@@ -150,10 +158,20 @@ const MergeModal = (props: Props) => {
    *
    * @type {function(*): void}
    */
-  const onSelect = useCallback((item) => setRecord((prevRecord) => ({
-    ...prevRecord,
-    ..._.pick(item, _.pluck(attributes, 'name'))
-  })), [attributes]);
+  const onSelect = useCallback((item) => {
+    const newRecord = {};
+
+    _.each(attributes, (attribute) => {
+      if (attribute.onSelection) {
+        _.extend(newRecord, attribute.onSelection(item));
+      } else {
+        const value = getAttributeValue(newRecord, item, attribute);
+        _.extend(newRecord, { [attribute.name]: value });
+      }
+    });
+
+    setRecord(newRecord);
+  }, [attributes, getAttributeValue]);
 
   /**
    * Toggles the primary indicator for the record at the passed index.
@@ -301,6 +319,13 @@ const MergeModal = (props: Props) => {
       <Modal.Content
         className={styles.content}
       >
+        { !_.isEmpty(props.errors) && (
+          <Message
+            header={t('MergeModal.errors.header')}
+            list={props.errors}
+            negative
+          />
+        )}
         { (loadingFields || loadingRecords) && (
           <Loader />
         )}
@@ -441,7 +466,9 @@ const MergeModal = (props: Props) => {
         />
         <Button
           content={t('MergeModal.buttons.merge')}
-          onClick={props.onSave}
+          disabled={props.saving}
+          loading={props.saving}
+          onClick={() => props.onSave({ ...record, project_model_id: props.projectModelId })}
           primary
         />
       </Modal.Actions>

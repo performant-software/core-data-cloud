@@ -1,11 +1,11 @@
 // @flow
 
 import React, {
-  type AbstractComponent,
+  useContext,
+  useMemo,
   useState,
-  useContext, useMemo
+  type AbstractComponent
 } from 'react';
-
 import { ListTable } from '@performant-software/semantic-components';
 import { useUserDefinedColumns } from '@performant-software/user-defined-fields';
 import { Icon } from 'semantic-ui-react';
@@ -103,6 +103,11 @@ const Works: AbstractComponent<any> = () => {
               onLoad={(id) => (
                 WorksService
                   .fetchOne(id)
+                  .then(({ data }) => data.work)
+              )}
+              onSave={(work) => (
+                WorksService
+                  .mergeRecords(work, selectedItems)
                   .then(({ data }) => data.work)
               )}
               projectModelId={projectModelId}

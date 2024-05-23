@@ -113,6 +113,11 @@ const People: AbstractComponent<any> = () => {
                   .fetchOne(id)
                   .then(({ data }) => data.person)
               )}
+              onSave={(person) => (
+                PeopleService
+                  .mergeRecords(person, selectedItems)
+                  .then(({ data }) => data.person)
+              )}
               projectModelId={projectModelId}
               title={t('People.actions.merge.title')}
             />

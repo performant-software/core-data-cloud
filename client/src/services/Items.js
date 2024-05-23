@@ -1,12 +1,12 @@
 // @flow
 
-import { BaseService } from '@performant-software/shared-components';
 import ItemTransform from '../transforms/Item';
+import MergeableService from './Mergeable';
 
 /**
  * Class responsible for handling all item API requests.
  */
-class Items extends BaseService {
+class Items extends MergeableService {
   /**
    * Returns the item base URL.
    *

@@ -96,6 +96,11 @@ const TaxonomyItems = () => {
                   .fetchOne(id)
                   .then(({ data }) => data.taxonomy)
               )}
+              onSave={(taxonomy) => (
+                TaxonomiesService
+                  .mergeRecords(taxonomy, selectedItems)
+                  .then(({ data }) => data.taxonomy)
+              )}
               projectModelId={projectModelId}
               title={t('TaxonomyItems.actions.merge.title')}
             />

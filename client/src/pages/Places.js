@@ -126,6 +126,11 @@ const Places: AbstractComponent<any> = () => {
                   .fetchOne(id)
                   .then(({ data }) => data.place)
               )}
+              onSave={(place) => (
+                PlacesService
+                  .mergeRecords(place, selectedItems)
+                  .then(({ data }) => data.place)
+              )}
               projectModelId={projectModelId}
               title={t('Places.actions.merge.title')}
             />

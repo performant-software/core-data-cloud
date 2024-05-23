@@ -1,14 +1,14 @@
 // @flow
 
-import { BaseTransform } from '@performant-software/shared-components';
 import _ from 'underscore';
+import MergeableTransform from './Mergeable';
 import type { Person as PersonType } from '../types/Person';
 import PersonNames from './PersonNames';
 
 /**
  * Class responsible for transforming person records for POST/PUT requests.
  */
-class Person extends BaseTransform {
+class Person extends MergeableTransform {
   /**
    * Returns the person parameter name.
    *

@@ -1,6 +1,6 @@
 // @flow
 
-import { FuzzyDate, ListTable } from '@performant-software/semantic-components';
+import { ListTable } from '@performant-software/semantic-components';
 import { FuzzyDate as FuzzyDateUtils } from '@performant-software/shared-components';
 import { useUserDefinedColumns } from '@performant-software/user-defined-fields';
 import React, {
@@ -121,6 +121,11 @@ const Events: AbstractComponent<any> = () => {
               onLoad={(id) => (
                 EventsService
                   .fetchOne(id)
+                  .then(({ data }) => data.event)
+              )}
+              onSave={(event) => (
+                EventsService
+                  .mergeRecords(event, selectedItems)
                   .then(({ data }) => data.event)
               )}
               projectModelId={projectModelId}

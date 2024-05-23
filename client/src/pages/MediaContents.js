@@ -90,7 +90,7 @@ const MediaContents = () => {
                   content_type: null
                 }),
                 onSelection: (mediaContent) => ({
-                  content: mediaContent.content_url,
+                  content_url: mediaContent.content_url,
                   content_thumbnail_url: mediaContent.content_thumbnail_url,
                   content_type: mediaContent.content_type
                 }),
@@ -103,6 +103,11 @@ const MediaContents = () => {
               onLoad={(id) => (
                 MediaContentsService
                   .fetchOne(id)
+                  .then(({ data }) => data.media_content)
+              )}
+              onSave={(mediaContent) => (
+                MediaContentsService
+                  .mergeRecords(mediaContent, selectedItems)
                   .then(({ data }) => data.media_content)
               )}
               projectModelId={projectModelId}
@@ -137,6 +142,10 @@ const MediaContents = () => {
         )}
         renderMeta={() => ''}
         selectable
+        session={{
+          key: `media_contents_${projectModelId}`,
+          storage: localStorage
+        }}
       />
     </>
   );

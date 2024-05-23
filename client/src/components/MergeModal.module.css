@@ -1,7 +1,7 @@
 .mergeModal.ui.modal > .content > .tableContainer {
   overflow: auto;
   width: 100%;
-  max-height: 75vh;
+  max-height: 65vh;
 }
 
 .mergeModal.ui.modal > .content > .tableContainer .listButton.ui.button {

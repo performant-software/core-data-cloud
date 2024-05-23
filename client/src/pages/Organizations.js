@@ -101,6 +101,11 @@ const Organizations: AbstractComponent<any> = () => {
                   .fetchOne(id)
                   .then(({ data }) => data.organization)
               )}
+              onSave={(organization) => (
+                OrganizationsService
+                  .mergeRecords(organization, selectedItems)
+                  .then(({ data }) => data.organization)
+              )}
               projectModelId={projectModelId}
               title={t('Organizations.actions.merge.title')}
             />

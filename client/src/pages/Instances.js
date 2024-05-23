@@ -107,6 +107,11 @@ const Instances: AbstractComponent<any> = () => {
                   .fetchOne(id)
                   .then(({ data }) => data.instance)
               )}
+              onSave={(instance) => (
+                InstancesService
+                  .mergeRecords(instance, selectedItems)
+                  .then(({ data }) => data.instance)
+              )}
               projectModelId={projectModelId}
               title={t('Instances.actions.merge.title')}
             />

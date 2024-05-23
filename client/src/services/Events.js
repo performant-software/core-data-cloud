@@ -1,12 +1,12 @@
 // @flow
 
-import { BaseService } from '@performant-software/shared-components';
 import EventTransform from '../transforms/Event';
+import MergeableService from './Mergeable';
 
 /**
  * Class responsible for handling all event API requests.
  */
-class Events extends BaseService {
+class Events extends MergeableService {
   /**
    * Returns the event base URL.
    *
