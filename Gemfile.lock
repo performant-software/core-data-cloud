@@ -1,4 +1,26 @@
 GIT
+  remote: https://github.com/performant-software/core-data-connector.git
+  revision: a599acf98b1939ae86bac761ac2d50892771c306
+  tag: v0.1.50
+  specs:
+    core_data_connector (0.1.0)
+      activerecord-postgis-adapter (~> 8.0)
+      faker
+      fuzzy_dates
+      jwt (~> 2.7.1)
+      jwt_auth
+      rack-cors (~> 2.0.1)
+      rails (>= 6.0.3.2, < 8)
+      resource_api
+      rexml (~> 3.2)
+      rgeo-geojson (~> 2.1)
+      rubyzip (~> 2.3.2)
+      triple_eye_effable
+      typesense (~> 0.14)
+      typhoeus (~> 1.4)
+      user_defined_fields
+
+GIT
   remote: https://github.com/performant-software/fuzzy-dates.git
   revision: fa3f237882f9c89888f82af41f6fe2b8ff2281a3
   tag: v0.1.0
@@ -43,26 +65,6 @@ GIT
     user_defined_fields (0.1.0)
       rails (>= 6.0.3.2, < 8)
       resource_api
-
-PATH
-  remote: ../core-data-connector
-  specs:
-    core_data_connector (0.1.0)
-      activerecord-postgis-adapter (~> 8.0)
-      faker
-      fuzzy_dates
-      jwt (~> 2.7.1)
-      jwt_auth
-      rack-cors (~> 2.0.1)
-      rails (>= 6.0.3.2, < 8)
-      resource_api
-      rexml (~> 3.2)
-      rgeo-geojson (~> 2.1)
-      rubyzip (~> 2.3.2)
-      triple_eye_effable
-      typesense (~> 0.14)
-      typhoeus (~> 1.4)
-      user_defined_fields
 
 GEM
   remote: https://rubygems.org/
@@ -153,7 +155,7 @@ GEM
     erubi (1.12.0)
     ethon (0.16.0)
       ffi (>= 1.15.0)
-    faker (3.3.1)
+    faker (3.4.1)
       i18n (>= 1.8.11, < 2)
     ffi (1.16.3)
     globalid (1.1.0)
