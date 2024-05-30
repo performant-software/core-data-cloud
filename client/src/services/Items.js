@@ -8,6 +8,17 @@ import MergeableService from './Mergeable';
  */
 class Items extends MergeableService {
   /**
+   * Calls the `/items/:id/analyze_import` API endpoint.
+   *
+   * @param id
+   *
+   * @returns {*}
+   */
+  analyzeImport(id: number) {
+    return this.getAxios().get(`${this.getBaseUrl()}/${id}/analyze_import`);
+  }
+
+  /**
    * Returns the item base URL.
    *
    * @returns {string}

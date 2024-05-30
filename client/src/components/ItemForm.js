@@ -3,9 +3,15 @@
 import { BooleanIcon, EmbeddedList } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Header } from 'semantic-ui-react';
+import {
+  Button,
+  Form,
+  Header,
+  Popup
+} from 'semantic-ui-react';
+import ImportModal from './ImportModal';
 import type { Item as ItemType } from '../types/Item';
 import NameRelationModal from './NameRelationModal';
 import ProjectContext from '../context/Project';
@@ -17,9 +23,10 @@ type Props = EditContainerProps & {
 };
 
 const ItemForm = (props: Props) => {
-  const { t } = useTranslation();
+  const [modal, setModal] = useState(false);
 
   const { project, projectModel } = useContext(ProjectContext);
+  const { t } = useTranslation();
 
   return (
     <Form>
@@ -63,11 +70,28 @@ const ItemForm = (props: Props) => {
       { projectModel.id === project.faircopy_cloud_project_model_id && (
         <Form.Input
           error={props.isError('faircopy_cloud_id')}
+          fluid
           label={t('ItemForm.labels.faircopyCloudId')}
-          onChange={props.onTextInputChange.bind(this, 'faircopy_cloud_id')}
           required={props.isRequired('faircopy_cloud_id')}
+          onChange={props.onTextInputChange.bind(this, 'faircopy_cloud_id')}
           value={props.item.faircopy_cloud_id}
-        />
+        >
+          <input />
+          <Popup
+            content={t('ItemForm.actions.import.content')}
+            header={t('ItemForm.actions.import.header')}
+            trigger={(
+              <Button
+                disabled={!props.item.id}
+                icon='cloud download'
+                onClick={() => setModal(true)}
+                style={{
+                  marginLeft: '1em'
+                }}
+              />
+            )}
+          />
+        </Form.Input>
       )}
       { props.item.project_model_id && (
         <UserDefinedFieldsForm
@@ -78,6 +102,13 @@ const ItemForm = (props: Props) => {
           onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
           onClearValidationError={props.onClearValidationError}
           tableName='CoreDataConnector::Item'
+        />
+      )}
+      { modal && (
+        <ImportModal
+          id={props.item.id}
+          onClose={() => setModal(false)}
+          title={props.item.faircopy_cloud_id}
         />
       )}
     </Form>

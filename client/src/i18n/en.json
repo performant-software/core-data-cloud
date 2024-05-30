@@ -43,6 +43,7 @@
       "cancel": "Cancel",
       "delete": "Delete",
       "edit": "Edit",
+      "save": "Save",
       "upload": "Upload"
     },
     "columns":{
@@ -138,6 +139,12 @@
     }
   },
   "ItemForm": {
+    "actions": {
+      "import": {
+        "content": "Import data from FairCopy.cloud",
+        "header": "Import"
+      }
+    },
     "labels": {
       "names": "Names",
       "faircopyCloudId": "FairCopy.cloud identifier"
