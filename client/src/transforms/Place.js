@@ -1,6 +1,7 @@
 // @flow
 
-import { BaseTransform } from '@performant-software/shared-components';
+import _ from 'underscore';
+import MergeableTransform from './Mergeable';
 import type { Place as PlaceType } from '../types/Place';
 import PlaceGeometry from './PlaceGeometry';
 import PlaceLayers from './PlaceLayers';
@@ -9,7 +10,7 @@ import PlaceNames from './PlaceNames';
 /**
  * Class responsible for transforming place records for POST/PUT requests.
  */
-class Place extends BaseTransform {
+class Place extends MergeableTransform {
   /**
    * Returns the place parameter name.
    *
@@ -44,6 +45,27 @@ class Place extends BaseTransform {
       value: place.id,
       text: place.name
     };
+  }
+
+  /**
+   * Converts the passed place to a mergeable payload by transforming the GeoJSON.
+   *
+   * @param place
+   * @param ids
+   *
+   * @returns {{[p: string]: *, ids: Array<number>}}
+   */
+  toMergeable(place: PlaceType, ids: Array<number>) {
+    const mergeable = super.toMergeable(place, ids);
+
+    const { place_geometry: geometry } = mergeable.place;
+
+    // Convert the geometry_json to a string
+    _.extend(geometry, {
+      geometry_json: JSON.stringify(geometry?.geometry_json)
+    });
+
+    return mergeable;
   }
 
   /**

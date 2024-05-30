@@ -29,6 +29,9 @@
   },
   "Common": {
     "actions": {
+      "merge": {
+        "uuid": "Identifier"
+      },
       "navigate": {
         "content": "Navigates to the edit page for this record",
         "title": "Navigate"
@@ -91,6 +94,15 @@
     "title": "Add Event"
   },
   "Events": {
+    "actions": {
+      "merge": {
+        "description": "Description",
+        "endDate": "End date",
+        "name": "Name",
+        "startDate": "Start date",
+        "title": "Merge Events"
+      }
+    },
     "columns": {
       "endDate": "End date",
       "name": "Name",
@@ -115,6 +127,12 @@
     "title": "New Instance"
   },
   "Instances": {
+    "actions": {
+      "merge": {
+        "names": "Names",
+        "title": "Merge Instances"
+      }
+    },
     "columns": {
       "name": "Name"
     }
@@ -141,6 +159,12 @@
     }
   },
   "Items": {
+    "actions": {
+      "merge": {
+        "names": "Names",
+        "title": "Merge Items"
+      }
+    },
     "columns": {
       "name": "Name"
     }
@@ -186,8 +210,42 @@
       "name": "Name"
     }
   },
+  "MediaContents": {
+    "actions": {
+      "merge": {
+        "content": "Content",
+        "name": "Name",
+        "title": "Merge Media Contents"
+      }
+    }
+  },
   "MediaContentsSelectize": {
     "title": "Select Media"
+  },
+  "MergeButton": {
+    "buttons": {
+      "merge": "Merge",
+      "mergeCount": "Merge ({{count}})"
+    },
+    "messages": {
+      "confirm": {
+        "content": "Are you sure you wish to merge these records? This action cannot be undone.",
+        "header": "Confirm Record Merge"
+      }
+    }
+  },
+  "MergeModal": {
+    "buttons": {
+      "merge": "Merge"
+    },
+    "errors": {
+      "header": "There was an error merging the selected records"
+    },
+    "labels": {
+      "attributes": "Attributes",
+      "mergedRecord": "Merge Record",
+      "record": "Record {{index}}"
+    }
   },
   "NameModal": {
     "labels": {
@@ -234,11 +292,25 @@
     }
   },
   "Organizations": {
+    "actions": {
+      "merge": {
+        "description": "Description",
+        "names": "Names",
+        "title": "Merge Organizations"
+      }
+    },
     "columns": {
       "name": "Name"
     }
   },
   "People": {
+    "actions": {
+      "merge": {
+        "biography": "Biography",
+        "names": "Names",
+        "title": "Merge People"
+      }
+    },
     "columns": {
       "firstName": "First name",
       "lastName": "Last name",
@@ -339,6 +411,14 @@
     }
   },
   "Places": {
+    "actions": {
+      "merge": {
+        "geometry": "Geometry",
+        "layers": "Layers",
+        "names": "Names",
+        "title": "Merge Places"
+      }
+    },
     "columns": {
       "name": "Name"
     }
@@ -632,6 +712,12 @@
     "title": "Add Taxonomy Item"
   },
   "TaxonomyItems": {
+    "actions": {
+      "merge": {
+        "name": "Name",
+        "title": "Merge Taxonomy Items"
+      }
+    },
     "columns": {
       "name": "Name"
     },
@@ -752,6 +838,12 @@
     "title": "New Work"
   },
   "Works": {
+    "actions": {
+      "merge": {
+        "names": "Names",
+        "title": "Merge Works"
+      }
+    },
     "columns": {
       "name": "Name"
     }

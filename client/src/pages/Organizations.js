@@ -13,10 +13,12 @@ import { HiBuildingOffice, HiBuildingOffice2 } from 'react-icons/hi2';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 import ListViewMenu from '../components/ListViewMenu';
+import MergeButton from '../components/MergeButton';
 import OrganizationsService from '../services/Organizations';
 import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
+import useSelectable from '../hooks/Selectable';
 import Views from '../constants/ListViews';
 import WindowUtils from '../utils/Window';
 
@@ -28,6 +30,7 @@ const Organizations: AbstractComponent<any> = () => {
   const { projectModelId } = useParams();
   const { t } = useTranslation();
 
+  const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
 
   /**
@@ -76,6 +79,38 @@ const Organizations: AbstractComponent<any> = () => {
           icon: 'times',
           name: 'delete'
         }]}
+        buttons={[{
+          render: () => (
+            <MergeButton
+              attributes={[{
+                name: 'uuid',
+                label: t('Common.actions.merge.uuid'),
+              }, {
+                name: 'organization_names',
+                label: t('Organizations.actions.merge.names'),
+                array: true,
+                names: true,
+                resolve: (organizationName) => organizationName.name
+              }, {
+                name: 'description',
+                label: t('Organizations.actions.merge.description')
+              }]}
+              ids={selectedItems}
+              onLoad={(id) => (
+                OrganizationsService
+                  .fetchOne(id)
+                  .then(({ data }) => data.organization)
+              )}
+              onSave={(organization) => (
+                OrganizationsService
+                  .mergeRecords(organization, selectedItems)
+                  .then(({ data }) => data.organization)
+              )}
+              projectModelId={projectModelId}
+              title={t('Organizations.actions.merge.title')}
+            />
+          )
+        }]}
         addButton={{
           basic: false,
           color: 'blue',
@@ -84,6 +119,7 @@ const Organizations: AbstractComponent<any> = () => {
         }}
         collectionName='organizations'
         columns={columns}
+        isRowSelected={isSelected}
         key={view}
         onDelete={(organization) => OrganizationsService.delete(organization)}
         onLoad={(params) => (
@@ -97,11 +133,13 @@ const Organizations: AbstractComponent<any> = () => {
             })
             .finally(() => WindowUtils.scrollToTop())
         )}
+        onRowSelect={onRowSelect}
         searchable
         session={{
           key: `organizations_${projectModelId}`,
           storage: localStorage
         }}
+        selectable
       />
     </>
   );

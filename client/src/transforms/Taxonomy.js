@@ -1,12 +1,12 @@
 // @flow
 
-import { BaseTransform } from '@performant-software/shared-components';
+import MergeableTransform from './Mergeable';
 import TaxonomyType from '../types/Taxonomy';
 
 /**
  * Class responsible for transforming taxonomy records for POST/PUT requests.
  */
-class Taxonomy extends BaseTransform {
+class Taxonomy extends MergeableTransform {
   /**
    * Returns the taxonomy parameter name.
    *

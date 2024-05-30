@@ -1,13 +1,13 @@
 // @flow
 
-import { BaseTransform } from '@performant-software/shared-components';
 import type { Instance as InstanceType } from '../types/Instance';
+import MergeableTransform from './Mergeable';
 import SourceTitles from './SourceTitles';
 
 /**
  * Class responsible for transforming instance records for POST/PUT requests.
  */
-class Instance extends BaseTransform {
+class Instance extends MergeableTransform {
   /**
    * Returns the instance parameter name.
    *

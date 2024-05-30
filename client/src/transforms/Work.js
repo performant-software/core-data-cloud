@@ -1,10 +1,10 @@
 // @flow
 
-import { BaseTransform } from '@performant-software/shared-components';
-import type { Work as WorkType } from '../types/Work';
+import MergeableTransform from './Mergeable';
 import SourceTitles from './SourceTitles';
+import type { Work as WorkType } from '../types/Work';
 
-class Work extends BaseTransform {
+class Work extends MergeableTransform {
   /**
    * Returns the work parameter name.
    *

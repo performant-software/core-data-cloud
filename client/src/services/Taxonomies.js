@@ -1,12 +1,12 @@
 // @flow
 
-import { BaseService } from '@performant-software/shared-components';
+import MergeableService from './Mergeable';
 import TaxonomyTransform from '../transforms/Taxonomy';
 
 /**
  * Class responsible for handling all taxonomy API requests.
  */
-class Taxonomies extends BaseService {
+class Taxonomies extends MergeableService {
   /**
    * Returns the taxonomy base URL.
    *

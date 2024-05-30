@@ -1,13 +1,13 @@
 // @flow
 
-import { BaseTransform } from '@performant-software/shared-components';
 import type { Item as ItemType } from '../types/Item';
+import MergeableTransform from './Mergeable';
 import SourceTitles from './SourceTitles';
 
 /**
  * Class responsible for transforming item records for POST/PUT requests.
  */
-class Item extends BaseTransform {
+class Item extends MergeableTransform {
   /**
    * Returns the item parameter name.
    *

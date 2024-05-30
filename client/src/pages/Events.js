@@ -20,6 +20,8 @@ import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
 import Views from '../constants/ListViews';
 import WindowUtils from '../utils/Window';
+import MergeButton from '../components/MergeButton';
+import useSelectable from '../hooks/Selectable';
 
 const Events: AbstractComponent<any> = () => {
   const [view, setView] = useState(Views.all);
@@ -29,6 +31,7 @@ const Events: AbstractComponent<any> = () => {
   const { projectModelId } = useParams();
   const { t } = useTranslation();
 
+  const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
 
   /**
@@ -93,9 +96,47 @@ const Events: AbstractComponent<any> = () => {
           location: 'top',
           onClick: () => navigate('new')
         }}
+        buttons={[{
+          render: () => (
+            <MergeButton
+              attributes={[{
+                name: 'uuid',
+                label: t('Common.actions.merge.uuid'),
+              }, {
+                name: 'name',
+                label: t('Events.actions.merge.name')
+              }, {
+                name: 'description',
+                label: t('Events.actions.merge.description')
+              }, {
+                name: 'start_date',
+                label: t('Events.actions.merge.startDate'),
+                resolve: (event) => FuzzyDateUtils.getDateView(event.start_date)
+              }, {
+                name: 'end_date',
+                label: t('Events.actions.merge.endDate'),
+                resolve: (event) => FuzzyDateUtils.getDateView(event.end_date)
+              }]}
+              ids={selectedItems}
+              onLoad={(id) => (
+                EventsService
+                  .fetchOne(id)
+                  .then(({ data }) => data.event)
+              )}
+              onSave={(event) => (
+                EventsService
+                  .mergeRecords(event, selectedItems)
+                  .then(({ data }) => data.event)
+              )}
+              projectModelId={projectModelId}
+              title={t('Events.actions.merge.title')}
+            />
+          )
+        }]}
         collectionName='events'
         columns={columns}
         key={view}
+        isRowSelected={isSelected}
         onDelete={(event) => EventsService.delete(event)}
         onLoad={(params) => (
           EventsService
@@ -108,7 +149,9 @@ const Events: AbstractComponent<any> = () => {
             })
             .finally(() => WindowUtils.scrollToTop())
         )}
+        onRowSelect={onRowSelect}
         searchable
+        selectable
         session={{
           key: `events_${projectModelId}`,
           storage: localStorage
