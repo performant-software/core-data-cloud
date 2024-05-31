@@ -5,8 +5,13 @@ import { useTranslation } from 'react-i18next';
 import { Button, Modal, Table } from 'semantic-ui-react';
 import _ from 'underscore';
 
+type Attribute = {
+  name: string,
+  label: string
+};
+
 type Props = {
-  attributes: Array<string>,
+  attributes: Array<Attribute>,
   item: any,
   onClose: () => void,
   onSave: () => void
@@ -24,7 +29,7 @@ const ImportCompareModal = (props: Props) => {
    */
   const onClear = useCallback((attribute) => setItem((prevItem) => ({
     ...prevItem,
-    [attribute]: null
+    [attribute.name]: null
   })), []);
 
   /**
@@ -41,7 +46,7 @@ const ImportCompareModal = (props: Props) => {
    */
   const onUpdate = useCallback((attribute) => setItem((prevItem) => ({
     ...prevItem,
-    [attribute]: props.item.db[attribute]
+    [attribute.name]: props.item.db[attribute.name]
   })), [props.item]);
 
   return (
@@ -74,7 +79,7 @@ const ImportCompareModal = (props: Props) => {
             { _.map(props.attributes, (attribute) => (
               <Table.Row>
                 <Table.Cell>
-                  { attribute }
+                  { attribute.label }
                 </Table.Cell>
                 <Table.Cell>
                   <div
@@ -85,7 +90,7 @@ const ImportCompareModal = (props: Props) => {
                     }}
                   >
                     <span>
-                      { item[attribute] }
+                      { item[attribute.name] }
                     </span>
                     <Button.Group>
                       <Button
@@ -113,7 +118,7 @@ const ImportCompareModal = (props: Props) => {
                       />
                     </Button.Group>
                     <span>
-                      { props.item.db[attribute] }
+                      { props.item.db[attribute.name] }
                     </span>
                   </div>
                 </Table.Cell>

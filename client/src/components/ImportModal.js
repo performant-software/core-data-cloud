@@ -27,6 +27,8 @@ type Props = {
   title: string
 };
 
+const FILE_NAME_RELATIONSHIPS = 'relationships.csv';
+
 const ImportModal = (props: Props) => {
   const [columns, setColumns] = useState([]);
   const [data, setData] = useState();
@@ -41,8 +43,8 @@ const ImportModal = (props: Props) => {
    *
    * @type {unknown}
    */
-  const displayAttributes = useCallback((attribute) => (
-    attribute !== 'project_model_id' && attribute !== 'project_model_relationship_id'
+  const displayAttributes = useCallback((column) => (
+    column.name !== 'project_model_id' && column.name !== 'project_model_relationship_id'
   ), []);
 
   /**
@@ -77,11 +79,13 @@ const ImportModal = (props: Props) => {
     const fileNames = [];
 
     _.each(_.keys(data), (name) => {
-      fileNames.push({
-        key: name,
-        value: name,
-        text: name
-      });
+      if (name !== FILE_NAME_RELATIONSHIPS) {
+        fileNames.push({
+          key: name,
+          value: name,
+          text: name
+        });
+      }
     });
 
     return fileNames;
@@ -187,13 +191,17 @@ const ImportModal = (props: Props) => {
           value={fileName}
         />
         <Table
+          padded
           size='small'
         >
           <Table.Header>
             <Table.Row>
               { columns && _.map(columns, (column) => (
                 <Table.HeaderCell
-                  content={column}
+                  content={column.label}
+                  style={{
+                    textWrap: 'nowrap'
+                  }}
                 />
               ))}
               <Table.HeaderCell />
@@ -205,7 +213,7 @@ const ImportModal = (props: Props) => {
               <Table.Row>
                 { columns && _.map(columns, (column) => (
                   <Table.Cell>
-                    { item.import[column] }
+                    { item.import[column.name] }
                   </Table.Cell>
                 ))}
                 <Table.Cell>
