@@ -12,6 +12,7 @@ import {
   Button,
   Dropdown,
   Header,
+  Message,
   Modal,
   Table
 } from 'semantic-ui-react';
@@ -24,6 +25,7 @@ import { Status } from '../constants/Import';
 type Props = {
   id: number,
   onClose: () => void,
+  onSave: () => void,
   title: string
 };
 
@@ -32,8 +34,10 @@ const FILE_NAME_RELATIONSHIPS = 'relationships.csv';
 const ImportModal = (props: Props) => {
   const [columns, setColumns] = useState([]);
   const [data, setData] = useState();
+  const [errors, setErrors] = useState([]);
   const [fileName, setFileName] = useState();
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
 
   const { t } = useTranslation();
@@ -90,6 +94,28 @@ const ImportModal = (props: Props) => {
 
     return fileNames;
   }, [data]);
+
+  /**
+   * Sets the errors on the state.
+   *
+   * @type {function({response: {data: {errors: *}}}): void}
+   */
+  const onError = useCallback(({ response: { data: { errors: e } } }) => setErrors(e), []);
+
+  /**
+   * Calls the /core_data/items/:id/import API endpoint with the current data set.
+   *
+   * @type {(function(): void)|*}
+   */
+  const onImport = useCallback(() => {
+    setLoading(true);
+
+    ItemsService
+      .import(props.id, data)
+      .then(props.onSave)
+      .catch(onError)
+      .finally(() => setLoading(false));
+  }, [data, props.id, props.onSave]);
 
   /**
    * Removes the item at the passed index from the data set.
@@ -184,6 +210,13 @@ const ImportModal = (props: Props) => {
           minHeight: '50vh'
         }}
       >
+        { !_.isEmpty(errors) && (
+          <Message
+            header={t('ImportModal.errors.header')}
+            list={_.map(errors, (e) => _.values(e))}
+            negative
+          />
+        )}
         <Dropdown
           selection
           onChange={(e, { value }) => setFileName(value)}
@@ -259,6 +292,9 @@ const ImportModal = (props: Props) => {
         />
         <Button
           content={'Import'}
+          disabled={loading}
+          loading={loading}
+          onClick={onImport}
           primary
         />
       </Modal.Actions>

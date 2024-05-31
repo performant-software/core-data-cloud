@@ -35,6 +35,21 @@ class Items extends MergeableService {
   getTransform(): typeof ItemTransform {
     return ItemTransform;
   }
+
+  /**
+   * Calls the `/items/:id/import` API endpoint for the passed payload.
+   *
+   * @param id
+   * @param payload
+   *
+   * @returns {*}
+   */
+  import(id: number, payload: any) {
+    const transform = this.getTransform();
+    const config = this.getConfig();
+
+    return this.getAxios().post(`${this.getBaseUrl()}/${id}/import`, transform.toImport(payload), config);
+  }
 }
 
 const ItemsService: Items = new Items();

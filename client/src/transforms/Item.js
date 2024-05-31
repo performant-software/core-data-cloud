@@ -3,6 +3,7 @@
 import type { Item as ItemType } from '../types/Item';
 import MergeableTransform from './Mergeable';
 import SourceTitles from './SourceTitles';
+import _ from 'underscore';
 
 /**
  * Class responsible for transforming item records for POST/PUT requests.
@@ -42,6 +43,25 @@ class Item extends MergeableTransform {
       key: item.id,
       value: item.id,
       text: item.primary_name.name.name
+    };
+  }
+
+  /**
+   * Transforms the passed payload into an importable payload.
+   *
+   * @param payload
+   *
+   * @returns {{files: {}}}
+   */
+  toImport(payload) {
+    const files = {};
+
+    _.each(_.keys(payload), (filename) => {
+      files[filename] = _.map(payload[filename].data, (item) => item.import);
+    });
+
+    return {
+      files
     };
   }
 

@@ -13,6 +13,7 @@ import {
 } from 'semantic-ui-react';
 import ImportModal from './ImportModal';
 import type { Item as ItemType } from '../types/Item';
+import ItemLayoutContext from '../context/ItemLayout';
 import NameRelationModal from './NameRelationModal';
 import ProjectContext from '../context/Project';
 import type { SourceTitle as SourceTitleType } from '../types/Source';
@@ -25,6 +26,7 @@ type Props = EditContainerProps & {
 const ItemForm = (props: Props) => {
   const [modal, setModal] = useState(false);
 
+  const { setSaved } = useContext(ItemLayoutContext);
   const { project, projectModel } = useContext(ProjectContext);
   const { t } = useTranslation();
 
@@ -108,6 +110,10 @@ const ItemForm = (props: Props) => {
         <ImportModal
           id={props.item.id}
           onClose={() => setModal(false)}
+          onSave={() => {
+            setModal(false);
+            setSaved(true);
+          }}
           title={props.item.faircopy_cloud_id}
         />
       )}
