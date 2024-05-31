@@ -113,6 +113,26 @@
   "Home": {
     "header": "Welcome to Rails-React Template <1>Edit <1>src/App.js</1> and save to reload.</1>"
   },
+  "ImportModal": {
+    "buttons": {
+      "import": "Import"
+    },
+    "confirmation": {
+      "content": "You are about to import {{countTotal}} record(s) with {{countConflicts}} conflict(s). This action cannot be undone.",
+      "header": "Confirm Import"
+    },
+    "labels": {
+      "total": "Total"
+    }
+  },
+  "ImportStatus": {
+    "labels": {
+      "conflict": "Conflict",
+      "new": "New",
+      "noConflict": "No Conflict",
+      "resolved": "Resolved"
+    }
+  },
   "InstanceForm": {
     "labels": {
       "names": "Names"

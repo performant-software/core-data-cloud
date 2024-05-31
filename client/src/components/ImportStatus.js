@@ -1,21 +1,26 @@
 // @flow
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Label } from 'semantic-ui-react';
 import { Status } from '../constants/Import';
 import styles from './ImportStatus.module.css';
 
 type Props = {
+  count?: number,
   status: string
 };
 
 const ImportStatus = (props: Props) => {
+  const { t } = useTranslation();
+
   if (props.status === Status.new) {
     return (
       <Label
         className={styles.fairCopyImportStatus}
         color='blue'
-        content={'New Record'}
+        content={t('ImportStatus.labels.new')}
+        detail={props.count}
         icon='plus'
       />
     );
@@ -25,7 +30,8 @@ const ImportStatus = (props: Props) => {
     return (
       <Label
         className={styles.fairCopyImportStatus}
-        content={'No Conflict'}
+        content={t('ImportStatus.labels.noConflict')}
+        detail={props.count}
         icon='checkmark'
       />
     );
@@ -36,7 +42,8 @@ const ImportStatus = (props: Props) => {
       <Label
         className={styles.fairCopyImportStatus}
         color='red'
-        content={'Conflict'}
+        content={t('ImportStatus.labels.conflict')}
+        detail={props.count}
         icon='warning'
       />
     );
@@ -47,7 +54,8 @@ const ImportStatus = (props: Props) => {
       <Label
         className={styles.fairCopyImportStatus}
         color='green'
-        content={'Resolved'}
+        content={t('ImportStatus.labels.resolved')}
+        detail={props.count}
         icon='checkmark'
       />
     );

@@ -10,8 +10,10 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import {
   Button,
+  Confirm,
   Dropdown,
   Header,
+  Label,
   Message,
   Modal,
   Table
@@ -33,6 +35,7 @@ const FILE_NAME_RELATIONSHIPS = 'relationships.csv';
 
 const ImportModal = (props: Props) => {
   const [columns, setColumns] = useState([]);
+  const [confirmation, setConfirmation] = useState(false);
   const [data, setData] = useState();
   const [errors, setErrors] = useState([]);
   const [fileName, setFileName] = useState();
@@ -41,6 +44,62 @@ const ImportModal = (props: Props) => {
   const [selectedIndex, setSelectedIndex] = useState(null);
 
   const { t } = useTranslation();
+
+  /**
+   * Returns the count of records with the (optional) passed statuses.
+   *
+   * @type {function([]=): number}
+   */
+  const getCount = useCallback((status = null) => {
+    let count = 0;
+
+    _.each(_.keys(data), (file) => {
+      if (file !== FILE_NAME_RELATIONSHIPS) {
+        _.each(data[file].data, (row) => {
+          if (_.isEmpty(status) || status === row.status) {
+            count += 1;
+          }
+        });
+      }
+    });
+
+    return count;
+  }, [data]);
+
+  /**
+   * Sets the total number of records with conflicts.
+   *
+   * @type {number}
+   */
+  const countConflicts = useMemo(() => getCount(Status.conflict), [getCount]);
+
+  /**
+   * Sets the total number of new records.
+   *
+   * @type {number}
+   */
+  const countNew = useMemo(() => getCount(Status.new), [getCount]);
+
+  /**
+   * Sets the total number of records without conflicts.
+   *
+   * @type {number}
+   */
+  const countNoConflicts = useMemo(() => getCount(Status.noConflict), [getCount]);
+
+  /**
+   * Sets the total number of records that have been resolved.
+   *
+   * @type {number}
+   */
+  const countResolved = useMemo(() => getCount(Status.resolved), [getCount]);
+
+  /**
+   * Sets the total number of records.
+   *
+   * @type {number}
+   */
+  const countTotal = useMemo(() => getCount(), [getCount]);
 
   /**
    * Removes the "project_model_id" and "project_model_relationship_id" attributes from the list of visible attributes.
@@ -109,6 +168,7 @@ const ImportModal = (props: Props) => {
    */
   const onImport = useCallback(() => {
     setLoading(true);
+    setConfirmation(false);
 
     ItemsService
       .import(props.id, data)
@@ -203,6 +263,30 @@ const ImportModal = (props: Props) => {
           content={props.title}
           icon='cloud download'
         />
+        <Label.Group>
+          <ImportStatus
+            count={countNew}
+            status={Status.new}
+          />
+          <ImportStatus
+            count={countConflicts}
+            status={Status.conflict}
+          />
+          <ImportStatus
+            count={countResolved}
+            status={Status.resolved}
+          />
+          <ImportStatus
+            count={countNoConflicts}
+            status={Status.noConflict}
+          />
+          <Label
+            color='black'
+            content={t('ImportModal.labels.total')}
+            icon='database'
+            detail={countTotal}
+          />
+        </Label.Group>
       </Modal.Header>
       <Modal.Content
         scrolling
@@ -284,6 +368,21 @@ const ImportModal = (props: Props) => {
             onSave={onSave}
           />
         )}
+        { confirmation && (
+          <Confirm
+            centered={false}
+            content={t('ImportModal.confirmation.content', { countTotal, countConflicts })}
+            header={(
+              <Header
+                content={t('ImportModal.confirmation.header')}
+                icon='warning sign'
+              />
+            )}
+            onCancel={() => setConfirmation(false)}
+            onConfirm={onImport}
+            open
+          />
+        )}
       </Modal.Content>
       <Modal.Actions>
         <Button
@@ -291,10 +390,10 @@ const ImportModal = (props: Props) => {
           onClick={props.onClose}
         />
         <Button
-          content={'Import'}
+          content={t('ImportModal.buttons.import')}
           disabled={loading}
           loading={loading}
-          onClick={onImport}
+          onClick={() => setConfirmation(true)}
           primary
         />
       </Modal.Actions>
