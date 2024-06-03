@@ -116,15 +116,20 @@ const ImportModal = (props: Props) => {
    * @type {(function(*): (*))|*}
    */
   const getStatus = useCallback((item) => {
-    let status;
-
     if (item.status) {
       return item.status;
     }
 
     if (_.isEmpty(item.db)) {
-      status = Status.new;
-    } else if (ObjectUtils.isEqual(item.db, item.import)) {
+      return Status.new;
+    }
+
+    let status;
+
+    const { db = {}, duplicates = [], import: incoming } = ObjectUtils.without(item, 'uuid');
+    const isEqual = _.every([db, ...duplicates], (i) => ObjectUtils.isEqual(incoming, i));
+
+    if (isEqual) {
       status = Status.noConflict;
     } else {
       status = Status.conflict;

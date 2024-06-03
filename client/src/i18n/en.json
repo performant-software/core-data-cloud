@@ -113,6 +113,14 @@
   "Home": {
     "header": "Welcome to Rails-React Template <1>Edit <1>src/App.js</1> and save to reload.</1>"
   },
+  "ImportCompareModal": {
+    "labels": {
+      "duplicate": "Duplicate {{index}}",
+      "existing": "Existing",
+      "incoming": "Incoming"
+    },
+    "title": "Compare Records"
+  },
   "ImportModal": {
     "buttons": {
       "import": "Import"
@@ -269,9 +277,13 @@
       "header": "There was an error merging the selected records"
     },
     "labels": {
-      "attributes": "Attributes",
       "mergedRecord": "Merge Record",
       "record": "Record {{index}}"
+    }
+  },
+  "MergeTable": {
+    "labels": {
+      "attributes": "Attributes"
     }
   },
   "NameModal": {

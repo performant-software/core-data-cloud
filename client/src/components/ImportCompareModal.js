@@ -1,9 +1,10 @@
 // @flow
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Modal, Table } from 'semantic-ui-react';
+import { Button, Modal } from 'semantic-ui-react';
 import _ from 'underscore';
+import MergeTable from './MergeTable';
 
 type Attribute = {
   name: string,
@@ -21,6 +22,28 @@ const ImportCompareModal = (props: Props) => {
   const [item, setItem] = useState(props.item.import);
 
   const { t } = useTranslation();
+
+  /**
+   * Memo-izes the list of items, adding a label to each.
+   *
+   * @type {[]}
+   */
+  const items = useMemo(() => {
+    const value = [];
+
+    if (props.item.db) {
+      value.push({ ...props.item.db, label: t('ImportCompareModal.labels.existing') });
+    }
+
+    if (props.item.duplicates) {
+      _.each(props.item.duplicates, (duplicate, idx) => value.push({
+        ...duplicate,
+        label: t('ImportCompareModal.labels.duplicate', { index: idx + 1 })
+      }));
+    }
+
+    return value;
+  }, [props.item]);
 
   /**
    * Clears the passed attribute from the current item.
@@ -44,9 +67,9 @@ const ImportCompareModal = (props: Props) => {
    *
    * @type {function(*): void}
    */
-  const onUpdate = useCallback((attribute) => setItem((prevItem) => ({
+  const onUpdate = useCallback((i, attribute) => setItem((prevItem) => ({
     ...prevItem,
-    [attribute.name]: props.item.db[attribute.name]
+    [attribute.name]: i[attribute.name]
   })), [props.item]);
 
   return (
@@ -55,77 +78,18 @@ const ImportCompareModal = (props: Props) => {
       open
     >
       <Modal.Header
-        content={'Compare'}
+        content={t('ImportCompareModal.title')}
       />
       <Modal.Content>
-        <Table
-          celled
-          size='small'
-        >
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell
-                content={'Attributes'}
-              />
-              <Table.HeaderCell
-                content={'Incoming Record'}
-              />
-              <Table.HeaderCell
-                content={'Existing Record'}
-              />
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            { _.map(props.attributes, (attribute) => (
-              <Table.Row>
-                <Table.Cell>
-                  { attribute.label }
-                </Table.Cell>
-                <Table.Cell>
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center'
-                    }}
-                  >
-                    <span>
-                      { item[attribute.name] }
-                    </span>
-                    <Button.Group>
-                      <Button
-                        basic
-                        compact
-                        icon='times'
-                        onClick={() => onClear(attribute)}
-                      />
-                    </Button.Group>
-                  </div>
-                </Table.Cell>
-                <Table.Cell>
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center'
-                    }}
-                  >
-                    <Button.Group>
-                      <Button
-                        basic
-                        compact
-                        icon='arrow left'
-                        onClick={() => onUpdate(attribute)}
-                      />
-                    </Button.Group>
-                    <span>
-                      { props.item.db[attribute.name] }
-                    </span>
-                  </div>
-                </Table.Cell>
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table>
+        <MergeTable
+          attributes={props.attributes}
+          item={item}
+          items={items}
+          label={t('ImportCompareModal.labels.incoming')}
+          onAttributeSelection={onUpdate}
+          onClearAttribute={onClear}
+          renderValue={(i, attr) => i[attr.name]}
+        />
       </Modal.Content>
       <Modal.Actions>
         <Button
