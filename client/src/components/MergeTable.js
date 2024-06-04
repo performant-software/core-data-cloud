@@ -8,8 +8,14 @@ import _ from 'underscore';
 import MergeAttribute from './MergeAttribute';
 import styles from './MergeTable.module.css';
 
+type Attribute = {
+  editable?: boolean,
+  label: string,
+  name: string
+};
+
 type Props = {
-  attributes: Array<any>,
+  attributes: Array<Attribute>,
   item: any,
   items: Array<any>,
   label: string,
@@ -17,7 +23,7 @@ type Props = {
   onClear: () => void,
   onClearAttribute: () => void,
   onSelect: (item: any) => void,
-  renderValue: (item: any, attribute: any, editable: boolean) => Element | string
+  renderValue: (item: any, attribute: Attribute, editable: boolean) => Element | string
 };
 
 const MergeTable = (props: Props) => {
@@ -111,7 +117,7 @@ const MergeTable = (props: Props) => {
                 verticalAlign='top'
               >
                 <MergeAttribute
-                  button={{
+                  button={attribute.editable !== false && {
                     basic: true,
                     className: cx(
                       styles.ui,
@@ -133,7 +139,7 @@ const MergeTable = (props: Props) => {
                   verticalAlign='top'
                 >
                   <MergeAttribute
-                    button={{
+                    button={attribute.editable !== false && {
                       basic: true,
                       className: cx(
                         styles.ui,

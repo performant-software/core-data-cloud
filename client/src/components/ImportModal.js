@@ -34,16 +34,33 @@ type Props = {
 const FILE_NAME_RELATIONSHIPS = 'relationships.csv';
 
 const ImportModal = (props: Props) => {
-  const [columns, setColumns] = useState([]);
   const [confirmation, setConfirmation] = useState(false);
   const [data, setData] = useState();
   const [errors, setErrors] = useState([]);
   const [fileName, setFileName] = useState();
-  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
 
   const { t } = useTranslation();
+
+  /**
+   * Memo-izes the table display columns.
+   *
+   * @type {[]}
+   */
+  const columns = useMemo(() => {
+    const value = [];
+
+    const { attributes } = _.get(data, fileName) || {};
+
+    _.each(attributes, (attribute) => {
+      if (attribute.name !== 'project_model_id' && attribute.name !== 'project_model_relationship_id') {
+        value.push({ ...attribute, editable: attribute.name !== 'uuid' });
+      }
+    });
+
+    return value;
+  }, [data, fileName]);
 
   /**
    * Returns the count of records with the (optional) passed statuses.
@@ -102,15 +119,6 @@ const ImportModal = (props: Props) => {
   const countTotal = useMemo(() => getCount(), [getCount]);
 
   /**
-   * Removes the "project_model_id" and "project_model_relationship_id" attributes from the list of visible attributes.
-   *
-   * @type {unknown}
-   */
-  const displayAttributes = useCallback((column) => (
-    column.name !== 'project_model_id' && column.name !== 'project_model_relationship_id'
-  ), []);
-
-  /**
    * Returns the import status for the passed item.
    *
    * @type {(function(*): (*))|*}
@@ -137,6 +145,14 @@ const ImportModal = (props: Props) => {
 
     return status;
   }, []);
+
+  /**
+   * Memo-izes the display items for the current file name.
+   */
+  const items = useMemo(() => {
+    const { data: value } = _.get(data, fileName) || {};
+    return value;
+  }, [data, fileName]);
 
   /**
    * Sets the file name dropdown options.
@@ -245,18 +261,6 @@ const ImportModal = (props: Props) => {
       setFileName(_.first(_.keys(data)));
     }
   }, [data, fileName]);
-
-  /**
-   * Sets the display columns and items on the state based on the selected file.
-   */
-  useEffect(() => {
-    if (data && fileName) {
-      const { attributes, data: fileItems } = data[fileName] || {};
-
-      setColumns(_.filter(attributes, displayAttributes));
-      setItems(fileItems);
-    }
-  }, [data, displayAttributes, fileName]);
 
   return (
     <Modal
