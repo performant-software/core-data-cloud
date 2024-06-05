@@ -250,7 +250,8 @@ const ImportModal = (props: Props) => {
   useEffect(() => {
     ItemsService
       .analyzeImport(props.id)
-      .then(analyzeData);
+      .then(analyzeData)
+      .catch(onError);
   }, [props.id]);
 
   /**
@@ -306,7 +307,7 @@ const ImportModal = (props: Props) => {
         { !_.isEmpty(errors) && (
           <Message
             header={t('ImportModal.errors.header')}
-            list={_.map(errors, (e) => _.values(e))}
+            list={_.map(errors, (e) => (_.isObject(e) ? _.values(e) : e))}
             negative
           />
         )}
