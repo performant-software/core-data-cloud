@@ -129,6 +129,9 @@
       "content": "You are about to import {{countTotal}} record(s) with {{countConflicts}} conflict(s). This action cannot be undone.",
       "header": "Confirm Import"
     },
+    "errors": {
+      "header": "There was an error importing for the current record"
+    },
     "labels": {
       "total": "Total"
     }

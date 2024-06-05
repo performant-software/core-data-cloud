@@ -23,6 +23,7 @@ import ImportCompareModal from './ImportCompareModal';
 import ImportStatus from './ImportStatus';
 import ItemsService from '../services/Items';
 import { Status } from '../constants/Import';
+import styles from './ImportModal.module.css';
 
 type Props = {
   id: number,
@@ -219,7 +220,10 @@ const ImportModal = (props: Props) => {
     const newData = { ...data };
     const newItem = newData[fileName].data[selectedIndex];
 
-    // TODO: Comment me
+    /**
+     * If the item currently has a status of "conflict", assume that the user has resolved any conflicts and
+     * mark as resolved.
+     */
     let { status } = newItem;
 
     if (status === Status.conflict) {
@@ -266,6 +270,7 @@ const ImportModal = (props: Props) => {
   return (
     <Modal
       centered={false}
+      className={styles.importModal}
       open
     >
       <Modal.Header>
@@ -299,10 +304,8 @@ const ImportModal = (props: Props) => {
         </Label.Group>
       </Modal.Header>
       <Modal.Content
+        className={styles.content}
         scrolling
-        style={{
-          minHeight: '50vh'
-        }}
       >
         { !_.isEmpty(errors) && (
           <Message
@@ -326,9 +329,6 @@ const ImportModal = (props: Props) => {
               { columns && _.map(columns, (column) => (
                 <Table.HeaderCell
                   content={column.label}
-                  style={{
-                    textWrap: 'nowrap'
-                  }}
                 />
               ))}
               <Table.HeaderCell />
@@ -401,7 +401,7 @@ const ImportModal = (props: Props) => {
         />
         <Button
           content={t('ImportModal.buttons.import')}
-          disabled={loading}
+          disabled={loading || !_.isEmpty(errors) || _.isEmpty(data)}
           loading={loading}
           onClick={() => setConfirmation(true)}
           primary
