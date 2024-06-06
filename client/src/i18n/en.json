@@ -134,6 +134,12 @@
     },
     "labels": {
       "total": "Total"
+    },
+    "messages": {
+      "notFound": {
+        "content": "We couldn't locate the \"{{name}}\" record in FairCopy.cloud. Please contact your system administrator.",
+        "header": "Not Found"
+      }
     }
   },
   "ImportStatus": {

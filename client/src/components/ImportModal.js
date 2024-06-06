@@ -40,6 +40,7 @@ const ImportModal = (props: Props) => {
   const [errors, setErrors] = useState([]);
   const [fileName, setFileName] = useState();
   const [loading, setLoading] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
 
   const { t } = useTranslation();
@@ -255,6 +256,7 @@ const ImportModal = (props: Props) => {
     ItemsService
       .analyzeImport(props.id)
       .then(analyzeData)
+      .then(() => setLoaded(true))
       .catch(onError);
   }, [props.id]);
 
@@ -314,62 +316,73 @@ const ImportModal = (props: Props) => {
             negative
           />
         )}
-        <Dropdown
-          selection
-          onChange={(e, { value }) => setFileName(value)}
-          options={options}
-          value={fileName}
-        />
-        <Table
-          padded
-          size='small'
-        >
-          <Table.Header>
-            <Table.Row>
-              { columns && _.map(columns, (column) => (
-                <Table.HeaderCell
-                  content={column.label}
-                />
-              ))}
-              <Table.HeaderCell />
-              <Table.HeaderCell />
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            { items && _.map(items, (item, index) => (
-              <Table.Row>
-                { columns && _.map(columns, (column) => (
-                  <Table.Cell>
-                    { item.import[column.name] }
-                  </Table.Cell>
-                ))}
-                <Table.Cell>
-                  <ImportStatus
-                    status={item.status}
-                  />
-                </Table.Cell>
-                <Table.Cell>
-                  <Button.Group>
-                    { item.import && item.db && (
-                      <Button
-                        basic
-                        compact
-                        icon='pencil'
-                        onClick={() => setSelectedIndex(index)}
-                      />
-                    )}
-                    <Button
-                      basic
-                      compact
-                      icon='times'
-                      onClick={() => onRemove(index)}
+        { loaded && _.isEmpty(data) && (
+          <Message
+            content={t('ImportModal.messages.notFound.content', { name: props.title })}
+            header={t('ImportModal.messages.notFound.header')}
+            icon='question mark'
+          />
+        )}
+        { loaded && !_.isEmpty(data) && (
+          <>
+            <Dropdown
+              selection
+              onChange={(e, { value }) => setFileName(value)}
+              options={options}
+              value={fileName}
+            />
+            <Table
+              padded
+              size='small'
+            >
+              <Table.Header>
+                <Table.Row>
+                  { columns && _.map(columns, (column) => (
+                    <Table.HeaderCell
+                      content={column.label}
                     />
-                  </Button.Group>
-                </Table.Cell>
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table>
+                  ))}
+                  <Table.HeaderCell />
+                  <Table.HeaderCell />
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                { items && _.map(items, (item, index) => (
+                  <Table.Row>
+                    { columns && _.map(columns, (column) => (
+                      <Table.Cell>
+                        { item.import[column.name] }
+                      </Table.Cell>
+                    ))}
+                    <Table.Cell>
+                      <ImportStatus
+                        status={item.status}
+                      />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Button.Group>
+                        { item.import && item.db && (
+                          <Button
+                            basic
+                            compact
+                            icon='pencil'
+                            onClick={() => setSelectedIndex(index)}
+                          />
+                        )}
+                        <Button
+                          basic
+                          compact
+                          icon='times'
+                          onClick={() => onRemove(index)}
+                        />
+                      </Button.Group>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
+          </>
+        )}
         { selectedIndex != null && items[selectedIndex] && (
           <ImportCompareModal
             attributes={columns}
