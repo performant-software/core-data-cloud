@@ -1,0 +1,7 @@
+.importModal > .content  {
+  min-height: 50vh;
+}
+
+.importModal > .content > table > thead > tr > th {
+  text-wrap: nowrap;
+}

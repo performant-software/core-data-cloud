@@ -4,19 +4,22 @@ import { BooleanIcon } from '@performant-software/semantic-components';
 import { Date as DateUtils } from '@performant-software/shared-components';
 import { DataTypes, UserDefinedFieldsService } from '@performant-software/user-defined-fields';
 import cx from 'classnames';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
-  Header,
   Label,
   Loader,
   Message,
-  Modal,
-  Table
+  Modal
 } from 'semantic-ui-react';
 import _ from 'underscore';
-import MergeAttribute from './MergeAttribute';
+import MergeTable from './MergeTable';
 import styles from './MergeModal.module.css';
 
 type MergeAttributeType = {
@@ -50,6 +53,19 @@ const MergeModal = (props: Props) => {
 
   const { t } = useTranslation();
 
+  /**
+   * Memo-izes the list of items and adds a label to each.
+   */
+  const itemsWithLabels = useMemo(() => _.map(items, (i, index) => ({
+    ...i,
+    label: t('MergeModal.labels.record', { index: index + 1 })
+  })), [items]);
+
+  /**
+   * Returns the attribute value for the passed item/attribute.
+   *
+   * @type {function(*, *, *): *}
+   */
   const getAttributeValue = useCallback((current, item, attribute) => {
     let value = item[attribute.name];
 
@@ -316,9 +332,7 @@ const MergeModal = (props: Props) => {
       <Modal.Header
         content={props.title}
       />
-      <Modal.Content
-        className={styles.content}
-      >
+      <Modal.Content>
         { !_.isEmpty(props.errors) && (
           <Message
             header={t('MergeModal.errors.header')}
@@ -330,133 +344,17 @@ const MergeModal = (props: Props) => {
           <Loader />
         )}
         { !(loadingFields || loadingRecords) && (
-          <div
-            className={styles.tableContainer}
-          >
-            <Table
-              celled
-              padded
-              verticalAlign='top'
-              size='small'
-            >
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell>
-                    <Header
-                      className={cx(styles.ui, styles.header)}
-                      content={t('MergeModal.labels.attributes')}
-                      size='tiny'
-                    />
-                  </Table.HeaderCell>
-                  <Table.HeaderCell>
-                    <div
-                      className={styles.mergeHeader}
-                    >
-                      <Header
-                        className={cx(styles.ui, styles.header)}
-                        content={t('MergeModal.labels.mergedRecord')}
-                        size='tiny'
-                      />
-                      <Button
-                        basic
-                        className={cx(
-                          styles.ui,
-                          styles.button,
-                          styles.listButton
-                        )}
-                        compact
-                        icon='times'
-                        onClick={onClear}
-                      />
-                    </div>
-                  </Table.HeaderCell
-                    >
-                  { _.map(items, (item, index) => (
-                    <Table.HeaderCell
-                      key={index}
-                    >
-                      <div
-                        className={cx(styles.recordHeader)}
-                      >
-                        <Button
-                          basic
-                          className={cx(
-                            styles.ui,
-                            styles.button,
-                            styles.listButton
-                          )}
-                          compact
-                          icon='arrow left'
-                          onClick={() => onSelect(item)}
-                        />
-                        <Header
-                          className={cx(styles.ui, styles.header)}
-                          content={t('MergeModal.labels.record', { index: index + 1 })}
-                          size='tiny'
-                        />
-                      </div>
-                    </Table.HeaderCell>
-                  ))}
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                { _.map(attributes, (attribute, index) => (
-                  <Table.Row
-                    key={index}
-                  >
-                    <Table.Cell
-                      verticalAlign='top'
-                    >
-                      { attribute.label }
-                    </Table.Cell>
-                    <Table.Cell
-                      verticalAlign='top'
-                    >
-                      <MergeAttribute
-                        button={{
-                          basic: true,
-                          className: cx(
-                            styles.ui,
-                            styles.button,
-                            styles.listButton
-                          ),
-                          compact: true,
-                          icon: 'times',
-                          onClick: () => onClearAttribute(attribute)
-                        }}
-                        buttonPosition='right'
-                        className={cx(styles.attributeValue, styles.selected)}
-                        value={renderValue(record, attribute, true)}
-                      />
-                    </Table.Cell>
-                    { _.map(items, (item, idx) => (
-                      <Table.Cell
-                        key={idx}
-                        verticalAlign='top'
-                      >
-                        <MergeAttribute
-                          button={{
-                            basic: true,
-                            className: cx(
-                              styles.ui,
-                              styles.button,
-                              styles.listButton
-                            ),
-                            compact: true,
-                            icon: 'arrow left',
-                            onClick: () => onAttributeSelection(item, attribute)
-                          }}
-                          buttonPosition='left'
-                          className={styles.attributeValue}
-                          value={renderValue(item, attribute)}
-                        />
-                      </Table.Cell>
-                    ))}
-                  </Table.Row>
-                ))}
-              </Table.Body>
-            </Table>
-          </div>
+          <MergeTable
+            attributes={attributes}
+            item={record}
+            items={itemsWithLabels}
+            label={t('MergeModal.labels.mergedRecord')}
+            onAttributeSelection={onAttributeSelection}
+            onClear={onClear}
+            onClearAttribute={onClearAttribute}
+            onSelect={onSelect}
+            renderValue={renderValue}
+          />
         )}
       </Modal.Content>
       <Modal.Actions>

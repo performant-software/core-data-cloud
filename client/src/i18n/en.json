@@ -43,6 +43,7 @@
       "cancel": "Cancel",
       "delete": "Delete",
       "edit": "Edit",
+      "save": "Save",
       "upload": "Upload"
     },
     "columns":{
@@ -112,6 +113,43 @@
   "Home": {
     "header": "Welcome to Rails-React Template <1>Edit <1>src/App.js</1> and save to reload.</1>"
   },
+  "ImportCompareModal": {
+    "labels": {
+      "duplicate": "Duplicate {{index}}",
+      "existing": "Existing",
+      "incoming": "Incoming"
+    },
+    "title": "Compare Records"
+  },
+  "ImportModal": {
+    "buttons": {
+      "import": "Import"
+    },
+    "confirmation": {
+      "content": "You are about to import {{countTotal}} record(s) with {{countConflicts}} conflict(s). This action cannot be undone.",
+      "header": "Confirm Import"
+    },
+    "errors": {
+      "header": "There was an error importing for the current record"
+    },
+    "labels": {
+      "total": "Total"
+    },
+    "messages": {
+      "notFound": {
+        "content": "We couldn't locate the \"{{name}}\" record in FairCopy.cloud. Please contact your system administrator.",
+        "header": "Not Found"
+      }
+    }
+  },
+  "ImportStatus": {
+    "labels": {
+      "conflict": "Conflict",
+      "new": "New",
+      "noConflict": "No Conflict",
+      "resolved": "Resolved"
+    }
+  },
   "InstanceForm": {
     "labels": {
       "names": "Names"
@@ -138,6 +176,12 @@
     }
   },
   "ItemForm": {
+    "actions": {
+      "import": {
+        "content": "Import data from FairCopy.cloud",
+        "header": "Import"
+      }
+    },
     "labels": {
       "names": "Names",
       "faircopyCloudId": "FairCopy.cloud identifier"
@@ -242,9 +286,13 @@
       "header": "There was an error merging the selected records"
     },
     "labels": {
-      "attributes": "Attributes",
       "mergedRecord": "Merge Record",
       "record": "Record {{index}}"
+    }
+  },
+  "MergeTable": {
+    "labels": {
+      "attributes": "Attributes"
     }
   },
   "NameModal": {
