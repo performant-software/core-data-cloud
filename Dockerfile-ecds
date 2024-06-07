@@ -1,0 +1,61 @@
+# Use the Ruby 3.2.2 image from Docker Hub as the base image (https://hub.docker.com/_/ruby)
+FROM ruby:3.2.2
+
+RUN ls /etc
+RUN apt update -qq && apt install -y postgresql-client git libvips npm
+RUN npm install --global yarn
+RUN mkdir -p /data/typesense
+
+WORKDIR /app
+
+ARG RAILS_ENV
+ARG REACT_APP_HOSTNAME
+ARG REACT_APP_IIIF_MANIFEST_ITEM_LIMIT
+ARG REACT_APP_MAP_TILER_KEY
+ARG DATABASE_HOST
+ARG DATABASE_NAME
+ARG DATABASE_PORT
+ARG DATABASE_USERNAME
+ARG DATABASE_PASSWORD
+ARG TYPESENSE_API_KEY
+
+
+# Add Rails gems
+COPY Gemfile Gemfile
+COPY Gemfile.lock Gemfile.lock
+COPY crontab /etc/cron.d/crontab
+
+RUN bundle install
+
+RUN curl -O https://dl.typesense.org/releases/26.0/typesense-server-26.0-linux-amd64.tar.gz && \
+  tar -xzf typesense-server-26.0-linux-amd64.tar.gz
+
+COPY . .
+
+RUN sed -i -e 's|api-key.*|'"api-key = $TYPESENSE_API_KEY"'|g' ./typesense-server.ini
+
+ENV DISABLE_ESLINT_PLUGIN=true
+ENV GENERATE_SOURCEMAP=false
+ENV NODE_OPTIONS="--max-old-space-size=16384"
+ENV RAILS_MAX_THREADS=5
+ENV RAILS_ENV=development
+ENV DATABASE_HOST=$DATABASE_HOST
+ENV DATABASE_NAME=$DATABASE_NAME
+ENV DATABASE_PORT=$DATABASE_PORT
+ENV DATABASE_USERNAME=$DATABASE_USERNAME
+ENV DATABASE_PASSWORD=$DATABASE_PASSWORD
+ENV TYPESENSE_API_KEY=$TYPESENSE_API_KEY
+ENV REACT_APP_MAP_TILER_KEY=$REACT_APP_MAP_TILER_KEY
+
+# Build and deploy React front-end
+RUN yarn config set network-timeout 600000 -g
+RUN yarn build && yarn deploy
+
+# Clean up APT when done.
+RUN apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN chmod +x ./ecds-entrypoint.sh
+
+EXPOSE 3000 8108
+
+ENTRYPOINT [ "./ecds-entrypoint.sh" ]

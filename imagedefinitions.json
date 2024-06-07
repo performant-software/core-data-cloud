@@ -1,0 +1,6 @@
+[
+  {
+    "name": "CoreDataCloud",
+    "imageUri": "310867200447.dkr.ecr.us-east-1.amazonaws.com/core-data-cloud:latest"
+  }
+]
