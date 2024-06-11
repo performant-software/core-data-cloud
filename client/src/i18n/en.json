@@ -574,8 +574,8 @@
   },
   "ProjectModeLink": {
     "labels": {
-      "edit": "Edit",
-      "settings": "Settings"
+      "edit": "Data Entry",
+      "settings": "Project Settings"
     }
   },
   "ProjectModel": {
