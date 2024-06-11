@@ -1,9 +1,0 @@
-.projectHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.projectHeader > .ui.dropdown > .icon {
-  opacity: 0.5;
-}

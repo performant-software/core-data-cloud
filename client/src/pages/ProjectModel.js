@@ -254,7 +254,7 @@ const ProjectModelForm = (props: Props) => {
               columns={[{
                 name: 'project_name',
                 label: t('ProjectModel.accesses.columns.name'),
-                resolve: (projectModelAccess) => projectModelAccess.project.name
+                resolve: (projectModelAccess) => projectModelAccess.project?.name
               }]}
               items={props.item.project_model_accesses}
               onDelete={props.onDeleteChildAssociation.bind(this, 'project_model_accesses')}
@@ -289,8 +289,8 @@ const ProjectModelForm = (props: Props) => {
             )}
           </SimpleEditPage.Tab>
           <SimpleEditPage.Tab
-            key='share'
-            name={t('ProjectModel.tabs.share')}
+            key='discover'
+            name={t('ProjectModel.tabs.discover')}
           >
             <Message
               className={cx(styles.ui, styles.icon, styles.message)}

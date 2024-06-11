@@ -216,8 +216,8 @@
   "ListViewMenu": {
     "labels": {
       "all": "All {{name}}",
-      "owned": "My {{name}}",
-      "shared": "Shared {{name}}"
+      "owned": "{{name}} from this project",
+      "shared": "{{name}} from other projects"
     }
   },
   "Login": {
@@ -574,8 +574,8 @@
   },
   "ProjectModeLink": {
     "labels": {
-      "edit": "Edit",
-      "settings": "Settings"
+      "edit": "Data Entry",
+      "settings": "Project Settings"
     }
   },
   "ProjectModel": {
@@ -611,11 +611,11 @@
       "title": "Select Resource"
     },
     "tabs": {
-      "access": "Access",
+      "access": "Grant Access",
       "details": "Details",
+      "discover": "Discover",
       "fields": "Fields",
-      "relationships": "Relationships",
-      "share": "Share"
+      "relationships": "Relationships"
     }
   },
   "ProjectModelRelationshipModal": {
@@ -735,8 +735,8 @@
   "RelatedViewMenu": {
     "labels": {
       "all": "All {{name}}",
-      "owned": "My {{name}}",
-      "shared": "Shared {{name}}"
+      "owned": "{{name}} from this project",
+      "shared": "{{name}} from other projects"
     }
   },
   "RelatedWorks": {
