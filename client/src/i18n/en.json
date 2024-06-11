@@ -611,11 +611,11 @@
       "title": "Select Resource"
     },
     "tabs": {
-      "access": "Access",
+      "access": "Grant Access",
       "details": "Details",
+      "discover": "Discover",
       "fields": "Fields",
-      "relationships": "Relationships",
-      "share": "Share"
+      "relationships": "Relationships"
     }
   },
   "ProjectModelRelationshipModal": {
