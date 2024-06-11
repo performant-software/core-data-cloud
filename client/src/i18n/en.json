@@ -216,8 +216,8 @@
   "ListViewMenu": {
     "labels": {
       "all": "All {{name}}",
-      "owned": "My {{name}}",
-      "shared": "Shared {{name}}"
+      "owned": "{{name}} from this project",
+      "shared": "{{name}} from other projects"
     }
   },
   "Login": {
@@ -735,8 +735,8 @@
   "RelatedViewMenu": {
     "labels": {
       "all": "All {{name}}",
-      "owned": "My {{name}}",
-      "shared": "Shared {{name}}"
+      "owned": "{{name}} from this project",
+      "shared": "{{name}} from other projects"
     }
   },
   "RelatedWorks": {
