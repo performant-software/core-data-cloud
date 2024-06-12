@@ -1,0 +1,52 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - develop
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read # This is required for actions/checkout
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Checkout Docker configs
+        run: |
+          mv ./.github/workflows/build.sh .
+          chmod +x build.sh
+
+      - name: Configure AWS credentials from AWS account
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+          aws-region: us-east-1
+          role-session-name: GitHub-OIDC-frontend
+
+      - name: Run Deploy
+        env:
+          AUTHENTICATION_EXPIRATION: ${{ secrets.AUTHENTICATION_EXPIRATION }}
+          AWS_ECR: ${{ secrets.AWS_ECR }}
+          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+          DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+          DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          HOSTNAME: ${{ secrets.HOSTNAME}}
+          IIIF_CLOUD_API_KEY: ${{ secrets.IIIF_CLOUD_API_KEY }}
+          IIIF_CLOUD_PROJECT_ID: ${{ secrets.IIIF_CLOUD_PROJECT_ID }}
+          IIIF_CLOUD_URL: ${{ secrets.IIIF_CLOUD_URL }}
+          REACT_APP_HOSTNAME: ${{ secrets.HOSTNAME}}
+          REACT_APP_IIIF_MANIFEST_ITEM_LIMIT: ${{ secrets.REACT_APP_IIIF_MANIFEST_ITEM_LIMIT }}
+          REACT_APP_MAP_TILER_KEY: ${{ secrets.REACT_APP_MAP_TILER_KEY }}
+          SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
+          TYPESENSE_API_KEY: ${{ secrets.TYPESENSE_API_KEY }}
+
+        run: |
+          chmod +x build.sh
+          ./build.sh
