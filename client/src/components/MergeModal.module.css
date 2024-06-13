@@ -1,0 +1,10 @@
+.mergeModal.ui.modal .ui.label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5em;
+  width: fit-content;
+}
+
+.mergeModal.ui.modal .ui.label.selectable {
+  cursor: pointer;
+}

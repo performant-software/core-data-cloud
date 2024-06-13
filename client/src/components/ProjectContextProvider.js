@@ -1,6 +1,7 @@
 // @flow
 
 import React, {
+  useCallback,
   useEffect,
   useMemo,
   useState,
@@ -20,8 +21,20 @@ const ProjectContextProvider = (props: Props) => {
   const [project, setProject] = useState();
   const [projectModel, setProjectModel] = useState();
   const [projectModels, setProjectModels] = useState();
+  const [reloadProjectModels, setReloadProjectModels] = useState(false);
 
   const { projectId, projectModelId } = useParams();
+
+  /**
+   * Calls the `/core_data/projects/:id/project_models` API endpoint and sets the results on the state.
+   *
+   * @type {function(): Promise<void>}
+   */
+  const onLoadProjectModels = useCallback(() => (
+    ProjectModelsService
+      .fetchAll({ project_id: projectId, sort_by: 'name', per_page: 0 })
+      .then(({ data }) => setProjectModels(data.project_models))
+  ), [projectId]);
 
   /**
    * Load the project record based on the projectId parameter.
@@ -54,15 +67,23 @@ const ProjectContextProvider = (props: Props) => {
    */
   useEffect(() => {
     if (projectId) {
-      ProjectModelsService
-        .fetchAll({ project_id: projectId, sort_by: 'name' })
-        .then(({ data }) => setProjectModels(data.project_models))
+      onLoadProjectModels()
         .finally(() => setLoadedProjectModels(true));
     } else {
       setLoadedProjectModels(false);
       setProjectModels(null);
     }
   }, [projectId]);
+
+  /**
+   * Reloads the list of project models.
+   */
+  useEffect(() => {
+    if (reloadProjectModels) {
+      onLoadProjectModels()
+        .then(() => setReloadProjectModels(false));
+    }
+  }, [reloadProjectModels]);
 
   /**
    * Memo-ize the value to be set on the context.
@@ -73,8 +94,9 @@ const ProjectContextProvider = (props: Props) => {
     loadedProjectModels,
     project,
     projectModel,
-    projectModels
-  }), [loadedProjectModels, project, projectModel, projectModels]);
+    projectModels,
+    setReloadProjectModels
+  }), [loadedProjectModels, project, projectModel, projectModels, setReloadProjectModels]);
 
   return (
     <ProjectContext.Provider

@@ -83,6 +83,10 @@ textarea {
   background-color: transparent !important;
 }
 
+.list.data-table-column-selector > table.ui.sortable > thead > tr > th.select-cell {
+  width: 1px;
+}
+
 .list.compact.data-table-column-selector > table.ui.sortable > thead > tr > th {
   color: #616161;
   font-size: 12px;

@@ -7,7 +7,7 @@ import _ from 'underscore';
 import useParams from '../hooks/ParsedParams';
 
 const ProjectEdit = () => {
-  const { loadedProjectModels, projectModels } = useContext(ProjectContext);
+  const { loadedProjectModels, projectModels, setReloadProjectModels } = useContext(ProjectContext);
   const { projectId } = useParams();
 
   /**
@@ -27,6 +27,11 @@ const ProjectEdit = () => {
       />
     );
   }
+
+  /**
+   * Reload the list of project models (in case it was modified in settings) and navigate to the edit view.
+   */
+  setReloadProjectModels(true);
 
   return (
     <Navigate

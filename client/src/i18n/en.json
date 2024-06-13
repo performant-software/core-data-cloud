@@ -29,6 +29,9 @@
   },
   "Common": {
     "actions": {
+      "merge": {
+        "uuid": "Identifier"
+      },
       "navigate": {
         "content": "Navigates to the edit page for this record",
         "title": "Navigate"
@@ -40,6 +43,7 @@
       "cancel": "Cancel",
       "delete": "Delete",
       "edit": "Edit",
+      "save": "Save",
       "upload": "Upload"
     },
     "columns":{
@@ -91,6 +95,15 @@
     "title": "Add Event"
   },
   "Events": {
+    "actions": {
+      "merge": {
+        "description": "Description",
+        "endDate": "End date",
+        "name": "Name",
+        "startDate": "Start date",
+        "title": "Merge Events"
+      }
+    },
     "columns": {
       "endDate": "End date",
       "name": "Name",
@@ -99,6 +112,43 @@
   },
   "Home": {
     "header": "Welcome to Rails-React Template <1>Edit <1>src/App.js</1> and save to reload.</1>"
+  },
+  "ImportCompareModal": {
+    "labels": {
+      "duplicate": "Duplicate {{index}}",
+      "existing": "Existing",
+      "incoming": "Incoming"
+    },
+    "title": "Compare Records"
+  },
+  "ImportModal": {
+    "buttons": {
+      "import": "Import"
+    },
+    "confirmation": {
+      "content": "You are about to import {{countTotal}} record(s) with {{countConflicts}} conflict(s). This action cannot be undone.",
+      "header": "Confirm Import"
+    },
+    "errors": {
+      "header": "There was an error importing for the current record"
+    },
+    "labels": {
+      "total": "Total"
+    },
+    "messages": {
+      "notFound": {
+        "content": "We couldn't locate the \"{{name}}\" record in FairCopy.cloud. Please contact your system administrator.",
+        "header": "Not Found"
+      }
+    }
+  },
+  "ImportStatus": {
+    "labels": {
+      "conflict": "Conflict",
+      "new": "New",
+      "noConflict": "No Conflict",
+      "resolved": "Resolved"
+    }
   },
   "InstanceForm": {
     "labels": {
@@ -115,11 +165,23 @@
     "title": "New Instance"
   },
   "Instances": {
+    "actions": {
+      "merge": {
+        "names": "Names",
+        "title": "Merge Instances"
+      }
+    },
     "columns": {
       "name": "Name"
     }
   },
   "ItemForm": {
+    "actions": {
+      "import": {
+        "content": "Import data from FairCopy.cloud",
+        "header": "Import"
+      }
+    },
     "labels": {
       "names": "Names",
       "faircopyCloudId": "FairCopy.cloud identifier"
@@ -141,6 +203,12 @@
     }
   },
   "Items": {
+    "actions": {
+      "merge": {
+        "names": "Names",
+        "title": "Merge Items"
+      }
+    },
     "columns": {
       "name": "Name"
     }
@@ -148,8 +216,8 @@
   "ListViewMenu": {
     "labels": {
       "all": "All {{name}}",
-      "owned": "My {{name}}",
-      "shared": "Shared {{name}}"
+      "owned": "{{name}} from this project",
+      "shared": "{{name}} from other projects"
     }
   },
   "Login": {
@@ -186,8 +254,46 @@
       "name": "Name"
     }
   },
+  "MediaContents": {
+    "actions": {
+      "merge": {
+        "content": "Content",
+        "name": "Name",
+        "title": "Merge Media Contents"
+      }
+    }
+  },
   "MediaContentsSelectize": {
     "title": "Select Media"
+  },
+  "MergeButton": {
+    "buttons": {
+      "merge": "Merge",
+      "mergeCount": "Merge ({{count}})"
+    },
+    "messages": {
+      "confirm": {
+        "content": "Are you sure you wish to merge these records? This action cannot be undone.",
+        "header": "Confirm Record Merge"
+      }
+    }
+  },
+  "MergeModal": {
+    "buttons": {
+      "merge": "Merge"
+    },
+    "errors": {
+      "header": "There was an error merging the selected records"
+    },
+    "labels": {
+      "mergedRecord": "Merge Record",
+      "record": "Record {{index}}"
+    }
+  },
+  "MergeTable": {
+    "labels": {
+      "attributes": "Attributes"
+    }
   },
   "NameModal": {
     "labels": {
@@ -234,11 +340,25 @@
     }
   },
   "Organizations": {
+    "actions": {
+      "merge": {
+        "description": "Description",
+        "names": "Names",
+        "title": "Merge Organizations"
+      }
+    },
     "columns": {
       "name": "Name"
     }
   },
   "People": {
+    "actions": {
+      "merge": {
+        "biography": "Biography",
+        "names": "Names",
+        "title": "Merge People"
+      }
+    },
     "columns": {
       "firstName": "First name",
       "lastName": "Last name",
@@ -339,6 +459,14 @@
     }
   },
   "Places": {
+    "actions": {
+      "merge": {
+        "geometry": "Geometry",
+        "layers": "Layers",
+        "names": "Names",
+        "title": "Merge Places"
+      }
+    },
     "columns": {
       "name": "Name"
     }
@@ -446,8 +574,8 @@
   },
   "ProjectModeLink": {
     "labels": {
-      "edit": "Edit",
-      "settings": "Settings"
+      "edit": "Data Entry",
+      "settings": "Project Settings"
     }
   },
   "ProjectModel": {
@@ -483,11 +611,11 @@
       "title": "Select Resource"
     },
     "tabs": {
-      "access": "Access",
+      "access": "Grant Access",
       "details": "Details",
+      "discover": "Discover",
       "fields": "Fields",
-      "relationships": "Relationships",
-      "share": "Share"
+      "relationships": "Relationships"
     }
   },
   "ProjectModelRelationshipModal": {
@@ -607,8 +735,8 @@
   "RelatedViewMenu": {
     "labels": {
       "all": "All {{name}}",
-      "owned": "My {{name}}",
-      "shared": "Shared {{name}}"
+      "owned": "{{name}} from this project",
+      "shared": "{{name}} from other projects"
     }
   },
   "RelatedWorks": {
@@ -632,6 +760,12 @@
     "title": "Add Taxonomy Item"
   },
   "TaxonomyItems": {
+    "actions": {
+      "merge": {
+        "name": "Name",
+        "title": "Merge Taxonomy Items"
+      }
+    },
     "columns": {
       "name": "Name"
     },
@@ -752,6 +886,12 @@
     "title": "New Work"
   },
   "Works": {
+    "actions": {
+      "merge": {
+        "names": "Names",
+        "title": "Merge Works"
+      }
+    },
     "columns": {
       "name": "Name"
     }

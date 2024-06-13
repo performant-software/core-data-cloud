@@ -1,12 +1,12 @@
 // @flow
 
-import { BaseService } from '@performant-software/shared-components';
 import InstanceTransform from '../transforms/Instance';
+import MergeableService from './Mergeable';
 
 /**
  * Class responsible for handling all Instance API requests.
  */
-class Instances extends BaseService {
+class Instances extends MergeableService {
   /**
    * Returns the Instance base URL.
    *

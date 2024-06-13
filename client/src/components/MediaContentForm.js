@@ -48,15 +48,17 @@ const MediaContentForm = (props: Props) => {
         onChange={props.onTextInputChange.bind(this, 'name')}
         value={props.item.name}
       />
-      <UserDefinedFieldsForm
-        data={props.item.user_defined}
-        defineableId={props.item.project_model_id}
-        defineableType='CoreDataConnector::ProjectModel'
-        isError={props.isError}
-        onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
-        onClearValidationError={props.onClearValidationError}
-        tableName='CoreDataConnector::MediaContent'
-      />
+      { props.item.project_model_id && (
+        <UserDefinedFieldsForm
+          data={props.item.user_defined}
+          defineableId={props.item.project_model_id}
+          defineableType='CoreDataConnector::ProjectModel'
+          isError={props.isError}
+          onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
+          onClearValidationError={props.onClearValidationError}
+          tableName='CoreDataConnector::MediaContent'
+        />
+      )}
     </Form>
   );
 };

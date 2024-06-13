@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_08_185610) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_31_180143) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -225,6 +225,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_08_185610) do
     t.integer "faircopy_cloud_project_model_id"
   end
 
+  create_table "core_data_connector_record_merges", force: :cascade do |t|
+    t.string "mergeable_type"
+    t.bigint "mergeable_id"
+    t.string "merged_uuid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mergeable_type", "mergeable_id"], name: "index_core_data_connector_record_merges_on_mergeable"
+  end
+
   create_table "core_data_connector_relationships", force: :cascade do |t|
     t.bigint "project_model_relationship_id"
     t.string "primary_record_type"
@@ -235,6 +244,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_08_185610) do
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
     t.integer "z_relationship_id"
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.index ["primary_record_type", "primary_record_id"], name: "index_core_data_connector_relationships_on_primary_record"
     t.index ["project_model_relationship_id"], name: "index_cdc_relationships_on_project_model_relationship_id"
     t.index ["related_record_type", "related_record_id"], name: "index_core_data_connector_relationships_on_related_record"

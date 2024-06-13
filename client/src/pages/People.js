@@ -19,6 +19,10 @@ import ProjectContext from '../context/Project';
 import Views from '../constants/ListViews';
 import useParams from '../hooks/ParsedParams';
 import WindowUtils from '../utils/Window';
+import useSelectable from '../hooks/Selectable';
+import MergeButton from '../components/MergeButton';
+import PeopleUtils from '../utils/People';
+import _ from 'underscore';
 
 const People: AbstractComponent<any> = () => {
   const [view, setView] = useState(Views.all);
@@ -28,6 +32,7 @@ const People: AbstractComponent<any> = () => {
   const { projectModelId } = useParams();
   const { t } = useTranslation();
 
+  const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
 
   /**
@@ -86,8 +91,41 @@ const People: AbstractComponent<any> = () => {
           location: 'top',
           onClick: () => navigate('new')
         }}
+        buttons={[{
+          render: () => (
+            <MergeButton
+              attributes={[{
+                name: 'uuid',
+                label: t('Common.actions.merge.uuid')
+              }, {
+                name: 'person_names',
+                label: t('People.actions.merge.names'),
+                array: true,
+                names: true,
+                resolve: (personName) => PeopleUtils.formatName(personName)
+              }, {
+                name: 'biography',
+                label: t('People.actions.merge.biography')
+              }]}
+              ids={selectedItems}
+              onLoad={(id) => (
+                PeopleService
+                  .fetchOne(id)
+                  .then(({ data }) => data.person)
+              )}
+              onSave={(person) => (
+                PeopleService
+                  .mergeRecords(person, selectedItems)
+                  .then(({ data }) => data.person)
+              )}
+              projectModelId={projectModelId}
+              title={t('People.actions.merge.title')}
+            />
+          )
+        }]}
         collectionName='people'
         columns={columns}
+        isRowSelected={isSelected}
         key={view}
         onDelete={(place) => PeopleService.delete(place)}
         onLoad={(params) => (
@@ -101,7 +139,9 @@ const People: AbstractComponent<any> = () => {
             })
             .finally(() => WindowUtils.scrollToTop())
         )}
+        onRowSelect={onRowSelect}
         searchable
+        selectable
         session={{
           key: `people_${projectModelId}`,
           storage: localStorage

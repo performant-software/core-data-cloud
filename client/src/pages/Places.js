@@ -3,6 +3,7 @@
 import { ListTable } from '@performant-software/semantic-components';
 import { useUserDefinedColumns } from '@performant-software/user-defined-fields';
 import React, {
+  useCallback,
   useContext,
   useMemo,
   useState,
@@ -14,10 +15,12 @@ import { TfiMapAlt } from 'react-icons/tfi';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 import ListViewMenu from '../components/ListViewMenu';
+import MergeButton from '../components/MergeButton';
 import PlacesService from '../services/Places';
 import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
+import useSelectable from '../hooks/Selectable';
 import Views from '../constants/ListViews';
 import WindowUtils from '../utils/Window';
 
@@ -29,6 +32,7 @@ const Places: AbstractComponent<any> = () => {
   const { projectModelId } = useParams();
   const { t } = useTranslation();
 
+  const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
 
   /**
@@ -44,6 +48,17 @@ const Places: AbstractComponent<any> = () => {
     sortable: true,
     hidden: true
   }, ...userDefinedColumns], [userDefinedColumns]);
+
+  /**
+   * Renders a string representation of the place geometry for the passed place.
+   *
+   * @type {unknown}
+   */
+  const renderPlaceGeometry = useCallback((place) => place.place_geometry?.geometry_json && (
+    <pre>
+      { JSON.stringify(place.place_geometry?.geometry_json, undefined, 2) }
+    </pre>
+  ), []);
 
   if (loading) {
     return null;
@@ -83,8 +98,47 @@ const Places: AbstractComponent<any> = () => {
           location: 'top',
           onClick: () => navigate('new')
         }}
+        buttons={[{
+          render: () => (
+            <MergeButton
+              attributes={[{
+                name: 'uuid',
+                label: t('Common.actions.merge.uuid')
+              }, {
+                name: 'place_names',
+                label: t('Places.actions.merge.names'),
+                array: true,
+                names: true,
+                resolve: (placeName) => placeName.name
+              }, {
+                name: 'place_layers',
+                label: t('Places.actions.merge.layers'),
+                array: true,
+                resolve: (placeLayer) => placeLayer.name
+              }, {
+                name: 'place_geometry',
+                label: t('Places.actions.merge.geometry'),
+                resolve: renderPlaceGeometry
+              }]}
+              ids={selectedItems}
+              onLoad={(id) => (
+                PlacesService
+                  .fetchOne(id)
+                  .then(({ data }) => data.place)
+              )}
+              onSave={(place) => (
+                PlacesService
+                  .mergeRecords(place, selectedItems)
+                  .then(({ data }) => data.place)
+              )}
+              projectModelId={projectModelId}
+              title={t('Places.actions.merge.title')}
+            />
+          )
+        }]}
         collectionName='places'
         columns={columns}
+        isRowSelected={isSelected}
         key={view}
         onDelete={(place) => PlacesService.delete(place)}
         onLoad={(params) => (
@@ -98,7 +152,9 @@ const Places: AbstractComponent<any> = () => {
             })
             .finally(() => WindowUtils.scrollToTop())
         )}
+        onRowSelect={onRowSelect}
         searchable
+        selectable
         session={{
           key: `places_${projectModelId}`,
           storage: localStorage

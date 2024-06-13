@@ -50,6 +50,7 @@ const ProjectModelsMenu = () => {
   return (
     <Dropdown
       className={cx(styles.projectModelsMenu, styles.ui, styles.dropdown)}
+      scrolling
       text={currentModel.name}
     >
       <Dropdown.Menu>

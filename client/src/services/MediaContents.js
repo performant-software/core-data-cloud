@@ -1,12 +1,12 @@
 // @flow
 
-import { BaseService } from '@performant-software/shared-components';
 import MediaContentTransform from '../transforms/MediaContent';
+import MergeableService from './Mergeable';
 
 /**
  * Class responsible for handling all media contents API requests.
  */
-class MediaContents extends BaseService {
+class MediaContents extends MergeableService {
   /**
    * Returns the media contents base URL.
    *

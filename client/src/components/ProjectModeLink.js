@@ -3,7 +3,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, matchPath, useLocation } from 'react-router-dom';
-import { Icon } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import PermissionsService from '../services/Permissions';
 import StringUtils from '../utils/String';
 import styles from './ProjectModeLink.module.css';
@@ -28,30 +28,28 @@ const ProjectModeLink = () => {
   const match = matchPath({ path: EDIT_PATH, end: true }, pathname);
   const isEditPath = StringUtils.isInteger(match?.params?.projectModelId);
 
-  if (isEditPath) {
-    return (
-      <Link
-        className={styles.projectModeLink}
-        to={`/projects/${projectId}/project_models`}
-      >
-        <Icon
-          name='cog'
-        />
-        { t('ProjectModeLink.labels.settings')}
-      </Link>
-    );
-  }
-
   return (
-    <Link
-      className={styles.projectModeLink}
-      to={`/projects/${projectId}/edit`}
+    <Button.Group
+      color='blue'
+      size='small'
     >
-      <Icon
-        name='edit'
+      <Button
+        active={isEditPath}
+        as={Link}
+        className={styles.projectModeLink}
+        content={t('ProjectModeLink.labels.edit')}
+        icon='pencil'
+        to={`/projects/${projectId}/edit`}
       />
-      { t('ProjectModeLink.labels.edit') }
-    </Link>
+      <Button
+        active={!isEditPath}
+        as={Link}
+        className={styles.projectModeLink}
+        content={t('ProjectModeLink.labels.settings')}
+        icon='cog'
+        to={`/projects/${projectId}/project_models`}
+      />
+    </Button.Group>
   );
 };
 

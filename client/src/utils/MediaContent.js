@@ -34,14 +34,45 @@ const getManifestURL = (projectModel, recordId, projectModelRelationshipId) => {
 
   let baseUrl;
 
-  if (projectModel.model_class_view === Types.Instance) {
-    baseUrl = 'instances';
-  } else if (projectModel.model_class_view === Types.Item) {
-    baseUrl = 'items';
-  } else if (projectModel.model_class_view === Types.Place) {
-    baseUrl = 'places';
-  } else if (projectModel.model_class_view === Types.Work) {
-    baseUrl = 'works';
+  switch (projectModel.model_class_view) {
+    case Types.Event:
+      baseUrl = 'events';
+      break;
+
+    case Types.Instance:
+      baseUrl = 'instances';
+      break;
+
+    case Types.Item:
+      baseUrl = 'items';
+      break;
+
+    case Types.MediaContent:
+      baseUrl = 'media_contents';
+      break;
+
+    case Types.Organization:
+      baseUrl = 'organizations';
+      break;
+
+    case Types.Person:
+      baseUrl = 'people';
+      break;
+
+    case Types.Place:
+      baseUrl = 'places';
+      break;
+
+    case Types.Taxonomy:
+      baseUrl = 'taxonomies';
+      break;
+
+    case Types.Work:
+      baseUrl = 'works';
+      break;
+
+    default:
+      baseUrl = null;
   }
 
   if (baseUrl) {
@@ -49,6 +80,7 @@ const getManifestURL = (projectModel, recordId, projectModelRelationshipId) => {
       process.env.REACT_APP_HOSTNAME,
       'core_data',
       'public',
+      'v1',
       baseUrl,
       recordId,
       'manifests',

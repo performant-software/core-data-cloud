@@ -1,13 +1,13 @@
 // @flow
 
-import { BaseTransform } from '@performant-software/shared-components';
+import MergeableTransform from './Mergeable';
 import type { Organization as OrganizationType } from '../types/Organization';
 import OrganizationNames from './OrganizationNames';
 
 /**
  * Class responsible for transforming organization records for POST/PUT requests.
  */
-class Organization extends BaseTransform {
+class Organization extends MergeableTransform {
   /**
    * Returns the person parameter name.
    *

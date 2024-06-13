@@ -1,12 +1,12 @@
 // @flow
 
-import { BaseService } from '@performant-software/shared-components';
+import MergeableService from './Mergeable';
 import PersonTransform from '../transforms/Person';
 
 /**
  * Class responsible for handling all person API requests.
  */
-class People extends BaseService {
+class People extends MergeableService {
   /**
    * Returns the person base URL.
    *

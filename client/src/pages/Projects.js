@@ -4,11 +4,10 @@ import { ItemList, ItemViews } from '@performant-software/semantic-components';
 import React, { type AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IoSearchOutline } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
-import ProjectsService from '../services/Projects';
-import ProjectHeader from '../components/ProjectHeader';
-import ProjectDescription from '../components/ProjectDescription';
+import { Link, useNavigate } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
+import ProjectDescription from '../components/ProjectDescription';
+import ProjectsService from '../services/Projects';
 
 const Projects: AbstractComponent<any> = () => {
   const navigate = useNavigate();
@@ -22,18 +21,17 @@ const Projects: AbstractComponent<any> = () => {
         location: 'top',
         onClick: () => navigate('new')
       }}
-      asProps={() => ({
+      as={Link}
+      asProps={(project) => ({
+        to: `${project.id}/edit`,
         raised: true
       })}
       basic={false}
       collectionName='projects'
       defaultView={ItemViews.grid}
       hideToggle
-      renderHeader={(project) => (
-        <ProjectHeader
-          project={project}
-        />
-      )}
+      link
+      renderHeader={(project) => project.name}
       renderDescription={(project) => (
         <ProjectDescription
           project={project}
