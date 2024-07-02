@@ -25,7 +25,7 @@ class Session {
    * Destroys the current session by removing the data from local storage.
    */
   destroySession() {
-    localStorage.removeItem(SESSION_KEY);
+    localStorage.clear();
   }
 
   /**
