@@ -23,13 +23,12 @@ import {
 } from 'semantic-ui-react';
 import _ from 'underscore';
 import FileUtils from '../utils/File';
+import HttpUtils from '../utils/Http';
 import PermissionsService from '../services/Permissions';
 import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import ProjectsService from '../services/Projects';
 import styles from './ProjectImportExport.module.css';
 import useParams from '../hooks/ParsedParams';
-
-const DEFAULT_FILENAME = 'project-settings.json';
 
 const ProjectImportExport = () => {
   const [importConfiguration, setImportConfiguration] = useState(false);
@@ -51,44 +50,16 @@ const ProjectImportExport = () => {
   const transformVariables = useCallback(({ data }) => data.project?.join('\n'), []);
 
   /**
-   * Returns the filename for the "content-disposition" header for the passed response.
-   *
-   * @type {function({headers: *}): *}
-   */
-  const getFilename = useCallback(({ headers }) => {
-    let filename;
-
-    const header = headers['content-disposition'];
-
-    if (header) {
-      filename = header
-        .split(';')
-        .find((name) => name.includes('filename='))
-        .replace('filename=', '')
-        .replaceAll('"', '')
-        .trim();
-    }
-
-    return filename;
-  }, []);
-
-  /**
    * Converts the data in the passed response to a blob, creates a temporary anchor element, and downloads the file.
    *
    * @type {(function(*): void)|*}
    */
   const onDownloadData = useCallback((response) => {
-    const url = URL.createObjectURL(new Blob([response.data], { type: 'application/zip' }));
-    const filename = getFilename(response);
+    const { data, headers = {} } = response;
+    const disposition = headers['content-disposition'];
 
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-
-    const clickHandler = () => setTimeout(() => URL.revokeObjectURL(url), 150);
-    link.addEventListener('click', clickHandler, false);
-
-    link.click();
+    const filename = HttpUtils.getFilename(disposition);
+    FileUtils.downloadZip(data, filename);
   }, []);
 
   /**
@@ -101,7 +72,7 @@ const ProjectImportExport = () => {
 
     ProjectsService
       .exportConfiguration(projectId)
-      .then(({ data }) => FileUtils.downloadJSON(data.project, DEFAULT_FILENAME))
+      .then(({ data }) => FileUtils.downloadJSON(data.project, data.project?.name))
       .finally(() => setExportConfiguration(false));
   }, [projectId]);
 
