@@ -1,5 +1,5 @@
 #!/bin/bash
-until curl -s -f -o /dev/null "http://localhost:8108/helth"
+until curl -s -f -o /dev/null "http://localhost:8108/health"
 do
   echo "waiting for typesense"
   sleep 5
