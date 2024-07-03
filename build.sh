@@ -19,6 +19,7 @@ docker build \
        --build-arg REACT_APP_MAP_TILER_KEY=$REACT_APP_MAP_TILER_KEY \
        --build-arg SECRET_KEY_BASE=$SECRET_KEY_BASE \
        --build-arg TYPESENSE_API_KEY=$TYPESENSE_API_KEY \
+       --build-arg TYPESENSE_SEARCH_KEY=$TYPESENSE_SEARCH_KEY \
        -t core-data-cloud \
        .
 

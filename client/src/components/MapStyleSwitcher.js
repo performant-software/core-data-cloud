@@ -6,9 +6,14 @@ import { mapStyle, satelliteStyle } from '../constants/MapStyles';
 import cx from 'classnames';
 import styles from './MapStyleSwitcher.module.css';
 
-const MapStyleSwitcher = ({ baseStyle, setBaseStyle }) => {
+type Props = {
+  baseStyle: mapStyle | satelliteStyle,
+  setBaseStyle: React.Dispatch<React.SetStateAction<mapStyle | satelliteStyle>>
+}
+
+const MapStyleSwitcher = ({ baseStyle, setBaseStyle }: Props) => {
   const updateBaseStyle = () => {
-    setBaseStyle(baseStyle == mapStyle ? satelliteStyle : mapStyle);
+    setBaseStyle(baseStyle === mapStyle ? satelliteStyle : mapStyle);
   };
 
   return (
@@ -21,10 +26,10 @@ const MapStyleSwitcher = ({ baseStyle, setBaseStyle }) => {
         styles.button,
         styles.styleButton
       )}
-      color="white"
+      color='white'
       onClick={updateBaseStyle}
     >
-      <Icon name={baseStyle == mapStyle ? 'camera' : 'map'} />
+      <Icon name={baseStyle === mapStyle ? 'camera' : 'map'} />
     </Button>
   );
 };

@@ -1,13 +1,23 @@
 // @flow
 
-import { GeoJsonLayer, LayerMenu, MapControl, MapDraw, RasterLayer } from '@performant-software/geospatial';
-import { BooleanIcon, EmbeddedList, FileInputButton } from '@performant-software/semantic-components';
+import {
+  GeoJsonLayer,
+  LayerMenu,
+  MapControl,
+  MapDraw,
+  RasterLayer,
+} from '@performant-software/geospatial';
+import {
+  BooleanIcon,
+  EmbeddedList,
+  FileInputButton,
+} from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
 import cx from 'classnames';
 import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Header, Icon, Button } from 'semantic-ui-react';
+import { Form, Header, Icon } from 'semantic-ui-react';
 import _ from 'underscore';
 import type { Place as PlaceType } from '../types/Place';
 import PlaceLayerModal from './PlaceLayerModal';
@@ -18,29 +28,31 @@ import { mapStyle, satelliteStyle } from '../constants/MapStyles';
 import styles from './PlaceForm.module.css';
 
 type Props = EditContainerProps & {
-  item: PlaceType
+  item: PlaceType,
 };
 
 const { LayerTypes } = PlaceLayerUtils;
 
 const PlaceForm = (props: Props) => {
   const { t } = useTranslation();
-  const [baseStyle, setBaseStyle] = useState<string>(mapStyle);
+  const [baseStyle, setBaseStyle] = useState<mapStyle | satelliteStyle>(mapStyle);
 
   /**
    * Memo-izes the names of the passed place layers.
    */
-  const layerNames = useMemo(() => _.pluck(props.item.place_layers, 'name'), [props.item.place_layers]);
+  const layerNames = useMemo(
+    () => _.pluck(props.item.place_layers, 'name'),
+    [props.item.place_layers]
+  );
 
   /**
    * Parses the geometry for the passed layers.
    */
   const layers = useMemo(
-    () =>
-      _.map(props.item.place_layers, (layer) => ({
-        ...layer,
-        geometry: layer.geometry ? JSON.parse(layer.geometry) : undefined
-      })),
+    () => _.map(props.item.place_layers, (layer) => ({
+      ...layer,
+      geometry: layer.geometry ? JSON.parse(layer.geometry) : undefined,
+    })),
     [props.item.place_layers]
   );
 
@@ -75,7 +87,10 @@ const PlaceForm = (props: Props) => {
    *
    * @type {function(*): *}
    */
-  const onMapChange = useCallback((data) => props.onSetState({ place_geometry: { geometry_json: data } }), []);
+  const onMapChange = useCallback(
+    (data) => props.onSetState({ place_geometry: { geometry_json: data } }),
+    []
+  );
 
   /**
    * Sets the uploaded file as the GeoJSON object.
@@ -94,12 +109,12 @@ const PlaceForm = (props: Props) => {
       <MapDraw
         apiKey={process.env.REACT_APP_MAP_TILER_KEY}
         data={props.item.place_geometry?.geometry_json}
-        geocoding="point"
+        geocoding='point'
         mapStyle={baseStyle}
         onChange={onMapChange}
         onGeocodingSelection={onGeocodingSelection}
       >
-        <MapControl position="bottom-left">
+        <MapControl position='bottom-left'>
           <FileInputButton
             className={cx(
               'mapbox-gl-draw_ctrl-draw-btn',
@@ -108,75 +123,75 @@ const PlaceForm = (props: Props) => {
               styles.button,
               styles.uploadButton
             )}
-            color="white"
-            icon={<Icon name="cloud upload" />}
+            color='white'
+            icon={<Icon name='cloud upload' />}
             onSelection={onUpload}
           />
         </MapControl>
-        <MapControl position="top-right">
+        <MapControl position='top-right'>
           <MapStyleSwitcher baseStyle={baseStyle} setBaseStyle={setBaseStyle} />
         </MapControl>
         <LayerMenu names={layerNames}>{_.map(layers, renderLayer)}</LayerMenu>
       </MapDraw>
-      <Header content={t('PlaceForm.labels.names')} size="tiny" />
+      <Header content={t('PlaceForm.labels.names')} size='tiny' />
       <EmbeddedList
         actions={[
           {
             name: 'edit',
-            icon: 'pencil'
+            icon: 'pencil',
           },
           {
             name: 'delete',
-            icon: 'times'
-          }
+            icon: 'times',
+          },
         ]}
         addButton={{
           basic: false,
           color: 'dark gray',
           content: t('Common.buttons.addName'),
-          location: 'bottom'
+          location: 'bottom',
         }}
-        className="compact"
+        className='compact'
         columns={[
           {
             name: 'name',
-            label: t('PlaceForm.placeNames.columns.name')
+            label: t('PlaceForm.placeNames.columns.name'),
           },
           {
             name: 'primary',
             label: t('PlaceForm.placeNames.columns.primary'),
-            render: (placeName) => <BooleanIcon value={placeName.primary} />
-          }
+            render: (placeName) => <BooleanIcon value={placeName.primary} />,
+          },
         ]}
         configurable={false}
         items={props.item.place_names}
         modal={{
-          component: PlaceNameModal
+          component: PlaceNameModal,
         }}
         onSave={props.onSaveChildAssociation.bind(this, 'place_names')}
         onDelete={props.onDeleteChildAssociation.bind(this, 'place_names')}
       />
-      <Header content={t('PlaceForm.labels.layers')} size="tiny" />
+      <Header content={t('PlaceForm.labels.layers')} size='tiny' />
       <EmbeddedList
         actions={[
           {
-            name: 'edit'
+            name: 'edit',
           },
           {
-            name: 'delete'
-          }
+            name: 'delete',
+          },
         ]}
         addButton={{
           basic: false,
           color: 'dark gray',
-          location: 'bottom'
+          location: 'bottom',
         }}
-        className="compact"
+        className='compact'
         columns={[
           {
             name: 'name',
-            label: t('PlaceForm.placeLayers.columns.name')
-          }
+            label: t('PlaceForm.placeLayers.columns.name'),
+          },
         ]}
         configurable={false}
         items={props.item.place_layers}
@@ -184,8 +199,8 @@ const PlaceForm = (props: Props) => {
           component: PlaceLayerModal,
           props: {
             required: ['name'],
-            validate: PlaceLayerUtils.validate.bind(this)
-          }
+            validate: PlaceLayerUtils.validate.bind(this),
+          },
         }}
         onSave={props.onSaveChildAssociation.bind(this, 'place_layers')}
         onDelete={props.onDeleteChildAssociation.bind(this, 'place_layers')}
@@ -194,11 +209,11 @@ const PlaceForm = (props: Props) => {
         <UserDefinedFieldsForm
           data={props.item.user_defined}
           defineableId={props.item.project_model_id}
-          defineableType="CoreDataConnector::ProjectModel"
+          defineableType='CoreDataConnector::ProjectModel'
           isError={props.isError}
           onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
           onClearValidationError={props.onClearValidationError}
-          tableName="CoreDataConnector::Place"
+          tableName='CoreDataConnector::Place'
         />
       )}
     </Form>

@@ -41,6 +41,7 @@ jobs:
           REACT_APP_MAP_TILER_KEY: ${{ secrets.REACT_APP_MAP_TILER_KEY }}
           SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
           TYPESENSE_API_KEY: ${{ secrets.TYPESENSE_API_KEY }}
+          TYPESENSE_SEARCH_KEY: ${{ secrets.TYPESENSE_SEARCH_KEY }}
 
         run: |
           chmod +x build.sh
