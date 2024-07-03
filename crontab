@@ -1,1 +1,1 @@
-*/5 * * * * /bin/bash -l -c '/app/update.sh >> /app/cron.log 2>&1'
+*/10 * * * * /bin/bash -l -c '/app/update.sh >> /app/cron.log 2>&1'
