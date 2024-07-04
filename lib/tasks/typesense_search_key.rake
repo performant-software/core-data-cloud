@@ -17,8 +17,6 @@ namespace :core_data_cloud do
 
     collection_name = 'gca'
 
-    client.collections[collection_name].delete
-
     schema = {
       name: collection_name,
       enable_nested_fields: true,
@@ -39,6 +37,14 @@ namespace :core_data_cloud do
 
     client.collections.create(schema)
     collection = client.collections[collection_name]
+
+    client.keys.create(
+      description: 'Search-only GCA',
+      actions: ['documents:search'],
+      collections: [collection_name],
+      value: ENV['TYPESENSE_SEARCH_KEY'],
+      expires_at: (Time.now + 10.years).to_i
+    )
 
     model_classes = CoreDataConnector::ProjectModel
                     .where(id: [2, 6])
@@ -83,13 +89,6 @@ namespace :core_data_cloud do
                                })
     end
 
-    client.keys.create(
-      description: 'Search-only GCA',
-      actions: ['documents:search'],
-      collections: [collection_name],
-      value: ENV['TYPESENSE_SEARCH_KEY'],
-      expires_at: (Time.now + 10.years).to_i
-    )
   rescue Typesense::Error::ObjectAlreadyExists
     puts 'Key already exists'
   end
