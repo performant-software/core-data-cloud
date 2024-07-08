@@ -4,7 +4,12 @@ import { FileInputButton, Toaster } from '@performant-software/semantic-componen
 import cx from 'classnames';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { BsDatabaseFillUp } from 'react-icons/bs';
+import {
+  BsArrowBarDown,
+  BsArrowBarUp,
+  BsDatabaseFillDown,
+  BsDatabaseFillUp
+} from 'react-icons/bs';
 import { FaCode } from 'react-icons/fa';
 import {
   Button,
@@ -18,17 +23,17 @@ import {
 } from 'semantic-ui-react';
 import _ from 'underscore';
 import FileUtils from '../utils/File';
+import HttpUtils from '../utils/Http';
 import PermissionsService from '../services/Permissions';
 import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import ProjectsService from '../services/Projects';
 import styles from './ProjectImportExport.module.css';
 import useParams from '../hooks/ParsedParams';
 
-const DEFAULT_FILENAME = 'project-settings.json';
-
 const ProjectImportExport = () => {
   const [importConfiguration, setImportConfiguration] = useState(false);
   const [exportConfiguration, setExportConfiguration] = useState(false);
+  const [exportData, setExportData] = useState(false);
   const [exportVariables, setExportVariables] = useState(false);
   const [importData, setImportData] = useState(false);
   const [error, setError] = useState(null);
@@ -45,6 +50,19 @@ const ProjectImportExport = () => {
   const transformVariables = useCallback(({ data }) => data.project?.join('\n'), []);
 
   /**
+   * Converts the data in the passed response to a blob, creates a temporary anchor element, and downloads the file.
+   *
+   * @type {(function(*): void)|*}
+   */
+  const onDownloadData = useCallback((response) => {
+    const { data, headers = {} } = response;
+    const disposition = headers['content-disposition'];
+
+    const filename = HttpUtils.getFilename(disposition);
+    FileUtils.downloadZip(data, filename);
+  }, []);
+
+  /**
    * Calls the export configuration API endpoint and downloads the resulting file.
    *
    * @type {(function(): void)|*}
@@ -54,9 +72,38 @@ const ProjectImportExport = () => {
 
     ProjectsService
       .exportConfiguration(projectId)
-      .then(({ data }) => FileUtils.downloadJSON(data.project, DEFAULT_FILENAME))
+      .then(({ data }) => FileUtils.downloadJSON(data.project, data.project?.name))
       .finally(() => setExportConfiguration(false));
   }, [projectId]);
+
+  /**
+   * Sets the error for the export API on the state.
+   *
+   * @type {(function({response: {data: *}}): void)|*}
+   */
+  const onExportError = useCallback(({ response: { data } }) => {
+    const { errors } = JSON.parse(new TextDecoder().decode(data));
+
+    setError({
+      content: _.first(errors),
+      header: t('ProjectImportExport.errors.export.header')
+    });
+  }, []);
+
+  /**
+   * Calls the /projects/:id/export_data API endpoint.
+   *
+   * @type {(function(): void)|*}
+   */
+  const onExportData = useCallback(() => {
+    setExportData(true);
+
+    ProjectsService
+      .exportData(projectId)
+      .then(onDownloadData)
+      .catch(onExportError)
+      .finally(() => setExportData(false));
+  }, [onExportError, projectId]);
 
   /**
    * Calls the export variables API endpoint and opens the content in a new window.
@@ -136,6 +183,24 @@ const ProjectImportExport = () => {
         className={cx(styles.ui, styles.segments)}
       >
         <Segment
+          as={Button}
+          className={cx(styles.ui, styles.segment)}
+          loading={exportConfiguration}
+          onClick={onExportConfiguration}
+          padded
+        >
+          <Header
+            content={t('ProjectImportExport.actions.configuration.export.header')}
+            icon={(
+              <Icon>
+                <BsArrowBarUp />
+              </Icon>
+            )}
+            size='small'
+            subheader={t('ProjectImportExport.actions.configuration.export.content')}
+          />
+        </Segment>
+        <Segment
           as={FileInputButton}
           className={cx(styles.ui, styles.segment)}
           loading={importConfiguration}
@@ -144,27 +209,17 @@ const ProjectImportExport = () => {
         >
           <Header
             content={t('ProjectImportExport.actions.configuration.import.header')}
-            icon='cloud upload'
+            icon={(
+              <Icon>
+                <BsArrowBarDown />
+              </Icon>
+            )}
             size='small'
             subheader={t('ProjectImportExport.actions.configuration.import.content')}
           />
         </Segment>
-        <Segment
-          as={Button}
-          className={cx(styles.ui, styles.segment)}
-          loading={exportConfiguration}
-          padded
-          onClick={onExportConfiguration}
-        >
-          <Header
-            content={t('ProjectImportExport.actions.configuration.export.header')}
-            icon='cloud download'
-            size='small'
-            subheader={t('ProjectImportExport.actions.configuration.export.content')}
-          />
-        </Segment>
       </SegmentGroup>
-      { PermissionsService.canImportData() && (
+      { (PermissionsService.canImportData() || PermissionsService.canExportData()) && (
         <>
           <Header
             content={t('ProjectImportExport.labels.data')}
@@ -172,24 +227,46 @@ const ProjectImportExport = () => {
           <SegmentGroup
             className={cx(styles.ui, styles.segments)}
           >
-            <Segment
-              as={FileInputButton}
-              className={cx(styles.ui, styles.segment)}
-              loading={importData}
-              onSelection={onImportData}
-              padded
-            >
-              <Header
-                content={t('ProjectImportExport.actions.data.import.header')}
-                icon={(
-                  <Icon>
-                    <BsDatabaseFillUp />
-                  </Icon>
-                )}
-                size='small'
-                subheader={t('ProjectImportExport.actions.data.import.content')}
-              />
-            </Segment>
+            { PermissionsService.canExportData() && (
+              <Segment
+                as={Button}
+                className={cx(styles.ui, styles.segment)}
+                loading={exportData}
+                onClick={onExportData}
+                padded
+              >
+                <Header
+                  content={t('ProjectImportExport.actions.data.export.header')}
+                  icon={(
+                    <Icon>
+                      <BsDatabaseFillUp />
+                    </Icon>
+                  )}
+                  size='small'
+                  subheader={t('ProjectImportExport.actions.data.export.content')}
+                />
+              </Segment>
+            )}
+            { PermissionsService.canImportData() && (
+              <Segment
+                as={FileInputButton}
+                className={cx(styles.ui, styles.segment)}
+                loading={importData}
+                onSelection={onImportData}
+                padded
+              >
+                <Header
+                  content={t('ProjectImportExport.actions.data.import.header')}
+                  icon={(
+                    <Icon>
+                      <BsDatabaseFillDown />
+                    </Icon>
+                  )}
+                  size='small'
+                  subheader={t('ProjectImportExport.actions.data.import.content')}
+                />
+              </Segment>
+            )}
           </SegmentGroup>
         </>
       )}
