@@ -3,13 +3,16 @@
 import { LazyMedia } from '@performant-software/semantic-components';
 import type { FileUploadProps } from '@performant-software/semantic-components/types';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
+import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
 import React from 'react';
-import { Button, Form, Item } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
+import { Button, Form, Item } from 'semantic-ui-react';
+import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 
 type Props = EditContainerProps & FileUploadProps;
 
 const MediaContentUploadForm = (props: Props) => {
+  const { foreignProjectModelId, projectModelRelationship } = useProjectModelRelationship();
   const { t } = useTranslation();
 
   return (
@@ -31,6 +34,30 @@ const MediaContentUploadForm = (props: Props) => {
           required={props.isRequired('name')}
           value={props.item.name}
         />
+        { foreignProjectModelId && (
+          <UserDefinedFieldsForm
+            data={props.item.user_defined}
+            defineableId={foreignProjectModelId}
+            defineableType='CoreDataConnector::ProjectModel'
+            isError={props.isError}
+            onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
+            onClearValidationError={props.onClearValidationError}
+            required
+            tableName='CoreDataConnector::MediaContent'
+          />
+        )}
+        { projectModelRelationship && (
+          <UserDefinedFieldsForm
+            data={props.item.user_defined}
+            defineableId={projectModelRelationship.id}
+            defineableType='CoreDataConnector::ProjectModelRelationship'
+            isError={props.isError}
+            onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
+            onClearValidationError={props.onClearValidationError}
+            required
+            tableName='CoreDataConnector::Relationship'
+          />
+        )}
         <Button
           basic
           color='red'

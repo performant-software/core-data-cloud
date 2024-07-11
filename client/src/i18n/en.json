@@ -254,6 +254,11 @@
       "name": "Name"
     }
   },
+  "MediaContentsUploadModal": {
+    "labels": {
+      "name": "Name"
+    }
+  },
   "MediaContents": {
     "actions": {
       "merge": {

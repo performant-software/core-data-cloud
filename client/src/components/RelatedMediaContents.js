@@ -28,6 +28,7 @@ const Modal = {
 
 const RelatedMediaContents = () => {
   const [count, setCount] = useState(0);
+  const [errors, setErrors] = useState(null);
   const [modal, setModal] = useState(null);
   const [saved, setSaved] = useState(false);
 
@@ -59,12 +60,13 @@ const RelatedMediaContents = () => {
    *  }
    * }
    */
-  const createRelationship = useCallback((mediaContent) => ({
+  const createRelationship = useCallback((mediaContent, userDefined = null) => ({
     project_model_relationship_id: projectModelRelationship.id,
     primary_record_id: itemId,
     primary_record_type: projectModel?.model_class,
     related_record_id: mediaContent.id,
-    related_record_type: 'CoreDataConnector::MediaContent'
+    related_record_type: 'CoreDataConnector::MediaContent',
+    user_defined: userDefined
   }), [projectModel, projectModelRelationship]);
 
   /**
@@ -79,12 +81,13 @@ const RelatedMediaContents = () => {
    *  }
    * }
    */
-  const createInverseRelationship = useCallback((mediaContent) => ({
+  const createInverseRelationship = useCallback((mediaContent, userDefined = null) => ({
     project_model_relationship_id: projectModelRelationship.id,
     primary_record_id: mediaContent.id,
     primary_record_type: 'CoreDataConnector::MediaContent',
     related_record_id: itemId,
-    related_record_type: projectModel?.model_class
+    related_record_type: projectModel?.model_class,
+    user_defined: userDefined
   }), [projectModel, projectModelRelationship]);
 
   /**
@@ -100,6 +103,34 @@ const RelatedMediaContents = () => {
   }, []);
 
   /**
+   * Closes the modal and sets the "saved" state to true.
+   *
+   * @type {(function(): void)|*}
+   */
+  const afterSave = useCallback(() => {
+    setModal(null);
+    setSaved(true);
+  }, []);
+
+  /**
+   * Resolves any error messages for user-defined fields and sets them on the state.
+   *
+   * @type {(function({response: {data: *}}): void)|*}
+   */
+  const onError = useCallback(({ response: { data } }) => {
+    const errorMessages = [];
+
+    _.each(data.errors, (error) => {
+      if (error.user_defined && _.isArray(error.user_defined)) {
+        const [, message] = _.first(error.user_defined);
+        errorMessages.push(message);
+      }
+    });
+
+    setErrors(errorMessages);
+  }, []);
+
+  /**
    * Calls the onRelationshipLoad function, then afterLoad.
    *
    * @type {function(*): Promise<T>}
@@ -112,19 +143,17 @@ const RelatedMediaContents = () => {
    * @type {(function(*): void)|*}
    */
   const onModalSave = useCallback((mediaContents) => {
-    const relationships = _.map(mediaContents, (mediaContent) => (
+    const relationships = _.map(mediaContents, ({ mediaContent, userDefined }) => (
       projectModelRelationship.inverse
-        ? createInverseRelationship(mediaContent)
-        : createRelationship(mediaContent)
+        ? createInverseRelationship(mediaContent, userDefined)
+        : createRelationship(mediaContent, userDefined)
     ));
 
     RelationshipsService
       .upload(relationships)
-      .then(() => {
-        setModal(null);
-        setSaved(true);
-      });
-  }, [createInverseRelationship, createRelationship, projectModelRelationship]);
+      .then(afterSave)
+      .catch(onError);
+  }, [afterSave, createInverseRelationship, createRelationship, onError, projectModelRelationship]);
 
   return (
     <>
@@ -198,6 +227,7 @@ const RelatedMediaContents = () => {
       />
       { modal === Modal.upload && (
         <MediaContentsUploadModal
+          errors={errors}
           onClose={() => setModal(null)}
           onSave={onModalSave}
         />
