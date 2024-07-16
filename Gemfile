@@ -31,22 +31,19 @@ gem 'jwt', '~> 2.4', '>= 2.4.1'
 gem 'bcrypt', '~> 3.1.18'
 
 # Resource API
-#gem 'resource_api', git: 'https://github.com/performant-software/resource-api.git', tag: 'v0.5.7'
-gem 'resource_api', path: '../resource-api'
+gem 'resource_api', git: 'https://github.com/performant-software/resource-api.git', tag: 'v0.5.9'
 
 # Authentication
 gem 'jwt_auth', git: 'https://github.com/performant-software/jwt-auth.git', tag: 'v0.1.2'
 
 # Core data
-#gem 'core_data_connector', git: 'https://github.com/performant-software/core-data-connector.git', tag: 'v0.1.53'
-gem 'core_data_connector', path: '../core-data-connector'
+gem 'core_data_connector', git: 'https://github.com/performant-software/core-data-connector.git', tag: 'v0.1.54'
 
 # IIIF
 gem 'triple_eye_effable', git: 'https://github.com/performant-software/triple-eye-effable.git', tag: 'v0.2.1'
 
 # User defined fields
-#gem 'user_defined_fields', git: 'https://github.com/performant-software/user-defined-fields.git', tag: 'v0.1.9'
-gem 'user_defined_fields', path: '../user-defined-fields'
+gem 'user_defined_fields', git: 'https://github.com/performant-software/user-defined-fields.git', tag: 'v0.1.10'
 
 # Fuzzy dates
 gem 'fuzzy_dates', git: 'https://github.com/performant-software/fuzzy-dates.git', tag: 'v0.1.0'
