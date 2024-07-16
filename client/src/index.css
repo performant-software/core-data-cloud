@@ -74,6 +74,11 @@ textarea {
   box-shadow: none;
 }
 
+.list.data-table-column-selector > .header > .ui.grid > .row > .column > .ui.menu .ui.button:focus,
+.list.data-table-column-selector > .header > .ui.grid > .row > .column > .ui.menu .ui.button:hover {
+  background-color: transparent !important;
+}
+
 .list.compact.data-table-column-selector > .header > .ui.grid > .row > .column > .ui.menu > .menu.list-header-menu > .configure-button.ui.button {
   border: none;
   box-shadow: none;
