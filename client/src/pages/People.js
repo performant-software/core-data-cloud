@@ -33,7 +33,6 @@ const People: AbstractComponent<any> = () => {
 
   const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
-  console.log(userDefinedColumns);
 
   /**
    * Memo-izes the people columns.
