@@ -11,7 +11,8 @@ import ManifestLimitIcon from './ManifestLimitIcon';
 import ManifestLimitMessage from './ManifestLimitMessage';
 import ManifestUrlButton from './ManifestUrlButton';
 import MediaContentUtils from '../utils/MediaContent';
-import MediaContentsSelectize from './MediaContentsSelectize';
+import MediaContentsSelector from './MediaContentsSelector';
+import MediaContentsService from '../services/MediaContents';
 import MediaContentsUploadModal from './MediaContentsUploadModal';
 import ProjectContext from '../context/Project';
 import RelatedMediaContentModal from './RelatedMediaContentModal';
@@ -138,6 +139,16 @@ const RelatedMediaContents = () => {
   const onLoad = useCallback((params) => onRelationshipLoad(params).then(afterLoad), [afterLoad, onRelationshipLoad]);
 
   /**
+   * Calls the `/api/media_contents` API endpoint.
+   *
+   * @type {function(*): Promise<AxiosResponse<T>>}
+   */
+  const onLoadMedia = useCallback((params) => (
+    MediaContentsService
+      .fetchAll({ ...params, project_model_id: foreignProjectModelId })
+  ), [foreignProjectModelId]);
+
+  /**
    * Uploads the passed media contents as related record relationships.
    *
    * @type {(function(*): void)|*}
@@ -233,9 +244,10 @@ const RelatedMediaContents = () => {
         />
       )}
       { modal === Modal.link && (
-        <MediaContentsSelectize
-          projectModelId={foreignProjectModelId}
+        <MediaContentsSelector
+          collectionName='media_contents'
           onClose={() => setModal(null)}
+          onLoad={onLoadMedia}
           onSave={onModalSave}
         />
       )}

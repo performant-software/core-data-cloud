@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import _ from 'underscore';
 import MediaContentUploadForm from './MediaContentUploadForm';
 import MediaContentsService from '../services/MediaContents';
+import UserDefinedFieldsUtils from '../utils/UserDefinedFields';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 
 type Props = {
@@ -18,8 +19,6 @@ type Props = {
   onClose: () => void,
   onSave: () => Promise<any>
 };
-
-const USER_DEFINED_REGEX = /(user_defined\[)(.+)(\])/g;
 
 const MediaContentsUploadModal = (props: Props) => {
   const [complete, setComplete] = useState(false);
@@ -76,7 +75,7 @@ const MediaContentsUploadModal = (props: Props) => {
     let value;
 
     if (key.includes('user_defined') && item.user_defined) {
-      const uuid = _.first(Array.from(key.matchAll(USER_DEFINED_REGEX)))[2];
+      const uuid = UserDefinedFieldsUtils.parseUuid(key);
       value = item.user_defined[uuid];
     } else {
       value = item[key];
@@ -162,6 +161,10 @@ const MediaContentsUploadModal = (props: Props) => {
       closeOnComplete={false}
       errors={props.errors}
       itemComponent={MediaContentUploadForm}
+      itemComponentProps={{
+        projectModelFields,
+        projectModelRelationshipFields
+      }}
       onAddFile={(file) => ({
         project_model_id: foreignProjectModelId,
         name: file.name,

@@ -271,6 +271,13 @@
   "MediaContentsSelectize": {
     "title": "Select Media"
   },
+  "MediaContentsSelector": {
+    "errors": {
+      "header": "There was an error selecting media",
+      "required": "Image {{name}} - The following fields are required: {{fields}}"
+    },
+    "title": "Select Media"
+  },
   "MergeButton": {
     "buttons": {
       "merge": "Merge",

@@ -3,13 +3,19 @@
 import { LazyMedia } from '@performant-software/semantic-components';
 import type { FileUploadProps } from '@performant-software/semantic-components/types';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
-import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
+import {
+  UserDefinedFieldsForm,
+  type UserDefinedField as UserDefinedFieldType
+} from '@performant-software/user-defined-fields';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Form, Item } from 'semantic-ui-react';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 
-type Props = EditContainerProps & FileUploadProps;
+type Props = EditContainerProps & FileUploadProps & {
+  projectModelFields: Array<UserDefinedFieldType>,
+  projectModelRelationshipFields: Array<UserDefinedFieldType>
+};
 
 const MediaContentUploadForm = (props: Props) => {
   const { foreignProjectModelId, projectModelRelationship } = useProjectModelRelationship();
@@ -39,6 +45,7 @@ const MediaContentUploadForm = (props: Props) => {
             data={props.item.user_defined}
             defineableId={foreignProjectModelId}
             defineableType='CoreDataConnector::ProjectModel'
+            fields={props.projectModelFields}
             isError={props.isError}
             onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
             onClearValidationError={props.onClearValidationError}
@@ -51,6 +58,7 @@ const MediaContentUploadForm = (props: Props) => {
             data={props.item.user_defined}
             defineableId={projectModelRelationship.id}
             defineableType='CoreDataConnector::ProjectModelRelationship'
+            fields={props.projectModelRelationshipFields}
             isError={props.isError}
             onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
             onClearValidationError={props.onClearValidationError}
