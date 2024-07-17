@@ -27,6 +27,9 @@ jobs:
         env:
           AUTHENTICATION_EXPIRATION: ${{ secrets.AUTHENTICATION_EXPIRATION }}
           AWS_ECR: ${{ secrets.AWS_ECR }}
+          AWS_ECS_CLUSTER: ${{ secrets.AWS_ECS_CLUSTER }}
+          AWS_ECS_SERVICE: ${{ secrets.AWS_ECS_SERVICE }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
           DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
           DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
           DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
