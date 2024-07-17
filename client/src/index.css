@@ -20,6 +20,13 @@ textarea {
   color: #FFFFFF;
 }
 
+.ui.button.basic.borderless,
+.ui.button.basic.borderless:hover,
+.ui.button.basic.borderless:focus {
+  border: none !important;
+  box-shadow: none !important;
+}
+
 .list > .header > .ui.grid .row > .column > .ui.menu input {
   background: transparent;
 }
@@ -74,6 +81,11 @@ textarea {
   box-shadow: none;
 }
 
+.list.data-table-column-selector > .header > .ui.grid > .row > .column > .ui.menu .ui.button:focus,
+.list.data-table-column-selector > .header > .ui.grid > .row > .column > .ui.menu .ui.button:hover {
+  background-color: transparent !important;
+}
+
 .list.compact.data-table-column-selector > .header > .ui.grid > .row > .column > .ui.menu > .menu.list-header-menu > .configure-button.ui.button {
   border: none;
   box-shadow: none;
@@ -108,4 +120,26 @@ textarea {
 .list.compact > .item-list > .ui.cards > .ui.card > .extra > .ui.button {
   border: none;
   box-shadow: none !important;
+}
+
+.media-contents-selector .lazy-image {
+  border: none;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.media-contents-selector .item-list .cards > .card > .content {
+  max-width: 100%;
+}
+
+.media-contents-selector .item-list .cards .lazy-image > .image {
+  width: 100%;
+}
+
+.media-contents-selector .item-list .items > .item > .image {
+  width: unset;
+}
+
+.media-contents-selector .list > .header input {
+  margin-right: -1em;
 }

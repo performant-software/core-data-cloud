@@ -1,0 +1,16 @@
+.mediaContentsSelector .grid > .column {
+  max-height: calc(80vh - 10em);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.mediaContentsSelector .grid > .column > .itemList .truncateName {
+  font-size: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-align: left;
+}

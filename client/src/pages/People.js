@@ -13,16 +13,15 @@ import { FaUsers } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 import ListViewMenu from '../components/ListViewMenu';
+import MergeButton from '../components/MergeButton';
 import PeopleService from '../services/People';
+import PeopleUtils from '../utils/People';
 import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';
 import Views from '../constants/ListViews';
 import useParams from '../hooks/ParsedParams';
-import WindowUtils from '../utils/Window';
 import useSelectable from '../hooks/Selectable';
-import MergeButton from '../components/MergeButton';
-import PeopleUtils from '../utils/People';
-import _ from 'underscore';
+import WindowUtils from '../utils/Window';
 
 const People: AbstractComponent<any> = () => {
   const [view, setView] = useState(Views.all);
@@ -140,6 +139,7 @@ const People: AbstractComponent<any> = () => {
             .finally(() => WindowUtils.scrollToTop())
         )}
         onRowSelect={onRowSelect}
+        perPageOptions={[10, 25, 50, 100]}
         searchable
         selectable
         session={{
