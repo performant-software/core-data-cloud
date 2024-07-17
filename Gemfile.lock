@@ -66,26 +66,6 @@ GIT
       rails (>= 6.0.3.2, < 8)
       resource_api
 
-PATH
-  remote: ../core-data-connector
-  specs:
-    core_data_connector (0.1.0)
-      activerecord-postgis-adapter (~> 8.0)
-      faker
-      fuzzy_dates
-      jwt (~> 2.7.1)
-      jwt_auth
-      rack-cors (~> 2.0.1)
-      rails (>= 6.0.3.2, < 8)
-      resource_api
-      rexml (~> 3.2)
-      rgeo-geojson (~> 2.1)
-      rubyzip (~> 2.3.2)
-      triple_eye_effable
-      typesense (~> 0.14)
-      typhoeus (~> 1.4)
-      user_defined_fields
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -179,6 +159,8 @@ GEM
     faker (3.4.2)
       i18n (>= 1.8.11, < 2)
     ffi (1.17.0-arm64-darwin)
+    ffi (1.17.0-x86_64-darwin)
+    ffi (1.17.0-x86_64-linux-gnu)
     globalid (1.1.0)
       activesupport (>= 5.0)
     httparty (0.20.0)
