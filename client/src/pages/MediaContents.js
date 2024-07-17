@@ -131,6 +131,7 @@ const MediaContents = () => {
         )}
         onDelete={(mediaContent) => MediaContentsService.delete(mediaContent)}
         onRowSelect={onRowSelect}
+        perPageOptions={[10, 25, 50, 100]}
         renderEmptyList={() => null}
         renderHeader={(mediaContent) => mediaContent.name}
         renderImage={(mediaContent) => (
