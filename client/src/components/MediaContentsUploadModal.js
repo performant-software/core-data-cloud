@@ -4,7 +4,8 @@ import { FileUploadModal } from '@performant-software/semantic-components';
 import { UserDefinedFieldsService } from '@performant-software/user-defined-fields';
 import React, {
   useCallback,
-  useEffect, useMemo,
+  useEffect,
+  useMemo,
   useState
 } from 'react';
 import { useTranslation } from 'react-i18next';
