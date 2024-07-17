@@ -101,6 +101,8 @@ const PlaceForm = (props: Props) => {
       .then((json) => props.onSetState({ place_geometry: { geometry_json: json } }));
   }, []);
 
+  // TODO: Disable map zoom on scroll?
+
   return (
     <Form
       className={styles.placeForm}
