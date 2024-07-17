@@ -24,6 +24,7 @@ class ProjectModelRelationships extends NestedAttributesTransform {
       'allow_inverse',
       'inverse_name',
       'inverse_multiple',
+      'order',
       '_destroy'
     ];
   }
@@ -38,10 +39,9 @@ class ProjectModelRelationships extends NestedAttributesTransform {
    */
   toPayload(projectModel: ProjectModelType, collection: string = 'project_model_relationships') {
     return {
-      [collection]: _.map(projectModel[collection], (item, index) => ({
+      [collection]: _.map(projectModel[collection], (item) => ({
         ..._.pick(item, this.getPayloadKeys()),
-        ...UserDefinedFieldsTransform.toPayload(item),
-        order: index
+        ...UserDefinedFieldsTransform.toPayload(item)
       }))
     };
   }

@@ -31,6 +31,7 @@ class ProjectModel extends BaseTransform {
       'name',
       'model_class',
       'allow_identifiers',
+      'order'
     ];
   }
 
@@ -70,12 +71,13 @@ class ProjectModel extends BaseTransform {
       })
     );
 
-    // Sort all relationships by name
-    const sortProjectModelRelationships = (relationship) => (
+    // Sort all relationships by order, name
+    const sortProjectModelRelationships = (relationship) => ([
+      relationship.order,
       relationship.inverse
         ? relationship.inverse_name
         : relationship.name
-    );
+    ]);
 
     // Add a collection containing all of the relationships
     const allRelationships = _.sortBy([

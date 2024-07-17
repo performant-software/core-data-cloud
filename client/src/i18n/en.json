@@ -613,13 +613,15 @@
       "all": "All Models",
       "allowIdentifiers": "Allow identifiers",
       "name": "Name",
+      "order": "Order",
       "type": "Type"
     },
     "relationships": {
       "columns": {
-        "related": "Related type",
         "multiple": "Multiple",
-        "name": "Name"
+        "name": "Name",
+        "order": "Order",
+        "related": "Related type"
       }
     },
     "shares": {
@@ -645,6 +647,7 @@
       "inverseName": "Inverse name",
       "multiple": "Multiple",
       "name": "Name",
+      "order": "Order",
       "related": "Related type"
     },
     "title": {
@@ -655,6 +658,7 @@
   "ProjectModels": {
     "columns": {
       "name": "Name",
+      "order": "Order",
       "type": "Type"
     }
   },

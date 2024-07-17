@@ -32,7 +32,11 @@ const ProjectContextProvider = (props: Props) => {
    */
   const onLoadProjectModels = useCallback(() => (
     ProjectModelsService
-      .fetchAll({ project_id: projectId, sort_by: 'name', per_page: 0 })
+      .fetchAll({
+        project_id: projectId,
+        sort_by: ['order', 'name'],
+        per_page: 0
+      })
       .then(({ data }) => setProjectModels(data.project_models))
   ), [projectId]);
 

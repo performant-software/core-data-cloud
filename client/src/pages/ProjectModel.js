@@ -144,6 +144,14 @@ const ProjectModelForm = (props: Props) => {
               onChange={props.onTextInputChange.bind(this, 'name')}
               value={props.item.name}
             />
+            <Form.Input
+              error={props.isError('order')}
+              label={t('ProjectModel.labels.order')}
+              required={props.isRequired('order')}
+              onChange={props.onTextInputChange.bind(this, 'order')}
+              type='number'
+              value={props.item.order}
+            />
             <Form.Checkbox
               checked={props.item.allow_identifiers}
               error={props.isError('allow_identifiers')}
@@ -209,6 +217,9 @@ const ProjectModelForm = (props: Props) => {
                 name: 'multiple',
                 label: t('ProjectModel.relationships.columns.multiple'),
                 render: (relationship) => <BooleanIcon value={resolveMultiple(relationship)} />
+              }, {
+                name: 'order',
+                label: t('ProjectModel.relationships.columns.order')
               }, {
                 name: 'uuid',
                 label: t('Common.columns.uuid'),
