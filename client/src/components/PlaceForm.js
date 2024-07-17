@@ -105,6 +105,13 @@ const PlaceForm = (props: Props) => {
   }, []);
 
   return (
+    <Form
+      className={styles.placeForm}
+    >
+      <Header
+        content={t('PlaceForm.labels.names')}
+        size='tiny'
+      />
     <Form className={styles.placeForm}>
       <MapDraw
         apiKey={process.env.REACT_APP_MAP_TILER_KEY}
