@@ -413,6 +413,7 @@
   "PlaceForm": {
     "labels": {
       "layers": "Layers",
+      "location": "Location",
       "names": "Names"
     },
     "placeLayers": {
