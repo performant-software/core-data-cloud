@@ -66,16 +66,6 @@ const PlaceForm = (props: Props) => {
   }, []);
 
   /**
-   * Sets the name of the selected place as a place_name record.
-   *
-   * @type {(function({text: *}): void)|*}
-   */
-  const onGeocodingSelection = useCallback(({ text: name }) => {
-    const primary = !_.findWhere(props.item.place_names, { primary: true });
-    props.onSaveChildAssociation('place_names', { name, primary });
-  }, [props.item.place_names]);
-
-  /**
    * Sets the new map geometries on the state.
    *
    * @type {function(*): *}
@@ -93,44 +83,12 @@ const PlaceForm = (props: Props) => {
       .then((json) => props.onSetState({ place_geometry: { geometry_json: json } }));
   }, []);
 
+  // TODO: Disable map zoom on scroll?
+
   return (
     <Form
       className={styles.placeForm}
     >
-      <MapDraw
-        apiKey={process.env.REACT_APP_MAP_TILER_KEY}
-        data={props.item.place_geometry?.geometry_json}
-        geocoding='point'
-        mapStyle='https://api.maptiler.com/maps/basic-v2/style.json'
-        onChange={onMapChange}
-        onGeocodingSelection={onGeocodingSelection}
-      >
-        <MapControl
-          position='bottom-left'
-        >
-          <FileInputButton
-            className={cx(
-              'mapbox-gl-draw_ctrl-draw-btn',
-              'layer-button',
-              styles.ui,
-              styles.button,
-              styles.uploadButton
-            )}
-            color='white'
-            icon={(
-              <Icon
-                name='cloud upload'
-              />
-            )}
-            onSelection={onUpload}
-          />
-        </MapControl>
-        <LayerMenu
-          names={layerNames}
-        >
-          { _.map(layers, renderLayer) }
-        </LayerMenu>
-      </MapDraw>
       <Header
         content={t('PlaceForm.labels.names')}
         size='tiny'
@@ -209,6 +167,47 @@ const PlaceForm = (props: Props) => {
           tableName='CoreDataConnector::Place'
         />
       )}
+      <Header
+        content={t('PlaceForm.labels.location')}
+        size='tiny'
+      />
+      <MapDraw
+        apiKey={process.env.REACT_APP_MAP_TILER_KEY}
+        data={props.item.place_geometry?.geometry_json}
+        geocoding='point'
+        mapStyle='https://api.maptiler.com/maps/dataviz/style.json'
+        onChange={onMapChange}
+        style={{
+          boxShadow: 'rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
+          WebkitBoxShadow: 'rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px'
+        }}
+      >
+        <MapControl
+          position='bottom-left'
+        >
+          <FileInputButton
+            className={cx(
+              'mapbox-gl-draw_ctrl-draw-btn',
+              'layer-button',
+              styles.ui,
+              styles.button,
+              styles.uploadButton
+            )}
+            color='white'
+            icon={(
+              <Icon
+                name='cloud upload'
+              />
+            )}
+            onSelection={onUpload}
+          />
+        </MapControl>
+        <LayerMenu
+          names={layerNames}
+        >
+          { _.map(layers, renderLayer) }
+        </LayerMenu>
+      </MapDraw>
     </Form>
   );
 };
