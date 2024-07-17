@@ -42,6 +42,14 @@ const RelationshipForm = (props: Props) => {
         onChange={props.onTextInputChange.bind(this, 'name')}
         value={props.item.name}
       />
+      <Form.Input
+        error={props.isError('order')}
+        label={t('ProjectModelRelationshipModal.labels.order')}
+        required={props.isRequired('order')}
+        onChange={props.onTextInputChange.bind(this, 'order')}
+        type='number'
+        value={props.item.order}
+      />
       <Form.Checkbox
         checked={props.item.multiple}
         error={props.isError('multiple')}
@@ -101,6 +109,14 @@ const InverseForm = (props: Props) => {
         required={props.isRequired('inverse_name')}
         onChange={props.onTextInputChange.bind(this, 'inverse_name')}
         value={props.item.inverse_name}
+      />
+      <Form.Input
+        error={props.isError('order')}
+        label={t('ProjectModelRelationshipModal.labels.order')}
+        required={props.isRequired('order')}
+        onChange={props.onTextInputChange.bind(this, 'order')}
+        type='number'
+        value={props.item.order}
       />
       <Form.Checkbox
         checked={props.item.inverse_multiple}

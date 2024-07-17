@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_31_180143) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_17_155712) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -190,6 +190,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_31_180143) do
     t.string "inverse_name"
     t.boolean "inverse_multiple", default: false
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.integer "order", default: 0, null: false
     t.index ["primary_model_id"], name: "index_cdc_project_model_relationships_on_primary_model_id"
     t.index ["related_model_id"], name: "index_cdc_project_model_relationships_on_related_model_id"
   end
@@ -212,6 +213,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_31_180143) do
     t.string "slug"
     t.boolean "allow_identifiers", default: false
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.integer "order", default: 0, null: false
     t.index ["project_id"], name: "index_core_data_connector_project_models_on_project_id"
   end
 

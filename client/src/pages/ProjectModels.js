@@ -42,6 +42,10 @@ const ProjectModels = () => {
           resolve: (projectModel) => projectModel.model_class_view,
           sortable: true
         }, {
+          name: 'order',
+          label: t('ProjectModels.columns.order'),
+          sortable: true
+        }, {
           name: 'uuid',
           label: t('Common.columns.uuid'),
           hidden: true
