@@ -83,6 +83,15 @@ class Permissions {
   }
 
   /**
+   * Only an admin user can export data.
+   *
+   * @returns {boolean}
+   */
+  canExportData(): boolean {
+    return this.isAdmin();
+  }
+
+  /**
    * An admin user can import data.
    *
    * @returns {boolean}

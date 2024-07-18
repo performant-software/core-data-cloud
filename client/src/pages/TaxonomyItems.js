@@ -117,6 +117,7 @@ const TaxonomyItems = () => {
             .finally(() => WindowUtils.scrollToTop())
         )}
         onRowSelect={onRowSelect}
+        perPageOptions={[10, 25, 50, 100]}
         searchable
         selectable
         session={{

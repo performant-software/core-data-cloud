@@ -1,6 +1,6 @@
 // @flow
 
-import { BaseTransform, String } from '@performant-software/shared-components';
+import { BaseTransform, Form as FormUtils } from '@performant-software/shared-components';
 import _ from 'underscore';
 import type { Relationship as RelationshipType } from '../types/Relationship';
 
@@ -45,7 +45,7 @@ class Relationship extends BaseTransform {
 
     _.each(relationships, (relationship, index) => {
       _.each(this.getPayloadKeys(), (key) => {
-        formData.append(`relationships[${index}][${key}]`, String.toString(relationship[key]));
+        FormUtils.setAttribute(formData, `relationships[${index}]`, relationship, key);
       });
     });
 

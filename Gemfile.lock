@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: de520ff40f2ed4f8be22af4a9b6d6ceee4098d51
-  tag: v0.1.51
+  revision: 5ea99c7ac00bbdb8f8b41c1429d0eb496cdfa25b
+  tag: v0.1.55
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 8.0)
@@ -40,8 +40,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/resource-api.git
-  revision: 1e4ff2138e74b8e4c3c1a9b1795f2bf0237ae945
-  tag: v0.5.7
+  revision: 29bb30e0977825e846acc8aa46895ecc798b31c7
+  tag: v0.5.9
   specs:
     resource_api (0.1.0)
       pagy (~> 5.10)
@@ -59,8 +59,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/user-defined-fields.git
-  revision: 91a3731e42f08e84acb60be55e87650c5137c1df
-  tag: v0.1.9
+  revision: 79b74e12e5b1cbdfc3b3a32e4a030fe71494766b
+  tag: v0.1.10
   specs:
     user_defined_fields (0.1.0)
       rails (>= 6.0.3.2, < 8)
@@ -155,7 +155,7 @@ GEM
     erubi (1.12.0)
     ethon (0.16.0)
       ffi (>= 1.15.0)
-    faker (3.4.1)
+    faker (3.4.2)
       i18n (>= 1.8.11, < 2)
     ffi (1.17.0-arm64-darwin)
     ffi (1.17.0-x86_64-darwin)
@@ -205,7 +205,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.15.4-x86_64-linux)
       racc (~> 1.4)
-    oj (3.16.3)
+    oj (3.16.4)
       bigdecimal (>= 3.0)
     pagy (5.10.1)
       activesupport
@@ -251,8 +251,8 @@ GEM
     rake (13.0.6)
     reline (0.3.8)
       io-console (~> 0.5)
-    rexml (3.2.8)
-      strscan (>= 3.0.9)
+    rexml (3.3.2)
+      strscan
     rgeo (3.0.1)
     rgeo-activerecord (7.0.1)
       activerecord (>= 5.0)

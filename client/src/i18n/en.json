@@ -254,6 +254,11 @@
       "name": "Name"
     }
   },
+  "MediaContentsUploadModal": {
+    "labels": {
+      "name": "Name"
+    }
+  },
   "MediaContents": {
     "actions": {
       "merge": {
@@ -264,6 +269,13 @@
     }
   },
   "MediaContentsSelectize": {
+    "title": "Select Media"
+  },
+  "MediaContentsSelector": {
+    "errors": {
+      "header": "There was an error selecting media",
+      "required": "Image {{name}} - The following fields are required: {{fields}}"
+    },
     "title": "Select Media"
   },
   "MergeButton": {
@@ -401,6 +413,7 @@
   "PlaceForm": {
     "labels": {
       "layers": "Layers",
+      "location": "Location",
       "names": "Names"
     },
     "placeLayers": {
@@ -523,7 +536,7 @@
     "actions": {
       "configuration": {
         "export": {
-          "content": "Download your project configuration file as JSON",
+          "content": "Export your project configuration file as JSON",
           "header": "Export"
         },
         "import": {
@@ -532,6 +545,10 @@
         }
       },
       "data": {
+        "export": {
+          "content": "Export a ZIP archive of CSV files containing your project's data",
+          "header": "Export"
+        },
         "import": {
           "content": "Import a ZIP archive of CSV files to populate your project with data",
           "header": "Import"
@@ -545,6 +562,9 @@
       }
     },
     "errors": {
+      "export": {
+        "header": "An error occurred exporting the project"
+      },
       "file": {
         "content": "You may only upload a single zip file.",
         "header": "An error occurred processing the file"
@@ -593,13 +613,15 @@
       "all": "All Models",
       "allowIdentifiers": "Allow identifiers",
       "name": "Name",
+      "order": "Order",
       "type": "Type"
     },
     "relationships": {
       "columns": {
-        "related": "Related type",
         "multiple": "Multiple",
-        "name": "Name"
+        "name": "Name",
+        "order": "Order",
+        "related": "Related type"
       }
     },
     "shares": {
@@ -625,6 +647,7 @@
       "inverseName": "Inverse name",
       "multiple": "Multiple",
       "name": "Name",
+      "order": "Order",
       "related": "Related type"
     },
     "title": {
@@ -635,6 +658,7 @@
   "ProjectModels": {
     "columns": {
       "name": "Name",
+      "order": "Order",
       "type": "Type"
     }
   },
