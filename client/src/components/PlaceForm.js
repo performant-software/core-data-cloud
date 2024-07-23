@@ -5,7 +5,8 @@ import {
   LayerMenu,
   MapControl,
   MapDraw,
-  RasterLayer
+  RasterLayer,
+  WarpedImageLayer
 } from '@performant-software/geospatial';
 import { BooleanIcon, EmbeddedList, FileInputButton } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
@@ -40,7 +41,7 @@ const PlaceForm = (props: Props) => {
    */
   const layers = useMemo(() => _.map(props.item.place_layers, (layer) => ({
     ...layer,
-    geometry: layer.geometry ? JSON.parse(layer.geometry) : undefined
+    content: layer.content ? JSON.parse(layer.content) : undefined
   })), [props.item.place_layers]);
 
   /**
@@ -52,17 +53,31 @@ const PlaceForm = (props: Props) => {
     if (layer.layer_type === LayerTypes.geojson) {
       return (
         <GeoJsonLayer
-          data={layer.geometry}
+          data={layer.content}
           url={layer.url}
         />
       );
     }
 
-    return (
-      <RasterLayer
-        url={layer.url}
-      />
-    );
+    if (layer.layer_type === LayerTypes.georeference) {
+      return (
+        <WarpedImageLayer
+          id={layer.id}
+          manifest={layer.content}
+          url={layer.url}
+        />
+      );
+    }
+
+    if (layer.layer_type === LayerTypes.raster) {
+      return (
+        <RasterLayer
+          url={layer.url}
+        />
+      );
+    }
+
+    return null;
   }, []);
 
   /**
@@ -174,7 +189,9 @@ const PlaceForm = (props: Props) => {
         data={props.item.place_geometry?.geometry_json}
         geocoding='point'
         mapStyle='https://api.maptiler.com/maps/dataviz/style.json'
+        maxPitch={0}
         onChange={onMapChange}
+        preserveDrawingBuffer
         style={{
           boxShadow: 'rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
           WebkitBoxShadow: 'rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px'

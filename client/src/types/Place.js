@@ -4,7 +4,7 @@ export type PlaceLayer = {
   id: number,
   name: string,
   layer_type: string,
-  geometry: { [key: string]: any },
+  content: any,
   url: string
 };
 
