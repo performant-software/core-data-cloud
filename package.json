@@ -1,8 +1,5 @@
 {
   "name": "core-data-cloud",
-  "engines": {
-    "yarn": "1.x"
-  },
   "private": true,
   "scripts": {
     "build": "cd client && yarn install && yarn build && cd ..",
