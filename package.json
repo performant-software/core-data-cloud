@@ -1,9 +1,5 @@
 {
-  "name": "rails-react-template",
-  "engines": {
-    "node": "18.x",
-    "yarn": "1.x"
-  },
+  "name": "core-data-cloud",
   "private": true,
   "scripts": {
     "build": "cd client && yarn install && yarn build && cd ..",
