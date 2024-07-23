@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_17_155712) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_22_141527) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -143,7 +143,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_17_155712) do
     t.string "name"
     t.string "layer_type"
     t.string "url"
-    t.string "geometry"
+    t.string "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["place_id"], name: "index_core_data_connector_place_layers_on_place_id"
