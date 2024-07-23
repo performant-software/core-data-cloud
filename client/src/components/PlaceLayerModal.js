@@ -29,18 +29,18 @@ const Tabs = {
 
 const PlaceLayerModal: AbstractComponent<any> = (props: Props) => {
   const [loading, setLoading] = useState(false);
-  const [tab, setTab] = useState(props.item.geometry ? Tabs.file : Tabs.url);
+  const [tab, setTab] = useState(props.item.content ? Tabs.file : Tabs.url);
 
   const { t } = useTranslation();
 
   /**
-   * Sets a memo-ized version of the parsed and formatted GeoJSON.
+   * Sets a memo-ized version of the parsed and formatted content.
    *
    * @type {string}
    */
-  const geometry = useMemo(() => (
-    JSON.stringify(JSON.parse(props.item.geometry || '{}'), null, 2)
-  ), [props.item.geometry]);
+  const content = useMemo(() => (
+    JSON.stringify(JSON.parse(props.item.content || '{}'), null, 2)
+  ), [props.item.content]);
 
   /**
    * Sets the uploaded file as the GeoJSON object.
@@ -51,26 +51,26 @@ const PlaceLayerModal: AbstractComponent<any> = (props: Props) => {
     setLoading(true);
 
     file.text()
-      .then((value) => props.onSetState({ geometry: value, url: null }))
+      .then((value) => props.onSetState({ content: value, url: null }))
       .finally(() => setLoading(false));
   }, []);
 
   /**
-   * Sets the geometry to the passed value and clears the URL.
+   * Sets the content to the passed value and clears the URL.
    *
    * @type {(function(*, {value: *}): void)|*}
    */
-  const onGeometryChange = useCallback((e, { value }) => {
-    props.onSetState({ url: null, geometry: value });
+  const onContentChange = useCallback((e, { value }) => {
+    props.onSetState({ url: null, content: value });
   }, []);
 
   /**
-   * Sets the URL to the passed value and clears the geometry.
+   * Sets the URL to the passed value and clears the content.
    *
    * @type {(function(*, {value: *}): void)|*}
    */
   const onUrlChange = useCallback((e, { value }) => {
-    props.onSetState({ url: value, geometry: null });
+    props.onSetState({ url: value, content: null });
   }, []);
 
   /**
@@ -114,7 +114,7 @@ const PlaceLayerModal: AbstractComponent<any> = (props: Props) => {
           selection
           value={props.item.layer_type}
         />
-        { props.item.layer_type === LayerTypes.geojson && (
+        { (props.item.layer_type === LayerTypes.geojson || props.item.layer_type === LayerTypes.georeference) && (
           <>
             <Menu
               secondary
@@ -151,11 +151,11 @@ const PlaceLayerModal: AbstractComponent<any> = (props: Props) => {
                   onSelection={onUpload}
                 />
                 <Form.TextArea
-                  error={props.isError('geometry')}
-                  label={t('PlaceLayerModal.labels.geometry')}
+                  error={props.isError('content')}
+                  label={t('PlaceLayerModal.labels.content')}
                   required
-                  onChange={onGeometryChange}
-                  value={geometry}
+                  onChange={onContentChange}
+                  value={content}
                 />
               </>
             )}

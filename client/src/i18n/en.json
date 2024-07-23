@@ -430,13 +430,14 @@
   },
   "PlaceLayerModal": {
     "labels": {
-      "geometry": "GeoJSON",
+      "content": "Content",
       "name": "Name",
       "type": "Type",
       "url": "URL"
     },
     "layerTypes": {
       "geometry": "GeoJSON",
+      "georeference": "GeoReference",
       "url": "URL"
     },
     "tabs": {
@@ -451,10 +452,12 @@
   "PlaceLayers": {
     "errors": {
       "geojson": "Either a URL or a GeoJSON file is required",
+      "georeference": "Either a URL or a IIIF Manifest is required",
       "raster": "A URL is required for Raster layers"
     },
     "labels": {
       "geojson": "GeoJSON",
+      "georeference": "GeoReference",
       "raster": "Raster"
     }
   },
