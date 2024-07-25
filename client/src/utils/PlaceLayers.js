@@ -8,11 +8,13 @@ const EMPTY_JSON = '{}';
 
 const LayerTypes = {
   geojson: 'geojson',
+  georeference: 'georeference',
   raster: 'raster'
 };
 
 const LayerTypeLabels = {
   [LayerTypes.geojson]: i18n.t('PlaceLayers.labels.geojson'),
+  [LayerTypes.georeference]: i18n.t('PlaceLayers.labels.georeference'),
   [LayerTypes.raster]: i18n.t('PlaceLayers.labels.raster')
 };
 
@@ -50,13 +52,13 @@ const validate = (layer: PlaceLayerType) => {
     _.extend(errors, { url: i18n.t('PlaceLayers.errors.raster') });
   }
 
-  if (layer.layer_type === LayerTypes.geojson) {
-    if (_.isEmpty(layer.url) && (_.isEmpty(layer.geometry) || layer.geometry === EMPTY_JSON)) {
-      _.extend(errors, { geojson: i18n.t('PlaceLayers.errors.geojson') });
+  if (layer.layer_type === LayerTypes.geojson || layer.layer_type === LayerTypes.georeference) {
+    if (_.isEmpty(layer.url) && (_.isEmpty(layer.content) || layer.content === EMPTY_JSON)) {
+      _.extend(errors, { content: i18n.t(`PlaceLayers.errors.${layer.layer_type}`) });
     }
 
-    if (!_.isEmpty(layer.url) && !_.isEmpty(layer.geometry) && layer.geometry !== EMPTY_JSON) {
-      _.extend(errors, { geojson: i18n.t('PlaceLayers.errors.geojson') });
+    if (!_.isEmpty(layer.url) && !_.isEmpty(layer.content) && layer.content !== EMPTY_JSON) {
+      _.extend(errors, { content: i18n.t(`PlaceLayers.errors.${layer.layer_type}`) });
     }
   }
 

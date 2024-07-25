@@ -62,7 +62,7 @@ const MediaContentsUploadModal = (props: Props) => {
       user_defined: mediaContentUserDefined
     };
 
-    MediaContentsService
+    return MediaContentsService
       .save(payload)
       .then(({ data }) => afterSave(data.media_content, relationshipUserDefined));
   }, [projectModelRelationshipFields]);

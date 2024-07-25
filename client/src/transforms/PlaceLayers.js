@@ -17,7 +17,7 @@ class PlaceLayers extends NestedAttributesTransform {
       'id',
       'name',
       'layer_type',
-      'geometry',
+      'content',
       'url',
       '_destroy'
     ];

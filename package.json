@@ -1,7 +1,6 @@
 {
-  "name": "rails-react-template",
+  "name": "core-data-cloud",
   "engines": {
-    "node": "18.x",
     "yarn": "1.x"
   },
   "private": true,
