@@ -2,7 +2,8 @@
 FROM ruby:3.2.2
 
 RUN ls /etc
-RUN apt update -qq && apt install -y postgresql-client git libvips npm cron vim
+RUN apt update -qq && apt install -y postgresql-client git libvips curl cron vim
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - &&  apt install -y nodejs
 RUN npm install --global yarn
 RUN mkdir -p /data/typesense
 
