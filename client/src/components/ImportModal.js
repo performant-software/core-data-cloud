@@ -11,9 +11,11 @@ import { useTranslation } from 'react-i18next';
 import {
   Button,
   Confirm,
+  Dimmer,
   Dropdown,
   Header,
   Label,
+  Loader,
   Message,
   Modal,
   Table
@@ -315,6 +317,14 @@ const ImportModal = (props: Props) => {
             list={_.map(errors, (e) => (_.isObject(e) ? _.values(e) : e))}
             negative
           />
+        )}
+        { !loaded && _.isEmpty(errors) && (
+          <Dimmer
+            active
+            inverted
+          >
+            <Loader />
+          </Dimmer>
         )}
         { loaded && _.isEmpty(data) && (
           <Message
