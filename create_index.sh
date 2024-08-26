@@ -7,5 +7,5 @@ done
 echo "***** create index *****"
 bundle exec rake core_data_cloud:create_search_index
 echo "***** enable crontab *****"
-crontab /var/spool/cron/crontabs/root
+bundle exec whenever --update-crontab
 echo "***** index created *****"

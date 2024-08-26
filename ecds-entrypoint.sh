@@ -11,4 +11,5 @@ bundle exec ./bin/rake db:prepare
 bundle exec rake core_data_connector:iiif:reset_manifests &
 chmod +x create_index.sh
 ./create_index.sh &
+bundle exec whenever --update-crontab
 bundle exec puma -C config/puma.rb

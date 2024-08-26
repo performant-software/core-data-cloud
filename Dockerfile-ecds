@@ -30,7 +30,6 @@ ARG TYPESENSE_SEARCH_KEY
 # Add Rails gems
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
-COPY crontab /var/spool/cron/crontabs/root
 
 RUN bundle install
 
@@ -40,7 +39,6 @@ RUN curl -O https://dl.typesense.org/releases/26.0/typesense-server-26.0-linux-a
 COPY . .
 
 RUN sed -i -e 's|api-key.*|'"api-key = $TYPESENSE_API_KEY"'|g' ./typesense-server.ini
-RUN sed -i -e 's|TYPESENSE_API_KEY|'"$TYPESENSE_API_KEY"'|g' ./update.sh
 
 ENV AUTHENTICATION_EXPIRATION=$AUTHENTICATION_EXPIRATION
 ENV GENERATE_SOURCEMAP=false
@@ -72,8 +70,10 @@ RUN yarn build && yarn deploy
 # Clean up APT when done.
 RUN apt clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Create cron log file
+RUN touch cron.log
+
 RUN chmod +x ./ecds-entrypoint.sh
-RUN chmod +x ./update.sh
 
 EXPOSE 3000 8108
 
