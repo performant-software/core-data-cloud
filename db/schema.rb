@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_240_722_141_527) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_22_141527) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'pgcrypto'
   enable_extension 'plpgsql'
@@ -138,15 +138,15 @@ ActiveRecord::Schema[7.0].define(version: 20_240_722_141_527) do
     t.index ['place_id'], name: 'index_core_data_connector_place_geometries_on_place_id'
   end
 
-  create_table 'core_data_connector_place_layers', force: :cascade do |t|
-    t.bigint 'place_id'
-    t.string 'name'
-    t.string 'layer_type'
-    t.string 'url'
-    t.string 'content'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['place_id'], name: 'index_core_data_connector_place_layers_on_place_id'
+  create_table "core_data_connector_place_layers", force: :cascade do |t|
+    t.bigint "place_id"
+    t.string "name"
+    t.string "layer_type"
+    t.string "url"
+    t.string "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["place_id"], name: "index_core_data_connector_place_layers_on_place_id"
   end
 
   create_table 'core_data_connector_place_names', force: :cascade do |t|
@@ -178,21 +178,21 @@ ActiveRecord::Schema[7.0].define(version: 20_240_722_141_527) do
     t.index ['project_model_id'], name: 'index_cdc_project_model_accesses_on_project_model_id'
   end
 
-  create_table 'core_data_connector_project_model_relationships', force: :cascade do |t|
-    t.bigint 'primary_model_id', null: false
-    t.bigint 'related_model_id', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.string 'slug'
-    t.boolean 'multiple'
-    t.string 'name'
-    t.boolean 'allow_inverse', default: false, null: false
-    t.string 'inverse_name'
-    t.boolean 'inverse_multiple', default: false
-    t.uuid 'uuid', default: -> { 'gen_random_uuid()' }, null: false
-    t.integer 'order', default: 0, null: false
-    t.index ['primary_model_id'], name: 'index_cdc_project_model_relationships_on_primary_model_id'
-    t.index ['related_model_id'], name: 'index_cdc_project_model_relationships_on_related_model_id'
+create_table "core_data_connector_project_model_relationships", force: :cascade do |t|
+    t.bigint "primary_model_id", null: false
+    t.bigint "related_model_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "slug"
+    t.boolean "multiple"
+    t.string "name"
+    t.boolean "allow_inverse", default: false, null: false
+    t.string "inverse_name"
+    t.boolean "inverse_multiple", default: false
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.integer "order", default: 0, null: false
+    t.index ["primary_model_id"], name: "index_cdc_project_model_relationships_on_primary_model_id"
+    t.index ["related_model_id"], name: "index_cdc_project_model_relationships_on_related_model_id"
   end
 
   create_table 'core_data_connector_project_model_shares', force: :cascade do |t|
@@ -204,170 +204,169 @@ ActiveRecord::Schema[7.0].define(version: 20_240_722_141_527) do
     t.index ['project_model_id'], name: 'index_cdc_project_model_shares_on_project_model_id'
   end
 
-  create_table 'core_data_connector_project_models', force: :cascade do |t|
-    t.bigint 'project_id'
-    t.string 'name'
-    t.string 'model_class'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.string 'slug'
-    t.boolean 'allow_identifiers', default: false
-    t.uuid 'uuid', default: -> { 'gen_random_uuid()' }, null: false
-    t.integer 'order', default: 0, null: false
-    t.index ['project_id'], name: 'index_core_data_connector_project_models_on_project_id'
+
+  create_table "core_data_connector_project_models", force: :cascade do |t|
+    t.bigint "project_id"
+    t.string "name"
+    t.string "model_class"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "slug"
+    t.boolean "allow_identifiers", default: false
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.integer "order", default: 0, null: false
+    t.index ["project_id"], name: "index_core_data_connector_project_models_on_project_id"
   end
 
-  create_table 'core_data_connector_projects', force: :cascade do |t|
-    t.string 'name'
-    t.string 'description'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.boolean 'discoverable', default: false, null: false
-    t.string 'faircopy_cloud_url'
-    t.integer 'faircopy_cloud_project_model_id'
+  create_table "core_data_connector_projects", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "discoverable", default: false, null: false
+    t.string "faircopy_cloud_url"
+    t.integer "faircopy_cloud_project_model_id"
   end
 
-  create_table 'core_data_connector_record_merges', force: :cascade do |t|
-    t.string 'mergeable_type'
-    t.bigint 'mergeable_id'
-    t.string 'merged_uuid'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index %w[mergeable_type mergeable_id], name: 'index_core_data_connector_record_merges_on_mergeable'
+  create_table "core_data_connector_record_merges", force: :cascade do |t|
+    t.string "mergeable_type"
+    t.bigint "mergeable_id"
+    t.string "merged_uuid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mergeable_type", "mergeable_id"], name: "index_core_data_connector_record_merges_on_mergeable"
   end
 
-  create_table 'core_data_connector_relationships', force: :cascade do |t|
-    t.bigint 'project_model_relationship_id'
-    t.string 'primary_record_type'
-    t.bigint 'primary_record_id'
-    t.string 'related_record_type'
-    t.bigint 'related_record_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.jsonb 'user_defined', default: {}
-    t.integer 'z_relationship_id'
-    t.uuid 'uuid', default: -> { 'gen_random_uuid()' }, null: false
-    t.index %w[primary_record_type primary_record_id],
-            name: 'index_core_data_connector_relationships_on_primary_record'
-    t.index ['project_model_relationship_id'], name: 'index_cdc_relationships_on_project_model_relationship_id'
-    t.index %w[related_record_type related_record_id],
-            name: 'index_core_data_connector_relationships_on_related_record'
-    t.index ['user_defined'], name: 'index_core_data_connector_relationships_on_user_defined', using: :gin
+  create_table "core_data_connector_relationships", force: :cascade do |t|
+    t.bigint "project_model_relationship_id"
+    t.string "primary_record_type"
+    t.bigint "primary_record_id"
+    t.string "related_record_type"
+    t.bigint "related_record_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "user_defined", default: {}
+    t.integer "z_relationship_id"
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.index ["primary_record_type", "primary_record_id"], name: "index_core_data_connector_relationships_on_primary_record"
+    t.index ["project_model_relationship_id"], name: "index_cdc_relationships_on_project_model_relationship_id"
+    t.index ["related_record_type", "related_record_id"], name: "index_core_data_connector_relationships_on_related_record"
+    t.index ["user_defined"], name: "index_core_data_connector_relationships_on_user_defined", using: :gin
   end
 
-  create_table 'core_data_connector_source_titles', force: :cascade do |t|
-    t.string 'nameable_type'
-    t.bigint 'nameable_id'
-    t.bigint 'name_id'
-    t.boolean 'primary'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['name_id'], name: 'index_core_data_connector_source_titles_on_name_id'
-    t.index %w[nameable_type nameable_id], name: 'index_core_data_connector_source_titles_on_nameable'
+  create_table "core_data_connector_source_titles", force: :cascade do |t|
+    t.string "nameable_type"
+    t.bigint "nameable_id"
+    t.bigint "name_id"
+    t.boolean "primary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name_id"], name: "index_core_data_connector_source_titles_on_name_id"
+    t.index ["nameable_type", "nameable_id"], name: "index_core_data_connector_source_titles_on_nameable"
   end
 
-  create_table 'core_data_connector_taxonomies', force: :cascade do |t|
-    t.bigint 'project_model_id'
-    t.string 'name'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.uuid 'uuid', default: -> { 'gen_random_uuid()' }, null: false
-    t.integer 'z_taxonomy_id'
-    t.index ['project_model_id'], name: 'index_core_data_connector_taxonomies_on_project_model_id'
+  create_table "core_data_connector_taxonomies", force: :cascade do |t|
+    t.bigint "project_model_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.integer "z_taxonomy_id"
+    t.index ["project_model_id"], name: "index_core_data_connector_taxonomies_on_project_model_id"
   end
 
-  create_table 'core_data_connector_user_projects', force: :cascade do |t|
-    t.bigint 'user_id', null: false
-    t.bigint 'project_id', null: false
-    t.string 'role', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['project_id'], name: 'index_core_data_connector_user_projects_on_project_id'
-    t.index ['user_id'], name: 'index_core_data_connector_user_projects_on_user_id'
+  create_table "core_data_connector_user_projects", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "project_id", null: false
+    t.string "role", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_core_data_connector_user_projects_on_project_id"
+    t.index ["user_id"], name: "index_core_data_connector_user_projects_on_user_id"
   end
 
-  create_table 'core_data_connector_users', force: :cascade do |t|
-    t.string 'name'
-    t.string 'email'
-    t.string 'password_digest'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.boolean 'admin', default: false
+  create_table "core_data_connector_users", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "admin", default: false
   end
 
-  create_table 'core_data_connector_web_authorities', force: :cascade do |t|
-    t.bigint 'project_id'
-    t.string 'source_type'
-    t.jsonb 'access'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['project_id'], name: 'index_core_data_connector_web_authorities_on_project_id'
+  create_table "core_data_connector_web_authorities", force: :cascade do |t|
+    t.bigint "project_id"
+    t.string "source_type"
+    t.jsonb "access"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_core_data_connector_web_authorities_on_project_id"
   end
 
-  create_table 'core_data_connector_web_identifiers', force: :cascade do |t|
-    t.bigint 'web_authority_id'
-    t.string 'identifiable_type'
-    t.bigint 'identifiable_id'
-    t.string 'identifier'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.jsonb 'extra'
-    t.integer 'z_web_identifier_id'
-    t.index %w[identifiable_type identifiable_id], name: 'index_core_data_connector_web_identifiers_on_identifiable'
-    t.index ['web_authority_id'], name: 'index_core_data_connector_web_identifiers_on_web_authority_id'
+  create_table "core_data_connector_web_identifiers", force: :cascade do |t|
+    t.bigint "web_authority_id"
+    t.string "identifiable_type"
+    t.bigint "identifiable_id"
+    t.string "identifier"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "extra"
+    t.integer "z_web_identifier_id"
+    t.index ["identifiable_type", "identifiable_id"], name: "index_core_data_connector_web_identifiers_on_identifiable"
+    t.index ["web_authority_id"], name: "index_core_data_connector_web_identifiers_on_web_authority_id"
   end
 
-  create_table 'core_data_connector_works', force: :cascade do |t|
-    t.bigint 'project_model_id'
-    t.uuid 'uuid', default: -> { 'gen_random_uuid()' }, null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.jsonb 'user_defined', default: {}
-    t.integer 'z_work_id'
-    t.index ['project_model_id'], name: 'index_core_data_connector_works_on_project_model_id'
-    t.index ['user_defined'], name: 'index_core_data_connector_works_on_user_defined', using: :gin
+  create_table "core_data_connector_works", force: :cascade do |t|
+    t.bigint "project_model_id"
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "user_defined", default: {}
+    t.integer "z_work_id"
+    t.index ["project_model_id"], name: "index_core_data_connector_works_on_project_model_id"
+    t.index ["user_defined"], name: "index_core_data_connector_works_on_user_defined", using: :gin
   end
 
-  create_table 'fuzzy_dates_fuzzy_dates', force: :cascade do |t|
-    t.string 'dateable_type', null: false
-    t.bigint 'dateable_id', null: false
-    t.string 'attribute_name'
-    t.integer 'accuracy'
-    t.boolean 'range'
-    t.date 'start_date'
-    t.date 'end_date'
-    t.text 'description'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index %w[dateable_id dateable_type attribute_name],
-            name: 'index_fuzzy_dates_dateable_id_dateable_type_attribute_name'
-    t.index %w[dateable_type dateable_id], name: 'index_fuzzy_dates_fuzzy_dates_on_dateable'
+  create_table "fuzzy_dates_fuzzy_dates", force: :cascade do |t|
+    t.string "dateable_type", null: false
+    t.bigint "dateable_id", null: false
+    t.string "attribute_name"
+    t.integer "accuracy"
+    t.boolean "range"
+    t.date "start_date"
+    t.date "end_date"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dateable_id", "dateable_type", "attribute_name"], name: "index_fuzzy_dates_dateable_id_dateable_type_attribute_name"
+    t.index ["dateable_type", "dateable_id"], name: "index_fuzzy_dates_fuzzy_dates_on_dateable"
   end
 
-  create_table 'triple_eye_effable_resource_descriptions', force: :cascade do |t|
-    t.string 'resourceable_type', null: false
-    t.bigint 'resourceable_id', null: false
-    t.string 'resource_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.string 'content_type'
-    t.index %w[resourceable_type resourceable_id], name: 'index_resource_description_on_resourceable'
+  create_table "triple_eye_effable_resource_descriptions", force: :cascade do |t|
+    t.string "resourceable_type", null: false
+    t.bigint "resourceable_id", null: false
+    t.string "resource_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "content_type"
+    t.index ["resourceable_type", "resourceable_id"], name: "index_resource_description_on_resourceable"
   end
 
-  create_table 'user_defined_fields_user_defined_fields', force: :cascade do |t|
-    t.string 'defineable_type'
-    t.bigint 'defineable_id'
-    t.string 'table_name'
-    t.string 'column_name'
-    t.string 'data_type'
-    t.boolean 'required'
-    t.boolean 'allow_multiple'
-    t.text 'options', default: [], array: true
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.boolean 'searchable', default: false, null: false
-    t.integer 'order', default: 0, null: false
-    t.uuid 'uuid', default: -> { 'gen_random_uuid()' }, null: false
-    t.index %w[defineable_type defineable_id], name: 'index_user_defined_fields_on_defineable'
+  create_table "user_defined_fields_user_defined_fields", force: :cascade do |t|
+    t.string "defineable_type"
+    t.bigint "defineable_id"
+    t.string "table_name"
+    t.string "column_name"
+    t.string "data_type"
+    t.boolean "required"
+    t.boolean "allow_multiple"
+    t.text "options", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "searchable", default: false, null: false
+    t.integer "order", default: 0, null: false
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.index ["defineable_type", "defineable_id"], name: "index_user_defined_fields_on_defineable"
   end
+
 end
