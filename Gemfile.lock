@@ -1,26 +1,4 @@
 GIT
-  remote: https://github.com/performant-software/core-data-connector.git
-  revision: ce171724eae739285bad89ffef632c7b893c45f8
-  tag: v0.1.58
-  specs:
-    core_data_connector (0.1.0)
-      activerecord-postgis-adapter (~> 8.0)
-      faker
-      fuzzy_dates
-      jwt (~> 2.7.1)
-      jwt_auth
-      rack-cors (~> 2.0.1)
-      rails (>= 6.0.3.2, < 8)
-      resource_api
-      rexml (~> 3.2)
-      rgeo-geojson (~> 2.1)
-      rubyzip (~> 2.3.2)
-      triple_eye_effable
-      typesense (~> 0.14)
-      typhoeus (~> 1.4)
-      user_defined_fields
-
-GIT
   remote: https://github.com/performant-software/fuzzy-dates.git
   revision: fa3f237882f9c89888f82af41f6fe2b8ff2281a3
   tag: v0.1.0
@@ -59,12 +37,32 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/user-defined-fields.git
-  revision: 79b74e12e5b1cbdfc3b3a32e4a030fe71494766b
-  tag: v0.1.10
+  revision: e7f943143a829fc53e5dd99b338cb155e5366fb1
+  tag: v0.1.11
   specs:
     user_defined_fields (0.1.0)
       rails (>= 6.0.3.2, < 8)
       resource_api
+
+PATH
+  remote: ../core-data-connector
+  specs:
+    core_data_connector (0.1.0)
+      activerecord-postgis-adapter (~> 8.0)
+      faker
+      fuzzy_dates
+      jwt (~> 2.7.1)
+      jwt_auth
+      rack-cors (~> 2.0.1)
+      rails (>= 6.0.3.2, < 8)
+      resource_api
+      rexml (~> 3.2)
+      rgeo-geojson (~> 2.1)
+      rubyzip (~> 2.3.2)
+      triple_eye_effable
+      typesense (~> 0.14)
+      typhoeus (~> 1.4)
+      user_defined_fields
 
 GEM
   remote: https://rubygems.org/
@@ -254,7 +252,7 @@ GEM
     rake (13.0.6)
     reline (0.3.8)
       io-console (~> 0.5)
-    rexml (3.3.5)
+    rexml (3.3.6)
       strscan
     rgeo (3.0.1)
     rgeo-activerecord (7.0.1)
