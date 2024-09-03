@@ -164,7 +164,13 @@ const WebIdentifierDropdown = (props: Props) => {
 
   return (
     <Dropdown
-      className={cx(styles.webIdentifierDropdown, styles.ui, styles.dropdown)}
+      className={cx(
+        styles.webIdentifierDropdown,
+        styles.ui,
+        styles.dropdown,
+        styles.search,
+        styles.selection
+      )}
       clearable
       fluid
       lazyLoad
@@ -183,6 +189,7 @@ const WebIdentifierDropdown = (props: Props) => {
           innerRef={inputRef}
         >
           <DropdownSearchInput
+            className={styles.search}
             value={searchQuery}
           />
         </Ref>
