@@ -132,7 +132,7 @@ const MergeButton = (props: Props) => {
           title={props.title}
         />
       )}
-      { item && (
+      { item && !saving && (
         <Confirm
           centered={false}
           content={t('MergeButton.messages.confirm.content')}
