@@ -157,7 +157,10 @@ const WebIdentifierDropdown = (props: Props) => {
    * Calls the onSearch function after the user has stopped typing.
    */
   useEffect(() => {
-    const timeoutId = setTimeout(onSearch, SEARCH_TIMEOUT);
+    const timeoutId = setTimeout(() => {
+      onSearch();
+      setOpen(true);
+    }, SEARCH_TIMEOUT);
 
     return () => clearTimeout(timeoutId);
   }, [searchQuery]);
