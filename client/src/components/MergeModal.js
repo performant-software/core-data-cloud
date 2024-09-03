@@ -359,6 +359,7 @@ const MergeModal = (props: Props) => {
       </Modal.Content>
       <Modal.Actions>
         <Button
+          disabled={props.saving}
           content={t('Common.buttons.cancel')}
           onClick={props.onClose}
         />
