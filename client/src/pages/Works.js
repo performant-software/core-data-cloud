@@ -38,8 +38,7 @@ const Works: AbstractComponent<any> = () => {
    */
   const columns = useMemo(() => [{
     label: t('Works.columns.name'),
-    name: 'core_data_connector_names.name',
-    resolve: (work) => work.primary_name?.name?.name,
+    name: 'name',
     sortable: true
   }, {
     name: 'uuid',

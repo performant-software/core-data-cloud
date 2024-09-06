@@ -6,10 +6,8 @@ import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields'
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Header } from 'semantic-ui-react';
+import SourceNameModal from './SourceNameModal';
 import type { Work as WorkType } from '../types/Work';
-import NameRelationModal from './NameRelationModal';
-import type { SourceTitle as SourceTitleType } from '../types/Source';
-import SourcesUtils from '../utils/Sources';
 
 type Props = EditContainerProps & {
   item: WorkType
@@ -41,21 +39,19 @@ const WorkForm = (props: Props) => {
         className='compact'
         columns={[{
           name: 'name',
-          label: t('WorkForm.workNames.columns.name'),
-          resolve: (sourceTitle) => sourceTitle.name.name
+          label: t('WorkForm.workNames.columns.name')
         }, {
           name: 'primary',
           label: t('WorkForm.workNames.columns.primary'),
-          render: (sourceTitle) => <BooleanIcon value={sourceTitle.primary} />
+          render: (sourceName) => <BooleanIcon value={sourceName.primary} />
         }]}
         configurable={false}
-        items={props.item.source_titles}
+        items={props.item.source_names}
         modal={{
-          component: NameRelationModal,
-          onSave: (sourceTitle: SourceTitleType) => SourcesUtils.insertSourceTitle(props, sourceTitle)
+          component: SourceNameModal
         }}
-        onSave={props.onSaveChildAssociation.bind(this, 'source_titles')}
-        onDelete={props.onDeleteChildAssociation.bind(this, 'source_titles')}
+        onSave={props.onSaveChildAssociation.bind(this, 'source_names')}
+        onDelete={props.onDeleteChildAssociation.bind(this, 'source_names')}
       />
       { props.item.project_model_id && (
         <UserDefinedFieldsForm

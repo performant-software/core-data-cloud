@@ -75,7 +75,7 @@ const RelatedItemForm = (props: Props) => {
           onSearch={onSearch}
           onSelection={onSelection}
           renderOption={ItemTransform.toDropdown.bind(this)}
-          searchQuery={foreignObject?.primary_name?.name.name}
+          searchQuery={foreignObject?.name}
           value={props.item[foreignKey]}
         />
       </Form.Input>

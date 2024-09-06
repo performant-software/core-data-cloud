@@ -40,8 +40,7 @@ const Instances: AbstractComponent<any> = () => {
    */
   const columns = useMemo(() => [{
     label: t('Instances.columns.name'),
-    name: 'core_data_connector_names.name',
-    resolve: (instance) => instance.primary_name?.name?.name,
+    name: 'name',
     sortable: true
   }, {
     name: 'uuid',

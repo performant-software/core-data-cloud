@@ -1,9 +1,9 @@
 // @flow
 
+import _ from 'underscore';
 import type { Item as ItemType } from '../types/Item';
 import MergeableTransform from './Mergeable';
-import SourceTitles from './SourceTitles';
-import _ from 'underscore';
+import SourceNames from './SourceNames';
 
 /**
  * Class responsible for transforming item records for POST/PUT requests.
@@ -42,7 +42,7 @@ class Item extends MergeableTransform {
     return {
       key: item.id,
       value: item.id,
-      text: item.primary_name.name.name
+      text: item.name
     };
   }
 
@@ -74,7 +74,7 @@ class Item extends MergeableTransform {
    */
   toPayload(item: ItemType) {
     const payload = super.toPayload(item, {
-      ...SourceTitles.toPayload(item)
+      ...SourceNames.toPayload(item)
     });
 
     return payload;
