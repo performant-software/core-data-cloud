@@ -94,11 +94,11 @@ const Items: AbstractComponent<any> = () => {
                 name: 'uuid',
                 label: t('Common.actions.merge.uuid'),
               }, {
-                name: 'source_titles',
+                name: 'source_names',
                 label: t('Items.actions.merge.names'),
                 array: true,
                 names: true,
-                resolve: (sourceTitle) => sourceTitle.name?.name
+                resolve: (sourceName) => sourceName.name
               }]}
               ids={selectedItems}
               onLoad={(id) => (

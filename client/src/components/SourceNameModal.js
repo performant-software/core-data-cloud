@@ -25,6 +25,7 @@ const SourceNameModal: AbstractComponent<any> = (props: Props) => {
       />
       <Modal.Content>
         <Form.Input
+          autoFocus
           label={t('NameRelationModal.labels.name')}
           onChange={props.onTextInputChange.bind(this, 'name')}
           value={props.item.name}
