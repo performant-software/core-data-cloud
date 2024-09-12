@@ -26,7 +26,7 @@ Use `bundle exec rake start` to start a live development build.
 ## Docker
 
 #### Prerequsites
-To run via Docker requires a IIIF Cloud instance as well. This can be run as a separate Docker application, or pointed to a IIIF Cloud application hosted somewhere else. All that's required is the `IIIF_CLOUD_*` environment variables are set properly.
+To run via Docker requires a IIIF Cloud instance as well. This can be run as a separate Docker application, or pointed to a IIIF Cloud application hosted somewhere else. All that's required is the `IIIF_CLOUD_*` environment variables are set properly and a MapTiler account/API key.
 
 #### Running
 To run via a Docker container (for development or production) set your environment variables in `.env`, you can use `.env.example` as a template. If an image has not yet been built, run `docker compose up --build` to build the image and start the container. Subsequent starts of the container can be done with `docker compose up` if no code changes have been made.
