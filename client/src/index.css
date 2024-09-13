@@ -143,3 +143,11 @@ textarea {
 .media-contents-selector .list > .header input {
   margin-right: -1em;
 }
+
+.ui.dropdown > .filtered.text {
+  width: calc(100% - 40px);
+  -webkit-line-clamp: 1;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}
