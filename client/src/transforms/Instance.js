@@ -2,7 +2,7 @@
 
 import type { Instance as InstanceType } from '../types/Instance';
 import MergeableTransform from './Mergeable';
-import SourceTitles from './SourceTitles';
+import SourceNames from './SourceNames';
 
 /**
  * Class responsible for transforming instance records for POST/PUT requests.
@@ -40,7 +40,7 @@ class Instance extends MergeableTransform {
     return {
       key: instance.id,
       value: instance.id,
-      text: instance.primary_name.name.name
+      text: instance.name
     };
   }
 
@@ -53,7 +53,7 @@ class Instance extends MergeableTransform {
    */
   toPayload(instance: InstanceType) {
     const payload = super.toPayload(instance, {
-      ...SourceTitles.toPayload(instance)
+      ...SourceNames.toPayload(instance)
     });
 
     return payload;

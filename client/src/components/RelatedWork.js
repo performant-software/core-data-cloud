@@ -10,9 +10,9 @@ import RelatedViewMenu from './RelatedViewMenu';
 import RelatedWorkModal from './RelatedWorkModal';
 import type { Relationship as RelationshipType } from '../types/Relationship';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
-import withRelationshipEditForm from '../hooks/RelationshipEditForm';
 import WorkTransform from '../transforms/Work';
 import WorksService from '../services/Works';
+import withRelationshipEditForm from '../hooks/RelationshipEditForm';
 
 type Props = EditContainerProps & {
   item: RelationshipType
@@ -75,7 +75,7 @@ const RelatedWorkForm = (props: Props) => {
             onSave
           }}
           renderOption={WorkTransform.toDropdown.bind(this)}
-          searchQuery={foreignObject?.primary_name?.name?.name}
+          searchQuery={foreignObject?.name}
           value={props.item[foreignKey]}
         />
       </Form.Input>

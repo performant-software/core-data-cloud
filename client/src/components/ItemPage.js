@@ -121,6 +121,9 @@ const ItemPage = ({ form: Form, onInitialize, onSave }: Props) => {
               <Section
                 id='details'
               >
+                <SaveButton
+                  onClick={props.onSave}
+                />
                 <Header
                   className={cx(styles.ui, styles.header)}
                   content={t('ItemPage.labels.details')}

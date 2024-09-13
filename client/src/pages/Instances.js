@@ -40,8 +40,7 @@ const Instances: AbstractComponent<any> = () => {
    */
   const columns = useMemo(() => [{
     label: t('Instances.columns.name'),
-    name: 'core_data_connector_names.name',
-    resolve: (instance) => instance.primary_name?.name?.name,
+    name: 'name',
     sortable: true
   }, {
     name: 'uuid',
@@ -95,11 +94,11 @@ const Instances: AbstractComponent<any> = () => {
                 name: 'uuid',
                 label: t('Common.actions.merge.uuid'),
               }, {
-                name: 'source_titles',
+                name: 'source_names',
                 label: t('Instances.actions.merge.names'),
                 array: true,
                 names: true,
-                resolve: (sourceTitle) => sourceTitle.name?.name
+                resolve: (sourceName) => sourceName.name
               }]}
               ids={selectedItems}
               onLoad={(id) => (

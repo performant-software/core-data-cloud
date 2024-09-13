@@ -157,14 +157,23 @@ const WebIdentifierDropdown = (props: Props) => {
    * Calls the onSearch function after the user has stopped typing.
    */
   useEffect(() => {
-    const timeoutId = setTimeout(onSearch, SEARCH_TIMEOUT);
+    const timeoutId = setTimeout(() => {
+      onSearch();
+      setOpen(true);
+    }, SEARCH_TIMEOUT);
 
     return () => clearTimeout(timeoutId);
   }, [searchQuery]);
 
   return (
     <Dropdown
-      className={cx(styles.webIdentifierDropdown, styles.ui, styles.dropdown)}
+      className={cx(
+        styles.webIdentifierDropdown,
+        styles.ui,
+        styles.dropdown,
+        styles.search,
+        styles.selection
+      )}
       clearable
       fluid
       lazyLoad
@@ -183,6 +192,7 @@ const WebIdentifierDropdown = (props: Props) => {
           innerRef={inputRef}
         >
           <DropdownSearchInput
+            className={styles.search}
             value={searchQuery}
           />
         </Ref>

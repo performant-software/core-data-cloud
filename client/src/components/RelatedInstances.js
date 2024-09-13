@@ -26,9 +26,9 @@ const RelatedInstances = () => {
    * Memo-ize the related instances columns.
    */
   const columns = useMemo(() => [{
-    name: 'core_data_connector_names.name',
+    name: 'core_data_connector_source_names.name',
     label: t('RelatedInstances.columns.name'),
-    resolve: resolveAttributeValue.bind(this, 'primary_name.name.name'),
+    resolve: resolveAttributeValue.bind(this, 'name'),
     sortable: true
   }, {
     name: 'core_data_connector_instances.uuid',

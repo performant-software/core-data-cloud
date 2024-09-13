@@ -1,13 +1,13 @@
 // @flow
 
 import { LazyIIIF } from '@performant-software/semantic-components';
-import { IIIF as IIIFUtils } from '@performant-software/shared-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form } from 'semantic-ui-react';
+import { Form, Message } from 'semantic-ui-react';
 import type { MediaContent as MediaContentType } from '../types/MediaContent';
+import MediaUploadingMessage from './MediaUploadingMessage';
 
 type Props = EditContainerProps & {
   item: MediaContentType
@@ -16,15 +16,19 @@ type Props = EditContainerProps & {
 const MediaContentForm = (props: Props) => {
   const { t } = useTranslation();
 
-  /**
-   * Sets the manifest URL.
-   *
-   * @type {string|string|*}
-   */
-  const manifest = useMemo(() => IIIFUtils.createManifestURL(props.item.manifest), [props.item.manifest]);
-
   return (
-    <Form>
+    <Form
+      warning={props.item.content_changed}
+    >
+      { props.saved && (
+        <MediaUploadingMessage />
+      )}
+      <Message
+        content={t('MediaContentForm.messages.upload.content')}
+        header={t('MediaContentForm.messages.upload.header')}
+        icon='warning sign'
+        warning
+      />
       <Form.Input
         label={t('MediaContent.labels.content')}
       >
@@ -32,10 +36,11 @@ const MediaContentForm = (props: Props) => {
           color='teal'
           contentType={props.item.content_type}
           downloadUrl={props.item.content_download_url}
-          manifest={manifest}
+          manifest={props.item.manifest_url}
           onUpload={(file) => props.onSetState({
             name: file.name,
-            content: file
+            content: file,
+            content_changed: true
           })}
           preview={props.item.content_preview_url}
           src={props.item.content_url}
