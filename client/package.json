@@ -11,10 +11,10 @@
     "flow": "flow"
   },
   "dependencies": {
-    "@performant-software/geospatial": "^2.2.8",
-    "@performant-software/semantic-components": "^2.2.8",
-    "@performant-software/shared-components": "^2.2.8",
-    "@performant-software/user-defined-fields": "^2.2.8",
+    "@performant-software/geospatial": "^2.2.12",
+    "@performant-software/semantic-components": "^2.2.12",
+    "@performant-software/shared-components": "^2.2.12",
+    "@performant-software/user-defined-fields": "^2.2.12",
     "@peripleo/maplibre": "^0.5.2",
     "@peripleo/peripleo": "^0.5.2",
     "@samvera/clover-iiif": "^2.7.3",
