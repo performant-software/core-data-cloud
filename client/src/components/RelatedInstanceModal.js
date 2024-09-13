@@ -15,7 +15,6 @@ import type { Relationship as RelationshipType } from '../types/Relationship';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 import { useRelationship } from '../hooks/Relationship';
 import { useTranslation } from 'react-i18next';
-import SourceUtils from '../utils/Sources';
 
 type Props = EditContainerProps & {
   item: RelationshipType
@@ -86,7 +85,7 @@ const RelatedInstanceModal = (props: Props) => {
               )
             }}
             renderOption={InstanceTransform.toDropdown.bind(this)}
-            searchQuery={SourceUtils.getNameView(foreignObject)}
+            searchQuery={foreignObject?.name}
             value={props.item[foreignKey]}
           />
         </Form.Input>

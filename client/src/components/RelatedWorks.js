@@ -26,9 +26,9 @@ const RelatedWorks = () => {
    * Memo-ize the related works columns.
    */
   const columns = useMemo(() => [{
-    name: 'core_data_connector_names.name',
+    name: 'core_data_connector_source_names.name',
     label: t('RelatedWorks.columns.name'),
-    resolve: resolveAttributeValue.bind(this, 'primary_name.name.name'),
+    resolve: resolveAttributeValue.bind(this, 'name'),
     sortable: true
   }, {
     name: 'core_data_connector_works.uuid',

@@ -3,7 +3,7 @@
 import { AssociatedDropdown, TabbedModal } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsEmbeddedList } from '@performant-software/user-defined-fields';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
 import type { ProjectModelRelationship as ProjectModelRelationshipType } from '../types/ProjectModel';
@@ -19,6 +19,15 @@ const RelationshipForm = (props: Props) => {
   const { projectId } = useParams();
   const { t } = useTranslation();
 
+  /**
+   * Calls the "/project_models" API endpoint with the passed search query.
+   *
+   * @type {function(*): Promise<AxiosResponse<T>>}
+   */
+  const onSearch = useCallback((search) => (
+    ProjectModelsService.fetchAll({ search, project_id: projectId })
+  ), [projectId]);
+
   return (
     <>
       <Form.Input
@@ -28,7 +37,7 @@ const RelationshipForm = (props: Props) => {
       >
         <AssociatedDropdown
           collectionName='project_models'
-          onSearch={(search) => ProjectModelsService.fetchAll({ search, project_id: projectId })}
+          onSearch={onSearch}
           onSelection={props.onAssociationInputChange.bind(this, 'related_model_id', 'related_model')}
           renderOption={ProjectModelTransform.toDropdown.bind(this)}
           searchQuery={props.item.related_model?.name}

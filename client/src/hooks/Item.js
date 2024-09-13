@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import _ from 'underscore';
 import ProjectContext from '../context/Project';
 import PeopleUtils from '../utils/People';
-import SourceUtils from '../utils/Sources';
 import { Types } from '../utils/ProjectModels';
 import { useLocation } from 'react-router-dom';
 import useParams from './ParsedParams';
@@ -47,11 +46,11 @@ const initialize = ({ item, onSetState }) => {
     }
 
     if (classView === Types.Instance) {
-      return SourceUtils.getNameView(item);
+      return _.findWhere(item.source_names, { primary: true })?.name;
     }
 
     if (classView === Types.Item) {
-      return SourceUtils.getNameView(item);
+      return _.findWhere(item.source_names, { primary: true })?.name;
     }
 
     if (classView === Types.MediaContent) {
@@ -75,7 +74,7 @@ const initialize = ({ item, onSetState }) => {
     }
 
     if (classView === Types.Work) {
-      return SourceUtils.getNameView(item);
+      return _.findWhere(item.source_names, { primary: true })?.name;
     }
 
     return null;

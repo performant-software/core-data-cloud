@@ -14,10 +14,8 @@ import {
 import ImportModal from './ImportModal';
 import type { Item as ItemType } from '../types/Item';
 import ItemLayoutContext from '../context/ItemLayout';
-import NameRelationModal from './NameRelationModal';
+import SourceNameModal from './SourceNameModal';
 import ProjectContext from '../context/Project';
-import type { SourceTitle as SourceTitleType } from '../types/Source';
-import SourcesUtils from '../utils/Sources';
 
 type Props = EditContainerProps & {
   item: ItemType
@@ -53,21 +51,19 @@ const ItemForm = (props: Props) => {
         className='compact'
         columns={[{
           name: 'name',
-          label: t('ItemForm.itemNames.columns.name'),
-          resolve: (sourceTitle) => sourceTitle.name.name
+          label: t('ItemForm.itemNames.columns.name')
         }, {
           name: 'primary',
           label: t('ItemForm.itemNames.columns.primary'),
-          render: (sourceTitle) => <BooleanIcon value={sourceTitle.primary} />
+          render: (sourceName) => <BooleanIcon value={sourceName.primary} />
         }]}
         configurable={false}
-        items={props.item.source_titles}
+        items={props.item.source_names}
         modal={{
-          component: NameRelationModal,
-          onSave: (sourceTitle: SourceTitleType) => SourcesUtils.insertSourceTitle(props, sourceTitle)
+          component: SourceNameModal
         }}
-        onSave={props.onSaveChildAssociation.bind(this, 'source_titles')}
-        onDelete={props.onDeleteChildAssociation.bind(this, 'source_titles')}
+        onSave={props.onSaveChildAssociation.bind(this, 'source_names')}
+        onDelete={props.onDeleteChildAssociation.bind(this, 'source_names')}
       />
       { projectModel.id === project.faircopy_cloud_project_model_id && (
         <Form.Input
