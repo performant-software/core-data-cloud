@@ -14,6 +14,7 @@ import MediaContentUtils from '../utils/MediaContent';
 import MediaContentsSelector from './MediaContentsSelector';
 import MediaContentsService from '../services/MediaContents';
 import MediaContentsUploadModal from './MediaContentsUploadModal';
+import MediaUploadingMessage from './MediaUploadingMessage';
 import ProjectContext from '../context/Project';
 import RelatedMediaContentModal from './RelatedMediaContentModal';
 import RelationshipsService from '../services/Relationships';
@@ -168,6 +169,11 @@ const RelatedMediaContents = () => {
 
   return (
     <>
+      { saved && (
+        <MediaUploadingMessage
+          multiple
+        />
+      )}
       <ManifestLimitMessage
         count={count}
       />

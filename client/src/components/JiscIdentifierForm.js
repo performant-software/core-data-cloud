@@ -21,11 +21,11 @@ const JiscIdentifierForm = (props: Props) => {
 
   // For some reason, Jisc's payloads include a URI that
   // contains the unique ID but not the ID itself.
-  const resolveId = useCallback(() => (
-    selectedItem?.uri
-      ? selectedItem.uri.replace(BASE_URL, '').replace('&rn=1', '')
+  const resolveId = useCallback((item) => (
+    item?.uri
+      ? item.uri.replace(BASE_URL, '').replace('&rn=1', '')
       : null
-  ), [selectedItem]);
+  ), []);
 
   return (
     <Form.Input
