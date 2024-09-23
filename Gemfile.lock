@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: bba7958ff7633e71b6a11ef78914777c518d7011
-  tag: v0.1.60
+  revision: 1894e19f4d0c29ca4c4e531f84ad9fafa1c5fe7d
+  tag: v0.1.61
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 8.0)
@@ -206,7 +206,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.15.4-x86_64-linux)
       racc (~> 1.4)
-    oj (3.16.5)
+    oj (3.16.6)
       bigdecimal (>= 3.0)
       ostruct (>= 0.2)
     ostruct (0.6.0)
@@ -254,8 +254,7 @@ GEM
     rake (13.0.6)
     reline (0.3.8)
       io-console (~> 0.5)
-    rexml (3.3.6)
-      strscan
+    rexml (3.3.7)
     rgeo (3.0.1)
     rgeo-activerecord (7.0.1)
       activerecord (>= 5.0)
@@ -264,7 +263,6 @@ GEM
       multi_json (~> 1.15)
       rgeo (>= 1.0.0)
     rubyzip (2.3.2)
-    strscan (3.1.0)
     thor (1.2.2)
     timeout (0.4.0)
     typesense (0.15.0)
