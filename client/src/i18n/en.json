@@ -274,6 +274,9 @@
         "name": "Name",
         "title": "Merge Media Contents"
       }
+    },
+    "sort": {
+      "name": "Name"
     }
   },
   "MediaContentsSelectize": {
