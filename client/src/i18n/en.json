@@ -35,6 +35,10 @@
       "navigate": {
         "content": "Navigates to the edit page for this record",
         "title": "Navigate"
+      },
+      "open": {
+        "content": "Opens the edit page for this record in a new tab",
+        "title": "Open"
       }
     },
     "buttons": {
