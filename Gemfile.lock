@@ -1,26 +1,4 @@
 GIT
-  remote: https://github.com/performant-software/core-data-connector.git
-  revision: 1894e19f4d0c29ca4c4e531f84ad9fafa1c5fe7d
-  tag: v0.1.61
-  specs:
-    core_data_connector (0.1.0)
-      activerecord-postgis-adapter (~> 8.0)
-      faker
-      fuzzy_dates
-      jwt (~> 2.7.1)
-      jwt_auth
-      rack-cors (~> 2.0.1)
-      rails (>= 6.0.3.2, < 8)
-      resource_api
-      rexml (~> 3.2)
-      rgeo-geojson (~> 2.1)
-      rubyzip (~> 2.3.2)
-      triple_eye_effable
-      typesense (~> 0.14)
-      typhoeus (~> 1.4)
-      user_defined_fields
-
-GIT
   remote: https://github.com/performant-software/fuzzy-dates.git
   revision: fa3f237882f9c89888f82af41f6fe2b8ff2281a3
   tag: v0.1.0
@@ -40,8 +18,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/resource-api.git
-  revision: 29bb30e0977825e846acc8aa46895ecc798b31c7
-  tag: v0.5.9
+  revision: dd731cd55db4c6eaed503c35b2e67ad3b87d7d97
+  tag: v0.5.12
   specs:
     resource_api (0.1.0)
       pagy (~> 5.10)
@@ -65,6 +43,26 @@ GIT
     user_defined_fields (0.1.0)
       rails (>= 6.0.3.2, < 8)
       resource_api
+
+PATH
+  remote: ../core-data-connector
+  specs:
+    core_data_connector (0.1.0)
+      activerecord-postgis-adapter (~> 8.0)
+      faker
+      fuzzy_dates
+      jwt (~> 2.7.1)
+      jwt_auth
+      rack-cors (~> 2.0.1)
+      rails (>= 6.0.3.2, < 8)
+      resource_api
+      rexml (~> 3.2)
+      rgeo-geojson (~> 2.1)
+      rubyzip (~> 2.3.2)
+      triple_eye_effable
+      typesense (~> 0.14)
+      typhoeus (~> 1.4)
+      user_defined_fields
 
 GEM
   remote: https://rubygems.org/
