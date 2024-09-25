@@ -10,7 +10,13 @@ import React, {
   useState
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Divider, Header, Message } from 'semantic-ui-react';
+import {
+  Dimmer,
+  Divider,
+  Header,
+  Loader,
+  Message
+} from 'semantic-ui-react';
 import _ from 'underscore';
 import ItemContext from '../context/Item';
 import ItemHeader from './ItemHeader';
@@ -29,6 +35,7 @@ import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
 
 type Props = {
   form: Element<any>,
+  loading: boolean,
   onInitialize: (id: number) => Promise<any>,
   onSave: (item: any) => Promise<any>
 };
@@ -118,6 +125,12 @@ const ItemPage = ({ form: Form, onInitialize, onSave }: Props) => {
               <ProjectItemMenu />
             </ItemLayout.Sidebar>
             <ItemLayout.Content>
+              <Dimmer
+                active={props.loading}
+                inverted
+              >
+                <Loader />
+              </Dimmer>
               <Section
                 id='details'
               >
