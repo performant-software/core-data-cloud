@@ -3,14 +3,13 @@
 import { useUserDefinedColumns } from '@performant-software/user-defined-fields';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import _ from 'underscore';
 import RelationshipsService from '../services/Relationships';
 import useParams from './ParsedParams';
 import useProjectModelRelationship from './ProjectModelRelationship';
 
 const useRelationships = () => {
-  const navigate = useNavigate();
   const { projectId } = useParams();
   const { t } = useTranslation();
 
@@ -118,11 +117,11 @@ const useRelationships = () => {
    *
    * @type {(function(*): void)|*}
    */
-  const onNavigate = useCallback((relationship) => {
+  const navigateUrl = useCallback((relationship) => {
     const projectModelId = resolveAttributeValue('project_model_id', relationship);
     const recordId = resolveAttributeValue('id', relationship);
 
-    navigate(`/projects/${projectId}/${projectModelId}/${recordId}`);
+    return `/projects/${projectId}/${projectModelId}/${recordId}`;
   }, [resolveAttributeValue]);
 
   /**
@@ -135,12 +134,27 @@ const useRelationships = () => {
     name: 'delete',
     icon: 'times'
   }, {
+    as: Link,
+    asProps: (relationship) => ({
+      to: navigateUrl(relationship)
+    }),
     name: 'navigate',
     icon: 'arrow right',
-    onClick: onNavigate,
     popup: {
       content: t('Common.actions.navigate.content'),
       title: t('Common.actions.navigate.title')
+    }
+  }, {
+    as: Link,
+    asProps: (relationship) => ({
+      target: '_blank',
+      to: navigateUrl(relationship)
+    }),
+    icon: 'external alternate',
+    name: 'open',
+    popup: {
+      content: t('Common.actions.open.content'),
+      title: t('Common.actions.open.title')
     }
   }];
 
@@ -164,7 +178,6 @@ const useRelationships = () => {
     onDelete,
     onInitialize,
     onLoad,
-    onNavigate,
     onSave,
     projectModelRelationship,
     resolveAttributeValue,
