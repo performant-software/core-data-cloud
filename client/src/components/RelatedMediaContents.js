@@ -241,6 +241,15 @@ const RelatedMediaContents = () => {
         renderMeta={() => ''}
         saved={saved}
         searchable={false}
+        session={{
+          key: `related_media_contents_${projectModelRelationship?.id}`,
+          storage: localStorage
+        }}
+        sort={[{
+          name: 'name',
+          value: 'core_data_connector_media_contents.name',
+          text: t('RelatedMediaContents.sort.name')
+        }]}
       />
       { modal === Modal.upload && (
         <MediaContentsUploadModal

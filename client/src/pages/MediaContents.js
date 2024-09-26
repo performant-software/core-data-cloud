@@ -147,6 +147,11 @@ const MediaContents = () => {
           key: `media_contents_${projectModelId}`,
           storage: localStorage
         }}
+        sort={[{
+          key: 'name',
+          value: 'core_data_connector_media_contents.name',
+          text: t('MediaContents.sort.name')
+        }]}
       />
     </>
   );
