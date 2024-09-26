@@ -81,6 +81,10 @@ textarea {
   box-shadow: none;
 }
 
+.list > .header > .ui.grid > .row > .column > .ui.menu {
+  min-height: unset;
+}
+
 .list > .header > .ui.grid > .row > .column > .ui.menu .ui.button.dropdown:focus,
 .list > .header > .ui.grid > .row > .column > .ui.menu .ui.button.dropdown:hover {
   background-color: transparent !important;
