@@ -214,7 +214,7 @@ const RelatedMediaContents = () => {
         defaultView={ItemViews.grid}
         dimmable={false}
         hideToggle
-        itemsPerRow={5}
+        itemsPerRow={4}
         modal={{
           component: RelatedMediaContentModal,
           props: {
