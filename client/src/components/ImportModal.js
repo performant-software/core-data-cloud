@@ -1,6 +1,8 @@
 // @flow
 
+import { EmbeddedList } from '@performant-software/semantic-components';
 import { ObjectJs as ObjectUtils } from '@performant-software/shared-components';
+import cx from 'classnames';
 import React, {
   useCallback,
   useEffect,
@@ -17,14 +19,13 @@ import {
   Label,
   Loader,
   Message,
-  Modal,
-  Table
+  Modal
 } from 'semantic-ui-react';
 import _ from 'underscore';
 import ImportCompareModal from './ImportCompareModal';
 import ImportStatus from './ImportStatus';
 import ItemsService from '../services/Items';
-import { Status } from '../constants/Import';
+import { DefaultSort, Status } from '../constants/Import';
 import styles from './ImportModal.module.css';
 
 type Props = {
@@ -35,6 +36,7 @@ type Props = {
 };
 
 const FILE_NAME_RELATIONSHIPS = 'relationships.csv';
+const MAX_DEFAULT_COLUMNS = 3;
 
 const ImportModal = (props: Props) => {
   const [confirmation, setConfirmation] = useState(false);
@@ -57,12 +59,28 @@ const ImportModal = (props: Props) => {
 
     const { attributes } = _.get(data, fileName) || {};
 
-    _.each(attributes, (attribute) => {
+    _.each(attributes, (attribute, index) => {
       if (attribute.name !== 'project_model_id' && attribute.name !== 'project_model_relationship_id') {
-        value.push({ ...attribute, editable: attribute.name !== 'uuid' });
+        value.push({
+          ...attribute,
+          editable: attribute.name !== 'uuid',
+          hidden: index > MAX_DEFAULT_COLUMNS,
+        });
       }
     });
 
+    // Add the "Status" column
+    value.push({
+      name: 'status',
+      label: t('ImportModal.labels.status'),
+      render: (item) => (
+        <ImportStatus
+          status={item.status}
+        />
+      )
+    });
+
+    console.log('recalculating columns');
     return value;
   }, [data, fileName]);
 
@@ -159,6 +177,15 @@ const ImportModal = (props: Props) => {
   }, [data, fileName]);
 
   /**
+   * Memoizes the list of items to display on the import table.
+   */
+  const importItems = _.map(items, (item, index) => ({
+    ...item.import,
+    index,
+    status: item.status
+  }));
+
+  /**
    * Sets the file name dropdown options.
    *
    * @type {[]}
@@ -207,10 +234,11 @@ const ImportModal = (props: Props) => {
    *
    * @type {(function(*): void)|*}
    */
-  const onRemove = useCallback((index) => {
+  const onRemove = useCallback((item) => {
     const newData = { ...data };
 
-    _.extend(newData[fileName], { data: _.filter(newData[fileName].data, (i, idx) => idx !== index) });
+    _.extend(newData[fileName], { data: _.filter(newData[fileName].data, (i, index) => index !== item.index) });
+
     setData(newData);
   }, [data, fileName]);
 
@@ -249,7 +277,7 @@ const ImportModal = (props: Props) => {
       response.data,
       ({ attributes, data: rows }) => ({ attributes, data: _.map(rows, (row) => ({ ...row, status: getStatus(row) })) })
     )
-  ), []);
+  ), [getStatus]);
 
   /**
    * Calls the `/items/:id/analyze_import` API endpoint and sets the results on the state.
@@ -274,7 +302,7 @@ const ImportModal = (props: Props) => {
   return (
     <Modal
       centered={false}
-      className={styles.importModal}
+      className={cx(styles.importModal, 'import-modal')}
       open
     >
       <Modal.Header>
@@ -333,65 +361,37 @@ const ImportModal = (props: Props) => {
             icon='question mark'
           />
         )}
-        { loaded && !_.isEmpty(data) && (
-          <>
-            <Dropdown
-              selection
-              onChange={(e, { value }) => setFileName(value)}
-              options={options}
-              value={fileName}
-            />
-            <Table
-              padded
-              size='small'
-            >
-              <Table.Header>
-                <Table.Row>
-                  { columns && _.map(columns, (column) => (
-                    <Table.HeaderCell
-                      content={column.label}
-                    />
-                  ))}
-                  <Table.HeaderCell />
-                  <Table.HeaderCell />
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                { items && _.map(items, (item, index) => (
-                  <Table.Row>
-                    { columns && _.map(columns, (column) => (
-                      <Table.Cell>
-                        { item.import[column.name] }
-                      </Table.Cell>
-                    ))}
-                    <Table.Cell>
-                      <ImportStatus
-                        status={item.status}
-                      />
-                    </Table.Cell>
-                    <Table.Cell>
-                      <Button.Group>
-                        { item.import && item.db && (
-                          <Button
-                            basic
-                            compact
-                            icon='pencil'
-                            onClick={() => setSelectedIndex(index)}
-                          />
-                        )}
-                        <Button
-                          basic
-                          compact
-                          icon='times'
-                          onClick={() => onRemove(index)}
-                        />
-                      </Button.Group>
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
-              </Table.Body>
-            </Table>
-          </>
+        { loaded && !_.isEmpty(data) && fileName && (
+          <EmbeddedList
+            actions={[{
+              name: 'edit',
+              icon: 'pencil',
+              onClick: (item) => setSelectedIndex(item.index)
+            }, {
+              name: 'delete',
+              icon: 'times',
+              onClick: (item) => onRemove(item)
+            }]}
+            buttons={[{
+              render: () => (
+                <Dropdown
+                  selection
+                  onChange={(e, { value }) => setFileName(value)}
+                  options={options}
+                  value={fileName}
+                />
+              )
+            }]}
+            columns={columns}
+            defaultSort={DefaultSort[fileName]}
+            items={importItems}
+            key={fileName}
+            tableProps={{
+              celled: false,
+              padded: true,
+              size: 'small'
+            }}
+          />
         )}
         { selectedIndex != null && items[selectedIndex] && (
           <ImportCompareModal
