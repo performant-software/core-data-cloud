@@ -81,8 +81,12 @@ textarea {
   box-shadow: none;
 }
 
-.list.data-table-column-selector > .header > .ui.grid > .row > .column > .ui.menu .ui.button:focus,
-.list.data-table-column-selector > .header > .ui.grid > .row > .column > .ui.menu .ui.button:hover {
+.list > .header > .ui.grid > .row > .column > .ui.menu {
+  min-height: unset;
+}
+
+.list > .header > .ui.grid > .row > .column > .ui.menu .ui.button.dropdown:focus,
+.list > .header > .ui.grid > .row > .column > .ui.menu .ui.button.dropdown:hover {
   background-color: transparent !important;
 }
 

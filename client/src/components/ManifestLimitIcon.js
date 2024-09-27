@@ -4,7 +4,7 @@ import cx from 'classnames';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IoWarning } from 'react-icons/io5';
-import { Icon, Popup } from 'semantic-ui-react';
+import { Button, Icon, Popup } from 'semantic-ui-react';
 import MediaContentUtils from '../utils/MediaContent';
 import styles from './ManifestLimitIcon.module.css';
 
@@ -26,13 +26,19 @@ const ManifestLimitIcon = () => {
     <Popup
       content={t('ManifestLimitIcon.labels.limit', { limit })}
       trigger={(
-        <Icon
-          className={cx(styles.manifestLimitIcon, styles.icon)}
+        <Button
+          basic
+          compact
+          size='mini'
         >
-          <IoWarning
-            size='2em'
-          />
-        </Icon>
+          <Icon
+            className={cx(styles.manifestLimitIcon, styles.icon)}
+          >
+            <IoWarning
+              size='2em'
+            />
+          </Icon>
+        </Button>
       )}
     />
   );
