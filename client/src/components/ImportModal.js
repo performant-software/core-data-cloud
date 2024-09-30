@@ -12,6 +12,7 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import {
   Button,
+  Checkbox,
   Confirm,
   Dimmer,
   Dropdown,
@@ -80,7 +81,6 @@ const ImportModal = (props: Props) => {
       )
     });
 
-    console.log('recalculating columns');
     return value;
   }, [data, fileName]);
 
@@ -268,6 +268,19 @@ const ImportModal = (props: Props) => {
   }, [data, fileName, selectedIndex]);
 
   /**
+   * Toggles the "remove duplicates" value for the current file.
+   *
+   * @type {(function(*, {checked: *}): void)|*}
+   */
+  const onToggleRemoveDuplicates = useCallback((e, { checked }) => {
+    const newData = { ...data };
+
+    _.extend(newData[fileName], { remove_duplicates: checked });
+
+    setData(newData);
+  }, [data, fileName]);
+
+  /**
    * Sets the calculated import status on each row of the data set.
    *
    * @type {function(*): void}
@@ -379,6 +392,16 @@ const ImportModal = (props: Props) => {
                   onChange={(e, { value }) => setFileName(value)}
                   options={options}
                   value={fileName}
+                />
+              )
+            }, {
+              render: () => (
+                <Checkbox
+                  className={styles.duplicatesCheckbox}
+                  checked={data[fileName]?.remove_duplicates}
+                  label={t('ImportModal.labels.removeDuplicates')}
+                  onChange={onToggleRemoveDuplicates}
+                  toggle
                 />
               )
             }]}
