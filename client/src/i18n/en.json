@@ -205,7 +205,8 @@
   "ItemPage": {
     "labels": {
       "details": "Details",
-      "identifiers": "Identifiers"
+      "identifiers": "Identifiers",
+      "merges": "Merges"
     }
   },
   "Items": {
@@ -621,7 +622,8 @@
   "ProjectItemMenu": {
     "labels": {
       "details": "Details",
-      "identifiers": "Identifiers"
+      "identifiers": "Identifiers",
+      "merges": "Merges"
     }
   },
   "ProjectModeLink": {
@@ -781,6 +783,11 @@
   "RelatedPlaces": {
     "columns": {
       "name": "Name"
+    }
+  },
+  "RelatedRecordMerges": {
+    "columns": {
+      "created": "Created"
     }
   },
   "RelatedTaxonomyItems": {
