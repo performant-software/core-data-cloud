@@ -12,7 +12,6 @@ import ListViews from '../constants/ListViews';
 import ProjectModelRelationshipContext from '../context/ProjectModelRelationship';
 import RelatedViewMenu from './RelatedViewMenu';
 import type { Relationship as RelationshipType } from '../types/Relationship';
-import SourceUtils from '../utils/Sources';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 import { useRelationship } from '../hooks/Relationship';
 import { useTranslation } from 'react-i18next';
@@ -86,7 +85,7 @@ const RelatedItemModal = (props: Props) => {
               )
             }}
             renderOption={ItemTransform.toDropdown.bind(this)}
-            searchQuery={SourceUtils.getNameView(foreignObject)}
+            searchQuery={foreignObject?.name}
             value={props.item[foreignKey]}
           />
         </Form.Input>

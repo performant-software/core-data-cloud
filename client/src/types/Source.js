@@ -1,20 +1,17 @@
 // @flow
 
-import type { Name } from './Name';
-
-export type SourceTitle = {
+export type SourceName = {
   id: number,
   primary: number,
-  nameable_type: 'CoreDataConnector::Instance'
-    | 'CoreDataConnector::Item'
-    | 'CoreDataConnector::Work',
+  nameable_type: 'CoreDataConnector::Instance' | 'CoreDataConnector::Item' | 'CoreDataConnector::Work',
   nameable_id: number,
-  name: Name,
+  name: string,
   project_id: number
-}
+};
 
 export type Source = {
   id: number,
-  source_titles: SourceTitle[],
-  primary_name: SourceTitle
-}
+  name: string,
+  primary_name: SourceName,
+  source_names: Array<SourceName>
+};

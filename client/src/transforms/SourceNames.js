@@ -1,14 +1,14 @@
 // @flow
 
 import { NestedAttributesTransform } from '@performant-software/shared-components';
-import InstanceType from '../types/Instance';
-import ItemType from '../types/Item';
-import WorkType from '../types/Work';
+import type { Instance as InstanceType } from '../types/Instance';
+import type { Item as ItemType } from '../types/Item';
+import type { Work as WorkType } from '../types/Work';
 
 /**
  * Class responsible for transforming place names objects.
  */
-class SourceTitles extends NestedAttributesTransform {
+class SourceNames extends NestedAttributesTransform {
   /**
    * Returns the source names payload keys.
    *
@@ -17,9 +17,8 @@ class SourceTitles extends NestedAttributesTransform {
   getPayloadKeys(): Array<string> {
     return [
       'id',
-      'primary',
       'name',
-      'name_id',
+      'primary',
       '_destroy'
     ];
   }
@@ -32,13 +31,10 @@ class SourceTitles extends NestedAttributesTransform {
    *
    * @returns {*}
    */
-  toPayload(
-    source: InstanceType | ItemType | WorkType,
-    collection: string = 'source_titles'
-  ): any {
+  toPayload(source: InstanceType | ItemType | WorkType, collection: string = 'source_names'): any {
     return super.toPayload(source, collection);
   }
 }
 
-const SourceTitlesTransform: SourceTitles = new SourceTitles();
+const SourceTitlesTransform: SourceNames = new SourceNames();
 export default SourceTitlesTransform;

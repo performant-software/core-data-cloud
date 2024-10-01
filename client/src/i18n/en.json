@@ -35,6 +35,10 @@
       "navigate": {
         "content": "Navigates to the edit page for this record",
         "title": "Navigate"
+      },
+      "open": {
+        "content": "Opens the edit page for this record in a new tab",
+        "title": "Open"
       }
     },
     "buttons": {
@@ -249,6 +253,14 @@
       "name": "Name"
     }
   },
+  "MediaContentForm": {
+    "messages": {
+      "upload": {
+        "content": "Please save the record to upload your file.",
+        "header": "Warning!"
+      }
+    }
+  },
   "MediaContentUploadForm": {
     "labels": {
       "name": "Name"
@@ -266,6 +278,9 @@
         "name": "Name",
         "title": "Merge Media Contents"
       }
+    },
+    "sort": {
+      "name": "Name"
     }
   },
   "MediaContentsSelectize": {
@@ -277,6 +292,18 @@
       "required": "Image {{name}} - The following fields are required: {{fields}}"
     },
     "title": "Select Media"
+  },
+  "MediaUploadingMessage": {
+    "messages": {
+      "multiple": {
+        "content": "Your files have been uploaded. Images may take time to process. Please refresh the page if you cannot see your images.",
+        "header": "Files Uploaded"
+      },
+      "single": {
+        "content": "Your file has been uploaded. Images may take time to process. Please refresh the page if you cannot see your image.",
+        "header": "File Uploaded"
+      }
+    }
   },
   "MergeButton": {
     "buttons": {

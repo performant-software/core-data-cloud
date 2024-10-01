@@ -1,12 +1,21 @@
-.webIdentifierDropdown.ui.dropdown > .menu > .item {
+.webIdentifierDropdown.ui.dropdown.search.selection > input.search,
+.webIdentifierDropdown.ui.dropdown.search.selection > div.filtered.text {
+  width: calc(100% - 40px);
+  -webkit-line-clamp: 1;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}
+
+.webIdentifierDropdown.ui.dropdown.search.selection > .menu > .item {
   display: flex;
   align-items: center;
 }
 
-.webIdentifierDropdown.ui.dropdown > .menu > .item.active {
+.webIdentifierDropdown.ui.dropdown.search.selection > .menu > .item.active {
   background: rgba(0, 0, 0, 0.05);
 }
 
-.webIdentifierDropdown.ui.dropdown > .menu > .item > .optionContainer {
+.webIdentifierDropdown.ui.dropdown.search.selection > .menu > .item > .optionContainer {
   flex-grow: 1;
 }

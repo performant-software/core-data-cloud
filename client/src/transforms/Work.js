@@ -1,7 +1,7 @@
 // @flow
 
 import MergeableTransform from './Mergeable';
-import SourceTitles from './SourceTitles';
+import SourceNames from './SourceNames';
 import type { Work as WorkType } from '../types/Work';
 
 class Work extends MergeableTransform {
@@ -37,13 +37,13 @@ class Work extends MergeableTransform {
     return {
       key: work.id,
       value: work.id,
-      text: work.primary_name.name.name
+      text: work.name
     };
   }
 
   toPayload(work: WorkType) {
     const payload = super.toPayload(work, {
-      ...SourceTitles.toPayload(work)
+      ...SourceNames.toPayload(work)
     });
 
     return payload;

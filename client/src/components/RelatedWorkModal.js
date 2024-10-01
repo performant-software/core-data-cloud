@@ -4,6 +4,7 @@ import { AssociatedDropdown } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
 import React, { useCallback, useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Form, Modal } from 'semantic-ui-react';
 import ListViews from '../constants/ListViews';
 import ProjectModelRelationshipContext from '../context/ProjectModelRelationship';
@@ -11,11 +12,9 @@ import RelatedViewMenu from './RelatedViewMenu';
 import type { Relationship as RelationshipType } from '../types/Relationship';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 import { useRelationship } from '../hooks/Relationship';
-import { useTranslation } from 'react-i18next';
 import WorkModal from './WorkModal';
 import WorkTransform from '../transforms/Work';
 import WorksService from '../services/Works';
-import SourceUtils from '../utils/Sources';
 
 type Props = EditContainerProps & {
   item: RelationshipType
@@ -86,7 +85,7 @@ const RelatedWorkModal = (props: Props) => {
               )
             }}
             renderOption={WorkTransform.toDropdown.bind(this)}
-            searchQuery={SourceUtils.getNameView(foreignObject)}
+            searchQuery={foreignObject?.name}
             value={props.item[foreignKey]}
           />
         </Form.Input>

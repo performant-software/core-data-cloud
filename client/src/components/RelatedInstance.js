@@ -4,14 +4,14 @@ import { AssociatedDropdown } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import React, { useCallback, useState } from 'react';
 import { Form } from 'semantic-ui-react';
-import { useRelationship } from '../hooks/Relationship';
 import ListViews from '../constants/ListViews';
 import InstanceTransform from '../transforms/Instance';
 import InstancesService from '../services/Instances';
+import RelatedInstanceModal from './RelatedInstanceModal';
 import RelatedViewMenu from './RelatedViewMenu';
 import type { Relationship as RelationshipType } from '../types/Relationship';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
-import RelatedInstanceModal from './RelatedInstanceModal';
+import { useRelationship } from '../hooks/Relationship';
 import withRelationshipEditForm from '../hooks/RelationshipEditForm';
 
 type Props = EditContainerProps & {
@@ -75,7 +75,7 @@ const RelatedInstanceForm = (props: Props) => {
           onSearch={onSearch}
           onSelection={onSelection}
           renderOption={InstanceTransform.toDropdown.bind(this)}
-          searchQuery={foreignObject?.primary_name?.name.name}
+          searchQuery={foreignObject?.name}
           value={props.item[foreignKey]}
         />
       </Form.Input>
