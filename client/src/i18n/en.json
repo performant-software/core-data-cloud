@@ -119,7 +119,7 @@
   },
   "ImportCompareModal": {
     "labels": {
-      "duplicate": "Duplicate {{index}}",
+      "merged": "Merged {{index}}",
       "existing": "Existing",
       "incoming": "Incoming"
     },
