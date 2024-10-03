@@ -38,7 +38,7 @@ const ImportCompareModal = (props: Props) => {
     if (props.item.duplicates) {
       _.each(props.item.duplicates, (duplicate, idx) => value.push({
         ...duplicate,
-        label: t('ImportCompareModal.labels.duplicate', { index: idx + 1 })
+        label: t('ImportCompareModal.labels.merged', { index: idx + 1 })
       }));
     }
 

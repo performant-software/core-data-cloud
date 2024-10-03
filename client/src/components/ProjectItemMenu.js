@@ -18,6 +18,7 @@ import useParams from '../hooks/ParsedParams';
 
 const SECTION_ID_DETAILS = 'details';
 const SECTION_ID_IDENTIFIERS = 'identifiers';
+const SECTION_ID_MERGES = 'merges';
 
 const ProjectItemMenu = () => {
   const [activeSection, setActiveSection] = useState();
@@ -79,6 +80,8 @@ const ProjectItemMenu = () => {
       if (projectModel?.allow_identifiers) {
         addSection(items, SECTION_ID_IDENTIFIERS, t('ProjectItemMenu.labels.identifiers'));
       }
+
+      addSection(items, SECTION_ID_MERGES, t('ProjectItemMenu.labels.merges'));
     }
 
     return items;

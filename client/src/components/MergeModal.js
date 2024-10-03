@@ -67,7 +67,7 @@ const MergeModal = (props: Props) => {
    * @type {function(*, *, *): *}
    */
   const getAttributeValue = useCallback((current, item, attribute) => {
-    let value = item[attribute.name];
+    let value = item[attribute.name] || {};
 
     if (attribute.names) {
       value = _.map(value, (entry) => ({

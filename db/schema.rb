@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_10_171712) do
+ActiveRecord::Schema[7.0].define(version: 2024_09_30_173046) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -25,6 +25,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_10_171712) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
+    t.uuid "import_id"
     t.index ["project_model_id"], name: "index_core_data_connector_events_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_events_on_user_defined", using: :gin
   end
@@ -36,6 +37,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_10_171712) do
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
     t.integer "z_instance_id"
+    t.uuid "import_id"
     t.index ["project_model_id"], name: "index_core_data_connector_instances_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_instances_on_user_defined", using: :gin
   end
@@ -48,6 +50,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_10_171712) do
     t.jsonb "user_defined", default: {}
     t.integer "z_item_id"
     t.string "faircopy_cloud_id"
+    t.uuid "import_id"
     t.index ["project_model_id"], name: "index_core_data_connector_items_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_items_on_user_defined", using: :gin
   end
@@ -95,6 +98,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_10_171712) do
     t.jsonb "user_defined", default: {}
     t.integer "z_organization_id"
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.uuid "import_id"
     t.index ["project_model_id"], name: "index_core_data_connector_organizations_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_organizations_on_user_defined", using: :gin
   end
@@ -107,6 +111,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_10_171712) do
     t.jsonb "user_defined", default: {}
     t.integer "z_person_id"
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.uuid "import_id"
     t.index ["project_model_id"], name: "index_core_data_connector_people_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_people_on_user_defined", using: :gin
   end
@@ -157,6 +162,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_10_171712) do
     t.jsonb "user_defined", default: {}
     t.integer "z_place_id"
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.uuid "import_id"
     t.index ["project_model_id"], name: "index_core_data_connector_places_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_places_on_user_defined", using: :gin
   end
@@ -173,11 +179,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_10_171712) do
   create_table "core_data_connector_project_model_relationships", force: :cascade do |t|
     t.bigint "primary_model_id", null: false
     t.bigint "related_model_id", null: false
-    t.string "name"
-    t.boolean "multiple"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
+    t.boolean "multiple"
+    t.string "name"
     t.boolean "allow_inverse", default: false, null: false
     t.string "inverse_name"
     t.boolean "inverse_multiple", default: false
@@ -239,6 +245,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_10_171712) do
     t.jsonb "user_defined", default: {}
     t.integer "z_relationship_id"
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.uuid "import_id"
     t.index ["primary_record_type", "primary_record_id"], name: "index_core_data_connector_relationships_on_primary_record"
     t.index ["project_model_relationship_id"], name: "index_cdc_relationships_on_project_model_relationship_id"
     t.index ["related_record_type", "related_record_id"], name: "index_core_data_connector_relationships_on_related_record"
@@ -262,6 +269,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_10_171712) do
     t.datetime "updated_at", null: false
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.integer "z_taxonomy_id"
+    t.uuid "import_id"
     t.index ["project_model_id"], name: "index_core_data_connector_taxonomies_on_project_model_id"
   end
 
@@ -313,6 +321,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_10_171712) do
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
     t.integer "z_work_id"
+    t.uuid "import_id"
     t.index ["project_model_id"], name: "index_core_data_connector_works_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_works_on_user_defined", using: :gin
   end
