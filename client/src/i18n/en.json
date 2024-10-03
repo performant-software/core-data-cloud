@@ -137,6 +137,7 @@
       "header": "There was an error importing for the current record"
     },
     "labels": {
+      "status": "Status",
       "total": "Total"
     },
     "messages": {
