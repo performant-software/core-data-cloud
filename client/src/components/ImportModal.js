@@ -79,8 +79,7 @@ const ImportModal = (props: Props) => {
         />
       )
     });
-
-    console.log('recalculating columns');
+    
     return value;
   }, [data, fileName]);
 
