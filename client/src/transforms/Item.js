@@ -1,5 +1,6 @@
 // @flow
 
+import { DataTypes } from '@performant-software/user-defined-fields';
 import _ from 'underscore';
 import type { Item as ItemType } from '../types/Item';
 import MergeableTransform from './Mergeable';
@@ -57,12 +58,47 @@ class Item extends MergeableTransform {
     const files = {};
 
     _.each(_.keys(payload), (filename) => {
-      files[filename] = _.map(payload[filename].data, (item) => item.import);
+      const file = payload[filename];
+      const { attributes, data } = file;
+
+      files[filename] = _.map(data, (item) => this.toImportItem(item.import, attributes));
     });
 
     return {
       files
     };
+  }
+
+  /**
+   * Converts the JSON user-defined fields for the passed item to strings.
+   *
+   * @param item
+   * @param attributes
+   *
+   * @returns {*}
+   */
+  toImportItem(item, attributes) {
+    const importItem = { ...item };
+
+    _.each(attributes, (attribute) => {
+      const { field } = attribute;
+
+      const isJson = (field?.data_type === DataTypes.select
+        && field?.allow_multiple)
+        || field?.data_type === DataTypes.fuzzyDate;
+
+      if (isJson) {
+        let value = importItem[attribute.name];
+
+        if (value) {
+          value = JSON.stringify(value);
+        }
+
+        importItem[attribute.name] = value;
+      }
+    });
+
+    return importItem;
   }
 
   /**
