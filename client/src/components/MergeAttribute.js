@@ -15,7 +15,7 @@ type Props = {
 
 const MergeAttribute = (props: Props) => {
   // Return null if the value is empty
-  if (_.isEmpty(props.value)) {
+  if (_.isEmpty(props.value) && !_.isNumber(props.value) && !_.isBoolean(props.value)) {
     return null;
   }
 

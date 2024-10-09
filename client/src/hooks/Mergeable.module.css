@@ -1,0 +1,10 @@
+.ui.label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5em;
+  width: fit-content;
+}
+
+.ui.label.selectable {
+  cursor: pointer;
+}

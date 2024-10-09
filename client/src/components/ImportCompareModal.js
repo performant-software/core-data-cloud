@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Modal } from 'semantic-ui-react';
 import _ from 'underscore';
 import MergeTable from './MergeTable';
+import useMergeable from '../hooks/Mergeable';
 
 type Attribute = {
   name: string,
@@ -21,6 +22,7 @@ type Props = {
 const ImportCompareModal = (props: Props) => {
   const [item, setItem] = useState(props.item.import);
 
+  const { renderUserDefined } = useMergeable();
   const { t } = useTranslation();
 
   /**
@@ -56,6 +58,16 @@ const ImportCompareModal = (props: Props) => {
   })), []);
 
   /**
+   * Removes the item at the passed index from the array attribute.
+   *
+   * @type {function(*, *): void}
+   */
+  const onRemoveArrayItem = useCallback((attribute, index) => setItem((prevItem) => ({
+    ...prevItem,
+    [attribute.name]: _.filter(prevItem[attribute.name], (i, idx) => idx !== index)
+  })), []);
+
+  /**
    * Calls the onSave prop with the item on the state.
    *
    * @type {function(): *}
@@ -71,6 +83,21 @@ const ImportCompareModal = (props: Props) => {
     ...prevItem,
     [attribute.name]: i[attribute.name]
   })), [props.item]);
+
+  /**
+   * Renders the value for the passed attribute.
+   *
+   * @type {(function(*, *, *): (*))|*}
+   */
+  const renderValue = useCallback((i, attribute, editable) => {
+    const value = (i || {})[attribute.name];
+
+    if (attribute.name.startsWith('udf')) {
+      return renderUserDefined(value, attribute.field, editable, onRemoveArrayItem);
+    }
+
+    return value;
+  }, []);
 
   return (
     <Modal
@@ -88,7 +115,7 @@ const ImportCompareModal = (props: Props) => {
           label={t('ImportCompareModal.labels.incoming')}
           onAttributeSelection={onUpdate}
           onClearAttribute={onClear}
-          renderValue={(i, attr) => i[attr.name]}
+          renderValue={renderValue}
         />
       </Modal.Content>
       <Modal.Actions>
