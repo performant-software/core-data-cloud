@@ -155,3 +155,11 @@ textarea {
   overflow: hidden !important;
   text-overflow: ellipsis;
 }
+
+.import-modal > .content > .embedded-list > table.ui.table > tbody > tr > td.actions-cell {
+  white-space: nowrap;
+}
+
+.import-modal > .content > .embedded-list > table.ui.table > thead > tr > th {
+  position: relative;
+}

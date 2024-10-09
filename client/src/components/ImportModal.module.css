@@ -1,3 +1,7 @@
+.importModal {
+  min-width: 90vw;
+}
+
 .importModal > .content  {
   min-height: 50vh;
 }
