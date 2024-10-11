@@ -90,6 +90,17 @@ const ItemLayout = (props: Props) => {
   const setSectionRef = useCallback((e: HTMLElement | null) => e && sections.current.push(e), [sections]);
 
   /**
+   * Sets the content style attribute.
+   *
+   * @type {{height: string}}
+   */
+  const sidebarStyle = useMemo(() => ({
+    height: `calc(100vh - ${contentPadding + menuBarHeight + headerHeight}px)`,
+    minWidth: 'min-content',
+    overflow: 'auto'
+  }), [contentPadding, menuBarHeight, headerHeight]);
+
+  /**
    * Memo-izes the value to set on the context.
    *
    * @type {{
@@ -165,6 +176,7 @@ const ItemLayout = (props: Props) => {
           { sidebar && (
             <div
               className={styles.sidebar}
+              style={sidebarStyle}
             >
               { sidebar.props.children }
             </div>
