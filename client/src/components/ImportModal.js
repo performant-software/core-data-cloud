@@ -157,7 +157,7 @@ const ImportModal = (props: Props) => {
     let status;
 
     const { db = {}, duplicates = [], import: incoming } = ObjectUtils.without(item, 'uuid');
-    const isEqual = _.every([db, ...duplicates], (i) => ObjectUtils.isEqual(incoming, i));
+    const isEqual = _.every([db, ...duplicates], (i) => ObjectUtils.isEqual(incoming, i, { removeEmptyValues: true }));
 
     if (isEqual) {
       status = Status.noConflict;
@@ -418,7 +418,7 @@ const ImportModal = (props: Props) => {
         )}
         { selectedIndex != null && items[selectedIndex] && (
           <ImportCompareModal
-            attributes={columns}
+            attributes={_.filter(columns, (column) => column.name !== 'status')}
             item={items[selectedIndex]}
             onClose={() => setSelectedIndex(null)}
             onSave={onSave}

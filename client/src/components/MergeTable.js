@@ -109,7 +109,7 @@ const MergeTable = (props: Props) => {
               key={index}
             >
               <Table.Cell
-                verticalAlign='top'
+                verticalAlign='middle'
               >
                 { attribute.label }
               </Table.Cell>
