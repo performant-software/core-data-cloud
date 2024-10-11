@@ -59,9 +59,12 @@ class Item extends MergeableTransform {
 
     _.each(_.keys(payload), (filename) => {
       const file = payload[filename];
-      const { attributes, data } = file;
+      const { attributes, data, remove_duplicates: removeDuplicates } = file;
 
-      files[filename] = _.map(data, (item) => this.toImportItem(item.import, attributes));
+      files[filename] = {
+        data: _.map(data, (item) => this.toImportItem(item.import, attributes)),
+        remove_duplicates: removeDuplicates
+      };
     });
 
     return {
