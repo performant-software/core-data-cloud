@@ -12,6 +12,7 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import {
   Button,
+  Checkbox,
   Confirm,
   Dimmer,
   Dropdown,
@@ -79,7 +80,7 @@ const ImportModal = (props: Props) => {
         />
       )
     });
-    
+
     return value;
   }, [data, fileName]);
 
@@ -156,7 +157,7 @@ const ImportModal = (props: Props) => {
     let status;
 
     const { db = {}, duplicates = [], import: incoming } = ObjectUtils.without(item, 'uuid');
-    const isEqual = _.every([db, ...duplicates], (i) => ObjectUtils.isEqual(incoming, i));
+    const isEqual = _.every([db, ...duplicates], (i) => ObjectUtils.isEqual(incoming, i, { removeEmptyValues: true }));
 
     if (isEqual) {
       status = Status.noConflict;
@@ -265,6 +266,19 @@ const ImportModal = (props: Props) => {
     setData(newData);
     setSelectedIndex(null);
   }, [data, fileName, selectedIndex]);
+
+  /**
+   * Toggles the "remove duplicates" value for the current file.
+   *
+   * @type {(function(*, {checked: *}): void)|*}
+   */
+  const onToggleRemoveDuplicates = useCallback((e, { checked }) => {
+    const newData = { ...data };
+
+    _.extend(newData[fileName], { remove_duplicates: checked });
+
+    setData(newData);
+  }, [data, fileName]);
 
   /**
    * Sets the calculated import status on each row of the data set.
@@ -380,6 +394,16 @@ const ImportModal = (props: Props) => {
                   value={fileName}
                 />
               )
+            }, {
+              render: () => (
+                <Checkbox
+                  className={styles.duplicatesCheckbox}
+                  checked={data[fileName]?.remove_duplicates}
+                  label={t('ImportModal.labels.removeDuplicates')}
+                  onChange={onToggleRemoveDuplicates}
+                  toggle
+                />
+              )
             }]}
             columns={columns}
             defaultSort={DefaultSort[fileName]}
@@ -394,7 +418,7 @@ const ImportModal = (props: Props) => {
         )}
         { selectedIndex != null && items[selectedIndex] && (
           <ImportCompareModal
-            attributes={columns}
+            attributes={_.filter(columns, (column) => column.name !== 'status')}
             item={items[selectedIndex]}
             onClose={() => setSelectedIndex(null)}
             onSave={onSave}

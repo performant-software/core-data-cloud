@@ -1,8 +1,6 @@
 // @flow
 
-import { BooleanIcon } from '@performant-software/semantic-components';
-import { Date as DateUtils } from '@performant-software/shared-components';
-import { DataTypes, UserDefinedFieldsService } from '@performant-software/user-defined-fields';
+import { UserDefinedFieldsService } from '@performant-software/user-defined-fields';
 import cx from 'classnames';
 import React, {
   useCallback,
@@ -21,6 +19,7 @@ import {
 import _ from 'underscore';
 import MergeTable from './MergeTable';
 import styles from './MergeModal.module.css';
+import useMergeable from '../hooks/Mergeable';
 
 type MergeAttributeType = {
   name: string,
@@ -51,6 +50,7 @@ const MergeModal = (props: Props) => {
   const [record, setRecord] = useState({});
   const [userDefinedFields, setUserDefinedFields] = useState([]);
 
+  const { renderUserDefined } = useMergeable();
   const { t } = useTranslation();
 
   /**
@@ -67,7 +67,7 @@ const MergeModal = (props: Props) => {
    * @type {function(*, *, *): *}
    */
   const getAttributeValue = useCallback((current, item, attribute) => {
-    let value = item[attribute.name];
+    let value = item[attribute.name] || {};
 
     if (attribute.names) {
       value = _.map(value, (entry) => ({
@@ -203,49 +203,6 @@ const MergeModal = (props: Props) => {
   })), []);
 
   /**
-   * Renders the user-defined field value for the passed item.
-   *
-   * @type {(function(*, *, boolean=): (*))|*}
-   */
-  const renderUserDefined = useCallback((item, field, editable = false) => {
-    const value = item.user_defined && item.user_defined[field.uuid];
-
-    if (_.isBoolean(value) && field.data_type === DataTypes.boolean) {
-      return (
-        <BooleanIcon
-          value={value}
-        />
-      );
-    }
-
-    if (field.data_type === DataTypes.date) {
-      return value && DateUtils.formatDate(value);
-    }
-
-    if (field.data_type === DataTypes.select && field.allow_multiple) {
-      return _.map(value, (entry) => (
-        <Label
-          className={cx(styles.ui, styles.label)}
-          content={entry}
-          onRemove={editable ? onRemoveUserDefinedAttribute.bind(this, field, entry) : undefined}
-        />
-      ));
-    }
-
-    if (value && field.data_type === DataTypes.richText) {
-      return (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: value
-          }}
-        />
-      );
-    }
-
-    return value;
-  }, []);
-
-  /**
    * Renders the value for the passed item/attribute.
    *
    * @type {(function(*, *, boolean=): (*))|*}
@@ -266,8 +223,9 @@ const MergeModal = (props: Props) => {
       ));
     }
 
-    if (attribute.name === 'user_defined' && attribute.field) {
-      return renderUserDefined(item, attribute.field, editable);
+    if (attribute.name === 'user_defined' && attribute.field && value) {
+      const { field } = attribute;
+      return renderUserDefined(value[field.uuid], field, editable, onRemoveUserDefinedAttribute);
     }
 
     if (attribute.resolve) {
@@ -275,7 +233,7 @@ const MergeModal = (props: Props) => {
     }
 
     return value;
-  }, [onTogglePrimary, renderUserDefined]);
+  }, [onRemoveArrayItem, onRemoveUserDefinedAttribute, onTogglePrimary, renderUserDefined]);
 
   /**
    * Loads the records to be merged.

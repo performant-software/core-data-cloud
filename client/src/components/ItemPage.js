@@ -26,6 +26,7 @@ import initialize from '../hooks/Item';
 import ProjectContext from '../context/Project';
 import ProjectItemMenu from './ProjectItemMenu';
 import RelatedIdentifiers from './RelatedIdentifiers';
+import RelatedRecordMerges from './RelatedRecordMerges';
 import Relationships from './Relationships';
 import SaveButton from './SaveButton';
 import Section from './Section';
@@ -162,6 +163,17 @@ const ItemPage = ({ form: Form, onInitialize, onSave }: Props) => {
                   <RelatedIdentifiers />
                 </Section>
               )}
+              <Section
+                id='merges'
+              >
+                <Divider
+                  section
+                />
+                <Header
+                  content={t('ItemPage.labels.merges')}
+                />
+                <RelatedRecordMerges />
+              </Section>
             </ItemLayout.Content>
           </ItemLayout>
         </ItemContext.Provider>
