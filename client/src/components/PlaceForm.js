@@ -10,12 +10,16 @@ import {
 } from '@performant-software/geospatial';
 import { BooleanIcon, EmbeddedList, FileInputButton } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
+import { FaMapPin } from 'react-icons/fa';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
 import cx from 'classnames';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Header, Icon } from 'semantic-ui-react';
+import {
+  Form, Header, Icon
+} from 'semantic-ui-react';
 import _ from 'underscore';
+import { PiPolygonBold } from 'react-icons/pi';
 import type { Place as PlaceType } from '../types/Place';
 import PlaceLayerModal from './PlaceLayerModal';
 import PlaceLayerUtils from '../utils/PlaceLayers';
@@ -30,6 +34,7 @@ const { LayerTypes } = PlaceLayerUtils;
 
 const PlaceForm = (props: Props) => {
   const { t } = useTranslation();
+  const [showPolygons, setShowPolygons] = useState(false);
 
   /**
    * Memo-izes the names of the passed place layers.
@@ -187,7 +192,7 @@ const PlaceForm = (props: Props) => {
       <MapDraw
         apiKey={process.env.REACT_APP_MAP_TILER_KEY}
         data={props.item.place_geometry?.geometry_json}
-        geocoding='point'
+        geocoding={showPolygons ? 'polygon' : 'point'}
         mapStyle='https://api.maptiler.com/maps/dataviz/style.json'
         maxPitch={0}
         onChange={onMapChange}
@@ -200,6 +205,19 @@ const PlaceForm = (props: Props) => {
         <MapControl
           position='bottom-left'
         >
+          <button
+            className={cx(
+              'mapbox-gl-draw_ctrl-draw-btn',
+              'layer-button',
+              styles.ui,
+              styles.button
+            )}
+            onClick={(() => setShowPolygons(!showPolygons))}
+            title={showPolygons ? t('PlaceForm.labels.polygonMode') : t('PlaceForm.labels.pointMode')}
+            type='button'
+          >
+            {showPolygons ? <PiPolygonBold /> : <FaMapPin />}
+          </button>
           <FileInputButton
             className={cx(
               'mapbox-gl-draw_ctrl-draw-btn',
