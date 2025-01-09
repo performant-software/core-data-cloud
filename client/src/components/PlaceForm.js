@@ -13,7 +13,9 @@ import type { EditContainerProps } from '@performant-software/shared-components/
 import { FaMapPin } from 'react-icons/fa';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
 import cx from 'classnames';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, {
+  useCallback, useEffect, useMemo, useState
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Form, Header, Icon
@@ -25,6 +27,7 @@ import PlaceLayerModal from './PlaceLayerModal';
 import PlaceLayerUtils from '../utils/PlaceLayers';
 import PlaceNameModal from './PlaceNameModal';
 import styles from './PlaceForm.module.css';
+import MapSessionUtils from '../utils/MapSession';
 
 type Props = EditContainerProps & {
   item: PlaceType
@@ -34,7 +37,18 @@ const { LayerTypes } = PlaceLayerUtils;
 
 const PlaceForm = (props: Props) => {
   const { t } = useTranslation();
-  const [showPolygons, setShowPolygons] = useState(false);
+
+  /**
+   * Tracks whether the user has enabled polygon data entry for MapView.
+   */
+  const [geocoding, setGeocoding] = useState(MapSessionUtils.restoreSession('mapView', localStorage).geocoding);
+
+  /**
+   * Updates localStorage to persist geocoding setting across pages.
+   */
+  useEffect(() => {
+    MapSessionUtils.setSession('mapView', localStorage, { geocoding });
+  }, [geocoding]);
 
   /**
    * Memo-izes the names of the passed place layers.
@@ -192,7 +206,7 @@ const PlaceForm = (props: Props) => {
       <MapDraw
         apiKey={process.env.REACT_APP_MAP_TILER_KEY}
         data={props.item.place_geometry?.geometry_json}
-        geocoding={showPolygons ? 'polygon' : 'point'}
+        geocoding={geocoding}
         mapStyle='https://api.maptiler.com/maps/dataviz/style.json'
         maxPitch={0}
         onChange={onMapChange}
@@ -212,11 +226,11 @@ const PlaceForm = (props: Props) => {
               styles.ui,
               styles.button
             )}
-            onClick={(() => setShowPolygons(!showPolygons))}
-            title={showPolygons ? t('PlaceForm.labels.polygonMode') : t('PlaceForm.labels.pointMode')}
+            onClick={(() => setGeocoding((oldVal) => (oldVal === 'point' ? 'polygon' : 'point')))}
+            title={geocoding === 'polygon' ? t('PlaceForm.labels.polygonMode') : t('PlaceForm.labels.pointMode')}
             type='button'
           >
-            {showPolygons ? <PiPolygonBold /> : <FaMapPin />}
+            {geocoding === 'polygon' ? <PiPolygonBold /> : <FaMapPin />}
           </button>
           <FileInputButton
             className={cx(
