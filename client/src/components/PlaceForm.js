@@ -227,10 +227,10 @@ const PlaceForm = (props: Props) => {
               styles.button
             )}
             onClick={(() => setGeocoding((oldVal) => (oldVal === 'point' ? 'polygon' : 'point')))}
-            title={geocoding === 'polygon' ? t('PlaceForm.labels.polygonMode') : t('PlaceForm.labels.pointMode')}
+            title={geocoding === 'point' ? t('PlaceForm.labels.pointMode') : t('PlaceForm.labels.polygonMode')}
             type='button'
           >
-            {geocoding === 'polygon' ? <PiPolygonBold /> : <FaMapPin />}
+            {geocoding === 'point' ? <FaMapPin /> : <PiPolygonBold />}
           </button>
           <FileInputButton
             className={cx(
