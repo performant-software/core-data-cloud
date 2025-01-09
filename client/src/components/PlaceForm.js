@@ -35,6 +35,11 @@ type Props = EditContainerProps & {
 
 const { LayerTypes } = PlaceLayerUtils;
 
+const GeocodingTypes = {
+  point: 'point',
+  polygon: 'polygon'
+};
+
 const PlaceForm = (props: Props) => {
   const { t } = useTranslation();
 
@@ -226,11 +231,15 @@ const PlaceForm = (props: Props) => {
               styles.ui,
               styles.button
             )}
-            onClick={(() => setGeocoding((oldVal) => (oldVal === 'point' ? 'polygon' : 'point')))}
-            title={geocoding === 'point' ? t('PlaceForm.labels.pointMode') : t('PlaceForm.labels.polygonMode')}
+            onClick={(() => setGeocoding(
+              (oldVal) => (oldVal === GeocodingTypes.point ? GeocodingTypes.polygon : GeocodingTypes.point)
+            ))}
+            title={geocoding === GeocodingTypes.point
+              ? t('PlaceForm.labels.pointMode')
+              : t('PlaceForm.labels.polygonMode')}
             type='button'
           >
-            {geocoding === 'point' ? <FaMapPin /> : <PiPolygonBold />}
+            {geocoding === GeocodingTypes.point ? <FaMapPin /> : <PiPolygonBold />}
           </button>
           <FileInputButton
             className={cx(
