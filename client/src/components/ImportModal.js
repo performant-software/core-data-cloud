@@ -23,16 +23,15 @@ import {
   Modal
 } from 'semantic-ui-react';
 import _ from 'underscore';
+import { DefaultSort, Status } from '../constants/Import';
 import ImportCompareModal from './ImportCompareModal';
 import ImportStatus from './ImportStatus';
-import ItemsService from '../services/Items';
-import { DefaultSort, Status } from '../constants/Import';
 import styles from './ImportModal.module.css';
 
 type Props = {
-  id: number,
   onClose: () => void,
-  onSave: () => void,
+  onLoad: () => Promise<any>,
+  onImport: (data: any) => Promise<any>,
   title: string
 };
 
@@ -214,7 +213,7 @@ const ImportModal = (props: Props) => {
   const onError = useCallback(({ response: { data: { errors: e } } }) => setErrors(e), []);
 
   /**
-   * Calls the /core_data/items/:id/import API endpoint with the current data set.
+   * Calls the `onImport` prop with the current data set. If successful, the `onClose` prop is aslo called.
    *
    * @type {(function(): void)|*}
    */
@@ -222,12 +221,12 @@ const ImportModal = (props: Props) => {
     setLoading(true);
     setConfirmation(false);
 
-    ItemsService
-      .import(props.id, data)
-      .then(props.onSave)
+    props
+      .onImport(data)
+      .then(props.onClose)
       .catch(onError)
       .finally(() => setLoading(false));
-  }, [data, props.id, props.onSave]);
+  }, [data, props.onClose, props.onImport]);
 
   /**
    * Removes the item at the passed index from the data set.
@@ -293,15 +292,14 @@ const ImportModal = (props: Props) => {
   ), [getStatus]);
 
   /**
-   * Calls the `/items/:id/analyze_import` API endpoint and sets the results on the state.
+   * Calls the `onLoad` prop when the component is mounted.
    */
   useEffect(() => {
-    ItemsService
-      .analyzeImport(props.id)
+    props.onLoad()
       .then(analyzeData)
       .then(() => setLoaded(true))
       .catch(onError);
-  }, [props.id]);
+  }, [props.onLoad]);
 
   /**
    * Sets the file name on the state to the first file in the dataset if no file is set.

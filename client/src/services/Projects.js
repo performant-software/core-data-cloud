@@ -1,6 +1,7 @@
 // @flow
 
 import { BaseService } from '@performant-software/shared-components';
+import Importable from '../transforms/Importable';
 import ProjectTransform from '../transforms/Project';
 import type { Project as ProjectType } from '../types/Project';
 import SessionService from './Session';
@@ -9,6 +10,21 @@ import SessionService from './Session';
  * Class responsible for handling all project API requests.
  */
 class Projects extends BaseService {
+  /**
+   * Calls the `/projects/:id/analyze_import` API endpoint.
+   *
+   * @param id
+   *
+   * @returns {*}
+   */
+  analyzeImport(id: number, file: File) {
+    const config = this.getConfig();
+    const transform = this.getTransform();
+    const payload = transform.toFileImport(file);
+
+    return this.getAxios().post(`${this.getBaseUrl()}/${id}/analyze_import`, payload, config);
+  }
+
   /**
    * Calls the <code>/projects/:id/clear</code> API endpoint to clear all data from the passed project.
    *
@@ -85,6 +101,21 @@ class Projects extends BaseService {
   }
 
   /**
+   * Calls the `/projects/:id/import_analyze` API endpoint.
+   *
+   * @param id
+   * @param files
+   *
+   * @returns {*}
+   */
+  importAnalyze(id: number, files: any) {
+    const config = this.getConfig();
+    const payload = Importable.toImport(files);
+
+    return this.getAxios().post(`${this.getBaseUrl()}/${id}/import_analyze`, payload, config);
+  }
+
+  /**
    * Calls the /projects/:id/import_configuration API endpoint with the passed file.
    *
    * @param id
@@ -93,7 +124,11 @@ class Projects extends BaseService {
    * @returns {*}
    */
   importConfiguration(id: number, file: File): Promise<any> {
-    return this.import(id, file, 'import_configuration');
+    const config = this.getConfig();
+    const transform = this.getTransform();
+    const payload = transform.toFileImport(file);
+
+    return this.getAxios().post(`${this.getBaseUrl()}/${id}/import_configuration`, payload, config);
   }
 
   /**
@@ -105,26 +140,11 @@ class Projects extends BaseService {
    * @returns {*}
    */
   importData(id: number, file: File) {
-    return this.import(id, file, 'import_data');
-  }
-
-  // private
-
-  /**
-   * Helper function to call the import API endpoints with the passed file.
-   *
-   * @param id
-   * @param file
-   * @param route
-   *
-   * @returns {*}
-   */
-  import(id: number, file: File, route) {
     const config = this.getConfig();
     const transform = this.getTransform();
-    const payload = transform.toImport(file);
+    const payload = transform.toFileImport(file);
 
-    return this.getAxios().post(`${this.getBaseUrl()}/${id}/${route}`, payload, config);
+    return this.getAxios().post(`${this.getBaseUrl()}/${id}/import_data`, payload, config);
   }
 }
 

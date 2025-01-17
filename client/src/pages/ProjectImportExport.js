@@ -2,7 +2,7 @@
 
 import { FileInputButton, Toaster } from '@performant-software/semantic-components';
 import cx from 'classnames';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   BsArrowBarDown,
@@ -11,6 +11,7 @@ import {
   BsDatabaseFillUp
 } from 'react-icons/bs';
 import { FaCode } from 'react-icons/fa';
+import { SlGraph } from 'react-icons/sl';
 import {
   Button,
   Container,
@@ -24,13 +25,16 @@ import {
 import _ from 'underscore';
 import FileUtils from '../utils/File';
 import HttpUtils from '../utils/Http';
+import ImportModal from '../components/ImportModal';
 import PermissionsService from '../services/Permissions';
+import ProjectContext from '../context/Project';
 import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import ProjectsService from '../services/Projects';
 import styles from './ProjectImportExport.module.css';
 import useParams from '../hooks/ParsedParams';
 
 const ProjectImportExport = () => {
+  const [analyzeFile, setAnalyzeFile] = useState();
   const [importConfiguration, setImportConfiguration] = useState(false);
   const [exportConfiguration, setExportConfiguration] = useState(false);
   const [exportData, setExportData] = useState(false);
@@ -39,6 +43,7 @@ const ProjectImportExport = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
+  const { project } = useContext(ProjectContext);
   const { projectId } = useParams();
   const { t } = useTranslation();
 
@@ -48,6 +53,13 @@ const ProjectImportExport = () => {
    * @type {function({data: *}): *}
    */
   const transformVariables = useCallback(({ data }) => data.project?.join('\n'), []);
+
+  /**
+   * Sets the selected file on the state.
+   *
+   * @type {function([*]): void}
+   */
+  const onAnalyze = useCallback(([f]) => setAnalyzeFile(f), []);
 
   /**
    * Converts the data in the passed response to a blob, creates a temporary anchor element, and downloads the file.
@@ -248,24 +260,43 @@ const ProjectImportExport = () => {
               </Segment>
             )}
             { PermissionsService.canImportData() && (
-              <Segment
-                as={FileInputButton}
-                className={cx(styles.ui, styles.segment)}
-                loading={importData}
-                onSelection={onImportData}
-                padded
-              >
-                <Header
-                  content={t('ProjectImportExport.actions.data.import.header')}
-                  icon={(
-                    <Icon>
-                      <BsDatabaseFillDown />
-                    </Icon>
-                  )}
-                  size='small'
-                  subheader={t('ProjectImportExport.actions.data.import.content')}
-                />
-              </Segment>
+              <>
+                <Segment
+                  as={FileInputButton}
+                  className={cx(styles.ui, styles.segment)}
+                  loading={importData}
+                  onSelection={onImportData}
+                  padded
+                >
+                  <Header
+                    content={t('ProjectImportExport.actions.data.import.header')}
+                    icon={(
+                      <Icon>
+                        <BsDatabaseFillDown />
+                      </Icon>
+                    )}
+                    size='small'
+                    subheader={t('ProjectImportExport.actions.data.import.content')}
+                  />
+                </Segment>
+                <Segment
+                  as={FileInputButton}
+                  className={cx(styles.ui, styles.segment)}
+                  onSelection={onAnalyze}
+                  padded
+                >
+                  <Header
+                    content={t('ProjectImportExport.actions.data.analyze.header')}
+                    icon={(
+                      <Icon>
+                        <SlGraph />
+                      </Icon>
+                    )}
+                    size='small'
+                    subheader={t('ProjectImportExport.actions.data.analyze.content')}
+                  />
+                </Segment>
+              </>
             )}
           </SegmentGroup>
         </>
@@ -316,6 +347,21 @@ const ProjectImportExport = () => {
           />
           <p>{ t('ProjectImportExport.messages.import.content') }</p>
         </Toaster>
+      )}
+      { analyzeFile && (
+        <ImportModal
+          onClose={() => setAnalyzeFile(null)}
+          onLoad={() => (
+            ProjectsService
+              .analyzeImport(projectId, analyzeFile)
+          )}
+          onImport={(data) => (
+            ProjectsService
+              .importAnalyze(projectId, data)
+              .then(() => setSuccess(true))
+          )}
+          title={t('ProjectImportExport.labels.importProject', { name: project.name })}
+        />
       )}
     </Container>
   );

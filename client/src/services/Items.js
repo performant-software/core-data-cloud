@@ -1,5 +1,6 @@
 // @flow
 
+import Importable from '../transforms/Importable';
 import ItemTransform from '../transforms/Item';
 import MergeableService from './Mergeable';
 
@@ -40,15 +41,15 @@ class Items extends MergeableService {
    * Calls the `/items/:id/import` API endpoint for the passed payload.
    *
    * @param id
-   * @param payload
+   * @param files
    *
    * @returns {*}
    */
-  import(id: number, payload: any) {
-    const transform = this.getTransform();
+  import(id: number, files: any) {
     const config = this.getConfig();
+    const payload = Importable.toImport(files);
 
-    return this.getAxios().post(`${this.getBaseUrl()}/${id}/import`, transform.toImport(payload), config);
+    return this.getAxios().post(`${this.getBaseUrl()}/${id}/import`, payload, config);
   }
 }
 
