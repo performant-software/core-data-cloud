@@ -10,6 +10,10 @@ type Props = EditContainerProps;
 const UserPassword = (props: Props) => {
   const { t } = useTranslation();
 
+  // if (props.item.sso_id) {
+  //   return <p>{t('UserPassword.messages.sso.cantChange')}</p>
+  // }
+
   return (
     <>
       <Message
