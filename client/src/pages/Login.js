@@ -7,7 +7,15 @@ import { Image } from 'semantic-ui-react';
 import AuthenticationService from '../services/Authentication';
 import styles from './Login.module.css';
 
-const SSO_CALLBACK_URL = `${process.env.REACT_APP_SSO_DOMAIN}/realms/${process.env.REACT_APP_SSO_REALM}/protocol/openid-connect/auth?client_id=${process.env.REACT_APP_SSO_CLIENT}&redirect_uri=${process.env.REACT_APP_SSO_REDIRECT_URI}&response_type=code`
+const SSO_CALLBACK_URL = `\
+${process.env.REACT_APP_SSO_BASE_URL}\
+/realms/\
+${process.env.REACT_APP_SSO_REALM}\
+/protocol/openid-connect/auth?client_id=\
+${process.env.REACT_APP_SSO_CLIENT}\
+&redirect_uri=\
+${process.env.REACT_APP_SSO_REDIRECT_URI}\
+&response_type=code`;
 
 const Login: ComponentType<any> = () => {
   const [disabled, setDisabled] = useState(false);
