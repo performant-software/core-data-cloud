@@ -444,7 +444,9 @@
     "labels": {
       "layers": "Layers",
       "location": "Location",
-      "names": "Names"
+      "names": "Names",
+      "polygonMode": "Polygon mode",
+      "pointMode": "Point mode"
     },
     "placeLayers": {
       "columns": {
@@ -578,6 +580,10 @@
         }
       },
       "data": {
+        "analyze": {
+          "content": "View and modify your data before importing",
+          "header": "Analyze"
+        },
         "export": {
           "content": "Export a ZIP archive of CSV files containing your project's data",
           "header": "Export"
@@ -609,7 +615,8 @@
     "labels": {
       "configuration": "Configuration",
       "data": "Data",
-      "developer": "Developer"
+      "developer": "Developer",
+      "importProject": "Import {{name}}"
     },
     "messages": {
       "import": {

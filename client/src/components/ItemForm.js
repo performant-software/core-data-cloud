@@ -3,7 +3,7 @@
 import { BooleanIcon, EmbeddedList } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
@@ -14,8 +14,9 @@ import {
 import ImportModal from './ImportModal';
 import type { Item as ItemType } from '../types/Item';
 import ItemLayoutContext from '../context/ItemLayout';
-import SourceNameModal from './SourceNameModal';
+import ItemsService from '../services/Items';
 import ProjectContext from '../context/Project';
+import SourceNameModal from './SourceNameModal';
 
 type Props = EditContainerProps & {
   item: ItemType
@@ -27,6 +28,27 @@ const ItemForm = (props: Props) => {
   const { setSaved } = useContext(ItemLayoutContext);
   const { project, projectModel } = useContext(ProjectContext);
   const { t } = useTranslation();
+
+  /**
+   * Calls the `/core_data/items/:id/import` API endpoint.
+   *
+   * @type {function(*): *}
+   */
+  const onImport = useCallback((data) => (
+    ItemsService
+      .import(props.item.id, data)
+      .then(() => setSaved(true))
+  ), [props.item]);
+
+  /**
+   * Calls the `/core_data/items/:id/analyze_import` API endpoint.
+   *
+   * @type {function(): *}
+   */
+  const onLoad = useCallback(() => (
+    ItemsService
+      .analyzeImport(props.item.id)
+  ), [props.item]);
 
   return (
     <Form>
@@ -102,14 +124,11 @@ const ItemForm = (props: Props) => {
           tableName='CoreDataConnector::Item'
         />
       )}
-      { modal && (
+      { modal && props.item?.id && (
         <ImportModal
-          id={props.item.id}
           onClose={() => setModal(false)}
-          onSave={() => {
-            setModal(false);
-            setSaved(true);
-          }}
+          onImport={onImport}
+          onLoad={onLoad}
           title={props.item.faircopy_cloud_id}
         />
       )}

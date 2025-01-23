@@ -10,17 +10,24 @@ import {
 } from '@performant-software/geospatial';
 import { BooleanIcon, EmbeddedList, FileInputButton } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
+import { FaMapPin } from 'react-icons/fa';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
 import cx from 'classnames';
-import React, { useCallback, useMemo } from 'react';
+import React, {
+  useCallback, useEffect, useMemo, useState
+} from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Header, Icon } from 'semantic-ui-react';
+import {
+  Form, Header, Icon
+} from 'semantic-ui-react';
 import _ from 'underscore';
+import { PiPolygonBold } from 'react-icons/pi';
 import type { Place as PlaceType } from '../types/Place';
 import PlaceLayerModal from './PlaceLayerModal';
 import PlaceLayerUtils from '../utils/PlaceLayers';
 import PlaceNameModal from './PlaceNameModal';
 import styles from './PlaceForm.module.css';
+import MapSessionUtils from '../utils/MapSession';
 
 type Props = EditContainerProps & {
   item: PlaceType
@@ -28,8 +35,25 @@ type Props = EditContainerProps & {
 
 const { LayerTypes } = PlaceLayerUtils;
 
+const GeocodingTypes = {
+  point: 'point',
+  polygon: 'polygon'
+};
+
 const PlaceForm = (props: Props) => {
   const { t } = useTranslation();
+
+  /**
+   * Tracks whether the user has enabled polygon data entry for MapView.
+   */
+  const [geocoding, setGeocoding] = useState(MapSessionUtils.restoreSession('mapView', localStorage).geocoding);
+
+  /**
+   * Updates localStorage to persist geocoding setting across pages.
+   */
+  useEffect(() => {
+    MapSessionUtils.setSession('mapView', localStorage, { geocoding });
+  }, [geocoding]);
 
   /**
    * Memo-izes the names of the passed place layers.
@@ -187,7 +211,7 @@ const PlaceForm = (props: Props) => {
       <MapDraw
         apiKey={process.env.REACT_APP_MAP_TILER_KEY}
         data={props.item.place_geometry?.geometry_json}
-        geocoding='point'
+        geocoding={geocoding}
         mapStyle='https://api.maptiler.com/maps/dataviz/style.json'
         maxPitch={0}
         onChange={onMapChange}
@@ -200,6 +224,23 @@ const PlaceForm = (props: Props) => {
         <MapControl
           position='bottom-left'
         >
+          <button
+            className={cx(
+              'mapbox-gl-draw_ctrl-draw-btn',
+              'layer-button',
+              styles.ui,
+              styles.button
+            )}
+            onClick={(() => setGeocoding(
+              (oldVal) => (oldVal === GeocodingTypes.point ? GeocodingTypes.polygon : GeocodingTypes.point)
+            ))}
+            title={geocoding === GeocodingTypes.point
+              ? t('PlaceForm.labels.pointMode')
+              : t('PlaceForm.labels.polygonMode')}
+            type='button'
+          >
+            {geocoding === GeocodingTypes.point ? <FaMapPin /> : <PiPolygonBold />}
+          </button>
           <FileInputButton
             className={cx(
               'mapbox-gl-draw_ctrl-draw-btn',

@@ -54,7 +54,7 @@ class Project extends BaseTransform {
    *
    * @returns {FormData}
    */
-  toImport(file: File) {
+  toFileImport(file: File) {
     const formData = new FormData();
     formData.append('file', file);
 
