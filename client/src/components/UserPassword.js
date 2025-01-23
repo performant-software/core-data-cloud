@@ -15,13 +15,7 @@ const UserPassword = (props: Props) => {
   const { t } = useTranslation();
 
   const showPasswordFields = useMemo(() => {
-    if (props.item.sso_id || props.item.user?.sso_id) {
-      return false;
-    }
-
-    const email = props.item.email || props.item.user?.email;
-
-    if (email) {
+    if (props.item.email || props.item.user?.email) {
       return !SSO_DOMAINS.some((domain) => email.endsWith(domain));
     }
 
