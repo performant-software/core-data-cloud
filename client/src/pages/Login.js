@@ -1,10 +1,11 @@
 // @flow
 
 import React, { useCallback, useState, type ComponentType } from 'react';
-import { LoginModal } from '@performant-software/semantic-components';
+import LoginModal from '../components/LoginModal';
 import { Navigate } from 'react-router-dom';
 import { Image } from 'semantic-ui-react';
 import AuthenticationService from '../services/Authentication';
+import { useTranslation } from 'react-i18next';
 import styles from './Login.module.css';
 
 const SSO_CALLBACK_URL = `\
@@ -22,6 +23,8 @@ const Login: ComponentType<any> = () => {
   const [email, setEmail] = useState();
   const [error, setError] = useState(false);
   const [password, setPassword] = useState();
+
+  const { t } = useTranslation();
 
   /**
    * Attempts to authenticate then navigates to the admin page.
@@ -61,6 +64,7 @@ const Login: ComponentType<any> = () => {
         onSSO={onSSO}
         onUsernameChange={(e, { value }) => setEmail(value)}
         open
+        placeholder={t('LoginModal.email')}
       />
     </div>
   );
