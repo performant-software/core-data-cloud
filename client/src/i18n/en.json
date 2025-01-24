@@ -75,6 +75,9 @@
     "tabs": {
       "details": "Details",
       "fields": "Fields"
+    },
+    "words": {
+      "or": "or"
     }
   },
   "CurrentRecordContextProvider": {

@@ -19,7 +19,6 @@ import './LoginModal.css';
 type Props = {
   disabled: boolean,
   loginFailed: boolean,
-  onClose: () => void,
   onLogin: () => void,
   onPasswordChange: () => void,
   onSSO: () => void,
@@ -58,17 +57,6 @@ const LoginModal = (props: Props) => {
             textAlign='center'
           >
             <Grid.Column>
-              <Grid.Row className='sso-row'>
-                <Button
-                  onClick={props.onSSO.bind(this)}
-                  secondary
-                  size='medium'
-                  type='button'
-                >
-                  {t('LoginModal.logInWithSso')}
-                </Button>
-              </Grid.Row>
-              <Divider />
               <Grid.Row>
                 <Input
                   autoFocus
@@ -91,28 +79,32 @@ const LoginModal = (props: Props) => {
                   type='password'
                 />
               </Grid.Row>
+              <Grid.Row>
+                <Button
+                  disabled={props.disabled}
+                  onClick={props.onLogin.bind(this)}
+                  primary
+                  size='medium'
+                  type='submit'
+                >
+                  { t('LoginModal.buttonLogin') }
+                </Button>
+              </Grid.Row>
+              <Divider horizontal>
+                {t('Common.words.or')}
+              </Divider>
+              <Grid.Row className='sso-row'>
+                <Button
+                  onClick={props.onSSO.bind(this)}
+                  secondary
+                  size='medium'
+                  type='button'
+                >
+                  {t('LoginModal.logInWithSso')}
+                </Button>
+              </Grid.Row>
             </Grid.Column>
           </Grid>
-          <Modal.Actions>
-            <Button
-              disabled={props.disabled}
-              onClick={props.onLogin.bind(this)}
-              primary
-              size='large'
-              type='submit'
-            >
-              { t('LoginModal.buttonLogin') }
-            </Button>
-            { props.onClose && (
-              <Button
-                basic
-                onClick={props.onClose.bind(this)}
-                size='large'
-              >
-                { t('LoginModal.buttonCancel') }
-              </Button>
-            )}
-          </Modal.Actions>
         </Modal>
       )}
     </ModalContext.Consumer>
