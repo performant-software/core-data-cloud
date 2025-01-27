@@ -18,6 +18,7 @@ import UserPassword from '../components/UserPassword';
 import UserProjectRoles from '../utils/UserProjectRoles';
 import UserProjectsService from '../services/UserProjects';
 import UsersService from '../services/Users';
+import UserUtils from '../utils/User';
 import useParams from '../hooks/ParsedParams';
 import Validation from '../utils/Validation';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
@@ -121,12 +122,14 @@ const UserProjectForm = (props: Props) => {
                 {...props}
               />
             )}
-            { PermissionsService.isOwner(props.item.project_id) && !isNew && (
-              <UserPassword
-                {...props}
-                email={props.item.user.email}
-              />
-            )}
+            { PermissionsService.isOwner(props.item.project_id)
+              && !isNew
+              && UserUtils.showPasswordFields(props.item.user.email)
+              && (
+                <UserPassword
+                  {...props}
+                />
+              )}
             <Form.Dropdown
               error={props.isError('role')}
               label={t('UserProject.labels.role')}

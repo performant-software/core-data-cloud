@@ -887,9 +887,6 @@
       "password": {
         "content": "Passwords must be at least eight (8) characters.",
         "header": "Password Policy"
-      },
-      "sso": {
-        "cantChange": "This user's password cannot be changed here because their account is managed through Single Sign On (SSO)."
       }
     }
   },
