@@ -35,7 +35,7 @@ const App: ComponentType<any> = useDragDrop(() => (
       />
       <Route
         element={<SsoLogin />}
-        path='sso-login'
+        path='sso_login'
       />
       <Route
         path='/'

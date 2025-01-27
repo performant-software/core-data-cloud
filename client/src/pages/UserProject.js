@@ -124,6 +124,7 @@ const UserProjectForm = (props: Props) => {
             { PermissionsService.isOwner(props.item.project_id) && !isNew && (
               <UserPassword
                 {...props}
+                email={props.item.user.email}
               />
             )}
             <Form.Dropdown

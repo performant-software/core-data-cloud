@@ -4,23 +4,16 @@ import type { EditContainerProps } from '@performant-software/shared-components/
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Message } from 'semantic-ui-react';
+import UserUtils from '../utils/User';
 
-type Props = EditContainerProps;
-
-const SSO_DOMAINS = process.env.REACT_APP_SSO_DOMAINS
-  ? process.env.REACT_APP_SSO_DOMAINS.split(',')
-  : [];
+type Props = EditContainerProps & {
+  email: string
+};
 
 const UserPassword = (props: Props) => {
   const { t } = useTranslation();
 
-  const showPasswordFields = useMemo(() => {
-    if (props.item.email || props.item.user?.email) {
-      return !SSO_DOMAINS.some((domain) => email.endsWith(domain));
-    }
-
-    return true;
-  }, [props.item]);
+  const showPasswordFields = useMemo(() => UserUtils.showPasswordFields(props.email), [props.email]);
 
   if (showPasswordFields) {
     return (

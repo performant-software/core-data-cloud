@@ -45,6 +45,7 @@ const UserForm: AbstractComponent<any> = (props: Props) => {
       )}
       <UserPassword
         {...props}
+        email={props.item.email}
       />
     </>
   );

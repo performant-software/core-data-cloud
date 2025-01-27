@@ -14,7 +14,7 @@ import {
   Modal
 } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
-import './LoginModal.css';
+import styles from './LoginModal.module.css';
 
 type Props = {
   disabled: boolean,
@@ -36,7 +36,7 @@ const LoginModal = (props: Props) => {
       { (mountNode) => (
         <Modal
           as={Form}
-          className='login-modal'
+          className={styles.loginModal}
           error={props.loginFailed}
           mountNode={mountNode}
           open={props.open}
@@ -60,7 +60,7 @@ const LoginModal = (props: Props) => {
               <Grid.Row>
                 <Input
                   autoFocus
-                  className='form-field'
+                  className={styles.formField}
                   icon={<Icon name='at' />}
                   onChange={props.onUsernameChange.bind(this)}
                   placeholder={props.placeholder}
@@ -68,10 +68,10 @@ const LoginModal = (props: Props) => {
                 />
               </Grid.Row>
               <Grid.Row
-                className='row'
+                className={styles.row}
               >
                 <Input
-                  className='form-field'
+                  className={styles.formField}
                   icon={<Icon name='lock' />}
                   onChange={props.onPasswordChange.bind(this)}
                   placeholder={t('LoginModal.password')}
@@ -93,7 +93,7 @@ const LoginModal = (props: Props) => {
               <Divider horizontal>
                 {t('Common.words.or')}
               </Divider>
-              <Grid.Row className='sso-row'>
+              <Grid.Row className={styles.ssoRow}>
                 <Button
                   fluid
                   onClick={props.onSSO.bind(this)}

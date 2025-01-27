@@ -1,0 +1,15 @@
+.loginModal .ui.grid > .column > .row {
+  margin: 15px 150px 0px 150px;
+}
+
+.loginModal .ui.grid > .column > .ssoRow {
+  margin: 15px 150px 15px 150px;
+}
+
+.loginModal .ui.grid > .column {
+  padding-top: 0;
+}
+
+.loginModal .ui.input.formField {
+  display: block;
+}
