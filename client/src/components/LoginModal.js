@@ -82,9 +82,9 @@ const LoginModal = (props: Props) => {
               <Grid.Row>
                 <Button
                   disabled={props.disabled}
+                  fluid
                   onClick={props.onLogin.bind(this)}
                   primary
-                  size='medium'
                   type='submit'
                 >
                   { t('LoginModal.buttonLogin') }
@@ -95,9 +95,9 @@ const LoginModal = (props: Props) => {
               </Divider>
               <Grid.Row className='sso-row'>
                 <Button
+                  fluid
                   onClick={props.onSSO.bind(this)}
                   secondary
-                  size='medium'
                   type='button'
                 >
                   {t('LoginModal.logInWithSso')}
