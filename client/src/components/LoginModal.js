@@ -1,5 +1,6 @@
 // @flow
 
+import cx from 'classnames';
 import { ModalContext } from '@performant-software/shared-components';
 import React, { type Element } from 'react';
 import {
@@ -53,14 +54,17 @@ const LoginModal = (props: Props) => {
             content={t('LoginModal.loginErrorContent')}
           />
           <Grid
+            className={cx(styles.grid, styles.ui)}
             padded='vertically'
             textAlign='center'
           >
-            <Grid.Column>
-              <Grid.Row>
+            <Grid.Column className={styles.column}>
+              <Grid.Row
+                className={styles.row}
+              >
                 <Input
                   autoFocus
-                  className={styles.formField}
+                  className={cx(styles.ui, styles.formField, styles.input)}
                   icon={<Icon name='at' />}
                   onChange={props.onUsernameChange.bind(this)}
                   placeholder={props.placeholder}
@@ -71,7 +75,7 @@ const LoginModal = (props: Props) => {
                 className={styles.row}
               >
                 <Input
-                  className={styles.formField}
+                  className={cx(styles.ui, styles.formField, styles.input)}
                   icon={<Icon name='lock' />}
                   onChange={props.onPasswordChange.bind(this)}
                   placeholder={t('LoginModal.password')}
@@ -79,7 +83,9 @@ const LoginModal = (props: Props) => {
                   type='password'
                 />
               </Grid.Row>
-              <Grid.Row>
+              <Grid.Row
+                className={styles.row}
+              >
                 <Button
                   disabled={props.disabled}
                   fluid
@@ -93,7 +99,9 @@ const LoginModal = (props: Props) => {
               <Divider horizontal>
                 {t('Common.words.or')}
               </Divider>
-              <Grid.Row className={styles.ssoRow}>
+              <Grid.Row
+                className={cx(styles.row, styles.ssoRow)}
+              >
                 <Button
                   fluid
                   onClick={props.onSSO.bind(this)}
