@@ -4,6 +4,7 @@ import WebAuthorityUtils from './WebAuthorities';
 
 const BNF_BASE_URL = 'https://catalogue.bnf.fr';
 const DPLA_BASE_URL = 'https://dp.la/item';
+const GEONAMES_BASE_URL = 'https://geonames.org';
 const JISC_BASE_URL = 'https://discover.libraryhub.jisc.ac.uk/search?id=';
 const VIAF_BASE_URL = 'http://viaf.org/viaf';
 const WIKIDATA_BASE_URL = 'https://www.wikidata.org/wiki';
@@ -26,6 +27,8 @@ const getURL = (identifier) => {
     url = `${BNF_BASE_URL}/${identifier.identifier}`;
   } else if (authority.source_type === WebAuthorityUtils.SourceTypes.dpla) {
     url = `${DPLA_BASE_URL}/${identifier.identifier}`;
+  } else if (authority.source_type == WebAuthorityUtils.SourceTypes.geonames) {
+    url = `${GEONAMES_BASE_URL}/${identifier.identifier}`;
   } else if (authority.source_type === WebAuthorityUtils.SourceTypes.jisc) {
     url = `${JISC_BASE_URL}${identifier.identifier}`;
   } else if (authority.source_type === WebAuthorityUtils.SourceTypes.viaf) {
