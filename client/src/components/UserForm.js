@@ -7,6 +7,7 @@ import { Form } from 'semantic-ui-react';
 import PermissionsService from '../services/Permissions';
 import type { User } from '../types/User';
 import UserPassword from './UserPassword';
+import UserUtils from '../utils/User';
 
 type Props = EditContainerProps & {
   item: User
@@ -43,9 +44,14 @@ const UserForm: AbstractComponent<any> = (props: Props) => {
           onChange={props.onCheckboxInputChange.bind(this, 'admin')}
         />
       )}
-      <UserPassword
-        {...props}
-      />
+      {
+        UserUtils.showPasswordFields(props.item.email) && (
+          <UserPassword
+            {...props}
+            email={props.item.email}
+          />
+        )
+      }
     </>
   );
 };

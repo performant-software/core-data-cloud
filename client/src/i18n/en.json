@@ -75,6 +75,9 @@
     "tabs": {
       "details": "Details",
       "fields": "Fields"
+    },
+    "words": {
+      "or": "or"
     }
   },
   "CurrentRecordContextProvider": {
@@ -231,6 +234,16 @@
     "buttons": {
       "login": "Login"
     }
+  },
+  "LoginModal": {
+    "buttonCancel": "Cancel",
+    "buttonLogin": "Login",
+    "email": "Email",
+    "header": "Login",
+    "loginErrorContent": "The username and/or password you entered is invalid. Please double check and try again.",
+    "loginErrorHeader": "Invalid Credentials",
+    "logInWithSso": "Single Sign On (SSO)",
+    "password": "Password"
   },
   "Logo": {
     "title": "Core Data Cloud"
