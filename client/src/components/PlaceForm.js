@@ -86,7 +86,7 @@ const PlaceForm = (props: Props) => {
     if (layer.layer_type === LayerTypes.georeference) {
       return (
         <WarpedImageLayer
-          id={layer.id}
+          id={layer.id || layer.uid}
           manifest={layer.content}
           url={layer.url}
         />

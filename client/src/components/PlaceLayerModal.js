@@ -5,6 +5,7 @@ import { FileInputButton } from '@performant-software/semantic-components';
 import cx from 'classnames';
 import React, {
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useState,
@@ -12,8 +13,10 @@ import React, {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Menu, Modal } from 'semantic-ui-react';
+import PlacesService from '../services/Places';
 import type { PlaceLayer as PlaceLayerType } from '../types/Place';
 import PlaceLayerUtils from '../utils/PlaceLayers';
+import ProjectContext from '../context/Project';
 import styles from './PlaceLayerModal.module.css';
 
 type Props = EditContainerProps & {
@@ -24,14 +27,41 @@ const { LayerTypes } = PlaceLayerUtils;
 
 const Tabs = {
   url: 0,
-  file: 1
+  file: 1,
+  mapLibrary: 3
 };
 
 const PlaceLayerModal: AbstractComponent<any> = (props: Props) => {
   const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState(props.item.content ? Tabs.file : Tabs.url);
+  const [geoLayers, setGeoLayers] = useState([]);
+  const { project } = useContext(ProjectContext);
 
   const { t } = useTranslation();
+
+  /**
+   * Fetch and set the list of georeferenced layers
+   * from the map_library_url, if valid.
+   */
+  useEffect(() => {
+    if (project.map_library_url) {
+      try {
+        const axios = PlacesService.getAxios();
+        axios.get(project.map_library_url, {
+          transformRequest: [(data, headers) => {
+            // delete authorization header for external request
+            // eslint-disable-next-line no-param-reassign
+            delete headers.Authorization;
+            return data;
+          }]
+        }).then(({ data }) => {
+          setGeoLayers(data);
+        });
+      } catch {
+        setGeoLayers([]);
+      }
+    }
+  }, [project.map_library_url]);
 
   /**
    * Sets a memo-ized version of the parsed and formatted content.
@@ -129,6 +159,13 @@ const PlaceLayerModal: AbstractComponent<any> = (props: Props) => {
                 content={t('PlaceLayerModal.tabs.file')}
                 onClick={() => setTab(Tabs.file)}
               />
+              { props.item.layer_type === LayerTypes.georeference && geoLayers?.length > 0 && (
+                <Menu.Item
+                  active={tab === Tabs.mapLibrary}
+                  content={t('PlaceLayerModal.tabs.mapLibrary')}
+                  onClick={() => setTab(Tabs.mapLibrary)}
+                />
+              )}
             </Menu>
             { tab === Tabs.url && (
               <Form.Input
@@ -158,6 +195,16 @@ const PlaceLayerModal: AbstractComponent<any> = (props: Props) => {
                   value={content}
                 />
               </>
+            )}
+            { tab === Tabs.mapLibrary && (
+              <Form.Dropdown
+                label={t('PlaceLayerModal.labels.mapLibraryLayer')}
+                required
+                onChange={onUrlChange}
+                options={PlaceLayerUtils.getMapLibraryOptions(geoLayers)}
+                selection
+                value={props.item.url}
+              />
             )}
           </>
         )}
