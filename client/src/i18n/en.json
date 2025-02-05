@@ -553,7 +553,8 @@
       "name": "Name",
       "sharing": "Sharing",
       "fairCopyCloudUrl": "FairCopy.cloud URL",
-      "faircopyCloudConnectedModel": "FairCopy.cloud connected model"
+      "faircopyCloudConnectedModel": "FairCopy.cloud connected model",
+      "mapLibraryUrl": "Map library URL"
     },
     "messages": {
       "clear": {
