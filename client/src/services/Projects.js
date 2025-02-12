@@ -146,6 +146,18 @@ class Projects extends BaseService {
 
     return this.getAxios().post(`${this.getBaseUrl()}/${id}/import_data`, payload, config);
   }
+
+  /**
+   * Calls the /projects/:id/map_library API endpoint.
+   *
+   * @param id
+   *
+   * @returns {*}
+   */
+  fetchMapLibrary(id: number): Promise<any> {
+    return this.getAxios().get(`${this.getBaseUrl()}/${id}/map_library`);
+  }
+
 }
 
 const ProjectsService: Projects = new Projects();
