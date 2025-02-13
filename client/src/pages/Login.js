@@ -40,13 +40,13 @@ const Login: ComponentType<any> = () => {
       .finally(() => setDisabled(false));
   }, [email, password]);
 
-  if (AuthenticationService.isAuthenticated()) {
-    return <Navigate to='/projects' />;
-  }
-
   const onSSO = useCallback(() => {
     window.location.href = SSO_CALLBACK_URL;
   }, []);
+
+  if (AuthenticationService.isAuthenticated()) {
+    return <Navigate to='/projects' />;
+  }
 
   return (
     <div
