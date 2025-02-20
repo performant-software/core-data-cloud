@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_02_11_200555) do
+ActiveRecord::Schema[7.0].define(version: 2025_02_20_152730) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_stat_statements"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
@@ -247,6 +248,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_11_200555) do
     t.integer "z_relationship_id"
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.uuid "import_id"
+    t.index ["primary_record_id", "related_record_id", "related_record_type", "primary_record_type"], name: "index_relationships_record_ids_and_types"
     t.index ["primary_record_type", "primary_record_id"], name: "index_core_data_connector_relationships_on_primary_record"
     t.index ["project_model_relationship_id"], name: "index_cdc_relationships_on_project_model_relationship_id"
     t.index ["related_record_type", "related_record_id"], name: "index_core_data_connector_relationships_on_related_record"
