@@ -24,7 +24,8 @@ class Taxonomy extends MergeableTransform {
   getPayloadKeys(): Array<string> {
     return [
       'project_model_id',
-      'name'
+      'name',
+      'user_defined'
     ];
   }
 

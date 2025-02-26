@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_02_20_152730) do
+ActiveRecord::Schema[7.0].define(version: 2025_02_26_180753) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "pgcrypto"
@@ -273,7 +273,9 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_20_152730) do
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.integer "z_taxonomy_id"
     t.uuid "import_id"
+    t.jsonb "user_defined", default: {}
     t.index ["project_model_id"], name: "index_core_data_connector_taxonomies_on_project_model_id"
+    t.index ["user_defined"], name: "index_core_data_connector_taxonomies_on_user_defined", using: :gin
   end
 
   create_table "core_data_connector_user_projects", force: :cascade do |t|
