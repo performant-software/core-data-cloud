@@ -22,6 +22,7 @@ import UserProjects from './pages/UserProjects';
 import Users from './pages/Users';
 import WebAuthorities from './pages/WebAuthorities';
 import WebAuthority from './pages/WebAuthority';
+import SsoLogin from './pages/SsoLogin';
 
 const App: ComponentType<any> = useDragDrop(() => (
   <Router>
@@ -31,6 +32,10 @@ const App: ComponentType<any> = useDragDrop(() => (
         element={<Login />}
         exact
         index
+      />
+      <Route
+        element={<SsoLogin />}
+        path='sso_login'
       />
       <Route
         path='/'

@@ -5,7 +5,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Message } from 'semantic-ui-react';
 
-type Props = EditContainerProps;
+type Props = EditContainerProps & {
+  email: string
+};
 
 const UserPassword = (props: Props) => {
   const { t } = useTranslation();

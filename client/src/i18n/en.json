@@ -75,6 +75,9 @@
     "tabs": {
       "details": "Details",
       "fields": "Fields"
+    },
+    "words": {
+      "or": "or"
     }
   },
   "CurrentRecordContextProvider": {
@@ -231,6 +234,16 @@
     "buttons": {
       "login": "Login"
     }
+  },
+  "LoginModal": {
+    "buttonCancel": "Cancel",
+    "buttonLogin": "Login",
+    "email": "Email",
+    "header": "Login",
+    "loginErrorContent": "The username and/or password you entered is invalid. Please double check and try again.",
+    "loginErrorHeader": "Invalid Credentials",
+    "logInWithSso": "Single Sign On (SSO)",
+    "password": "Password"
   },
   "Logo": {
     "title": "Core Data Cloud"
@@ -463,6 +476,7 @@
   "PlaceLayerModal": {
     "labels": {
       "content": "Content",
+      "mapLibraryLayer": "Map Library Layer",
       "name": "Name",
       "type": "Type",
       "url": "URL"
@@ -474,6 +488,7 @@
     },
     "tabs": {
       "file": "File",
+      "mapLibrary": "Map Library",
       "url": "URL"
     },
     "title": {
@@ -540,7 +555,8 @@
       "name": "Name",
       "sharing": "Sharing",
       "fairCopyCloudUrl": "FairCopy.cloud URL",
-      "faircopyCloudConnectedModel": "FairCopy.cloud connected model"
+      "faircopyCloudConnectedModel": "FairCopy.cloud connected model",
+      "mapLibraryUrl": "Map library URL"
     },
     "messages": {
       "clear": {

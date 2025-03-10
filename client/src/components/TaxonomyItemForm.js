@@ -1,6 +1,7 @@
 // @flow
 
 import type { EditContainerProps } from '@performant-software/shared-components';
+import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
@@ -23,6 +24,17 @@ const TaxonomyItemForm = (props: Props) => {
         required={props.isRequired('name')}
         value={props.item.name}
       />
+      { props.item.project_model_id && (
+        <UserDefinedFieldsForm
+          data={props.item.user_defined}
+          defineableId={props.item.project_model_id}
+          defineableType='CoreDataConnector::ProjectModel'
+          isError={props.isError}
+          onChange={(userDefined) => props.onSetState({ user_defined: userDefined })}
+          onClearValidationError={props.onClearValidationError}
+          tableName='CoreDataConnector::Taxonomy'
+        />
+      )}
     </Form>
   );
 };
