@@ -17,6 +17,7 @@ import WebAuthority from '../transforms/WebAuthority';
 import WebAuthorityUtils from '../utils/WebAuthorities';
 import type { WebIdentifier as WebIdentifierType } from '../types/WebIdentifier';
 import WikidataIdentifierForm from './WikidataIdentifierForm';
+import GeonamesIdentifierForm from './GeonamesIdentifierForm';
 
 type Props = EditContainerProps & {
   item: WebIdentifierType
@@ -101,6 +102,14 @@ const RelatedIdentifierModal = (props: Props) => {
         )}
         { props.item.web_authority?.source_type === WebAuthorityUtils.SourceTypes.dpla && (
           <DplaIdentifierForm
+            authorityId={props.item.web_authority_id}
+            error={props.isError('identifier')}
+            onSelection={(identifier) => props.onSetState({ identifier })}
+            value={props.item.identifier}
+          />
+        )}
+        { props.item.web_authority?.source_type === WebAuthorityUtils.SourceTypes.geonames && (
+          <GeonamesIdentifierForm
             authorityId={props.item.web_authority_id}
             error={props.isError('identifier')}
             onSelection={(identifier) => props.onSetState({ identifier })}
