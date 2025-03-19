@@ -6,6 +6,7 @@ import type { WebAuthority as WebAuthorityType } from '../types/WebAuthority';
 
 const ERROR_KEY_API_KEY = 'access.api_key';
 const ERROR_KEY_URL = 'access.url';
+const ERROR_KEY_USERNAME = 'access.username';
 
 const SourceTypes = {
   atom: 'atom',
@@ -66,6 +67,13 @@ const validate = (authority: WebAuthorityType) => {
       _.extend(errors, { [ERROR_KEY_API_KEY]: i18n.t('Common.errors.required', { name: ERROR_KEY_API_KEY }) });
     }
   }
+
+  if (authority.source_type === SourceTypes.geonames) {
+    if (_.isEmpty(authority.access?.username)) {
+      _.extend(errors, { [ERROR_KEY_USERNAME]: i18n.t('Common.errors.required', { name: ERROR_KEY_USERNAME }) });
+    }
+  }
+
 
   return errors;
 };

@@ -27,6 +27,11 @@
       "subject": "Subject Access Points"
     }
   },
+  "GeoNamesForm": {
+    "labels": {
+      "username": "Username"
+    }
+  },
   "Common": {
     "actions": {
       "merge": {
