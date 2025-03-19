@@ -27,6 +27,11 @@
       "subject": "Subject Access Points"
     }
   },
+  "GeoNamesForm": {
+    "labels": {
+      "username": "Username"
+    }
+  },
   "Common": {
     "actions": {
       "merge": {
@@ -939,6 +944,7 @@
       "atom": "AtoM",
       "bnf": "BnF",
       "dpla": "DPLA",
+      "geonames": "GeoNames",
       "jisc": "JISC",
       "viaf": "VIAF",
       "wikidata": "Wikidata"
