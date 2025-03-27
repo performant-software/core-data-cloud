@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: 7a2568f3acf77700a2bcb07c67d9315cf3a01f56
-  tag: v0.1.74
+  revision: 90483b438b95dc5ad2fa2cf5e8fce16b82b29405
+  tag: v0.1.82
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 8.0)
@@ -59,8 +59,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/user-defined-fields.git
-  revision: 5a71c96a5f16d6a0d0c00c2fe8dbad285c0bb8fb
-  tag: v0.1.12
+  revision: bacc27994df1ba3b3d969fcdea991ea9bff236f9
+  tag: v0.1.13
   specs:
     user_defined_fields (0.1.0)
       rails (>= 6.0.3.2, < 8)
@@ -206,7 +206,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.15.4-x86_64-linux)
       racc (~> 1.4)
-    oj (3.16.9)
+    oj (3.16.10)
       bigdecimal (>= 3.0)
       ostruct (>= 0.2)
     ostruct (0.6.1)
@@ -254,7 +254,7 @@ GEM
     rake (13.0.6)
     reline (0.3.8)
       io-console (~> 0.5)
-    rexml (3.4.0)
+    rexml (3.4.1)
     rgeo (3.0.1)
     rgeo-activerecord (7.0.1)
       activerecord (>= 5.0)
@@ -281,6 +281,7 @@ PLATFORMS
   arm64-darwin-22
   arm64-darwin-24
   x86_64-darwin-21
+  x86_64-darwin-23
   x86_64-linux
 
 DEPENDENCIES

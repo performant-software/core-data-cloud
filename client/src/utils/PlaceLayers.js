@@ -38,6 +38,12 @@ const getLayerTypeOptions = () => _.map(_.keys(LayerTypeLabels), (key) => ({
   text: LayerTypeLabels[key]
 }));
 
+const getMapLibraryOptions = (layers: Array<any>) => _.map(layers, ({ name, url }) => ({
+  key: url,
+  value: url,
+  text: name,
+}));
+
 /**
  * Validates the passed place layer.
  *
@@ -68,6 +74,7 @@ const validate = (layer: PlaceLayerType) => {
 export default {
   getLayerTypeOptions,
   getLayerTypeView,
+  getMapLibraryOptions,
   LayerTypeLabels,
   LayerTypes,
   validate

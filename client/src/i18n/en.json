@@ -481,6 +481,7 @@
   "PlaceLayerModal": {
     "labels": {
       "content": "Content",
+      "mapLibraryLayer": "Map Library Layer",
       "name": "Name",
       "type": "Type",
       "url": "URL"
@@ -492,6 +493,7 @@
     },
     "tabs": {
       "file": "File",
+      "mapLibrary": "Map Library",
       "url": "URL"
     },
     "title": {
@@ -558,7 +560,8 @@
       "name": "Name",
       "sharing": "Sharing",
       "fairCopyCloudUrl": "FairCopy.cloud URL",
-      "faircopyCloudConnectedModel": "FairCopy.cloud connected model"
+      "faircopyCloudConnectedModel": "FairCopy.cloud connected model",
+      "mapLibraryUrl": "Map library URL"
     },
     "messages": {
       "clear": {

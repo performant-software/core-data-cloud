@@ -141,6 +141,13 @@ const ProjectForm = (props: Props) => {
               value={props.item.faircopy_cloud_project_model_id}
             />
           </Form.Input>
+          <Form.Input
+            error={props.isError('map_library_url')}
+            label={t('Project.labels.mapLibraryUrl')}
+            required={props.isRequired('map_library_url')}
+            onChange={props.onTextInputChange.bind(this, 'map_library_url')}
+            value={props.item.map_library_url}
+          />
           <div
             className={styles.section}
           >
