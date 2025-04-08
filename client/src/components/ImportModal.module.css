@@ -9,3 +9,11 @@
 .importModal > .content .duplicatesCheckbox {
   margin-left: 1em;
 }
+
+.importModal > .content .cell {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
