@@ -248,7 +248,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_07_161528) do
     t.integer "z_relationship_id"
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.uuid "import_id"
-    t.integer "order"
+    t.integer "order", default: 0
     t.index ["primary_record_id", "related_record_id", "related_record_type", "primary_record_type"], name: "index_relationships_record_ids_and_types"
     t.index ["primary_record_type", "primary_record_id"], name: "index_core_data_connector_relationships_on_primary_record"
     t.index ["project_model_relationship_id"], name: "index_cdc_relationships_on_project_model_relationship_id"
