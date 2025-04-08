@@ -64,7 +64,7 @@ const ImportModal = (props: Props) => {
         value.push({
           ...attribute,
           editable: attribute.name !== 'uuid',
-          hidden: index > MAX_DEFAULT_COLUMNS,
+          hidden: index > MAX_DEFAULT_COLUMNS
         });
       }
     });
@@ -179,7 +179,7 @@ const ImportModal = (props: Props) => {
    * Memoizes the list of items to display on the import table.
    */
   const importItems = _.map(items, (item, index) => ({
-    ...item.import,
+    ...item.result,
     index,
     status: item.status
   }));
@@ -260,7 +260,7 @@ const ImportModal = (props: Props) => {
       status = Status.resolved;
     }
 
-    _.extend(newItem, { import: item, status });
+    _.extend(newItem, { result: item, status });
 
     setData(newData);
     setSelectedIndex(null);

@@ -19,7 +19,7 @@ class Importable {
       const { attributes, data, remove_duplicates: removeDuplicates } = file;
 
       files[filename] = {
-        data: _.map(data, (item) => this.toImportItem(item.import, attributes)),
+        data: _.map(data, (item) => this.toImportItem(item.result, attributes)),
         remove_duplicates: removeDuplicates
       };
     });

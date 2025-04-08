@@ -20,7 +20,7 @@ type Props = {
 };
 
 const ImportCompareModal = (props: Props) => {
-  const [item, setItem] = useState(props.item.import);
+  const [item, setItem] = useState(props.item.result);
 
   const { renderUserDefined } = useMergeable();
   const { t } = useTranslation();
@@ -31,7 +31,10 @@ const ImportCompareModal = (props: Props) => {
    * @type {[]}
    */
   const items = useMemo(() => {
-    const value = [];
+    const value = [{
+      ...props.item.import,
+      label: t('ImportCompareModal.labels.incoming')
+    }];
 
     if (props.item.db) {
       value.push({ ...props.item.db, label: t('ImportCompareModal.labels.existing') });
@@ -112,7 +115,7 @@ const ImportCompareModal = (props: Props) => {
           attributes={props.attributes}
           item={item}
           items={items}
-          label={t('ImportCompareModal.labels.incoming')}
+          label={t('ImportCompareModal.labels.result')}
           onAttributeSelection={onUpdate}
           onClearAttribute={onClear}
           renderValue={renderValue}

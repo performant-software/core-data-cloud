@@ -9,7 +9,3 @@
 .importModal > .content .duplicatesCheckbox {
   margin-left: 1em;
 }
-
-.importModal > .content > table > thead > tr > th {
-  text-wrap: nowrap;
-}
