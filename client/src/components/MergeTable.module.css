@@ -85,3 +85,7 @@
 .mergeTable > table > tbody > tr > td {
   background-color: #FFFFFF;
 }
+
+.mergeTable > table > tbody > tr > td > .icon {
+  margin-left: 0.5em;
+}

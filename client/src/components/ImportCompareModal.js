@@ -1,5 +1,6 @@
 // @flow
 
+import { ObjectJs as ObjectUtils } from '@performant-software/shared-components';
 import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Modal } from 'semantic-ui-react';
@@ -49,6 +50,17 @@ const ImportCompareModal = (props: Props) => {
 
     return value;
   }, [props.item]);
+
+  /**
+   * Memo-izes the attributes and adds a "conflict" property for any where the values conflicts
+   * between any of the items.
+   *
+   * @type {[]}
+   */
+  const attributes = useMemo(() => _.map(props.attributes, (attribute) => ({
+    ...attribute,
+    conflict: _.some(items, (i) => !ObjectUtils.isEqual(item[attribute.name], i[attribute.name]))
+  })), [item, items, props.attributes])
 
   /**
    * Clears the passed attribute from the current item.
@@ -112,7 +124,7 @@ const ImportCompareModal = (props: Props) => {
       />
       <Modal.Content>
         <MergeTable
-          attributes={props.attributes}
+          attributes={attributes}
           item={item}
           items={items}
           label={t('ImportCompareModal.labels.result')}
