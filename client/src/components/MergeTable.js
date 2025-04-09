@@ -26,9 +26,9 @@ type Props = {
   items: Array<any>,
   label: string,
   onAttributeSelection: () => void,
-  onClear: () => void,
+  onClear?: () => void,
   onClearAttribute: () => void,
-  onSelect: (item: any) => void,
+  onSelect?: (item: any) => void,
   renderValue: (item: any, attribute: Attribute, editable: boolean) => Element | string
 };
 

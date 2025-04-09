@@ -60,7 +60,7 @@ const ImportCompareModal = (props: Props) => {
   const attributes = useMemo(() => _.map(props.attributes, (attribute) => ({
     ...attribute,
     conflict: _.some(items, (i) => !ObjectUtils.isEqual(item[attribute.name], i[attribute.name]))
-  })), [item, items, props.attributes])
+  })), [item, items, props.attributes]);
 
   /**
    * Clears the passed attribute from the current item.
