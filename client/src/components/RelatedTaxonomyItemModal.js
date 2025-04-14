@@ -89,6 +89,16 @@ const RelatedTaxonomyItemModal = (props: Props) => {
             value={props.item[foreignKey]}
           />
         </Form.Input>
+        <Form.Input
+          autoFocus
+          error={props.isError('order')}
+          label={t('Common.columns.order')}
+          min={1}
+          onChange={props.onTextInputChange.bind(this, 'order')}
+          required={props.isRequired('order')}
+          type='number'
+          value={props.item.order}
+        />
         { projectModelRelationship && (
           <UserDefinedFieldsForm
             data={props.item.user_defined}

@@ -56,6 +56,7 @@
       "upload": "Upload"
     },
     "columns":{
+      "order": "Order",
       "uuid": "Identifier"
     },
     "errors": {

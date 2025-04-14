@@ -24,6 +24,7 @@ class Relationship extends BaseTransform {
    */
   getPayloadKeys() {
     return [
+      'order',
       'project_model_relationship_id',
       'primary_record_id',
       'primary_record_type',
