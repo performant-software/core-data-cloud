@@ -36,6 +36,10 @@ const RelatedPlaces = () => {
     resolve: resolveAttributeValue.bind(this, 'uuid'),
     sortable: true,
     hidden: true
+  }, {
+    name: 'order',
+    label: t('Common.columns.order'),
+    sortable: true
   }, ...userDefinedColumns], [resolveAttributeValue, userDefinedColumns]);
 
   if (loading) {
@@ -52,6 +56,8 @@ const RelatedPlaces = () => {
       }}
       className='compact'
       collectionName='relationships'
+      defaultSort='order'
+      defaultSortDirection='ascending'
       columns={columns}
       modal={{
         component: RelatedPlaceModal,

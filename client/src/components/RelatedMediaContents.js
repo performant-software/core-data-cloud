@@ -211,6 +211,8 @@ const RelatedMediaContents = () => {
         }]}
         className={cx('compact', styles.relatedMediaContents)}
         collectionName='relationships'
+        defaultSort='order'
+        defaultSortDirection='ascending'
         defaultView={ItemViews.grid}
         dimmable={false}
         hideToggle
@@ -246,6 +248,10 @@ const RelatedMediaContents = () => {
           storage: localStorage
         }}
         sort={[{
+          name: 'order',
+          value: 'order',
+          text: t('Common.columns.order')
+        }, {
           name: 'name',
           value: 'core_data_connector_media_contents.name',
           text: t('RelatedMediaContents.sort.name')

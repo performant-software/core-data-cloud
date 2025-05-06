@@ -36,6 +36,10 @@ const RelatedTaxonomyItems = () => {
     resolve: resolveAttributeValue.bind(this, 'uuid'),
     sortable: true,
     hidden: true
+  }, {
+    name: 'order',
+    label: t('Common.columns.order'),
+    sortable: true
   }, ...userDefinedColumns], [resolveAttributeValue, userDefinedColumns]);
 
   if (loading) {
@@ -53,6 +57,8 @@ const RelatedTaxonomyItems = () => {
       className='compact'
       collectionName='relationships'
       columns={columns}
+      defaultSort='order'
+      defaultSortDirection='ascending'
       modal={{
         component: RelatedTaxonomyItemModal,
         props: {

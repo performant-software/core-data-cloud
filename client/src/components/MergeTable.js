@@ -3,12 +3,18 @@
 import cx from 'classnames';
 import React, { type Element } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Header, Table } from 'semantic-ui-react';
+import {
+  Button,
+  Header,
+  Icon,
+  Table
+} from 'semantic-ui-react';
 import _ from 'underscore';
 import MergeAttribute from './MergeAttribute';
 import styles from './MergeTable.module.css';
 
 type Attribute = {
+  conflict?: boolean,
   editable?: boolean,
   label: string,
   name: string
@@ -20,9 +26,9 @@ type Props = {
   items: Array<any>,
   label: string,
   onAttributeSelection: () => void,
-  onClear: () => void,
+  onClear?: () => void,
   onClearAttribute: () => void,
-  onSelect: (item: any) => void,
+  onSelect?: (item: any) => void,
   renderValue: (item: any, attribute: Attribute, editable: boolean) => Element | string
 };
 
@@ -112,6 +118,13 @@ const MergeTable = (props: Props) => {
                 verticalAlign='middle'
               >
                 { attribute.label }
+                { attribute.conflict && (
+                  <Icon
+                    className={styles.icon}
+                    color='red'
+                    name='warning circle'
+                  />
+                )}
               </Table.Cell>
               <Table.Cell
                 verticalAlign='top'

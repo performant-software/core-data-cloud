@@ -41,6 +41,10 @@ const RelatedPeople = () => {
     resolve: resolveAttributeValue.bind(this, 'uuid'),
     sortable: true,
     hidden: true
+  }, {
+    name: 'order',
+    label: t('Common.columns.order'),
+    sortable: true
   }, ...userDefinedColumns], [resolveAttributeValue, userDefinedColumns]);
 
   if (loading) {
@@ -58,6 +62,8 @@ const RelatedPeople = () => {
       className='compact'
       collectionName='relationships'
       columns={columns}
+      defaultSort='order'
+      defaultSortDirection='ascending'
       modal={{
         component: RelatedPersonModal,
         props: {

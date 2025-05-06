@@ -157,7 +157,6 @@ class Projects extends BaseService {
   fetchMapLibrary(id: number): Promise<any> {
     return this.getAxios().get(`${this.getBaseUrl()}/${id}/map_library`);
   }
-
 }
 
 const ProjectsService: Projects = new Projects();

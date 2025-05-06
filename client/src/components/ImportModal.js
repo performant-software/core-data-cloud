@@ -50,6 +50,19 @@ const ImportModal = (props: Props) => {
   const { t } = useTranslation();
 
   /**
+   * Renders a wrapper `div` around the content for the passed item and attribute.
+   *
+   * @type {function(*, {name: *}): *}
+   */
+  const renderCell = useCallback((item, { name }) => (
+    <div
+      className={styles.cell}
+    >
+      { item[name] }
+    </div>
+  ), []);
+
+  /**
    * Memo-izes the table display columns.
    *
    * @type {[]}
@@ -65,6 +78,7 @@ const ImportModal = (props: Props) => {
           ...attribute,
           editable: attribute.name !== 'uuid',
           hidden: index > MAX_DEFAULT_COLUMNS,
+          render: (item) => renderCell(item, attribute)
         });
       }
     });
@@ -81,7 +95,7 @@ const ImportModal = (props: Props) => {
     });
 
     return value;
-  }, [data, fileName]);
+  }, [data, fileName, renderCell]);
 
   /**
    * Returns the count of records with the (optional) passed statuses.
@@ -179,7 +193,7 @@ const ImportModal = (props: Props) => {
    * Memoizes the list of items to display on the import table.
    */
   const importItems = _.map(items, (item, index) => ({
-    ...item.import,
+    ...item.result,
     index,
     status: item.status
   }));
@@ -260,7 +274,7 @@ const ImportModal = (props: Props) => {
       status = Status.resolved;
     }
 
-    _.extend(newItem, { import: item, status });
+    _.extend(newItem, { result: item, status });
 
     setData(newData);
     setSelectedIndex(null);

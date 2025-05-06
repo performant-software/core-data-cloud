@@ -56,6 +56,7 @@
       "upload": "Upload"
     },
     "columns":{
+      "order": "Order",
       "uuid": "Identifier"
     },
     "errors": {
@@ -127,9 +128,10 @@
   },
   "ImportCompareModal": {
     "labels": {
-      "merged": "Merged {{index}}",
       "existing": "Existing",
-      "incoming": "Incoming"
+      "incoming": "Incoming",
+      "merged": "Merged {{index}}",
+      "result": "Result"
     },
     "title": "Compare Records"
   },
