@@ -2,9 +2,10 @@
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 import MenuLink from './MenuLink';
+import PermissionsService from '../services/Permissions';
+import useParams from '../hooks/ParsedParams';
 
 const ProjectSettingsMenu = () => {
   const { projectId } = useParams();
@@ -25,11 +26,13 @@ const ProjectSettingsMenu = () => {
             parent
             to={`/projects/${projectId}/project_models`}
           />
-          <MenuLink
-            content={t('ProjectSettingsMenu.labels.users')}
-            parent
-            to={`/projects/${projectId}/user_projects`}
-          />
+          { PermissionsService.canEditUserProjects(projectId) && (
+            <MenuLink
+              content={t('ProjectSettingsMenu.labels.users')}
+              parent
+              to={`/projects/${projectId}/user_projects`}
+            />
+          )}
           <MenuLink
             content={t('ProjectSettingsMenu.labels.import')}
             parent

@@ -7,6 +7,8 @@ import ItemHeader from '../components/ItemHeader';
 import { type User as UserType } from '../types/User';
 import UserEditMenu from '../components/UserEditMenu';
 import UserForm from '../components/UserForm';
+import UserPassword from '../components/UserPassword';
+import UserUtils from '../utils/User';
 import UsersService from '../services/Users';
 import { useTranslation } from 'react-i18next';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
@@ -37,6 +39,11 @@ const UserFormComponent = (props: Props) => {
           <UserForm
             {...props}
           />
+          { !UserUtils.isSingleSignOn(props.item.email) && (
+            <UserPassword
+              {...props}
+            />
+          )}
         </SimpleEditPage.Tab>
       </SimpleEditPage>
     </>
@@ -55,7 +62,7 @@ const User: AbstractComponent<any> = withReactRouterEditPage(UserFormComponent, 
       .save(user)
       .then(({ data }) => data.user)
   ),
-  required: ['name', 'email']
+  required: ['name', 'email', 'role']
 });
 
 export default User;

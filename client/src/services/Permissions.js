@@ -6,11 +6,21 @@ import type { Ownable as OwnableType } from '../types/Ownable';
 import type { ProjectModel as ProjectModelType } from '../types/ProjectModel';
 import SessionService from './Session';
 import UserProjectRoles from '../utils/UserProjectRoles';
+import UserRoles from '../utils/UserRoles';
 
 /**
  * Class responsible for permissions business logic.
  */
 class Permissions {
+  /**
+   * An admin user or a member user can create a new project.
+   *
+   * @returns {boolean}
+   */
+  canCreateProject(): boolean {
+    return this.isAdmin() || this.isMember();
+  }
+
   /**
    * An admin user or project owner can delete a project.
    *
@@ -74,6 +84,17 @@ class Permissions {
   }
 
   /**
+   * An admin user or a member user who is a project owner can add users to a project.
+   *
+   * @param projectId
+   *
+   * @returns {boolean}
+   */
+  canEditUserProjects(projectId: number): boolean {
+    return this.isAdmin() || (this.isMember() && this.isOwner(projectId));
+  }
+
+  /**
    * Only an admin user can edit users.
    *
    * @returns {boolean}
@@ -111,13 +132,30 @@ class Permissions {
   }
 
   /**
-   * Returns true if the current user is an admin.
+   * Returns true if the current user has the "admin" role.
    *
    * @returns {boolean}
    */
   isAdmin(): boolean {
-    const user = this.getUser();
-    return user?.admin || false;
+    return UserRoles.isAdmin(this.getUser());
+  }
+
+  /**
+   * Returns true if the current user has the "guest" role.
+   *
+   * @returns {boolean}
+   */
+  isGuest(): boolean {
+    return UserRoles.isGuest(this.getUser());
+  }
+
+  /**
+   * Returns true if the current user has the "member" role.
+   *
+   * @returns {boolean}
+   */
+  isMember(): boolean {
+    return UserRoles.isMember(this.getUser());
   }
 
   /**

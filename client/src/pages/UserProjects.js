@@ -27,7 +27,7 @@ const UserProjects: AbstractComponent<any> = () => {
   const { t } = useTranslation();
 
   const ids = useMemo(() => ({ project_id: projectId, user_id: userId }), [projectId, userId]);
-  const editable = useMemo(() => PermissionsService.canEditProject(projectId), [projectId]);
+  const editable = useMemo(() => PermissionsService.canEditUserProjects(projectId), [projectId]);
 
   /**
    * Fetch the current yser so we can display the name in the ItemHeader component.
@@ -66,6 +66,10 @@ const UserProjects: AbstractComponent<any> = () => {
           accept: () => editable,
           icon: 'times',
           name: 'delete'
+        }, {
+          icon: 'arrow right',
+          name: 'navigate',
+          onClick: (item) => navigate(`/projects/${item.project_id}`)
         }]}
         addButton={editable ? {
           basic: false,

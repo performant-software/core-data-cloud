@@ -17,6 +17,7 @@ import UserModal from '../components/UserModal';
 import UserPassword from '../components/UserPassword';
 import UserProjectRoles from '../utils/UserProjectRoles';
 import UserProjectsService from '../services/UserProjects';
+import UserRoles from '../utils/UserRoles';
 import UsersService from '../services/Users';
 import UserUtils from '../utils/User';
 import useParams from '../hooks/ParsedParams';
@@ -31,8 +32,50 @@ const UserProjectForm = (props: Props) => {
   const params = useParams();
   const { t } = useTranslation();
 
+  /**
+   * Memo-izes whether we're on a new record.
+   *
+   * @type {boolean}
+   */
   const isNew = useMemo(() => !props.item.id, [props.item.id]);
+
+  /**
+   * Memo-izes if the current user can edit the current project.
+   *
+   * @type {boolean}
+   */
   const editable = useMemo(() => PermissionsService.canEditProject(props.item.project_id), [props.item.project_id]);
+
+  /**
+   * Memo-izes if the current user is an owner of the current project.
+   *
+   * @type {boolean}
+   */
+  const isOwner = useMemo(() => PermissionsService.isOwner(props.item.project_id), [props.item.project_id]);
+
+  /**
+   * Memo-izes if the password is editable for the current user.
+   */
+  const isPasswordEditable = useMemo(() => {
+    // Passwords for single sign on users cannot be changed
+    if (UserUtils.isSingleSignOn(props.item.user?.email)) {
+      return false;
+    }
+
+    let value = false;
+
+    // Users with edit permissions on users can change a password
+    if (PermissionsService.canEditUsers()) {
+      value = true;
+    }
+
+    // Project owners can change a password for guest users
+    if (isOwner && (isNew || UserRoles.isGuest(props.item.user))) {
+      value = true;
+    }
+
+    return value;
+  }, [isNew, isOwner, props.item.user]);
 
   /*
    * For a new record, set the foreign key ID based on the route parameters.
@@ -117,19 +160,11 @@ const UserProjectForm = (props: Props) => {
                 />
               </Form.Input>
             )}
-            { PermissionsService.isOwner(props.item.project_id) && isNew && (
+            { !PermissionsService.canEditUsers() && isOwner && isNew && (
               <UserForm
                 {...props}
               />
             )}
-            { PermissionsService.isOwner(props.item.project_id)
-              && !isNew
-              && UserUtils.showPasswordFields(props.item.user.email)
-              && (
-                <UserPassword
-                  {...props}
-                />
-              )}
             <Form.Dropdown
               error={props.isError('role')}
               label={t('UserProject.labels.role')}
@@ -140,6 +175,11 @@ const UserProjectForm = (props: Props) => {
               selectOnBlur={false}
               value={props.item.role}
             />
+            { isPasswordEditable && (
+              <UserPassword
+                {...props}
+              />
+            )}
           </SimpleEditPage.Tab>
         </SimpleEditPage>
       </ItemLayout.Content>

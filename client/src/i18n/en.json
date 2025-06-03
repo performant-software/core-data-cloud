@@ -879,9 +879,9 @@
   },
   "UserForm": {
     "labels": {
-      "admin": "Admin",
       "email": "Email",
-      "name": "Name"
+      "name": "Name",
+      "role": "Role"
     }
   },
   "UserMenu": {
@@ -932,10 +932,18 @@
       "allUsers": "All Users"
     }
   },
+  "UserRoles": {
+    "labels": {
+      "admin": "Administrator",
+      "guest": "Guest",
+      "member": "Member"
+    }
+  },
   "Users": {
     "columns": {
       "email": "Email",
-      "name": "Name"
+      "name": "Name",
+      "role": "Role"
     }
   },
   "WebAuthorities": {

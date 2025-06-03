@@ -6,6 +6,6 @@ export type User = {
   id: number,
   name: string,
   email: string,
-  admin: boolean,
+  role: 'admin' | 'member' | 'guest',
   user_projects: Array<UserProject>
 };

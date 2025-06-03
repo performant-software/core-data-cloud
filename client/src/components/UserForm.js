@@ -6,8 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
 import PermissionsService from '../services/Permissions';
 import type { User } from '../types/User';
-import UserPassword from './UserPassword';
-import UserUtils from '../utils/User';
+import UserRoles from '../utils/UserRoles';
 
 type Props = EditContainerProps & {
   item: User
@@ -36,22 +35,17 @@ const UserForm: AbstractComponent<any> = (props: Props) => {
         value={props.item.email}
       />
       { PermissionsService.isAdmin() && (
-        <Form.Checkbox
-          disabled={props.disabled}
-          checked={props.item.admin}
-          error={props.isError('admin')}
-          label={t('UserForm.labels.admin')}
-          onChange={props.onCheckboxInputChange.bind(this, 'admin')}
+        <Form.Dropdown
+          error={props.isError('role')}
+          label={t('UserForm.labels.role')}
+          onChange={props.onTextInputChange.bind(this, 'role')}
+          options={UserRoles.getRoleOptions()}
+          required={props.isRequired('role')}
+          selection
+          selectOnBlur={false}
+          value={props.item.role}
         />
       )}
-      {
-        UserUtils.showPasswordFields(props.item.email) && (
-          <UserPassword
-            {...props}
-            email={props.item.email}
-          />
-        )
-      }
     </>
   );
 };

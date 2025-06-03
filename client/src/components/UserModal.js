@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { Form, Modal } from 'semantic-ui-react';
 import type { User } from '../types/User';
 import UserForm from './UserForm';
+import UserPassword from './UserPassword';
+import UserUtils from '../utils/User';
 
 type Props = EditContainerProps & {
   item: User
@@ -29,6 +31,11 @@ const UserModal: AbstractComponent<any> = (props: Props) => {
         <UserForm
           {...props}
         />
+        { !UserUtils.isSingleSignOn(props.item.email) && (
+          <UserPassword
+            {...props}
+          />
+        )}
       </Modal.Content>
       { props.children }
     </Modal>
