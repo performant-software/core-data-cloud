@@ -38,7 +38,7 @@ const UserProjects: AbstractComponent<any> = () => {
         .then(({ data }) => setUser(data.user));
     }
   }, []);
-  
+
   if (projectId && !PermissionsService.canEditUserProjects(projectId)) {
     return (
       <Navigate
