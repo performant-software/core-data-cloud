@@ -4,6 +4,7 @@ import { AssociatedDropdown, SimpleEditPage } from '@performant-software/semanti
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import React, { useEffect, useMemo, type AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Navigate } from 'react-router-dom';
 import { Form } from 'semantic-ui-react';
 import ItemHeader from '../components/ItemHeader';
 import ItemLayout from '../components/ItemLayout';
@@ -38,13 +39,6 @@ const UserProjectForm = (props: Props) => {
    * @type {boolean}
    */
   const isNew = useMemo(() => !props.item.id, [props.item.id]);
-
-  /**
-   * Memo-izes if the current user can edit the current project.
-   *
-   * @type {boolean}
-   */
-  const editable = useMemo(() => PermissionsService.canEditProject(props.item.project_id), [props.item.project_id]);
 
   /**
    * Memo-izes if the current user is an owner of the current project.
@@ -90,6 +84,24 @@ const UserProjectForm = (props: Props) => {
     }
   }, []);
 
+  if (params.projectId && !PermissionsService.canEditUserProjects(params.projectId)) {
+    return (
+      <Navigate
+        replace
+        to={`/projects/${params.projectId}/edit`}
+      />
+    );
+  }
+
+  if (params.userId && !PermissionsService.canEditUsers()) {
+    return (
+      <Navigate
+        replace
+        to='/projects'
+      />
+    );
+  }
+
   return (
     <ItemLayout>
       <ItemLayout.Header>
@@ -115,7 +127,6 @@ const UserProjectForm = (props: Props) => {
       <ItemLayout.Content>
         <SimpleEditPage
           {...props}
-          editable={editable}
         >
           <SimpleEditPage.Tab
             key='default'

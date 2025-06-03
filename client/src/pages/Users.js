@@ -3,13 +3,23 @@
 import { ListTable } from '@performant-software/semantic-components';
 import React, { type AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import PermissionsService from '../services/Permissions';
 import UserRoles from '../utils/UserRoles';
 import UsersService from '../services/Users';
 
 const Users: AbstractComponent<any> = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  if (!PermissionsService.canEditUsers()) {
+    return (
+      <Navigate
+        replace
+        to='/projects'
+      />
+    );
+  }
 
   return (
     <ListTable
