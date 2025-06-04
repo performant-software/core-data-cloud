@@ -24,9 +24,10 @@ import ProjectModelTransform from '../transforms/ProjectModel';
 import { type Project as ProjectType } from '../types/Project';
 import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import ProjectsService from '../services/Projects';
+import { SlLock } from 'react-icons/sl';
 import styles from './Project.module.css';
-import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
 import useParams from '../hooks/ParsedParams';
+import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
 
 type Props = EditContainerProps & {
   item: ProjectType
@@ -81,7 +82,7 @@ const ProjectForm = (props: Props) => {
   /**
    * Return to the projects list if the user does not have permissions to edit this project.
    */
-  if (!PermissionsService.canEditProject(projectId)) {
+  if (!PermissionsService.canEditProjectSettings(projectId)) {
     return (
       <Navigate
         replace
@@ -151,9 +152,6 @@ const ProjectForm = (props: Props) => {
           <div
             className={styles.section}
           >
-            <Header
-              content={t('Project.labels.sharing')}
-            />
             <Message
               className={cx(styles.ui, styles.message)}
               color='blue'
@@ -179,6 +177,36 @@ const ProjectForm = (props: Props) => {
               </Message.Content>
             </Message>
           </div>
+          { PermissionsService.canArchiveProject() && (
+            <div
+              className={styles.section}
+            >
+              <Message
+                className={cx(styles.ui, styles.message)}
+                color='yellow'
+                icon
+              >
+                <Icon>
+                  <SlLock />
+                </Icon>
+                <Message.Content
+                  className={styles.content}
+                >
+                  <Message.Header
+                    className={styles.header}
+                    content={t('Project.messages.archive.header')}
+                  />
+                  <Form.Checkbox
+                    checked={props.item.archived}
+                    className={styles.field}
+                    label={t('Project.messages.archive.content')}
+                    error={props.isError('archived')}
+                    onChange={props.onCheckboxInputChange.bind(this, 'archived')}
+                  />
+                </Message.Content>
+              </Message>
+            </div>
+          )}
           { PermissionsService.canDeleteProject(props.item.id) && (
             <div
               className={styles.section}

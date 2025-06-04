@@ -39,6 +39,9 @@ const UserProjects: AbstractComponent<any> = () => {
     }
   }, []);
 
+  /**
+   * Return to the projects list if the user does not have permissions to edit this project.
+   */
   if (projectId && !PermissionsService.canEditUserProjects(projectId)) {
     return (
       <Navigate
@@ -48,6 +51,9 @@ const UserProjects: AbstractComponent<any> = () => {
     );
   }
 
+  /**
+   * Return to the projects list if the user does not have permissions to edit users.
+   */
   if (userId && !PermissionsService.canEditUsers()) {
     return (
       <Navigate

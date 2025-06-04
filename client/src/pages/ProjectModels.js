@@ -3,7 +3,8 @@
 import { ListTable } from '@performant-software/semantic-components';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import PermissionsService from '../services/Permissions';
 import ProjectModelsService from '../services/ProjectModels';
 import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import useParams from '../hooks/ParsedParams';
@@ -12,6 +13,18 @@ const ProjectModels = () => {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const { t } = useTranslation();
+
+  /**
+   * Return to the projects list if the user does not have permissions to edit this project.
+   */
+  if (!PermissionsService.canEditProjectSettings(projectId)) {
+    return (
+      <Navigate
+        replace
+        to='/projects'
+      />
+    );
+  }
 
   return (
     <>

@@ -560,12 +560,15 @@
       "danger": "Danger Zone",
       "description": "Description",
       "name": "Name",
-      "sharing": "Sharing",
       "fairCopyCloudUrl": "FairCopy.cloud URL",
       "faircopyCloudConnectedModel": "FairCopy.cloud connected model",
       "mapLibraryUrl": "Map library URL"
     },
     "messages": {
+      "archive": {
+        "content": "Project members will no longer be able to access project data",
+        "header": "Archive Project"
+      },
       "clear": {
         "content": "Do you really want to clear all data from this project? This action cannot be undone.",
         "header": "Are you sure?"

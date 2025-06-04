@@ -1,6 +1,7 @@
 // @flow
 
 import { ItemList, ItemViews } from '@performant-software/semantic-components';
+import cx from 'classnames';
 import React, { type AbstractComponent, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IoSearchOutline } from 'react-icons/io5';
@@ -9,6 +10,8 @@ import { Icon } from 'semantic-ui-react';
 import PermissionsService from '../services/Permissions';
 import ProjectDescription from '../components/ProjectDescription';
 import ProjectsService from '../services/Projects';
+import { SlLock } from 'react-icons/sl';
+import styles from './Projects.module.css';
 
 const Projects: AbstractComponent<any> = () => {
   const navigate = useNavigate();
@@ -33,10 +36,15 @@ const Projects: AbstractComponent<any> = () => {
       addButton={addButton}
       as={Link}
       asProps={(project) => ({
-        to: `${project.id}/edit`,
-        raised: true
+        className: cx(
+          styles.card,
+          { [styles.disabled]: project.archived && !PermissionsService.canArchiveProject() }
+        ),
+        raised: true,
+        to: `${project.id}/edit`
       })}
       basic={false}
+      className={styles.projects}
       collectionName='projects'
       defaultView={ItemViews.grid}
       hideToggle
@@ -49,13 +57,22 @@ const Projects: AbstractComponent<any> = () => {
       )}
       renderEmptyList={() => null}
       renderExtra={(project) => (
-        <Icon
-          color='blue'
+        <Icon.Group
+          className={styles.icons}
         >
-          { project.discoverable && (
-            <IoSearchOutline />
+          { project.archived && (
+            <Icon>
+              <SlLock />
+            </Icon>
           )}
-        </Icon>
+          { project.discoverable && (
+            <Icon
+              color='blue'
+            >
+              <IoSearchOutline />
+            </Icon>
+          )}
+        </Icon.Group>
       )}
       onLoad={(params) => ProjectsService.fetchAll(params)}
       session={{

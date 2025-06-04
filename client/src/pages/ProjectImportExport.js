@@ -12,6 +12,7 @@ import {
 } from 'react-icons/bs';
 import { FaCode } from 'react-icons/fa';
 import { SlGraph } from 'react-icons/sl';
+import { Navigate } from 'react-router-dom';
 import {
   Button,
   Container,
@@ -181,6 +182,18 @@ const ProjectImportExport = () => {
       .catch(onImportError)
       .finally(() => setImportData(false));
   }, [onImportError, projectId]);
+
+  /**
+   * Return to the projects list if the user does not have permissions to edit this project.
+   */
+  if (!PermissionsService.canEditProjectSettings(projectId)) {
+    return (
+      <Navigate
+        replace
+        to='/projects'
+      />
+    );
+  }
 
   return (
     <Container
