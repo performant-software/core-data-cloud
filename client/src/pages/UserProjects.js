@@ -8,7 +8,7 @@ import React, {
   type AbstractComponent
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import ItemHeader from '../components/ItemHeader';
 import PermissionsService from '../services/Permissions';
 import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
@@ -27,7 +27,6 @@ const UserProjects: AbstractComponent<any> = () => {
   const { t } = useTranslation();
 
   const ids = useMemo(() => ({ project_id: projectId, user_id: userId }), [projectId, userId]);
-  const editable = useMemo(() => PermissionsService.canEditProject(projectId), [projectId]);
 
   /**
    * Fetch the current yser so we can display the name in the ItemHeader component.
@@ -39,6 +38,24 @@ const UserProjects: AbstractComponent<any> = () => {
         .then(({ data }) => setUser(data.user));
     }
   }, []);
+
+  if (projectId && !PermissionsService.canEditUserProjects(projectId)) {
+    return (
+      <Navigate
+        replace
+        to={`/projects/${projectId}/edit`}
+      />
+    );
+  }
+
+  if (userId && !PermissionsService.canEditUsers()) {
+    return (
+      <Navigate
+        replace
+        to='/projects'
+      />
+    );
+  }
 
   return (
     <>
@@ -63,16 +80,19 @@ const UserProjects: AbstractComponent<any> = () => {
           icon: 'pencil',
           onClick: (item) => navigate(`${item.id}`)
         }, {
-          accept: () => editable,
           icon: 'times',
           name: 'delete'
+        }, {
+          icon: 'arrow right',
+          name: 'navigate',
+          onClick: (item) => navigate(`/projects/${item.project_id}`)
         }]}
-        addButton={editable ? {
+        addButton={{
           basic: false,
           color: 'blue',
           location: 'top',
           onClick: () => navigate('new')
-        } : undefined}
+        }}
         columns={[{
           name: 'core_data_connector_projects.name',
           label: t('UserProjects.columns.project'),

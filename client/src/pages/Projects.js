@@ -1,11 +1,12 @@
 // @flow
 
 import { ItemList, ItemViews } from '@performant-software/semantic-components';
-import React, { type AbstractComponent } from 'react';
+import React, { type AbstractComponent, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IoSearchOutline } from 'react-icons/io5';
 import { Link, useNavigate } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
+import PermissionsService from '../services/Permissions';
 import ProjectDescription from '../components/ProjectDescription';
 import ProjectsService from '../services/Projects';
 
@@ -13,14 +14,23 @@ const Projects: AbstractComponent<any> = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
+  /**
+   * Memo-izes the add button value based on the current user's permissions.
+   *
+   * @type {{basic: boolean, color: string, location: string, onClick: (function(): void)}}
+   */
+  const addButton = useMemo(() => (
+    PermissionsService.canCreateProject() ? ({
+      basic: false,
+      color: 'blue',
+      location: 'top',
+      onClick: () => navigate('new')
+    }) : undefined
+  ), []);
+
   return (
     <ItemList
-      addButton={{
-        basic: false,
-        color: 'blue',
-        location: 'top',
-        onClick: () => navigate('new')
-      }}
+      addButton={addButton}
       as={Link}
       asProps={(project) => ({
         to: `${project.id}/edit`,

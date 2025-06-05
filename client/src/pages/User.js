@@ -3,10 +3,14 @@
 import { SimpleEditPage } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import React, { type AbstractComponent } from 'react';
+import { Navigate } from 'react-router-dom';
 import ItemHeader from '../components/ItemHeader';
+import PermissionsService from '../services/Permissions';
 import { type User as UserType } from '../types/User';
 import UserEditMenu from '../components/UserEditMenu';
 import UserForm from '../components/UserForm';
+import UserPassword from '../components/UserPassword';
+import UserUtils from '../utils/User';
 import UsersService from '../services/Users';
 import { useTranslation } from 'react-i18next';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
@@ -17,6 +21,15 @@ type Props = EditContainerProps & {
 
 const UserFormComponent = (props: Props) => {
   const { t } = useTranslation();
+
+  if (!PermissionsService.canEditUsers()) {
+    return (
+      <Navigate
+        replace
+        to='/projects'
+      />
+    );
+  }
 
   return (
     <>
@@ -37,6 +50,11 @@ const UserFormComponent = (props: Props) => {
           <UserForm
             {...props}
           />
+          { !UserUtils.isSingleSignOn(props.item.email) && (
+            <UserPassword
+              {...props}
+            />
+          )}
         </SimpleEditPage.Tab>
       </SimpleEditPage>
     </>
@@ -55,7 +73,7 @@ const User: AbstractComponent<any> = withReactRouterEditPage(UserFormComponent, 
       .save(user)
       .then(({ data }) => data.user)
   ),
-  required: ['name', 'email']
+  required: ['name', 'email', 'role']
 });
 
 export default User;

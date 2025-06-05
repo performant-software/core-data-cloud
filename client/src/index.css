@@ -61,6 +61,7 @@ textarea {
   right: auto;
 }
 
+.association-dropdown > .ui.buttons > .ui.basic.button:focus,
 .association-dropdown > .ui.buttons > .ui.basic.button:hover {
   background: unset !important;
 }
@@ -162,4 +163,8 @@ textarea {
 
 .import-modal > .content > .embedded-list > table.ui.table > thead > tr > th {
   position: relative;
+}
+
+.ui.grid.simple-edit-page {
+  margin-top: 0px;
 }

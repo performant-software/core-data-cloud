@@ -28,7 +28,8 @@ class User extends BaseTransform {
       'email',
       'admin',
       'password',
-      'password_confirmation'
+      'password_confirmation',
+      'role'
     ];
   }
 
