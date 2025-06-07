@@ -38,6 +38,16 @@ class Session {
   }
 
   /**
+   * Returns true if the current session's user is required to change their password.
+   *
+   * @returns {boolean}
+   */
+  isPasswordChangeRequired(): boolean {
+    const { user } = this.getSession();
+    return user?.require_password_change;
+  }
+
+  /**
    * Re-fetches the user and creates a new session.
    *
    * @returns {Promise<R>|Promise<R|unknown>|Promise<void>|*}

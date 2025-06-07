@@ -7,6 +7,7 @@ import AuthenticatedRoute from './components/AuthenticatedRoute';
 import Layout from './components/Layout';
 import Login from './pages/Login';
 import Logout from './pages/Logout';
+import PasswordReset from './pages/PasswordReset';
 import Project from './pages/Project';
 import ProjectContextProvider from './components/ProjectContextProvider';
 import ProjectEdit from './pages/ProjectEdit';
@@ -184,6 +185,10 @@ const App: ComponentType<any> = useDragDrop(() => (
             </Route>
           </Route>
         </Route>
+        <Route
+          path='password_reset'
+          element={<PasswordReset />}
+        />
       </Route>
     </Routes>
   </Router>

@@ -4,15 +4,18 @@ import { ItemList, ItemViews } from '@performant-software/semantic-components';
 import React, { type AbstractComponent, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IoSearchOutline } from 'react-icons/io5';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 import PermissionsService from '../services/Permissions';
 import ProjectDescription from '../components/ProjectDescription';
 import ProjectsService from '../services/Projects';
 
 const Projects: AbstractComponent<any> = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  const { saved } = location?.state || {};
 
   /**
    * Memo-izes the add button value based on the current user's permissions.
@@ -58,6 +61,7 @@ const Projects: AbstractComponent<any> = () => {
         </Icon>
       )}
       onLoad={(params) => ProjectsService.fetchAll(params)}
+      saved={saved}
       session={{
         key: 'projects',
         storage: localStorage

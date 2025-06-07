@@ -413,6 +413,17 @@
       "name": "Name"
     }
   },
+  "PasswordReset": {
+    "labels": {
+      "back": "Back"
+    },
+    "messages": {
+      "required": {
+        "content": "You must change your password to continue.",
+        "header": "Password Reset Required"
+      }
+    }
+  },
   "People": {
     "actions": {
       "merge": {
@@ -881,12 +892,14 @@
     "labels": {
       "email": "Email",
       "name": "Name",
+      "requirePasswordChange": "Require password change",
       "role": "Role"
     }
   },
   "UserMenu": {
     "labels": {
-      "logout": "Logout"
+      "logout": "Logout",
+      "resetPassword": "Reset password"
     }
   },
   "UserModal": {
@@ -943,6 +956,7 @@
     "columns": {
       "email": "Email",
       "name": "Name",
+      "passwordChange": "Password change",
       "role": "Role"
     }
   },

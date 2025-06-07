@@ -1,6 +1,6 @@
 // @flow
 
-import { ListTable } from '@performant-software/semantic-components';
+import { BooleanIcon, ListTable } from '@performant-software/semantic-components';
 import React, { type AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -49,6 +49,16 @@ const Users: AbstractComponent<any> = () => {
         label: t('Users.columns.role'),
         resolve: (user) => UserRoles.getRoleView(user.role),
         sortable: true
+      }, {
+        name: 'required_password_change',
+        label: t('Users.columns.passwordChange'),
+        render: (user) => (
+          <BooleanIcon
+            value={user.require_password_change}
+          />
+        ),
+        sortable: true,
+        hidden: true
       }]}
       onDelete={(user) => UsersService.delete(user)}
       onLoad={(params) => UsersService.fetchAll(params)}

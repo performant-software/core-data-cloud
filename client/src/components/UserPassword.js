@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Form, Message } from 'semantic-ui-react';
 
 type Props = EditContainerProps & {
+  autoFocus?: boolean,
   email: string
 };
 
@@ -19,6 +20,7 @@ const UserPassword = (props: Props) => {
         header={t('UserPassword.messages.password.header')}
       />
       <Form.Input
+        autoFocus={props.autoFocus}
         error={props.isError('password')}
         label={t('UserPassword.labels.password')}
         onChange={props.onTextInputChange.bind(this, 'password')}

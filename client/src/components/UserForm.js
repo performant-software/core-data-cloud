@@ -35,16 +35,25 @@ const UserForm: AbstractComponent<any> = (props: Props) => {
         value={props.item.email}
       />
       { PermissionsService.isAdmin() && (
-        <Form.Dropdown
-          error={props.isError('role')}
-          label={t('UserForm.labels.role')}
-          onChange={props.onTextInputChange.bind(this, 'role')}
-          options={UserRoles.getRoleOptions()}
-          required={props.isRequired('role')}
-          selection
-          selectOnBlur={false}
-          value={props.item.role}
-        />
+        <>
+          <Form.Dropdown
+            error={props.isError('role')}
+            label={t('UserForm.labels.role')}
+            onChange={props.onTextInputChange.bind(this, 'role')}
+            options={UserRoles.getRoleOptions()}
+            required={props.isRequired('role')}
+            selection
+            selectOnBlur={false}
+            value={props.item.role}
+          />
+          <Form.Checkbox
+            checked={props.item.require_password_change}
+            error={props.isError('require_password_change')}
+            label={t('UserForm.labels.requirePasswordChange')}
+            onChange={props.onCheckboxInputChange.bind(this, 'require_password_change')}
+            required={props.isRequired('require_password_change')}
+          />
+        </>
       )}
     </>
   );
