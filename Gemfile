@@ -30,6 +30,9 @@ gem 'jwt', '~> 2.4', '>= 2.4.1'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.18'
 
+# Transactional emails
+gem 'postmark-rails', '~> 0.22.1'
+
 # Resource API
 gem 'resource_api', git: 'https://github.com/performant-software/resource-api.git', tag: 'v0.5.12'
 

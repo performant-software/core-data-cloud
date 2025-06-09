@@ -937,8 +937,10 @@
   },
   "UserProjects": {
     "columns": {
+      "email": "Email",
       "project": "Project",
       "role": "Role",
+      "status": "Status",
       "user": "User"
     },
     "labels": {
@@ -952,9 +954,16 @@
       "member": "Member"
     }
   },
+  "UserStatus": {
+    "labels": {
+      "active": "Active",
+      "pending": "Pending"
+    }
+  },
   "Users": {
     "columns": {
       "email": "Email",
+      "lastSignIn": "Last sign in",
       "name": "Name",
       "passwordChange": "Password change",
       "role": "Role"

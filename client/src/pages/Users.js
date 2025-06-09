@@ -4,6 +4,7 @@ import { BooleanIcon, ListTable } from '@performant-software/semantic-components
 import React, { type AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Navigate, useNavigate } from 'react-router-dom';
+import DateTimeUtils from '../utils/DateTime';
 import PermissionsService from '../services/Permissions';
 import UserRoles from '../utils/UserRoles';
 import UsersService from '../services/Users';
@@ -48,6 +49,11 @@ const Users: AbstractComponent<any> = () => {
         name: 'role',
         label: t('Users.columns.role'),
         resolve: (user) => UserRoles.getRoleView(user.role),
+        sortable: true
+      }, {
+        name: 'last_sign_in_at',
+        label: t('Users.columns.lastSignIn'),
+        resolve: (user) => DateTimeUtils.getTimestamp(user.last_sign_in_at),
         sortable: true
       }, {
         name: 'required_password_change',

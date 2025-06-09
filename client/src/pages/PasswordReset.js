@@ -1,5 +1,5 @@
 import { SimpleEditPage, Toaster } from '@performant-software/semantic-components';
-import React, { type AbstractComponent, useMemo, useState } from 'react';
+import React, { type AbstractComponent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MessageHeader } from 'semantic-ui-react';
 import ItemHeader from '../components/ItemHeader';
@@ -15,19 +15,12 @@ const PasswordResetForm = (props) => {
   const { t } = useTranslation();
   const { user } = SessionService.getSession();
 
-  /**
-   * Memo-izes the "back" url based on whether the user is required to change their password.
-   *
-   * @type {string}
-   */
-  const url = useMemo(() => (SessionService.isPasswordChangeRequired() ? '/logout' : '/projects'), []);
-
   return (
     <>
       <ItemHeader
-        back={{
+        back={SessionService.isPasswordChangeRequired() ? undefined : {
           label: t('PasswordReset.labels.back'),
-          url
+          url: '/projects'
         }}
         name={user?.name}
       />

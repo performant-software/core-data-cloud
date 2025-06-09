@@ -6,6 +6,7 @@ export type User = {
   id: number,
   name: string,
   email: string,
+  last_sign_in_at: number,
   password: string,
   password_confirmation: string,
   require_password_change: boolean,

@@ -15,6 +15,7 @@ import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import UserEditMenu from '../components/UserEditMenu';
 import UserProjectRoles from '../utils/UserProjectRoles';
 import UserProjectsService from '../services/UserProjects';
+import UserStatus from '../components/UserStatus';
 import UsersService from '../services/Users';
 import useParams from '../hooks/ParsedParams';
 import Validation from '../utils/Validation';
@@ -96,19 +97,34 @@ const UserProjects: AbstractComponent<any> = () => {
         columns={[{
           name: 'core_data_connector_projects.name',
           label: t('UserProjects.columns.project'),
-          resolve: (userProject) => userProject?.project.name,
+          resolve: (userProject) => userProject?.project?.name,
           sortable: true,
           hidden: !!projectId
         }, {
           name: 'core_data_connector_users.name',
           label: t('UserProjects.columns.user'),
-          resolve: (userProject) => userProject?.user.name,
+          resolve: (userProject) => userProject?.user?.name,
+          sortable: true,
+          hidden: !!userId
+        }, {
+          name: 'core_data_connector_users.email',
+          label: t('UserProjects.columns.email'),
+          resolve: (userProject) => userProject?.user?.email,
           sortable: true,
           hidden: !!userId
         }, {
           name: 'core_data_connector_user_projects.role',
           label: t('UserProjects.columns.role'),
           resolve: (userProject) => UserProjectRoles.getRoleView(userProject.role),
+          sortable: true
+        }, {
+          name: 'core_data_connector_users.last_sign_in_at',
+          label: t('UserProjects.columns.status'),
+          render: (userProject) => (
+            <UserStatus
+              lastSignIn={userProject.user?.last_sign_in_at}
+            />
+          ),
           sortable: true
         }]}
         collectionName='user_projects'
