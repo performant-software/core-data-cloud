@@ -1,6 +1,7 @@
 import { SimpleEditPage, Toaster } from '@performant-software/semantic-components';
 import React, { type AbstractComponent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Navigate } from 'react-router-dom';
 import { MessageHeader } from 'semantic-ui-react';
 import ItemHeader from '../components/ItemHeader';
 import PermissionsService from '../services/Permissions';
@@ -14,6 +15,18 @@ const PasswordResetForm = (props) => {
 
   const { t } = useTranslation();
   const { user } = SessionService.getSession();
+
+  /**
+   * Navigate to the projects list if the current user does not have permissions to reset passwords.
+   */
+  if (!PermissionsService.canResetPassword()) {
+    return (
+      <Navigate
+        replace
+        to='/projects'
+      />
+    );
+  }
 
   return (
     <>

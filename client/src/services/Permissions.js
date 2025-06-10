@@ -156,6 +156,16 @@ class Permissions {
   }
 
   /**
+   * An admin user and a user who does not log in via SSO can change their password.
+   *
+   * @returns {boolean}
+   */
+  canResetPassword() {
+    const user = this.getUser();
+    return this.isAdmin() || !user.sso;
+  }
+
+  /**
    * Returns a reference to the currently logged in user.
    *
    * @returns {User}

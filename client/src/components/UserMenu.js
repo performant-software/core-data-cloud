@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import { Dropdown, Header, Icon } from 'semantic-ui-react';
+import PermissionsService from '../services/Permissions';
 import SessionService from '../services/Session';
 import styles from './UserMenu.module.css';
 import UserAvatar from './UserAvatar';
@@ -37,16 +38,18 @@ const UserMenu = () => {
       <Dropdown.Menu
         className={styles.menu}
       >
-        <Dropdown.Item
-          as={Link}
-          className={styles.item}
-          to='/password_reset'
-        >
-          <Icon>
-            <RiLockPasswordLine />
-          </Icon>
-          { t('UserMenu.labels.resetPassword') }
-        </Dropdown.Item>
+        { PermissionsService.canResetPassword() && (
+          <Dropdown.Item
+            as={Link}
+            className={styles.item}
+            to='/password_reset'
+          >
+            <Icon>
+              <RiLockPasswordLine />
+            </Icon>
+            { t('UserMenu.labels.resetPassword') }
+          </Dropdown.Item>
+        )}
         <Dropdown.Item
           as={Link}
           className={styles.item}
