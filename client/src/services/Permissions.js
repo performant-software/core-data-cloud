@@ -1,10 +1,12 @@
 // @flow
 
 import _ from 'underscore';
-import type { User as UserType } from '../types/User';
+import DateTimeUtils from '../utils/DateTime';
 import type { Ownable as OwnableType } from '../types/Ownable';
 import type { ProjectModel as ProjectModelType } from '../types/ProjectModel';
 import SessionService from './Session';
+import type { User as UserType } from '../types/User';
+import type { UserProject as UserProjectType } from '../types/UserProject';
 import UserProjectRoles from '../utils/UserProjectRoles';
 import UserRoles from '../utils/UserRoles';
 
@@ -119,6 +121,38 @@ class Permissions {
    */
   canImportData(): boolean {
     return this.isAdmin();
+  }
+
+  /**
+   * An admin user can always invite user projects. A non-admin user can invite user projects if they have
+   * permission to edit users in the project, the user has not yet logged in, and the user has not been invited in
+   * the last 24 hours.
+   *
+   * @param userProject
+   *
+   * @returns {boolean}
+   */
+  canInviteUserProject(userProject: UserProjectType): boolean {
+    // Admin users can always invite users
+    if (this.isAdmin()) {
+      return true;
+    }
+
+    // The current user must be able to edit users in the current project
+    if (!this.canEditUserProjects(userProject.project_id)) {
+      return false;
+    }
+
+    // The user cannot be invited if they have already signed in
+    if (userProject.user.last_sign_in_at) {
+      return false;
+    }
+
+    // The user cannot be invited more than once in 24 hours
+    const timeInHours = DateTimeUtils.getDurationInHours(userProject?.user?.last_invited_at);
+    const interval = parseInt(process.env.REACT_APP_POSTMARK_INTERVAL, 10);
+
+    return timeInHours > interval;
   }
 
   /**

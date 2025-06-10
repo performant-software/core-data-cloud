@@ -54,7 +54,14 @@ const Users: AbstractComponent<any> = () => {
         name: 'last_sign_in_at',
         label: t('Users.columns.lastSignIn'),
         resolve: (user) => DateTimeUtils.getTimestamp(user.last_sign_in_at),
-        sortable: true
+        sortable: true,
+        hidden: true
+      }, {
+        name: 'last_invited_at',
+        label: t('Users.columns.lastInvited'),
+        resolve: (user) => DateTimeUtils.getTimestamp(user.last_invited_at),
+        sortable: true,
+        hidden: true
       }, {
         name: 'required_password_change',
         label: t('Users.columns.passwordChange'),

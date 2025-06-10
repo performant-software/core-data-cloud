@@ -1,3 +1,21 @@
+// @flow
+
+const MS_TO_HOURS = 1000 * 60 * 60;
+
+/**
+ * Returns the duration (in hours) of the passed date string.
+ *
+ * @param value
+ *
+ * @returns {number}
+ */
+const getDurationInHours = (value: string) => {
+  const date = new Date(value);
+  const duration = Date.now() - date;
+
+  return duration / MS_TO_HOURS;
+};
+
 /**
  * Returns the formatted timestamp for the passed value.
  *
@@ -15,5 +33,6 @@ const getTimestamp = (value: number) => {
 };
 
 export default {
+  getDurationInHours,
   getTimestamp
 };

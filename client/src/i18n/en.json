@@ -936,6 +936,12 @@
     }
   },
   "UserProjects": {
+    "actions": {
+      "invite": {
+        "content": "Send an email invitation to the user",
+        "header": "Invite User"
+      }
+    },
     "columns": {
       "email": "Email",
       "project": "Project",
@@ -945,6 +951,13 @@
     },
     "labels": {
       "allUsers": "All Users"
+    },
+    "messages": {
+      "invitation": {
+        "content": "Your invitation was successfully sent to {{email}}.",
+        "error": "Error Sending Invitation",
+        "header": "Invitation Sent!"
+      }
     }
   },
   "UserRoles": {
@@ -963,6 +976,7 @@
   "Users": {
     "columns": {
       "email": "Email",
+      "lastInvited": "Last invited",
       "lastSignIn": "Last sign in",
       "name": "Name",
       "passwordChange": "Password change",
