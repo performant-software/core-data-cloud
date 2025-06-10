@@ -929,6 +929,7 @@
     "columns": {
       "project": "Project",
       "role": "Role",
+      "type": "Type",
       "user": "User"
     },
     "labels": {
