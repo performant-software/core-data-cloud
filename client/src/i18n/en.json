@@ -878,6 +878,12 @@
     }
   },
   "User": {
+    "errors": {
+      "password": {
+        "format": "The password you entered does not meet the requirements",
+        "match": "The passwords you entered do not match"
+      }
+    },
     "labels": {
       "allUsers": "All Users"
     }
@@ -915,8 +921,12 @@
     },
     "messages": {
       "password": {
-        "content": "Passwords must be at least eight (8) characters.",
-        "header": "Password Policy"
+        "header": "Password Policy",
+        "length": "Passwords must be at least eight (8) characters",
+        "lower": "Passwords must contain at least one lowercase character",
+        "number": "Passwords must contain at least one number",
+        "symbol": "Passwords must contain at least one symbol",
+        "upper": "Passwords must contain at least one uppercase character"
       }
     }
   },

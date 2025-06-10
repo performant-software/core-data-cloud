@@ -15,10 +15,18 @@ const UserPassword = (props: Props) => {
 
   return (
     <>
-      <Message
-        content={t('UserPassword.messages.password.content')}
-        header={t('UserPassword.messages.password.header')}
-      />
+      <Message>
+        <Message.Header
+          content={t('UserPassword.messages.password.header')}
+        />
+        <Message.List>
+          <Message.Item>{ t('UserPassword.messages.password.length') }</Message.Item>
+          <Message.Item>{ t('UserPassword.messages.password.number') }</Message.Item>
+          <Message.Item>{ t('UserPassword.messages.password.lower') }</Message.Item>
+          <Message.Item>{ t('UserPassword.messages.password.upper') }</Message.Item>
+          <Message.Item>{ t('UserPassword.messages.password.symbol') }</Message.Item>
+        </Message.List>
+      </Message>
       <Form.Input
         autoFocus={props.autoFocus}
         error={props.isError('password')}

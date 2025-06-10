@@ -8,6 +8,7 @@ import PermissionsService from '../services/Permissions';
 import SessionService from '../services/Session';
 import UserPassword from '../components/UserPassword';
 import UsersService from '../services/Users';
+import UserUtils from '../utils/User';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
 
 const PasswordResetForm = (props) => {
@@ -79,7 +80,8 @@ const PasswordReset: AbstractComponent<any> = withReactRouterEditPage(PasswordRe
       .save({ ...user, id })
       .then(({ data }) => data.user);
   },
-  required: ['password', 'password_confirmation']
+  required: ['password', 'password_confirmation'],
+  validate: UserUtils.validatePassword.bind(this)
 });
 
 export default PasswordReset;
