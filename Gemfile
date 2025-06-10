@@ -31,8 +31,7 @@ gem 'jwt', '~> 2.4', '>= 2.4.1'
 gem 'bcrypt', '~> 3.1.18'
 
 # Resource API
-#gem 'resource_api', git: 'https://github.com/performant-software/resource-api.git', tag: 'v0.5.12'
-gem 'resource_api', path: '../resource-api'
+gem 'resource_api', git: 'https://github.com/performant-software/resource-api.git', tag: 'v0.5.13'
 
 # Authentication
 gem 'jwt_auth', git: 'https://github.com/performant-software/jwt-auth.git', tag: 'v0.1.2'

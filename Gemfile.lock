@@ -17,6 +17,16 @@ GIT
       rails (~> 7.0.7)
 
 GIT
+  remote: https://github.com/performant-software/resource-api.git
+  revision: c5c4ac16d490cc4f5013c39ee08e9422408d3b74
+  tag: v0.5.13
+  specs:
+    resource_api (0.1.0)
+      pagy (~> 5.10)
+      pundit (~> 2.3.1)
+      rails (>= 7.0, < 8)
+
+GIT
   remote: https://github.com/performant-software/triple-eye-effable.git
   revision: e36a09bb6b182149719cb1e7c3aa8c785886093c
   tag: v0.2.1
@@ -53,14 +63,6 @@ PATH
       typesense (~> 0.14)
       typhoeus (~> 1.4)
       user_defined_fields
-
-PATH
-  remote: ../resource-api
-  specs:
-    resource_api (0.1.0)
-      pagy (~> 5.10)
-      pundit (~> 2.3.1)
-      rails (>= 7.0, < 8)
 
 GEM
   remote: https://rubygems.org/
