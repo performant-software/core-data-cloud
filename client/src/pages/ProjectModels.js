@@ -3,10 +3,11 @@
 import { ListTable } from '@performant-software/semantic-components';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PermissionsService from '../services/Permissions';
 import ProjectModelsService from '../services/ProjectModels';
 import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
+import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import useParams from '../hooks/ParsedParams';
 
 const ProjectModels = () => {
@@ -18,12 +19,7 @@ const ProjectModels = () => {
    * Return to the projects list if the user does not have permissions to edit this project.
    */
   if (!PermissionsService.canEditProjectSettings(projectId)) {
-    return (
-      <Navigate
-        replace
-        to='/projects'
-      />
-    );
+    return <UnauthorizedRedirect />;
   }
 
   return (

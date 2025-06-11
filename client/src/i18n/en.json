@@ -869,6 +869,14 @@
       "name": "Name"
     }
   },
+  "UnauthorizedToaster": {
+    "messages": {
+      "redirect": {
+        "content": "You do not have permission to access that resource.",
+        "header": "Unable to access resource"
+      }
+    }
+  },
   "User": {
     "labels": {
       "allUsers": "All Users"

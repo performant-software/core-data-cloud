@@ -12,7 +12,6 @@ import {
 } from 'react-icons/bs';
 import { FaCode } from 'react-icons/fa';
 import { SlGraph } from 'react-icons/sl';
-import { Navigate } from 'react-router-dom';
 import {
   Button,
   Container,
@@ -32,6 +31,7 @@ import ProjectContext from '../context/Project';
 import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import ProjectsService from '../services/Projects';
 import styles from './ProjectImportExport.module.css';
+import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import useParams from '../hooks/ParsedParams';
 
 const ProjectImportExport = () => {
@@ -187,12 +187,7 @@ const ProjectImportExport = () => {
    * Return to the projects list if the user does not have permissions to edit this project.
    */
   if (!PermissionsService.canEditProjectSettings(projectId)) {
-    return (
-      <Navigate
-        replace
-        to='/projects'
-      />
-    );
+    return <UnauthorizedRedirect />;
   }
 
   return (

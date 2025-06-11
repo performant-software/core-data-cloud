@@ -1,7 +1,6 @@
 // @flow
 
 import React, { useContext } from 'react';
-import { Navigate } from 'react-router-dom';
 import Event from '../pages/Event';
 import Instance from '../pages/Instance';
 import Item from '../pages/Item';
@@ -13,6 +12,7 @@ import Place from '../pages/Place';
 import ProjectContext from '../context/Project';
 import TaxonomyItem from '../pages/TaxonomyItem';
 import { Types } from '../utils/ProjectModels';
+import UnauthorizedRedirect from './UnauthorizedRedirect';
 import useParams from '../hooks/ParsedParams';
 import Work from '../pages/Work';
 
@@ -24,12 +24,7 @@ const ProjectModelFactory = () => {
    * Return to the projects list if the user does not have permissions to edit this project.
    */
   if (!PermissionsService.canEditProjectData(projectId)) {
-    return (
-      <Navigate
-        replace
-        to='/projects'
-      />
-    );
+    return <UnauthorizedRedirect />;
   }
 
   const className = projectModel?.model_class_view;

@@ -8,10 +8,11 @@ import React, {
   type AbstractComponent
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ItemHeader from '../components/ItemHeader';
 import PermissionsService from '../services/Permissions';
 import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
+import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import UserEditMenu from '../components/UserEditMenu';
 import UserProjectRoles from '../utils/UserProjectRoles';
 import UserProjectsService from '../services/UserProjects';
@@ -90,8 +91,7 @@ const UserProjects: AbstractComponent<any> = () => {
    */
   if (projectId && !PermissionsService.canEditUserProjects(projectId)) {
     return (
-      <Navigate
-        replace
+      <UnauthorizedRedirect
         to={`/projects/${projectId}/edit`}
       />
     );
@@ -101,12 +101,7 @@ const UserProjects: AbstractComponent<any> = () => {
    * Return to the projects list if the user does not have permissions to edit users.
    */
   if (userId && !PermissionsService.canEditUsers()) {
-    return (
-      <Navigate
-        replace
-        to='/projects'
-      />
-    );
+    return <UnauthorizedRedirect />;
   }
 
   return (

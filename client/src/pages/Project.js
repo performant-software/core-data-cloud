@@ -6,7 +6,7 @@ import cx from 'classnames';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IoSearchOutline } from 'react-icons/io5';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   Button,
   Confirm,
@@ -26,6 +26,7 @@ import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import ProjectsService from '../services/Projects';
 import { SlLock } from 'react-icons/sl';
 import styles from './Project.module.css';
+import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import useParams from '../hooks/ParsedParams';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
 
@@ -83,12 +84,7 @@ const ProjectForm = (props: Props) => {
    * Return to the projects list if the user does not have permissions to edit this project.
    */
   if (!PermissionsService.canEditProjectSettings(projectId)) {
-    return (
-      <Navigate
-        replace
-        to='/projects'
-      />
-    );
+    return <UnauthorizedRedirect />;
   }
 
   return (
