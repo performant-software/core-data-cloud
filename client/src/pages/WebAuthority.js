@@ -6,11 +6,13 @@ import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
 import AtomForm from '../components/AtomForm';
-import GeonamesForm from "../components/GeonamesForm";
 import DplaForm from '../components/DplaForm';
+import GeonamesForm from '../components/GeonamesForm';
 import ItemLayout from '../components/ItemLayout';
 import ItemHeader from '../components/ItemHeader';
+import PermissionsService from '../services/Permissions';
 import styles from './ProjectModel.module.css';
+import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import useParams from '../hooks/ParsedParams';
 import Validation from '../utils/Validation';
 import type { WebAuthority as WebAuthorityType } from '../types/WebAuthority';
@@ -55,6 +57,10 @@ const WebAuthorityPage = (props: Props) => {
       props.onSetState({ project_id: projectId });
     }
   }, []);
+
+  if (!PermissionsService.canEditProjectSettings(projectId)) {
+    return <UnauthorizedRedirect />;
+  }
 
   return (
     <ItemLayout>

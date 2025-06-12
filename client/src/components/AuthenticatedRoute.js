@@ -3,6 +3,7 @@
 import React, { type ComponentType, type Node } from 'react';
 import { Navigate } from 'react-router-dom';
 import AuthenticationService from '../services/Authentication';
+import UnauthorizedToaster from './UnauthorizedToaster';
 
 type Props = {
   children: Array<Node>
@@ -13,7 +14,12 @@ const AuthenticatedRoute: ComponentType<any> = ({ children }: Props) => {
     return <Navigate to='/' />;
   }
 
-  return children;
+  return (
+    <>
+      { children }
+      <UnauthorizedToaster />
+    </>
+  );
 };
 
 export default AuthenticatedRoute;

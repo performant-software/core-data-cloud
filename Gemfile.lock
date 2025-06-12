@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: 13e37c91306b8766fbde8fb168d4512b94a8316a
-  tag: v0.1.90
+  revision: 2eec3d31fdc3ec6092ddf9c86562b7fe968d22bd
+  tag: v0.1.91
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 8.0)
@@ -9,6 +9,7 @@ GIT
       fuzzy_dates
       jwt (~> 2.7.1)
       jwt_auth
+      postmark-rails (~> 0.22.1)
       rack-cors (~> 2.0.1)
       rails (>= 6.0.3.2, < 8)
       resource_api
@@ -40,8 +41,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/resource-api.git
-  revision: dd731cd55db4c6eaed503c35b2e67ad3b87d7d97
-  tag: v0.5.12
+  revision: c5c4ac16d490cc4f5013c39ee08e9422408d3b74
+  tag: v0.5.13
   specs:
     resource_api (0.1.0)
       pagy (~> 5.10)
@@ -170,6 +171,7 @@ GEM
     io-console (0.6.0)
     irb (1.7.4)
       reline (>= 0.3.6)
+    json (2.12.2)
     jwt (2.7.1)
     loofah (2.21.3)
       crass (~> 1.0.2)
@@ -213,6 +215,11 @@ GEM
     pagy (5.10.1)
       activesupport
     pg (1.5.3)
+    postmark (1.25.1)
+      json
+    postmark-rails (0.22.1)
+      actionmailer (>= 3.0.0)
+      postmark (>= 1.21.3, < 2.0)
     puma (5.6.7)
       nio4r (~> 2.0)
     pundit (2.3.1)
