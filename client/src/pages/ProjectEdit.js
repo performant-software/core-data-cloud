@@ -1,13 +1,13 @@
 // @flow
 
 import React, { useContext } from 'react';
-import ProjectContext from '../context/Project';
 import { Navigate } from 'react-router-dom';
 import _ from 'underscore';
+import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
 
 const ProjectEdit = () => {
-  const { loadedProjectModels, projectModels, setReloadProjectModels } = useContext(ProjectContext);
+  const { loadedProjectModels, projectModels } = useContext(ProjectContext);
   const { projectId } = useParams();
 
   /**
@@ -19,6 +19,9 @@ const ProjectEdit = () => {
     return null;
   }
 
+  /**
+   * If the models have been loaded, but none exist, navigate to the project edit page.
+   */
   if (loadedProjectModels && !projectModel) {
     return (
       <Navigate
@@ -27,11 +30,6 @@ const ProjectEdit = () => {
       />
     );
   }
-
-  /**
-   * Reload the list of project models (in case it was modified in settings) and navigate to the edit view.
-   */
-  setReloadProjectModels(true);
 
   return (
     <Navigate
