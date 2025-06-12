@@ -2,7 +2,12 @@
 
 import { AssociatedDropdown, SimpleEditPage } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
-import React, { useEffect, useMemo, type AbstractComponent } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  type AbstractComponent
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
 import ItemHeader from '../components/ItemHeader';
@@ -43,6 +48,20 @@ const UserProjectForm = (props: Props) => {
    * @type {boolean}
    */
   const isOwner = useMemo(() => PermissionsService.isOwner(props.item.project_id), [props.item.project_id]);
+
+  /**
+   * Callback fired when the project search is executed.
+   *
+   * @type {function(*): Promise<AxiosResponse<T>>}
+   */
+  const onProjectSearch = useCallback((search) => ProjectsService.fetchAll({ search }), []);
+
+  /**
+   * Callback fired when the user search is executed.
+   *
+   * @type {function(*): Promise<AxiosResponse<T>>}
+   */
+  const onUserSearch = useCallback((search) => UsersService.fetchAll({ search }), []);
 
   /*
    * For a new record, set the foreign key ID based on the route parameters.
@@ -112,7 +131,7 @@ const UserProjectForm = (props: Props) => {
               >
                 <AssociatedDropdown
                   collectionName='projects'
-                  onSearch={(search) => ProjectsService.fetchAll({ search })}
+                  onSearch={onProjectSearch}
                   onSelection={props.onAssociationInputChange.bind(this, 'project_id', 'project')}
                   renderOption={(project) => Project.toDropdown(project)}
                   searchQuery={props.item.project?.name}
@@ -136,7 +155,7 @@ const UserProjectForm = (props: Props) => {
                         .then(({ data }) => data.user)
                     )
                   }}
-                  onSearch={(search) => UsersService.fetchAll({ search })}
+                  onSearch={onUserSearch}
                   onSelection={props.onAssociationInputChange.bind(this, 'user_id', 'user')}
                   renderOption={(user) => User.toDropdown(user)}
                   searchQuery={props.item.user?.name}
