@@ -1,4 +1,27 @@
 GIT
+  remote: https://github.com/performant-software/core-data-connector.git
+  revision: 2eec3d31fdc3ec6092ddf9c86562b7fe968d22bd
+  tag: v0.1.91
+  specs:
+    core_data_connector (0.1.0)
+      activerecord-postgis-adapter (~> 8.0)
+      faker
+      fuzzy_dates
+      jwt (~> 2.7.1)
+      jwt_auth
+      postmark-rails (~> 0.22.1)
+      rack-cors (~> 2.0.1)
+      rails (>= 6.0.3.2, < 8)
+      resource_api
+      rexml (~> 3.2)
+      rgeo-geojson (~> 2.1)
+      rubyzip (~> 2.3.2)
+      triple_eye_effable
+      typesense (~> 0.14)
+      typhoeus (~> 1.4)
+      user_defined_fields
+
+GIT
   remote: https://github.com/performant-software/fuzzy-dates.git
   revision: fa3f237882f9c89888f82af41f6fe2b8ff2281a3
   tag: v0.1.0
@@ -43,26 +66,6 @@ GIT
     user_defined_fields (0.1.0)
       rails (>= 6.0.3.2, < 8)
       resource_api
-
-PATH
-  remote: ../core-data-connector
-  specs:
-    core_data_connector (0.1.0)
-      activerecord-postgis-adapter (~> 8.0)
-      faker
-      fuzzy_dates
-      jwt (~> 2.7.1)
-      jwt_auth
-      rack-cors (~> 2.0.1)
-      rails (>= 6.0.3.2, < 8)
-      resource_api
-      rexml (~> 3.2)
-      rgeo-geojson (~> 2.1)
-      rubyzip (~> 2.3.2)
-      triple_eye_effable
-      typesense (~> 0.14)
-      typhoeus (~> 1.4)
-      user_defined_fields
 
 GEM
   remote: https://rubygems.org/
@@ -168,6 +171,7 @@ GEM
     io-console (0.6.0)
     irb (1.7.4)
       reline (>= 0.3.6)
+    json (2.12.2)
     jwt (2.7.1)
     loofah (2.21.3)
       crass (~> 1.0.2)
@@ -211,6 +215,11 @@ GEM
     pagy (5.10.1)
       activesupport
     pg (1.5.3)
+    postmark (1.25.1)
+      json
+    postmark-rails (0.22.1)
+      actionmailer (>= 3.0.0)
+      postmark (>= 1.21.3, < 2.0)
     puma (5.6.7)
       nio4r (~> 2.0)
     pundit (2.3.1)
