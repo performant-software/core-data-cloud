@@ -302,6 +302,7 @@ DEPENDENCIES
   jwt_auth!
   pagy (~> 5.10)
   pg (~> 1.5.3)
+  postmark-rails (~> 0.22.1)
   puma (~> 5.0)
   rack-cors (~> 2.0.1)
   rails (~> 7.0.7)

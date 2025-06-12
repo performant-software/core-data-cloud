@@ -68,7 +68,8 @@ const User: AbstractComponent<any> = withReactRouterEditPage(UserFormComponent, 
       .save(user)
       .then(({ data }) => data.user)
   ),
-  required: ['name', 'email', 'role']
+  required: ['name', 'email', 'role'],
+  validate: UserUtils.validatePassword.bind(this)
 });
 
 export default User;

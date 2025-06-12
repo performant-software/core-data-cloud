@@ -39,6 +39,17 @@ class UserProjects extends BaseService {
       .save(userProject)
       .then((response) => SessionService.reset().then(() => response));
   }
+
+  /**
+   * Sends an invitation email to the user of the passed user project.
+   *
+   * @param userProject
+   *
+   * @returns {*}
+   */
+  sendInvitation(userProject: UserProjectType): Promise<any> {
+    return this.getAxios().post(`${this.getBaseUrl()}/${userProject.id}/invite`);
+  }
 }
 
 const UserProjectsService: UserProjects = new UserProjects();

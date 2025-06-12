@@ -86,8 +86,8 @@ textarea {
   min-height: unset;
 }
 
-.list > .header > .ui.grid > .row > .column > .ui.menu .ui.button.dropdown:focus,
-.list > .header > .ui.grid > .row > .column > .ui.menu .ui.button.dropdown:hover {
+.list > .header > .ui.grid > .row > .column > .ui.menu .ui.button.basic.dropdown:focus,
+.list > .header > .ui.grid > .row > .column > .ui.menu .ui.button.basic.dropdown:hover {
   background-color: transparent !important;
 }
 
