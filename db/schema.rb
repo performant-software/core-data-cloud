@@ -224,6 +224,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_06_09_160515) do
     t.string "faircopy_cloud_url"
     t.integer "faircopy_cloud_project_model_id"
     t.string "map_library_url"
+    t.boolean "archived", default: false, null: false
   end
 
   create_table "core_data_connector_record_merges", force: :cascade do |t|

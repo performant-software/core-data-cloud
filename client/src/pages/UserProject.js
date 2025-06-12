@@ -4,13 +4,13 @@ import { AssociatedDropdown, SimpleEditPage } from '@performant-software/semanti
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import React, { useEffect, useMemo, type AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Navigate } from 'react-router-dom';
 import { Form } from 'semantic-ui-react';
 import ItemHeader from '../components/ItemHeader';
 import ItemLayout from '../components/ItemLayout';
 import PermissionsService from '../services/Permissions';
 import Project from '../transforms/Project';
 import ProjectsService from '../services/Projects';
+import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import User from '../transforms/User';
 import type { UserProject as UserProjectType } from '../types/UserProject';
 import UserForm from '../components/UserForm';
@@ -57,22 +57,22 @@ const UserProjectForm = (props: Props) => {
     }
   }, []);
 
+  /**
+   * Redirect to the project edit page if we're in a project context and the user cannot edit user projects.
+   */
   if (params.projectId && !PermissionsService.canEditUserProjects(params.projectId)) {
     return (
-      <Navigate
-        replace
+      <UnauthorizedRedirect
         to={`/projects/${params.projectId}/edit`}
       />
     );
   }
 
+  /**
+   * Redirect to the projects page if we're in a user context and the users cannot edit users.
+   */
   if (params.userId && !PermissionsService.canEditUsers()) {
-    return (
-      <Navigate
-        replace
-        to='/projects'
-      />
-    );
+    return <UnauthorizedRedirect />;
   }
 
   return (

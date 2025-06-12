@@ -4,6 +4,7 @@ import React, { type ComponentType, type Node, useCallback } from 'react';
 import { matchPath, Navigate, useLocation } from 'react-router-dom';
 import AuthenticationService from '../services/Authentication';
 import SessionService from '../services/Session';
+import UnauthorizedToaster from './UnauthorizedToaster';
 
 type Props = {
   children: Array<Node>
@@ -33,7 +34,12 @@ const AuthenticatedRoute: ComponentType<any> = ({ children }: Props) => {
     return <Navigate to='/password_reset' />;
   }
 
-  return children;
+  return (
+    <>
+      { children }
+      <UnauthorizedToaster />
+    </>
+  );
 };
 
 export default AuthenticatedRoute;

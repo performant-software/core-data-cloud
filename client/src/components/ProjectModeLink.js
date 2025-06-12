@@ -16,7 +16,7 @@ const ProjectModeLink = () => {
   const { projectId } = useParams();
   const { t } = useTranslation();
 
-  if (!(projectId && PermissionsService.canEditProject(projectId))) {
+  if (!(projectId && PermissionsService.canEditProjectSettings(projectId))) {
     return null;
   }
 
