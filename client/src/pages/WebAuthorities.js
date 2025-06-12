@@ -5,6 +5,8 @@ import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import { ListTable } from '@performant-software/semantic-components';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import PermissionsService from '../services/Permissions';
+import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import useParams from '../hooks/ParsedParams';
 import WebAuthoritiesService from '../services/WebAuthorities';
 import WebAuthorityUtils from '../utils/WebAuthorities';
@@ -13,6 +15,13 @@ const WebAuthorities = () => {
   const { projectId } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  /**
+   * Return to the projects list if the user does not have permissions to edit this project.
+   */
+  if (!PermissionsService.canEditProjectSettings(projectId)) {
+    return <UnauthorizedRedirect />;
+  }
 
   return (
     <>

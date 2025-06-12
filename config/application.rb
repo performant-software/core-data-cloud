@@ -23,5 +23,9 @@ module RailsReactTemplate
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Configure Postmark for transactional emails
+    config.action_mailer.delivery_method = :postmark
+    config.action_mailer.postmark_settings = { :api_token => ENV['POSTMARK_API_TOKEN'] }
   end
 end

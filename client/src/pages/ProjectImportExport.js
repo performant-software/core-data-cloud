@@ -31,6 +31,7 @@ import ProjectContext from '../context/Project';
 import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import ProjectsService from '../services/Projects';
 import styles from './ProjectImportExport.module.css';
+import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import useParams from '../hooks/ParsedParams';
 
 const ProjectImportExport = () => {
@@ -181,6 +182,13 @@ const ProjectImportExport = () => {
       .catch(onImportError)
       .finally(() => setImportData(false));
   }, [onImportError, projectId]);
+
+  /**
+   * Return to the projects list if the user does not have permissions to edit this project.
+   */
+  if (!PermissionsService.canEditProjectSettings(projectId)) {
+    return <UnauthorizedRedirect />;
+  }
 
   return (
     <Container

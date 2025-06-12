@@ -413,6 +413,17 @@
       "name": "Name"
     }
   },
+  "PasswordReset": {
+    "labels": {
+      "back": "Back"
+    },
+    "messages": {
+      "required": {
+        "content": "You must change your password to continue.",
+        "header": "Password Reset Required"
+      }
+    }
+  },
   "People": {
     "actions": {
       "merge": {
@@ -560,12 +571,15 @@
       "danger": "Danger Zone",
       "description": "Description",
       "name": "Name",
-      "sharing": "Sharing",
       "fairCopyCloudUrl": "FairCopy.cloud URL",
       "faircopyCloudConnectedModel": "FairCopy.cloud connected model",
       "mapLibraryUrl": "Map library URL"
     },
     "messages": {
+      "archive": {
+        "content": "Project members will no longer be able to access project data",
+        "header": "Archive Project"
+      },
       "clear": {
         "content": "Do you really want to clear all data from this project? This action cannot be undone.",
         "header": "Are you sure?"
@@ -866,7 +880,21 @@
       "name": "Name"
     }
   },
+  "UnauthorizedToaster": {
+    "messages": {
+      "redirect": {
+        "content": "You do not have permission to access that resource.",
+        "header": "Unable to access resource"
+      }
+    }
+  },
   "User": {
+    "errors": {
+      "password": {
+        "format": "The password you entered does not meet the requirements",
+        "match": "The passwords you entered do not match"
+      }
+    },
     "labels": {
       "allUsers": "All Users"
     }
@@ -881,12 +909,14 @@
     "labels": {
       "email": "Email",
       "name": "Name",
+      "requirePasswordChange": "Require password change",
       "role": "Role"
     }
   },
   "UserMenu": {
     "labels": {
-      "logout": "Logout"
+      "logout": "Logout",
+      "resetPassword": "Reset password"
     }
   },
   "UserModal": {
@@ -902,8 +932,12 @@
     },
     "messages": {
       "password": {
-        "content": "Passwords must be at least eight (8) characters.",
-        "header": "Password Policy"
+        "header": "Password Policy",
+        "length": "Passwords must be at least eight (8) characters",
+        "lower": "Passwords must contain at least one lowercase character",
+        "number": "Passwords must contain at least one number",
+        "symbol": "Passwords must contain at least one symbol",
+        "upper": "Passwords must contain at least one uppercase character"
       }
     }
   },
@@ -923,13 +957,29 @@
     }
   },
   "UserProjects": {
+    "actions": {
+      "invite": {
+        "content": "Send an email invitation to the user",
+        "header": "Invite User"
+      }
+    },
     "columns": {
+      "email": "Email",
       "project": "Project",
       "role": "Role",
+      "status": "Status",
+      "type": "Type",
       "user": "User"
     },
     "labels": {
       "allUsers": "All Users"
+    },
+    "messages": {
+      "invitation": {
+        "content": "Your invitation was successfully sent to {{email}}.",
+        "error": "Error Sending Invitation",
+        "header": "Invitation Sent!"
+      }
     }
   },
   "UserRoles": {
@@ -939,10 +989,19 @@
       "member": "Member"
     }
   },
+  "UserStatus": {
+    "labels": {
+      "active": "Active",
+      "pending": "Pending"
+    }
+  },
   "Users": {
     "columns": {
       "email": "Email",
+      "lastInvited": "Last invited",
+      "lastSignIn": "Last sign in",
       "name": "Name",
+      "passwordChange": "Password change",
       "role": "Role"
     }
   },

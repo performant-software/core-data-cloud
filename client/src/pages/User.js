@@ -3,9 +3,9 @@
 import { SimpleEditPage } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import React, { type AbstractComponent } from 'react';
-import { Navigate } from 'react-router-dom';
 import ItemHeader from '../components/ItemHeader';
 import PermissionsService from '../services/Permissions';
+import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import { type User as UserType } from '../types/User';
 import UserEditMenu from '../components/UserEditMenu';
 import UserForm from '../components/UserForm';
@@ -23,12 +23,7 @@ const UserFormComponent = (props: Props) => {
   const { t } = useTranslation();
 
   if (!PermissionsService.canEditUsers()) {
-    return (
-      <Navigate
-        replace
-        to='/projects'
-      />
-    );
+    return <UnauthorizedRedirect />;
   }
 
   return (
@@ -73,7 +68,8 @@ const User: AbstractComponent<any> = withReactRouterEditPage(UserFormComponent, 
       .save(user)
       .then(({ data }) => data.user)
   ),
-  required: ['name', 'email', 'role']
+  required: ['name', 'email', 'role'],
+  validate: UserUtils.validatePassword.bind(this)
 });
 
 export default User;

@@ -21,7 +21,7 @@ const ProjectModeLink = () => {
   const { t } = useTranslation();
 
   // Hide the link if the user does not have permissions to edit the project settings
-  if (!(projectId && PermissionsService.canEditProject(projectId))) {
+  if (!(projectId && PermissionsService.canEditProjectSettings(projectId))) {
     return null;
   }
 

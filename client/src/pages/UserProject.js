@@ -2,25 +2,27 @@
 
 import { AssociatedDropdown, SimpleEditPage } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
-import React, { useEffect, useMemo, type AbstractComponent, useCallback } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  type AbstractComponent
+} from 'react';
 import { useTranslation } from 'react-i18next';
-import { Navigate } from 'react-router-dom';
 import { Form } from 'semantic-ui-react';
 import ItemHeader from '../components/ItemHeader';
 import ItemLayout from '../components/ItemLayout';
 import PermissionsService from '../services/Permissions';
 import Project from '../transforms/Project';
 import ProjectsService from '../services/Projects';
+import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import User from '../transforms/User';
 import type { UserProject as UserProjectType } from '../types/UserProject';
 import UserForm from '../components/UserForm';
 import UserModal from '../components/UserModal';
-import UserPassword from '../components/UserPassword';
 import UserProjectRoles from '../utils/UserProjectRoles';
 import UserProjectsService from '../services/UserProjects';
-import UserRoles from '../utils/UserRoles';
 import UsersService from '../services/Users';
-import UserUtils from '../utils/User';
 import useParams from '../hooks/ParsedParams';
 import Validation from '../utils/Validation';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
@@ -46,30 +48,6 @@ const UserProjectForm = (props: Props) => {
    * @type {boolean}
    */
   const isOwner = useMemo(() => PermissionsService.isOwner(props.item.project_id), [props.item.project_id]);
-
-  /**
-   * Memo-izes if the password is editable for the current user.
-   */
-  const isPasswordEditable = useMemo(() => {
-    // Passwords for single sign on users cannot be changed
-    if (UserUtils.isSingleSignOn(props.item.user?.email)) {
-      return false;
-    }
-
-    let value = false;
-
-    // Users with edit permissions on users can change a password
-    if (PermissionsService.canEditUsers()) {
-      value = true;
-    }
-
-    // Project owners can change a password for guest users
-    if (isOwner && (isNew || UserRoles.isGuest(props.item.user))) {
-      value = true;
-    }
-
-    return value;
-  }, [isNew, isOwner, props.item.user]);
 
   /**
    * Callback fired when the project search is executed.
@@ -98,22 +76,22 @@ const UserProjectForm = (props: Props) => {
     }
   }, []);
 
+  /**
+   * Redirect to the project edit page if we're in a project context and the user cannot edit user projects.
+   */
   if (params.projectId && !PermissionsService.canEditUserProjects(params.projectId)) {
     return (
-      <Navigate
-        replace
+      <UnauthorizedRedirect
         to={`/projects/${params.projectId}/edit`}
       />
     );
   }
 
+  /**
+   * Redirect to the projects page if we're in a user context and the users cannot edit users.
+   */
   if (params.userId && !PermissionsService.canEditUsers()) {
-    return (
-      <Navigate
-        replace
-        to='/projects'
-      />
-    );
+    return <UnauthorizedRedirect />;
   }
 
   return (
@@ -200,11 +178,6 @@ const UserProjectForm = (props: Props) => {
               selectOnBlur={false}
               value={props.item.role}
             />
-            { isPasswordEditable && (
-              <UserPassword
-                {...props}
-              />
-            )}
           </SimpleEditPage.Tab>
         </SimpleEditPage>
       </ItemLayout.Content>

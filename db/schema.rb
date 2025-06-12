@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_06_03_111812) do
+ActiveRecord::Schema[7.0].define(version: 2025_06_09_160515) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -224,6 +224,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_06_03_111812) do
     t.string "faircopy_cloud_url"
     t.integer "faircopy_cloud_project_model_id"
     t.string "map_library_url"
+    t.boolean "archived", default: false, null: false
   end
 
   create_table "core_data_connector_record_merges", force: :cascade do |t|
@@ -296,6 +297,9 @@ ActiveRecord::Schema[7.0].define(version: 2025_06_03_111812) do
     t.datetime "updated_at", null: false
     t.uuid "sso_id"
     t.string "role"
+    t.boolean "require_password_change", default: false, null: false
+    t.datetime "last_sign_in_at", precision: nil
+    t.datetime "last_invited_at", precision: nil
   end
 
   create_table "core_data_connector_web_authorities", force: :cascade do |t|

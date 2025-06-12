@@ -7,3 +7,8 @@
 .userMenu.ui.dropdown > .ui.header {
   margin: 0rem 0rem 0rem 1rem;
 }
+
+.userMenu.ui.dropdown > .menu > .item {
+  display: flex;
+  align-items: center;
+}
