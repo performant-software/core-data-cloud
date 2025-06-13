@@ -69,7 +69,14 @@ const UserProjects: AbstractComponent<any> = () => {
       value.push({
         name: 'core_data_connector_users.name',
         label: t('UserProjects.columns.user'),
-        resolve: (userProject) => userProject?.user.name,
+        resolve: (userProject) => userProject?.user?.name,
+        sortable: true
+      });
+
+      value.push({
+        name: 'core_data_connector_users.email',
+        label: t('UserProjects.columns.email'),
+        resolve: (userProject) => userProject?.user?.email,
         sortable: true
       });
     }
