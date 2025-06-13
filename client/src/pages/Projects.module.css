@@ -2,3 +2,8 @@
   opacity: 0.5;
   pointer-events: none;
 }
+
+.projects .icons {
+  display: inline-flex;
+  align-items: center;
+}

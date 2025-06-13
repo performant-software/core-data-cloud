@@ -60,22 +60,30 @@ const Projects: AbstractComponent<any> = () => {
       )}
       renderEmptyList={() => null}
       renderExtra={(project) => (
-        <Icon.Group
+        <div
           className={styles.icons}
         >
           { project.archived && (
-            <Icon>
+            <Icon
+              circular
+              color='grey'
+              inverted
+              size='small'
+            >
               <SlLock />
             </Icon>
           )}
           { project.discoverable && (
             <Icon
+              circular
               color='blue'
+              inverted
+              size='small'
             >
               <IoSearchOutline />
             </Icon>
           )}
-        </Icon.Group>
+        </div>
       )}
       onLoad={(params) => ProjectsService.fetchAll(params)}
       saved={saved}
