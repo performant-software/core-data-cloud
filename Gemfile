@@ -57,6 +57,9 @@ group :development, :test do
 
   # Environment variable management
   gem 'dotenv-rails'
+
+  # Email filtering
+  gem 'mail_safe', '~> 0.3.4'
 end
 
 group :development do

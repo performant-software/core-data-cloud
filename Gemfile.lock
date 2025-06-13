@@ -181,6 +181,8 @@ GEM
       net-imap
       net-pop
       net-smtp
+    mail_safe (0.3.4)
+      actionmailer (>= 3.0.0)
     marcel (1.0.2)
     method_source (1.0.0)
     mime-types (3.5.2)
@@ -300,6 +302,7 @@ DEPENDENCIES
   fuzzy_dates!
   jwt (~> 2.4, >= 2.4.1)
   jwt_auth!
+  mail_safe (~> 0.3.4)
   pagy (~> 5.10)
   pg (~> 1.5.3)
   postmark-rails (~> 0.22.1)
