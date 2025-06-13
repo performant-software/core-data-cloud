@@ -34,3 +34,7 @@ docker:
 production:
   <<: *default
   url: <%= ENV.fetch("DATABASE_URL") { '' }.gsub(/postgres/, 'postgis') %>
+
+staging:
+  <<: *default
+  url: <%= ENV.fetch("DATABASE_URL") { '' }.gsub(/postgres/, 'postgis') %>

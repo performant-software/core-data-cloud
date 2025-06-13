@@ -51,15 +51,15 @@ gem 'user_defined_fields', git: 'https://github.com/performant-software/user-def
 # Fuzzy dates
 gem 'fuzzy_dates', git: 'https://github.com/performant-software/fuzzy-dates.git', tag: 'v0.1.0'
 
+# Email filtering
+gem 'mail_safe', '~> 0.3.4', group: [:development, :staging]
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[ mri mingw x64_mingw ]
 
   # Environment variable management
   gem 'dotenv-rails'
-
-  # Email filtering
-  gem 'mail_safe', '~> 0.3.4'
 end
 
 group :development do
