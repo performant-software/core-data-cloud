@@ -9,13 +9,13 @@ import { useTranslation } from 'react-i18next';
 import styles from './Login.module.css';
 
 const SSO_CALLBACK_URL = `\
-${process.env.REACT_APP_SSO_BASE_URL}\
+${import.meta.env.VITE_SSO_BASE_URL}\
 /realms/\
-${process.env.REACT_APP_SSO_REALM}\
+${import.meta.env.VITE_SSO_REALM}\
 /protocol/openid-connect/auth?client_id=\
-${process.env.REACT_APP_SSO_CLIENT}\
+${import.meta.env.VITE_SSO_CLIENT}\
 &redirect_uri=\
-${process.env.REACT_APP_SSO_REDIRECT_URI}\
+${import.meta.env.VITE_SSO_REDIRECT_URI}\
 &response_type=code`;
 
 const Login: ComponentType<any> = () => {

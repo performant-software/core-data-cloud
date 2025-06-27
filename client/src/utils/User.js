@@ -6,8 +6,8 @@ import type { User as UserType } from '../types/User';
 
 const PASSWORD_FORMAT = /(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])/;
 
-const SSO_DOMAINS = process.env.REACT_APP_SSO_DOMAINS
-  ? process.env.REACT_APP_SSO_DOMAINS.split(',')
+const SSO_DOMAINS = import.meta.env.VITE_SSO_DOMAINS
+  ? import.meta.env.VITE_SSO_DOMAINS.split(',')
   : [];
 
 /**

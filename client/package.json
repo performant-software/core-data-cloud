@@ -4,10 +4,9 @@
   "private": true,
   "proxy": "http://localhost:3001",
   "scripts": {
-    "start": "PORT=3000 react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "flow": "flow"
   },
   "dependencies": {
@@ -18,6 +17,7 @@
     "@peripleo/maplibre": "^0.5.2",
     "@peripleo/peripleo": "^0.5.2",
     "@samvera/clover-iiif": "^2.7.3",
+    "@vitejs/plugin-react": "^4.6.0",
     "boring-avatars": "^1.10.1",
     "classnames": "^2.3.1",
     "i18next": "^21.9.1",
@@ -28,10 +28,10 @@
     "react-i18next": "^11.18.4",
     "react-icons": "^4.10.1",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "5.0.1",
     "react-uuid": "^2.0.0",
     "semantic-ui-react": "^2.1.2",
-    "underscore": "^1.13.3"
+    "underscore": "^1.13.3",
+    "vite": "^7.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.22.10",
@@ -39,6 +39,7 @@
     "@babel/eslint-parser": "^7.22.11",
     "@babel/preset-flow": "^7.22.5",
     "@babel/preset-react": "^7.22.5",
+    "@bunchtogether/vite-plugin-flow": "^1.0.2",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",

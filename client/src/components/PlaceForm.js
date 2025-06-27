@@ -209,7 +209,7 @@ const PlaceForm = (props: Props) => {
         size='tiny'
       />
       <MapDraw
-        apiKey={process.env.REACT_APP_MAP_TILER_KEY}
+        apiKey={import.meta.env.VITE_MAP_TILER_KEY}
         data={props.item.place_geometry?.geometry_json}
         geocoding={geocoding}
         mapStyle='https://api.maptiler.com/maps/dataviz/style.json'
