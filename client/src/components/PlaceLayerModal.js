@@ -162,7 +162,7 @@ const PlaceLayerModal: AbstractComponent<any> = (props: Props) => {
               <>
                 <FileInputButton
                   className={cx(styles.ui, styles.button, styles.uploadButton)}
-                  color='dark gray'
+                  color='grey'
                   content={t('Common.buttons.upload')}
                   disabled={loading}
                   icon='upload'

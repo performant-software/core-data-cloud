@@ -10,24 +10,25 @@ import {
 } from '@performant-software/geospatial';
 import { BooleanIcon, EmbeddedList, FileInputButton } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
-import { FaMapPin } from 'react-icons/fa';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
 import cx from 'classnames';
 import React, {
-  useCallback, useEffect, useMemo, useState
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Form, Header, Icon
-} from 'semantic-ui-react';
-import _ from 'underscore';
+import { FaMapPin } from 'react-icons/fa';
 import { PiPolygonBold } from 'react-icons/pi';
+import { Form, Header, Icon } from 'semantic-ui-react';
+import _ from 'underscore';
+import MapSessionUtils from '../utils/MapSession';
 import type { Place as PlaceType } from '../types/Place';
 import PlaceLayerModal from './PlaceLayerModal';
 import PlaceLayerUtils from '../utils/PlaceLayers';
 import PlaceNameModal from './PlaceNameModal';
 import styles from './PlaceForm.module.css';
-import MapSessionUtils from '../utils/MapSession';
 
 type Props = EditContainerProps & {
   item: PlaceType
@@ -140,7 +141,7 @@ const PlaceForm = (props: Props) => {
         }]}
         addButton={{
           basic: false,
-          color: 'dark gray',
+          color: 'grey',
           content: t('Common.buttons.addName'),
           location: 'bottom'
         }}
@@ -173,7 +174,7 @@ const PlaceForm = (props: Props) => {
         }]}
         addButton={{
           basic: false,
-          color: 'dark gray',
+          color: 'grey',
           location: 'bottom'
         }}
         className='compact'
@@ -249,7 +250,6 @@ const PlaceForm = (props: Props) => {
               styles.button,
               styles.uploadButton
             )}
-            color='white'
             icon={(
               <Icon
                 name='cloud upload'

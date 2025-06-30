@@ -32,7 +32,7 @@ const OrganizationForm = (props: Props) => {
         }]}
         addButton={{
           basic: false,
-          color: 'dark gray',
+          color: 'grey',
           content: t('Common.buttons.addName'),
           location: 'bottom'
         }}

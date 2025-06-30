@@ -183,7 +183,7 @@ const RelatedMediaContents = () => {
         buttons={[{
           render: () => (
             <DropdownButton
-              color='dark gray'
+              color='grey'
               direction='right'
               icon='plus'
               key='upload'
