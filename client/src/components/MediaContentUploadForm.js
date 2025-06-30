@@ -38,7 +38,7 @@ const MediaContentUploadForm = (props: Props) => {
           label={t('MediaContentUploadForm.labels.name')}
           onChange={props.onTextInputChange.bind(this, 'name')}
           required={props.isRequired('name')}
-          value={props.item.name}
+          value={props.item.name || ''}
         />
         { foreignProjectModelId && (
           <UserDefinedFieldsForm

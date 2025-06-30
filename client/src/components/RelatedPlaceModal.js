@@ -97,7 +97,7 @@ const RelatedPlaceModal = (props: Props) => {
           onChange={props.onTextInputChange.bind(this, 'order')}
           required={props.isRequired('order')}
           type='number'
-          value={props.item.order}
+          value={props.item.order || 0}
         />
         { projectModelRelationship && (
           <UserDefinedFieldsForm

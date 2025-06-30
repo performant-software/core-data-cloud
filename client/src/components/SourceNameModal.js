@@ -28,7 +28,7 @@ const SourceNameModal: AbstractComponent<any> = (props: Props) => {
           autoFocus
           label={t('NameRelationModal.labels.name')}
           onChange={props.onTextInputChange.bind(this, 'name')}
-          value={props.item.name}
+          value={props.item.name || ''}
         />
         <Form.Checkbox
           checked={props.item.primary}

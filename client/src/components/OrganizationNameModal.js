@@ -32,7 +32,7 @@ const OrganizationNameModal: AbstractComponent<any> = (props: Props) => {
           label={t('OrganizationNameModal.labels.name')}
           required={props.isRequired('name')}
           onChange={props.onTextInputChange.bind(this, 'name')}
-          value={props.item.name}
+          value={props.item.name || ''}
         />
         <Form.Checkbox
           checked={props.item.primary}

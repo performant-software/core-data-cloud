@@ -79,6 +79,7 @@ const PlaceForm = (props: Props) => {
       return (
         <GeoJsonLayer
           data={layer.content}
+          key={layer.id || layer.uuid}
           url={layer.url}
         />
       );
@@ -88,6 +89,7 @@ const PlaceForm = (props: Props) => {
       return (
         <WarpedImageLayer
           id={layer.id || layer.uid}
+          key={layer.id || layer.uid}
           manifest={layer.content}
           url={layer.url}
         />
@@ -97,6 +99,7 @@ const PlaceForm = (props: Props) => {
     if (layer.layer_type === LayerTypes.raster) {
       return (
         <RasterLayer
+          key={layer.id || layer.uuid}
           url={layer.url}
         />
       );

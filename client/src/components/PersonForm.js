@@ -61,7 +61,7 @@ const PersonForm = (props: Props) => {
         label={t('PersonForm.labels.biography')}
         onChange={props.onTextInputChange.bind(this, 'biography')}
         required={props.isRequired('biography')}
-        value={props.item.biography}
+        value={props.item.biography || ''}
       />
       { props.item.project_model_id && (
         <UserDefinedFieldsForm
