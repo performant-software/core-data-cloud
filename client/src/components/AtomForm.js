@@ -20,14 +20,14 @@ const AtomForm = (props: Props) => {
         label={t('AtomForm.labels.url')}
         required
         onChange={(e, { value }) => props.onChange('url', value)}
-        value={props.value?.url}
+        value={props.value?.url || ''}
       />
       <Form.Input
         error={props.isError('access.api_key')}
         label={t('AtomForm.labels.apiKey')}
         required
         onChange={(e, { value }) => props.onChange('api_key', value)}
-        value={props.value?.api_key}
+        value={props.value?.api_key || ''}
       />
     </>
   );

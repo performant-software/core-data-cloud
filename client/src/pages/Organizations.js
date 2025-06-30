@@ -96,6 +96,7 @@ const Organizations: AbstractComponent<any> = () => {
                 label: t('Organizations.actions.merge.description')
               }]}
               ids={selectedItems}
+              key='merge'
               onLoad={(id) => (
                 OrganizationsService
                   .fetchOne(id)

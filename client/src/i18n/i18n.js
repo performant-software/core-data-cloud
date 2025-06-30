@@ -20,7 +20,7 @@ i18n
     fallbackLng: 'en',
     lng: 'en',
     interpolation: {
-      escapeValue: false,
+      escapeValue: false
     },
     resources
   });

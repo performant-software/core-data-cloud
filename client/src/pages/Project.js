@@ -103,7 +103,7 @@ const ProjectForm = (props: Props) => {
             label={t('Project.labels.name')}
             required={props.isRequired('name')}
             onChange={props.onTextInputChange.bind(this, 'name')}
-            value={props.item.name}
+            value={props.item.name || ''}
           />
           <Form.TextArea
             error={props.isError('description')}
@@ -111,14 +111,14 @@ const ProjectForm = (props: Props) => {
             required={props.isRequired('description')}
             rows={5}
             onChange={props.onTextInputChange.bind(this, 'description')}
-            value={props.item.description}
+            value={props.item.description || ''}
           />
           <Form.Input
             error={props.isError('faircopy_cloud_url')}
             label={t('Project.labels.fairCopyCloudUrl')}
             required={props.isRequired('faircopy_cloud_url')}
             onChange={props.onTextInputChange.bind(this, 'faircopy_cloud_url')}
-            value={props.item.faircopy_cloud_url}
+            value={props.item.faircopy_cloud_url || ''}
           />
           <Form.Input
             error={props.isError('faircopy_cloud_project_model_id')}
@@ -143,7 +143,7 @@ const ProjectForm = (props: Props) => {
             label={t('Project.labels.mapLibraryUrl')}
             required={props.isRequired('map_library_url')}
             onChange={props.onTextInputChange.bind(this, 'map_library_url')}
-            value={props.item.map_library_url}
+            value={props.item.map_library_url || ''}
           />
           <div
             className={styles.section}

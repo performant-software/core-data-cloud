@@ -52,6 +52,7 @@ const Relationships = () => {
 
   return _.map(projectModel.all_project_model_relationships, (projectModelRelationship) => (
     <Relationship
+      key={projectModelRelationship.id}
       projectModelRelationship={projectModelRelationship}
     />
   ));

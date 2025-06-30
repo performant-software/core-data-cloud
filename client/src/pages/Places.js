@@ -121,6 +121,7 @@ const Places: AbstractComponent<any> = () => {
                 resolve: renderPlaceGeometry
               }]}
               ids={selectedItems}
+              key='merge'
               onLoad={(id) => (
                 PlacesService
                   .fetchOne(id)

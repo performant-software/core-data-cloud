@@ -18,11 +18,11 @@ type Props = {
 const MenuLink: ComponentType<any> = (props: Props) => {
   const url = `${props.to}${props.parent ? '/*' : ''}`;
   const { pathname } = useResolvedPath(url);
-  const active = useMatch({ path: pathname, end: true });
+  const active = !!useMatch({ path: pathname, end: true });
 
   return (
     <Menu.Item
-      {..._.omit(props, 'children')}
+      {..._.omit(props, 'children', 'parent')}
       active={active}
       as={Link}
     >

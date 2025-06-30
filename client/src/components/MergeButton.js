@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { Fragment, useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaArrowRightArrowLeft } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';

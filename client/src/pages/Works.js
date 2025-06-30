@@ -99,6 +99,7 @@ const Works: AbstractComponent<any> = () => {
                 resolve: (sourceName) => sourceName.name
               }]}
               ids={selectedItems}
+              key='merge'
               onLoad={(id) => (
                 WorksService
                   .fetchOne(id)

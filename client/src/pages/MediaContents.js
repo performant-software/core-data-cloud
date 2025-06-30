@@ -100,6 +100,7 @@ const MediaContents = () => {
                 label: t('MediaContents.actions.merge.name')
               }]}
               ids={selectedItems}
+              key='merge'
               onLoad={(id) => (
                 MediaContentsService
                   .fetchOne(id)

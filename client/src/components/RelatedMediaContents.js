@@ -186,6 +186,7 @@ const RelatedMediaContents = () => {
               color='dark gray'
               direction='right'
               icon='plus'
+              key='upload'
               onChange={(e, { value }) => setModal(value)}
               options={[{
                 icon: 'cloud upload',
@@ -205,6 +206,7 @@ const RelatedMediaContents = () => {
         }, {
           render: () => (
             <ManifestUrlButton
+              key='manifest'
               url={MediaContentUtils.getManifestURL(projectModel, uuid, projectModelRelationship.uuid)}
             />
           )

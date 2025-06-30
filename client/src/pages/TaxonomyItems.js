@@ -91,6 +91,7 @@ const TaxonomyItems = () => {
                 label: t('TaxonomyItems.actions.merge.name')
               }]}
               ids={selectedItems}
+              key='merge'
               onLoad={(id) => (
                 TaxonomiesService
                   .fetchOne(id)

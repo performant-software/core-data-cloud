@@ -24,7 +24,7 @@ const UserForm: AbstractComponent<any> = (props: Props) => {
         label={t('UserForm.labels.name')}
         required={props.isRequired('name')}
         onChange={props.onTextInputChange.bind(this, 'name')}
-        value={props.item.name}
+        value={props.item.name || ''}
       />
       <Form.Input
         disabled={props.disabled}
@@ -32,7 +32,7 @@ const UserForm: AbstractComponent<any> = (props: Props) => {
         label={t('UserForm.labels.email')}
         required={props.isRequired('email')}
         onChange={props.onTextInputChange.bind(this, 'email')}
-        value={props.item.email}
+        value={props.item.email || ''}
       />
       { PermissionsService.isAdmin() && (
         <>
