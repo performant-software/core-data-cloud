@@ -5,3 +5,12 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.relatedMediaContents .ui.small.image {
+  width: 100%;
+  aspect-ratio: 1 / 0.75;
+  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
