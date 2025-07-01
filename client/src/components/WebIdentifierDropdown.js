@@ -172,7 +172,8 @@ const WebIdentifierDropdown = (props: Props) => {
         styles.ui,
         styles.dropdown,
         styles.search,
-        styles.selection
+        styles.selection,
+        'selection'
       )}
       clearable
       fluid
@@ -185,14 +186,12 @@ const WebIdentifierDropdown = (props: Props) => {
       onSearchChange={(e, data) => setSearchQuery(data.searchQuery)}
       open={open}
       placeholder={t('WebIdentifierDropdown.labels.search')}
-      selection
       search
       searchInput={(
         <Ref
           innerRef={inputRef}
         >
           <DropdownSearchInput
-            className={styles.search}
             value={searchQuery}
           />
         </Ref>
