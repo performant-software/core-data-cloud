@@ -30,3 +30,15 @@ To run via Docker requires a IIIF Cloud instance as well. This can be run as a s
 
 #### Running
 To run via a Docker container (for development or production) set your environment variables in `.env`, you can use `.env.example` as a template. If an image has not yet been built, run `docker compose up --build` to build the image and start the container. Subsequent starts of the container can be done with `docker compose up` if no code changes have been made.
+
+## Production
+
+### Heroku Backups
+
+Use the following command the schedule daily backups in a Heroku environment:
+
+```
+heroku pg:backups:schedule DATABASE_URL --at '00:00 America/New_York' --app my-app
+```
+
+See Heroku's [retention policy](https://devcenter.heroku.com/articles/heroku-postgres-backups#scheduled-backups-retention-limits) for backups.
