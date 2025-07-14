@@ -40,7 +40,7 @@ gem 'resource_api', git: 'https://github.com/performant-software/resource-api.gi
 gem 'jwt_auth', git: 'https://github.com/performant-software/jwt-auth.git', tag: 'v0.1.2'
 
 # Core data
-gem 'core_data_connector', git: 'https://github.com/performant-software/core-data-connector.git', tag: 'v0.1.92'
+gem 'core_data_connector', git: 'https://github.com/performant-software/core-data-connector.git', tag: 'v0.1.93'
 
 # IIIF
 gem 'triple_eye_effable', git: 'https://github.com/performant-software/triple-eye-effable.git', tag: 'v0.2.1'
