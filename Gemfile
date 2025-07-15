@@ -18,9 +18,6 @@ gem 'tzinfo-data', platforms: %i[ mingw mswin x64_mingw jruby ]
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
-# Pagination
-gem 'pagy', '~> 5.10'
-
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors', '~> 2.0.1'
 
