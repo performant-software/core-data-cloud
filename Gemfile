@@ -22,7 +22,7 @@ gem 'bootsnap', require: false
 gem 'jwt', '~> 3.1.2'
 
 # Use ActiveModel has_secure_password
-gem 'bcrypt', '~> 3.1.18'
+gem 'bcrypt', '~> 3.1.20'
 
 # Transactional emails
 gem 'postmark-rails', '~> 0.22.1'
