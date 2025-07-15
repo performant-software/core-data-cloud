@@ -5,7 +5,7 @@ PATH
       activerecord-postgis-adapter (~> 11.0)
       faker
       fuzzy_dates
-      jwt (~> 2.7.1)
+      jwt (~> 3.1.2)
       jwt_auth
       postmark-rails (~> 0.22.1)
       rack-cors (~> 3.0.0)
@@ -30,7 +30,7 @@ PATH
   remote: ../jwt-auth
   specs:
     jwt_auth (0.1.0)
-      jwt (~> 2.7.1)
+      jwt (~> 3.1.2)
       rails (>= 6.0.3.2, < 9)
 
 PATH
@@ -174,7 +174,8 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.12.2)
-    jwt (2.7.1)
+    jwt (3.1.2)
+      base64
     logger (1.7.0)
     loofah (2.21.3)
       crass (~> 1.0.2)
@@ -323,7 +324,7 @@ DEPENDENCIES
   debug
   dotenv-rails
   fuzzy_dates!
-  jwt (~> 2.4, >= 2.4.1)
+  jwt (~> 3.1.2)
   jwt_auth!
   mail_safe (~> 0.3.4)
   mutex_m

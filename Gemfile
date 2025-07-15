@@ -19,7 +19,7 @@ gem 'tzinfo-data', platforms: %i[ mingw mswin x64_mingw jruby ]
 gem 'bootsnap', require: false
 
 # Use Json Web Token (JWT) for token based authentication
-gem 'jwt', '~> 2.4', '>= 2.4.1'
+gem 'jwt', '~> 3.1.2'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.18'
