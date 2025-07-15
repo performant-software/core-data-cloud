@@ -7,7 +7,7 @@ ruby file: '.ruby-version'
 gem 'rails', '~> 8.0.2'
 
 # Use Postgres as the database for Active Record
-gem 'pg', '~> 1.5.3'
+gem 'pg', '~> 1.5.9'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 5.0'

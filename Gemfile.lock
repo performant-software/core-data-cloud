@@ -328,7 +328,7 @@ DEPENDENCIES
   mail_safe (~> 0.3.4)
   mutex_m
   pagy (~> 5.10)
-  pg (~> 1.5.3)
+  pg (~> 1.5.9)
   postmark-rails (~> 0.22.1)
   puma (~> 5.0)
   rack-cors (~> 2.0.1)
