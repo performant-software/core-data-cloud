@@ -144,13 +144,13 @@ GEM
     crass (1.0.6)
     csv (3.3.5)
     date (3.3.3)
-    debug (1.8.0)
-      irb (>= 1.5.0)
-      reline (>= 0.3.1)
-    dotenv (2.8.1)
-    dotenv-rails (2.8.1)
-      dotenv (= 2.8.1)
-      railties (>= 3.2)
+    debug (1.11.0)
+      irb (~> 1.10)
+      reline (>= 0.3.8)
+    dotenv (3.1.8)
+    dotenv-rails (3.1.8)
+      dotenv (= 3.1.8)
+      railties (>= 6.1)
     drb (2.2.3)
     erb (5.0.1)
     erubi (1.12.0)
@@ -193,12 +193,11 @@ GEM
     mime-types-data (3.2024.0507)
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
-    minitest (5.19.0)
+    minitest (5.25.5)
     msgpack (1.8.0)
     multi_json (1.16.0)
     multi_xml (0.7.1)
       bigdecimal (~> 3.1)
-    mutex_m (0.3.0)
     net-imap (0.3.7)
       date
       net-protocol
@@ -320,14 +319,13 @@ DEPENDENCIES
   bcrypt (~> 3.1.20)
   bootsnap
   core_data_connector!
-  csv
-  debug
-  dotenv-rails
+  csv (~> 3.3.5)
+  debug (~> 1.11.0)
+  dotenv-rails (~> 3.1.8)
   fuzzy_dates!
   jwt (~> 3.1.2)
   jwt_auth!
   mail_safe (~> 0.3.4)
-  mutex_m
   pg (~> 1.5.9)
   postmark-rails (~> 0.22.1)
   puma (~> 6.6.0)

@@ -27,6 +27,9 @@ gem 'bcrypt', '~> 3.1.20'
 # Transactional emails
 gem 'postmark-rails', '~> 0.22.1'
 
+# CSV processing
+gem 'csv', '~> 3.3.5'
+
 # Resource API
 #gem 'resource_api', git: 'https://github.com/performant-software/resource-api.git', tag: 'v0.5.13'
 gem 'resource_api', path: '../resource-api'
@@ -56,20 +59,8 @@ gem 'mail_safe', '~> 0.3.4', group: [:development, :staging]
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem 'debug', platforms: %i[ mri mingw x64_mingw ]
+  gem 'debug', '~> 1.11.0', platforms: %i[ mri mingw x64_mingw ]
 
   # Environment variable management
-  gem 'dotenv-rails'
+  gem 'dotenv-rails', '~> 3.1.8'
 end
-
-group :development do
-  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  # gem "spring"
-end
-
-
-
-
-
-gem 'mutex_m' # TODO: Remove me
-gem 'csv' # TODO: Remove me
