@@ -16,7 +16,7 @@
     "@peripleo/maplibre": "^0.8.7",
     "@peripleo/peripleo": "^0.8.7",
     "@samvera/clover-iiif": "^2.18.3",
-    "boring-avatars": "^1.10.1",
+    "boring-avatars": "^1.11.2",
     "classnames": "^2.3.1",
     "i18next": "^21.9.1",
     "react": "^18.2.0",
