@@ -30,7 +30,7 @@ PATH
   specs:
     jwt_auth (0.1.0)
       jwt (~> 3.1.2)
-      rails (>= 6.0.3.2, < 9)
+      rails (>= 7.1, < 9)
 
 PATH
   remote: ../resource-api
