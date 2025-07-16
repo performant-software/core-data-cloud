@@ -15,7 +15,7 @@
     "@performant-software/user-defined-fields": "^3.0.7",
     "@peripleo/maplibre": "^0.8.7",
     "@peripleo/peripleo": "^0.8.7",
-    "@samvera/clover-iiif": "^2.7.3",
+    "@samvera/clover-iiif": "^2.18.3",
     "boring-avatars": "^1.10.1",
     "classnames": "^2.3.1",
     "i18next": "^21.9.1",
