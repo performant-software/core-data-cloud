@@ -1,7 +1,8 @@
 // @flow
 
-import { useDragDrop } from '@performant-software/shared-components';
 import React, { type ComponentType } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { BrowserRouter as Router, Routes, Route } from 'react-router';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
 import Layout from './components/Layout';
@@ -17,181 +18,185 @@ import ProjectModelFactory from './components/ProjectModelFactory';
 import ProjectModels from './pages/ProjectModels';
 import ProjectModelsFactory from './components/ProjectModelsFactory';
 import Projects from './pages/Projects';
+import SsoLogin from './pages/SsoLogin';
 import User from './pages/User';
 import UserProject from './pages/UserProject';
 import UserProjects from './pages/UserProjects';
 import Users from './pages/Users';
 import WebAuthorities from './pages/WebAuthorities';
 import WebAuthority from './pages/WebAuthority';
-import SsoLogin from './pages/SsoLogin';
 
-const App: ComponentType<any> = useDragDrop(() => (
-  <Router>
-    <Routes>
-      <Route
-        path='/'
-        element={<Login />}
-        exact
-        index
-      />
-      <Route
-        element={<SsoLogin />}
-        path='sso_login'
-      />
-      <Route
-        path='/'
-        element={(
-          <AuthenticatedRoute>
-            <ProjectContextProvider>
-              <Layout />
-            </ProjectContextProvider>
-          </AuthenticatedRoute>
-        )}
-      >
+const App: ComponentType<any> = () => (
+  <DndProvider
+    backend={HTML5Backend}
+  >
+    <Router>
+      <Routes>
         <Route
-          path='/logout'
-          element={<Logout />}
+          path='/'
+          element={<Login />}
+          exact
+          index
         />
         <Route
-          path='/projects'
+          element={<SsoLogin />}
+          path='sso_login'
+        />
+        <Route
+          path='/'
+          element={(
+            <AuthenticatedRoute>
+              <ProjectContextProvider>
+                <Layout />
+              </ProjectContextProvider>
+            </AuthenticatedRoute>
+          )}
         >
           <Route
-            index
-            element={<Projects />}
+            path='/logout'
+            element={<Logout />}
           />
           <Route
-            path='new'
-            element={<Project />}
-          />
-          <Route
-            path=':projectId'
+            path='/projects'
           >
             <Route
               index
+              element={<Projects />}
+            />
+            <Route
+              path='new'
               element={<Project />}
             />
             <Route
-              path='edit'
-              element={<ProjectEdit />}
-              exact
-            />
-            <Route
-              path='user_projects'
+              path=':projectId'
             >
               <Route
                 index
-                element={<UserProjects />}
+                element={<Project />}
               />
               <Route
-                path='new'
-                element={<UserProject />}
+                path='edit'
+                element={<ProjectEdit />}
+                exact
               />
               <Route
-                path=':userProjectId'
-                element={<UserProject />}
-              />
-            </Route>
-            <Route
-              path='project_models'
-            >
-              <Route
-                index
-                element={<ProjectModels />}
-              />
-              <Route
-                path='new'
-                element={<ProjectModel />}
-              />
-              <Route
-                path=':projectModelId'
-                element={<ProjectModel />}
-              />
-            </Route>
-            <Route
-              path='import'
-              element={<ProjectImportExport />}
-            />
-            <Route
-              path='web_authorities'
-            >
-              <Route
-                index
-                element={<WebAuthorities />}
-              />
-              <Route
-                path='new'
-                element={<WebAuthority />}
-              />
-              <Route
-                path=':webAuthorityId'
-                element={<WebAuthority />}
-              />
-            </Route>
-            <Route
-              path=':projectModelId'
-            >
-              <Route
-                index
-                element={<ProjectModelsFactory />}
-              />
-              <Route
-                path='new'
-                element={<ProjectModelFactory />}
-              />
-              <Route
-                path=':itemId'
+                path='user_projects'
               >
                 <Route
                   index
+                  element={<UserProjects />}
+                />
+                <Route
+                  path='new'
+                  element={<UserProject />}
+                />
+                <Route
+                  path=':userProjectId'
+                  element={<UserProject />}
+                />
+              </Route>
+              <Route
+                path='project_models'
+              >
+                <Route
+                  index
+                  element={<ProjectModels />}
+                />
+                <Route
+                  path='new'
+                  element={<ProjectModel />}
+                />
+                <Route
+                  path=':projectModelId'
+                  element={<ProjectModel />}
+                />
+              </Route>
+              <Route
+                path='import'
+                element={<ProjectImportExport />}
+              />
+              <Route
+                path='web_authorities'
+              >
+                <Route
+                  index
+                  element={<WebAuthorities />}
+                />
+                <Route
+                  path='new'
+                  element={<WebAuthority />}
+                />
+                <Route
+                  path=':webAuthorityId'
+                  element={<WebAuthority />}
+                />
+              </Route>
+              <Route
+                path=':projectModelId'
+              >
+                <Route
+                  index
+                  element={<ProjectModelsFactory />}
+                />
+                <Route
+                  path='new'
                   element={<ProjectModelFactory />}
+                />
+                <Route
+                  path=':itemId'
+                >
+                  <Route
+                    index
+                    element={<ProjectModelFactory />}
+                  />
+                </Route>
+              </Route>
+            </Route>
+          </Route>
+          <Route
+            path='/users'
+          >
+            <Route
+              index
+              element={<Users />}
+            />
+            <Route
+              path='new'
+              element={<User />}
+            />
+            <Route
+              path=':userId'
+            >
+              <Route
+                index
+                element={<User />}
+              />
+              <Route
+                path='user_projects'
+              >
+                <Route
+                  index
+                  element={<UserProjects />}
+                />
+                <Route
+                  path='new'
+                  element={<UserProject />}
+                />
+                <Route
+                  path=':userProjectId'
+                  element={<UserProject />}
                 />
               </Route>
             </Route>
           </Route>
-        </Route>
-        <Route
-          path='/users'
-        >
           <Route
-            index
-            element={<Users />}
+            path='password_reset'
+            element={<PasswordReset />}
           />
-          <Route
-            path='new'
-            element={<User />}
-          />
-          <Route
-            path=':userId'
-          >
-            <Route
-              index
-              element={<User />}
-            />
-            <Route
-              path='user_projects'
-            >
-              <Route
-                index
-                element={<UserProjects />}
-              />
-              <Route
-                path='new'
-                element={<UserProject />}
-              />
-              <Route
-                path=':userProjectId'
-                element={<UserProject />}
-              />
-            </Route>
-          </Route>
         </Route>
-        <Route
-          path='password_reset'
-          element={<PasswordReset />}
-        />
-      </Route>
-    </Routes>
-  </Router>
-));
+      </Routes>
+    </Router>
+  </DndProvider>
+);
 
 export default App;
