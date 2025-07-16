@@ -1,7 +1,7 @@
 // @flow
 
 import React, { useContext } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router';
 import _ from 'underscore';
 import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';

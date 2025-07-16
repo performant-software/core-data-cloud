@@ -2,7 +2,7 @@
 
 import React, { useCallback, useState, type ComponentType } from 'react';
 import LoginModal from '../components/LoginModal';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router';
 import { Image } from 'semantic-ui-react';
 import AuthenticationService from '../services/Authentication';
 import { useTranslation } from 'react-i18next';

@@ -7,7 +7,7 @@ import {
   matchPath,
   useLocation,
   useMatch
-} from 'react-router-dom';
+} from 'react-router';
 import { Dropdown } from 'semantic-ui-react';
 import _ from 'underscore';
 import ProjectContext from '../context/Project';

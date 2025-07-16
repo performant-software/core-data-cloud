@@ -2,7 +2,7 @@
 
 import { Toaster } from '@performant-software/semantic-components';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { Message } from 'semantic-ui-react';
 

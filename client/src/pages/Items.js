@@ -17,7 +17,7 @@ import MergeButton from '../components/MergeButton';
 import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import useSelectable from '../hooks/Selectable';
 import { useTranslation } from 'react-i18next';
 import Views from '../constants/ListViews';

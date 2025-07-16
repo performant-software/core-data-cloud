@@ -11,7 +11,7 @@ import React, {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TbCalendarShare, TbCalendarTime } from 'react-icons/tb';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { Icon } from 'semantic-ui-react';
 import EventsService from '../services/Events';
 import ListViewMenu from '../components/ListViewMenu';

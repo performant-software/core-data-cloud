@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaUsers } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { Icon } from 'semantic-ui-react';
 import ListViewMenu from '../components/ListViewMenu';
 import MergeButton from '../components/MergeButton';

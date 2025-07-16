@@ -2,7 +2,7 @@
 
 import { useDragDrop } from '@performant-software/shared-components';
 import React, { type ComponentType } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
 import Layout from './components/Layout';
 import Login from './pages/Login';

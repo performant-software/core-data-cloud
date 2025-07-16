@@ -4,7 +4,7 @@ import cx from 'classnames';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { TbDatabaseShare } from 'react-icons/tb';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { Header } from 'semantic-ui-react';
 import styles from './Logo.module.css';
 

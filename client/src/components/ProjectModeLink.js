@@ -2,7 +2,7 @@
 
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, matchPath, useLocation } from 'react-router-dom';
+import { Link, matchPath, useLocation } from 'react-router';
 import { Button } from 'semantic-ui-react';
 import _ from 'underscore';
 import PermissionsService from '../services/Permissions';

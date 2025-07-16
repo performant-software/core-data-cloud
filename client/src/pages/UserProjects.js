@@ -9,7 +9,7 @@ import React, {
   type AbstractComponent
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { Message } from 'semantic-ui-react';
 import _ from 'underscore';
 import ItemHeader from '../components/ItemHeader';

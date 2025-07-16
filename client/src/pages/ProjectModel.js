@@ -18,7 +18,7 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import { FaUnlockAlt } from 'react-icons/fa';
 import { FaShareFromSquare } from 'react-icons/fa6';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import uuid from 'react-uuid';
 import {
   Form,

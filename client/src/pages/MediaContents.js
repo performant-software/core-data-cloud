@@ -3,7 +3,7 @@
 import { ItemList, LazyMedia } from '@performant-software/semantic-components';
 import React, { useCallback, useContext, useState } from 'react';
 import { FaImage, FaImages } from 'react-icons/fa6';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { Icon } from 'semantic-ui-react';
 import ListViewMenu from '../components/ListViewMenu';
 import MediaContentsService from '../services/MediaContents';

@@ -16,7 +16,7 @@ import { MdChatBubble } from 'react-icons/md';
 import MergeButton from '../components/MergeButton';
 import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import useParams from '../hooks/ParsedParams';
 import useSelectable from '../hooks/Selectable';
 import { useTranslation } from 'react-i18next';
