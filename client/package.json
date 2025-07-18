@@ -49,6 +49,7 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
     "flow-bin": "^0.275.0",
+    "flow-typed": "^4.1.1",
     "globals": "^16.3.0",
     "vite": "^7.0.4"
   },

@@ -1,13 +1,15 @@
 [ignore]
 
+<PROJECT_ROOT>/build/*
+
 [include]
-./node_modules/
 
 [libs]
 
 [lints]
 
 [options]
+
 module.file_ext=.js
 module.file_ext=.jsx
 module.file_ext=.json
@@ -16,6 +18,9 @@ module.file_ext=.scss
 module.file_ext=.ts
 module.file_ext=.tsx
 module.file_ext=.cts
-react.runtime=automatic
+module.file_ext=.cjs
+module.file_ext=.mjs
+
+react.runtime=classic
 
 [strict]
