@@ -84,7 +84,7 @@ const Organizations: AbstractComponent<any> = () => {
             <MergeButton
               attributes={[{
                 name: 'uuid',
-                label: t('Common.actions.merge.uuid'),
+                label: t('Common.actions.merge.uuid')
               }, {
                 name: 'organization_names',
                 label: t('Organizations.actions.merge.names'),

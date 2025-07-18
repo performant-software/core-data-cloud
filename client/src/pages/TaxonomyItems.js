@@ -85,7 +85,7 @@ const TaxonomyItems = () => {
             <MergeButton
               attributes={[{
                 name: 'uuid',
-                label: t('Common.actions.merge.uuid'),
+                label: t('Common.actions.merge.uuid')
               }, {
                 name: 'name',
                 label: t('TaxonomyItems.actions.merge.name')

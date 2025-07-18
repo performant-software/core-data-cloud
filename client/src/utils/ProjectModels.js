@@ -41,7 +41,7 @@ const resolveValidationError = ({ key, error, item }) => {
 };
 
 export default {
-  resolveValidationError,
+  resolveValidationError
 };
 
 export {

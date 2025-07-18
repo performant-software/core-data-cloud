@@ -80,7 +80,7 @@ const MediaContents = () => {
             <MergeButton
               attributes={[{
                 name: 'uuid',
-                label: t('Common.actions.merge.uuid'),
+                label: t('Common.actions.merge.uuid')
               }, {
                 name: 'content',
                 label: t('MediaContents.actions.merge.content'),

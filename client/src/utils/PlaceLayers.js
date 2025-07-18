@@ -41,7 +41,7 @@ const getLayerTypeOptions = () => _.map(_.keys(LayerTypeLabels), (key) => ({
 const getMapLibraryOptions = (layers: Array<any>) => _.map(layers, ({ name, url }) => ({
   key: url,
   value: url,
-  text: name,
+  text: name
 }));
 
 /**

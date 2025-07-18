@@ -52,7 +52,7 @@ const RelatedItems = () => {
       addButton={{
         basic: false,
         color: 'grey',
-        location: 'top',
+        location: 'top'
       }}
       className='compact'
       collectionName='relationships'
