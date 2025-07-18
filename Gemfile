@@ -31,20 +31,17 @@ gem 'postmark-rails', '~> 0.22.1'
 gem 'csv', '~> 3.3.5'
 
 # Resource API
-#gem 'resource_api', git: 'https://github.com/performant-software/resource-api.git', tag: 'v0.5.13'
-gem 'resource_api', path: '../resource-api'
+gem 'resource_api', git: 'https://github.com/performant-software/resource-api.git', tag: 'v0.5.14'
 
 # Authentication
-#gem 'jwt_auth', git: 'https://github.com/performant-software/jwt-auth.git', tag: 'v0.1.2'
-gem 'jwt_auth', path: '../jwt-auth'
+gem 'jwt_auth', git: 'https://github.com/performant-software/jwt-auth.git', tag: 'v0.1.3'
 
 # Core data
 #gem 'core_data_connector', git: 'https://github.com/performant-software/core-data-connector.git', tag: 'v0.1.93'
 gem 'core_data_connector', path: '../core-data-connector'
 
 # IIIF
-#gem 'triple_eye_effable', git: 'https://github.com/performant-software/triple-eye-effable.git', tag: 'v0.2.1'
-gem 'triple_eye_effable', path: '../triple-eye-effable'
+gem 'triple_eye_effable', git: 'https://github.com/performant-software/triple-eye-effable.git', tag: 'v0.2.4'
 
 # User defined fields
 #gem 'user_defined_fields', git: 'https://github.com/performant-software/user-defined-fields.git', tag: 'v0.1.13'
