@@ -1,7 +1,5 @@
 [ignore]
-
-<PROJECT_ROOT>/build/*
-<PROJECT_ROOT>/src/*
+<PROJECT_ROOT>/build/
 
 [include]
 
@@ -10,7 +8,6 @@
 [lints]
 
 [options]
-
 module.file_ext=.js
 module.file_ext=.jsx
 module.file_ext=.json
