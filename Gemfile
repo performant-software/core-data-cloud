@@ -44,12 +44,10 @@ gem 'core_data_connector', path: '../core-data-connector'
 gem 'triple_eye_effable', git: 'https://github.com/performant-software/triple-eye-effable.git', tag: 'v0.2.4'
 
 # User defined fields
-#gem 'user_defined_fields', git: 'https://github.com/performant-software/user-defined-fields.git', tag: 'v0.1.13'
-gem 'user_defined_fields', path: '../user-defined-fields'
+gem 'user_defined_fields', git: 'https://github.com/performant-software/user-defined-fields.git', tag: 'v0.1.14'
 
 # Fuzzy dates
-#gem 'fuzzy_dates', git: 'https://github.com/performant-software/fuzzy-dates.git', tag: 'v0.1.0'
-gem 'fuzzy_dates', path: '../fuzzy-dates'
+gem 'fuzzy_dates', git: 'https://github.com/performant-software/fuzzy-dates.git', tag: 'v0.1.1'
 
 # Email filtering
 gem 'mail_safe', '~> 0.3.4', group: [:development, :staging]
