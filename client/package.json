@@ -9,6 +9,7 @@
     "flow": "flow"
   },
   "dependencies": {
+    "@bunchtogether/vite-plugin-flow": "^1.0.2",
     "@performant-software/geospatial": "^3.1.0",
     "@performant-software/semantic-components": "^3.1.0",
     "@performant-software/shared-components": "^3.1.0",
@@ -16,6 +17,7 @@
     "@peripleo/maplibre": "^0.8.7",
     "@peripleo/peripleo": "^0.8.7",
     "@samvera/clover-iiif": "^2.18.3",
+    "@vitejs/plugin-react": "^4.6.0",
     "boring-avatars": "^1.11.2",
     "classnames": "^2.5.1",
     "i18next": "^25.3.2",
@@ -28,7 +30,8 @@
     "react-router": "^7.6.3",
     "semantic-ui-react": "^2.1.5",
     "underscore": "^1.13.7",
-    "uuid": "^11.1.0"
+    "uuid": "^11.1.0",
+    "vite": "^7.0.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.28.0",
@@ -51,8 +54,7 @@
     "eslint-plugin-react": "^7.37.5",
     "flow-bin": "^0.276.0",
     "flow-typed": "^4.1.1",
-    "globals": "^16.3.0",
-    "vite": "^7.0.4"
+    "globals": "^16.3.0"
   },
   "browserslist": {
     "production": [
