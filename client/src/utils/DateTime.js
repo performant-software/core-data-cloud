@@ -9,9 +9,9 @@ const MS_TO_HOURS = 1000 * 60 * 60;
  *
  * @returns {number}
  */
-const getDurationInHours = (value: string) => {
+const getDurationInHours = (value: string): number => {
   const date = new Date(value);
-  const duration = Date.now() - date;
+  const duration = Date.now() - date.getTime();
 
   return duration / MS_TO_HOURS;
 };
@@ -23,7 +23,7 @@ const getDurationInHours = (value: string) => {
  *
  * @returns {string|null}
  */
-const getTimestamp = (value: number) => {
+const getTimestamp = (value: number): ?string => {
   if (!value) {
     return null;
   }

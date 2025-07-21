@@ -10,13 +10,13 @@ const FILENAME_ATTRIBUTE = 'filename=';
  *
  * @returns {string}
  */
-const getFilename = (disposition) => (
+const getFilename = (disposition: string): ?string => (
   disposition
     .split(FIELD_DELIMITER)
     .find((name) => name.includes(FILENAME_ATTRIBUTE))
-    .replace(FILENAME_ATTRIBUTE, '')
-    .replaceAll('"', '')
-    .trim()
+    ?.replace(FILENAME_ATTRIBUTE, '')
+    ?.replaceAll('"', '')
+    ?.trim()
 );
 
 export default {
