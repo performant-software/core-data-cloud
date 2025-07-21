@@ -2,7 +2,7 @@
 
 import cx from 'classnames';
 import React, { type Element } from 'react';
-import { Button, ButtonProps } from 'semantic-ui-react';
+import { Button, type ButtonProps } from 'semantic-ui-react';
 import _ from 'underscore';
 import styles from './MergeAttribute.module.css';
 

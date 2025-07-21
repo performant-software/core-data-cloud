@@ -42,7 +42,9 @@ const PlaceLayerModal: AbstractComponent<any> = (props: Props) => {
    * Fetch and set the list of georeferenced layers from the map library.
    */
   useEffect(() => {
-    ProjectsService.fetchMapLibrary(projectId).then(({ data }) => setGeoLayers(data));
+    ProjectsService
+      .fetchMapLibrary(projectId)
+      .then(({ data }) => setGeoLayers(data));
   }, []);
 
   /**
@@ -116,7 +118,7 @@ const PlaceLayerModal: AbstractComponent<any> = (props: Props) => {
           label={t('PlaceLayerModal.labels.name')}
           required={props.isRequired('name')}
           onChange={props.onTextInputChange.bind(this, 'name')}
-          value={props.item.name}
+          value={props.item.name || ''}
         />
         <Form.Dropdown
           label={t('PlaceLayerModal.labels.type')}
@@ -155,14 +157,14 @@ const PlaceLayerModal: AbstractComponent<any> = (props: Props) => {
                 label={t('PlaceLayerModal.labels.url')}
                 required
                 onChange={onUrlChange}
-                value={props.item.url}
+                value={props.item.url || ''}
               />
             )}
             { tab === Tabs.file && (
               <>
                 <FileInputButton
                   className={cx(styles.ui, styles.button, styles.uploadButton)}
-                  color='dark gray'
+                  color='grey'
                   content={t('Common.buttons.upload')}
                   disabled={loading}
                   icon='upload'
@@ -185,7 +187,7 @@ const PlaceLayerModal: AbstractComponent<any> = (props: Props) => {
                 onChange={onUrlChange}
                 options={PlaceLayerUtils.getMapLibraryOptions(geoLayers)}
                 selection
-                value={props.item.url}
+                value={props.item.url || ''}
               />
             )}
           </>

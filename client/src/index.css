@@ -14,12 +14,6 @@ textarea {
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 
-.ui.buttons.dark.gray > .ui.button,
-.ui.button.dark.gray {
-  background-color: #616161;
-  color: #FFFFFF;
-}
-
 .ui.button.basic.borderless,
 .ui.button.basic.borderless:hover,
 .ui.button.basic.borderless:focus {

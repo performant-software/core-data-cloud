@@ -39,14 +39,14 @@ const EventForm = (props: Props) => {
         label={t('EventForm.labels.name')}
         onChange={props.onTextInputChange.bind(this, 'name')}
         required={props.isRequired('name')}
-        value={props.item.name}
+        value={props.item.name || ''}
       />
       <Form.TextArea
         error={props.isError('description')}
         label={t('EventForm.labels.description')}
         onChange={props.onTextInputChange.bind(this, 'description')}
         required={props.isRequired('description')}
-        value={props.item.description}
+        value={props.item.description || ''}
       />
       <Form.Input
         error={props.isError('start_date')}

@@ -32,21 +32,21 @@ const PersonNameModal: AbstractComponent<any> = (props: Props) => {
           label={t('PersonNameModal.labels.firstName')}
           required={props.isRequired('first_name')}
           onChange={props.onTextInputChange.bind(this, 'first_name')}
-          value={props.item.first_name}
+          value={props.item.first_name || ''}
         />
         <Form.Input
           error={props.isError('middle_name')}
           label={t('PersonNameModal.labels.middleName')}
           required={props.isRequired('middle_name')}
           onChange={props.onTextInputChange.bind(this, 'middle_name')}
-          value={props.item.middle_name}
+          value={props.item.middle_name || ''}
         />
         <Form.Input
           error={props.isError('last_name')}
           label={t('PersonNameModal.labels.lastName')}
           required={props.isRequired('last_name')}
           onChange={props.onTextInputChange.bind(this, 'last_name')}
-          value={props.item.last_name}
+          value={props.item.last_name || ''}
         />
         <Form.Checkbox
           checked={props.item.primary}

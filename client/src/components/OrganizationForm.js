@@ -32,7 +32,7 @@ const OrganizationForm = (props: Props) => {
         }]}
         addButton={{
           basic: false,
-          color: 'dark gray',
+          color: 'grey',
           content: t('Common.buttons.addName'),
           location: 'bottom'
         }}
@@ -58,7 +58,7 @@ const OrganizationForm = (props: Props) => {
         label={t('OrganizationForm.labels.description')}
         onChange={props.onTextInputChange.bind(this, 'description')}
         required={props.isRequired('description')}
-        value={props.item.description}
+        value={props.item.description || ''}
       />
       { props.item.project_model_id && (
         <UserDefinedFieldsForm

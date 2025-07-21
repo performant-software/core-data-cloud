@@ -179,7 +179,7 @@ class Permissions {
 
     // The user cannot be invited more than once in 24 hours
     const timeInHours = DateTimeUtils.getDurationInHours(userProject?.user?.last_invited_at);
-    const interval = parseInt(process.env.REACT_APP_POSTMARK_INTERVAL, 10);
+    const interval = parseInt(import.meta.env.VITE_POSTMARK_INTERVAL, 10);
 
     return timeInHours > interval;
   }

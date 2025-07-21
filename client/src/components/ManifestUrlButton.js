@@ -15,7 +15,7 @@ type Props = {
   url: string
 };
 
-const COLOR_DARK_GRAY = 'dark gray';
+const COLOR_GREY = 'grey';
 const COLOR_GREEN = 'green';
 
 const ManifestUrlButton = (props: Props) => {
@@ -28,9 +28,7 @@ const ManifestUrlButton = (props: Props) => {
    *
    * @type {string}
    */
-  const color = useMemo(() => (
-    active ? COLOR_GREEN : COLOR_DARK_GRAY
-  ), [active]);
+  const color = useMemo(() => (active ? COLOR_GREEN : COLOR_GREY), [active]);
 
   /**
    * Memo-izes the button content based on the active state.

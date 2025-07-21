@@ -1,7 +1,7 @@
 // @flow
 
 import MergeableTransform from './Mergeable';
-import TaxonomyType from '../types/Taxonomy';
+import type { Taxonomy as TaxonomyType } from '../types/Taxonomy';
 
 /**
  * Class responsible for transforming taxonomy records for POST/PUT requests.

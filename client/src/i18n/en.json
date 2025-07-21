@@ -357,15 +357,6 @@
       "attributes": "Attributes"
     }
   },
-  "NameModal": {
-    "labels": {
-      "name": "Name"
-    },
-    "title": {
-      "add": "Add Name",
-      "edit": "Edit Name"
-    }
-  },
   "NameRelationModal": {
     "labels": {
       "name": "Name",

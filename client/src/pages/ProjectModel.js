@@ -161,7 +161,7 @@ const ProjectModelForm = (props: Props) => {
               label={t('ProjectModel.labels.name')}
               required={props.isRequired('name')}
               onChange={props.onTextInputChange.bind(this, 'name')}
-              value={props.item.name}
+              value={props.item.name || ''}
             />
             <Form.Input
               error={props.isError('order')}
@@ -169,7 +169,7 @@ const ProjectModelForm = (props: Props) => {
               required={props.isRequired('order')}
               onChange={props.onTextInputChange.bind(this, 'order')}
               type='number'
-              value={props.item.order}
+              value={props.item.order || 0}
             />
             <Form.Checkbox
               checked={props.item.allow_identifiers}

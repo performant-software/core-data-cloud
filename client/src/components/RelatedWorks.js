@@ -51,7 +51,7 @@ const RelatedWorks = () => {
       actions={actions}
       addButton={{
         basic: false,
-        color: 'dark gray',
+        color: 'grey',
         location: 'top'
       }}
       className='compact'

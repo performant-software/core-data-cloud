@@ -107,6 +107,7 @@ const People: AbstractComponent<any> = () => {
                 label: t('People.actions.merge.biography')
               }]}
               ids={selectedItems}
+              key='merge'
               onLoad={(id) => (
                 PeopleService
                   .fetchOne(id)

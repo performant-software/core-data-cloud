@@ -51,7 +51,7 @@ const MediaContentForm = (props: Props) => {
         label={t('MediaContent.labels.name')}
         required={props.isRequired('name')}
         onChange={props.onTextInputChange.bind(this, 'name')}
-        value={props.item.name}
+        value={props.item.name || ''}
       />
       { props.item.project_model_id && (
         <UserDefinedFieldsForm

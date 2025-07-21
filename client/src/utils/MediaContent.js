@@ -13,8 +13,8 @@ const RADIX = 10;
 const getManifestLimit = () => {
   let limit = DEFAULT_LIMIT;
 
-  if (process.env.REACT_APP_IIIF_MANIFEST_ITEM_LIMIT) {
-    limit = parseInt(process.env.REACT_APP_IIIF_MANIFEST_ITEM_LIMIT, RADIX);
+  if (import.meta.env.VITE_IIIF_MANIFEST_ITEM_LIMIT) {
+    limit = parseInt(import.meta.env.VITE_IIIF_MANIFEST_ITEM_LIMIT, RADIX);
   }
 
   return limit;
@@ -77,7 +77,7 @@ const getManifestURL = (projectModel, recordId, projectModelRelationshipId) => {
 
   if (baseUrl) {
     url = [
-      process.env.REACT_APP_HOSTNAME,
+      import.meta.env.VITE_HOSTNAME,
       'core_data',
       'public',
       'v1',

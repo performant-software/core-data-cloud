@@ -101,6 +101,7 @@ const Items: AbstractComponent<any> = () => {
                 resolve: (sourceName) => sourceName.name
               }]}
               ids={selectedItems}
+              key='merge'
               onLoad={(id) => (
                 ItemsService
                   .fetchOne(id)

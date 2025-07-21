@@ -1,10 +1,14 @@
 // @flow
 
-import { DropdownButton, ItemList, ItemViews } from '@performant-software/semantic-components';
+import {
+  DropdownButton,
+  ItemList,
+  ItemViews,
+  LazyImage
+} from '@performant-software/semantic-components';
 import cx from 'classnames';
 import React, { useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image } from 'semantic-ui-react';
 import _ from 'underscore';
 import ItemContext from '../context/Item';
 import ManifestLimitIcon from './ManifestLimitIcon';
@@ -183,9 +187,10 @@ const RelatedMediaContents = () => {
         buttons={[{
           render: () => (
             <DropdownButton
-              color='dark gray'
+              color='grey'
               direction='right'
               icon='plus'
+              key='upload'
               onChange={(e, { value }) => setModal(value)}
               options={[{
                 icon: 'cloud upload',
@@ -205,6 +210,7 @@ const RelatedMediaContents = () => {
         }, {
           render: () => (
             <ManifestUrlButton
+              key='manifest'
               url={MediaContentUtils.getManifestURL(projectModel, uuid, projectModelRelationship.uuid)}
             />
           )
@@ -235,8 +241,12 @@ const RelatedMediaContents = () => {
           </div>
         )}
         renderImage={(relationship) => (
-          <Image
-            src={resolveAttributeValue('content_thumbnail_url', relationship)}
+          <LazyImage
+            className={cx(styles.ui, styles.small, styles.image)}
+            dimmable={false}
+            preview={resolveAttributeValue('content_thumbnail_url', relationship)}
+            size='small'
+            src={resolveAttributeValue('content_iiif_url', relationship)}
           />
         )}
         renderListHeader={() => <ManifestLimitIcon />}

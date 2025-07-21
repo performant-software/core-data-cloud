@@ -23,7 +23,7 @@ const CONFIG_PATH = '/projects/:projectId/project_models/:projectModelId';
 
 const DropdownItem = ({ projectModel }: Props) => {
   const url = `projects/${projectModel.project_id}/${projectModel.id}`;
-  const isActive = useMatch({ path: `${url}/*`, end: true });
+  const isActive = !!useMatch({ path: `${url}/*`, end: true });
 
   return (
     <Dropdown.Item
@@ -56,6 +56,7 @@ const ProjectModelsMenu = () => {
       <Dropdown.Menu>
         { _.map(projectModels, (projectModel) => (
           <DropdownItem
+            key={projectModel.id}
             projectModel={projectModel}
           />
         ))}

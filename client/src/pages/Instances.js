@@ -101,6 +101,7 @@ const Instances: AbstractComponent<any> = () => {
                 resolve: (sourceName) => sourceName.name
               }]}
               ids={selectedItems}
+              key='merge'
               onLoad={(id) => (
                 InstancesService
                   .fetchOne(id)

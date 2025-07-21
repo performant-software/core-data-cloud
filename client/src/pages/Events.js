@@ -118,6 +118,7 @@ const Events: AbstractComponent<any> = () => {
                 resolve: (event) => FuzzyDateUtils.getDateView(event.end_date)
               }]}
               ids={selectedItems}
+              key='merge'
               onLoad={(id) => (
                 EventsService
                   .fetchOne(id)

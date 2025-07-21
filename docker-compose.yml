@@ -4,9 +4,9 @@ services:
     build:
       args:
         - RAILS_ENV=docker
-        - REACT_APP_HOSTNAME=$REACT_APP_HOSTNAME
-        - REACT_APP_IIIF_MANIFEST_ITEM_LIMIT=$REACT_APP_IIIF_MANIFEST_ITEM_LIMIT
-        - REACT_APP_MAP_TILER_KEY=$REACT_APP_MAP_TILER_KEY
+        - VITE_HOSTNAME=$VITE_HOSTNAME
+        - VITE_IIIF_MANIFEST_ITEM_LIMIT=$VITE_IIIF_MANIFEST_ITEM_LIMIT
+        - VITE_MAP_TILER_KEY=$VITE_MAP_TILER_KEY
       context: .
     container_name: core-data-cloud-app
     depends_on:
