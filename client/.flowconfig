@@ -1,11 +1,18 @@
 [ignore]
-<PROJECT_ROOT>/build/
+.*
 
 [include]
 
 [libs]
 
 [lints]
+untyped-type-import=error
+internal-type=error
+unsafe-object-assign=error
+nested-component=error
+nested-hook=error
+libdef-override=error
+deprecated-type-bool=error
 
 [options]
 module.file_ext=.js
@@ -18,7 +25,5 @@ module.file_ext=.tsx
 module.file_ext=.cts
 module.file_ext=.cjs
 module.file_ext=.mjs
-
-react.runtime=classic
 
 [strict]
