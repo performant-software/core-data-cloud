@@ -40,11 +40,8 @@
     "@babel/preset-env": "^7.28.0",
     "@babel/preset-flow": "^7.27.1",
     "@babel/preset-react": "^7.27.1",
-    "@bunchtogether/vite-plugin-flow": "^1.0.2",
     "@eslint/js": "^9.31.0",
-    "@vitejs/plugin-react": "^4.7.0",
     "babel-eslint": "^10.1.0",
-    "babel-plugin-syntax-hermes-parser": "^0.29.1",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "eslint": "^9.31.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -53,7 +50,6 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
     "flow-bin": "^0.276.0",
-    "flow-typed": "^4.1.1",
     "globals": "^16.3.0"
   },
   "browserslist": {

@@ -1,6 +1,5 @@
 export default {
   plugins: [
-    'babel-plugin-syntax-hermes-parser',
     'transform-flow-strip-types'
   ],
   presets: [
