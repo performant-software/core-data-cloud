@@ -1,20 +1,19 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: c18e1f09a2f4a124e8b691e5044920e703dfa9fb
-  tag: v0.1.93
+  revision: 31ec98b64d3bb084291bd22396591c7e66da5aab
+  tag: v0.1.94
   specs:
     core_data_connector (0.1.0)
-      activerecord-postgis-adapter (~> 8.0)
+      activerecord-postgis-adapter (~> 11.0)
       faker
       fuzzy_dates
-      jwt (~> 2.7.1)
+      jwt (~> 3.1.2)
       jwt_auth
       postmark-rails (~> 0.22.1)
-      rack-cors (~> 2.0.1)
-      rails (>= 6.0.3.2, < 8)
+      rack-cors (~> 3.0.0)
+      rails (>= 8.0, < 9)
       resource_api
-      rexml (~> 3.2)
-      rgeo-geojson (~> 2.1)
+      rgeo-geojson (~> 2.2)
       rubyzip (~> 2.3.2)
       triple_eye_effable
       typesense (~> 0.14)
@@ -23,136 +22,148 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/fuzzy-dates.git
-  revision: fa3f237882f9c89888f82af41f6fe2b8ff2281a3
-  tag: v0.1.0
+  revision: c83271acb4837325d026a63229f89059984648f5
+  tag: v0.1.1
   specs:
     fuzzy_dates (0.1.0)
-      rails (>= 6.0.3.2, < 8)
+      rails (>= 6.0.3.2, < 9)
       resource_api
 
 GIT
   remote: https://github.com/performant-software/jwt-auth.git
-  revision: fa54af0cdcad6122fad10d9ad745b814c2918853
-  tag: v0.1.2
+  revision: 993b47f395d7349c499a0ffda6ef286871ef89dc
+  tag: v0.1.3
   specs:
     jwt_auth (0.1.0)
-      jwt (~> 2.7.1)
-      rails (~> 7.0.7)
+      jwt (~> 3.1.2)
+      rails (>= 7.1, < 9)
 
 GIT
   remote: https://github.com/performant-software/resource-api.git
-  revision: c5c4ac16d490cc4f5013c39ee08e9422408d3b74
-  tag: v0.5.13
+  revision: ab5afbdfedfd4e89309d748b46167652562a22bf
+  tag: v0.5.14
   specs:
     resource_api (0.1.0)
       pagy (~> 5.10)
       pundit (~> 2.3.1)
-      rails (>= 7.0, < 8)
+      rails (>= 7.0, < 9)
 
 GIT
   remote: https://github.com/performant-software/triple-eye-effable.git
-  revision: e36a09bb6b182149719cb1e7c3aa8c785886093c
-  tag: v0.2.1
+  revision: 2a94435877fb5bf281571247a837d575ce901ed7
+  tag: v0.2.4
   specs:
     triple_eye_effable (0.1.0)
       httparty (~> 0.20.0)
-      rails (>= 6.0.3.2, < 8)
+      rails (>= 6.0.3.2, < 9)
 
 GIT
   remote: https://github.com/performant-software/user-defined-fields.git
-  revision: bacc27994df1ba3b3d969fcdea991ea9bff236f9
-  tag: v0.1.13
+  revision: 9799f151ab51506eef42177c756b762060a9838a
+  tag: v0.1.14
   specs:
     user_defined_fields (0.1.0)
-      rails (>= 6.0.3.2, < 8)
+      rails (>= 6.0.3.2, < 9)
       resource_api
 
 GEM
   remote: https://rubygems.org/
   specs:
-    actioncable (7.0.7)
-      actionpack (= 7.0.7)
-      activesupport (= 7.0.7)
+    actioncable (8.0.2)
+      actionpack (= 8.0.2)
+      activesupport (= 8.0.2)
       nio4r (~> 2.0)
       websocket-driver (>= 0.6.1)
-    actionmailbox (7.0.7)
-      actionpack (= 7.0.7)
-      activejob (= 7.0.7)
-      activerecord (= 7.0.7)
-      activestorage (= 7.0.7)
-      activesupport (= 7.0.7)
-      mail (>= 2.7.1)
-      net-imap
-      net-pop
-      net-smtp
-    actionmailer (7.0.7)
-      actionpack (= 7.0.7)
-      actionview (= 7.0.7)
-      activejob (= 7.0.7)
-      activesupport (= 7.0.7)
-      mail (~> 2.5, >= 2.5.4)
-      net-imap
-      net-pop
-      net-smtp
-      rails-dom-testing (~> 2.0)
-    actionpack (7.0.7)
-      actionview (= 7.0.7)
-      activesupport (= 7.0.7)
-      rack (~> 2.0, >= 2.2.4)
+      zeitwerk (~> 2.6)
+    actionmailbox (8.0.2)
+      actionpack (= 8.0.2)
+      activejob (= 8.0.2)
+      activerecord (= 8.0.2)
+      activestorage (= 8.0.2)
+      activesupport (= 8.0.2)
+      mail (>= 2.8.0)
+    actionmailer (8.0.2)
+      actionpack (= 8.0.2)
+      actionview (= 8.0.2)
+      activejob (= 8.0.2)
+      activesupport (= 8.0.2)
+      mail (>= 2.8.0)
+      rails-dom-testing (~> 2.2)
+    actionpack (8.0.2)
+      actionview (= 8.0.2)
+      activesupport (= 8.0.2)
+      nokogiri (>= 1.8.5)
+      rack (>= 2.2.4)
+      rack-session (>= 1.0.1)
       rack-test (>= 0.6.3)
-      rails-dom-testing (~> 2.0)
-      rails-html-sanitizer (~> 1.0, >= 1.2.0)
-    actiontext (7.0.7)
-      actionpack (= 7.0.7)
-      activerecord (= 7.0.7)
-      activestorage (= 7.0.7)
-      activesupport (= 7.0.7)
+      rails-dom-testing (~> 2.2)
+      rails-html-sanitizer (~> 1.6)
+      useragent (~> 0.16)
+    actiontext (8.0.2)
+      actionpack (= 8.0.2)
+      activerecord (= 8.0.2)
+      activestorage (= 8.0.2)
+      activesupport (= 8.0.2)
       globalid (>= 0.6.0)
       nokogiri (>= 1.8.5)
-    actionview (7.0.7)
-      activesupport (= 7.0.7)
+    actionview (8.0.2)
+      activesupport (= 8.0.2)
       builder (~> 3.1)
-      erubi (~> 1.4)
-      rails-dom-testing (~> 2.0)
-      rails-html-sanitizer (~> 1.1, >= 1.2.0)
-    activejob (7.0.7)
-      activesupport (= 7.0.7)
+      erubi (~> 1.11)
+      rails-dom-testing (~> 2.2)
+      rails-html-sanitizer (~> 1.6)
+    activejob (8.0.2)
+      activesupport (= 8.0.2)
       globalid (>= 0.3.6)
-    activemodel (7.0.7)
-      activesupport (= 7.0.7)
-    activerecord (7.0.7)
-      activemodel (= 7.0.7)
-      activesupport (= 7.0.7)
-    activerecord-postgis-adapter (8.0.3)
-      activerecord (~> 7.0.0)
-      rgeo-activerecord (~> 7.0.0)
-    activestorage (7.0.7)
-      actionpack (= 7.0.7)
-      activejob (= 7.0.7)
-      activerecord (= 7.0.7)
-      activesupport (= 7.0.7)
+    activemodel (8.0.2)
+      activesupport (= 8.0.2)
+    activerecord (8.0.2)
+      activemodel (= 8.0.2)
+      activesupport (= 8.0.2)
+      timeout (>= 0.4.0)
+    activerecord-postgis-adapter (11.0.0)
+      activerecord (~> 8.0.0)
+      rgeo-activerecord (~> 8.0.0)
+    activestorage (8.0.2)
+      actionpack (= 8.0.2)
+      activejob (= 8.0.2)
+      activerecord (= 8.0.2)
+      activesupport (= 8.0.2)
       marcel (~> 1.0)
-      mini_mime (>= 1.1.0)
-    activesupport (7.0.7)
-      concurrent-ruby (~> 1.0, >= 1.0.2)
+    activesupport (8.0.2)
+      base64
+      benchmark (>= 0.3)
+      bigdecimal
+      concurrent-ruby (~> 1.0, >= 1.3.1)
+      connection_pool (>= 2.2.5)
+      drb
       i18n (>= 1.6, < 2)
+      logger (>= 1.4.2)
       minitest (>= 5.1)
-      tzinfo (~> 2.0)
-    bcrypt (3.1.19)
+      securerandom (>= 0.3)
+      tzinfo (~> 2.0, >= 2.0.5)
+      uri (>= 0.13.1)
+    base64 (0.3.0)
+    bcrypt (3.1.20)
+    benchmark (0.4.1)
     bigdecimal (3.1.8)
-    bootsnap (1.16.0)
+    bootsnap (1.18.6)
       msgpack (~> 1.2)
     builder (3.2.4)
-    concurrent-ruby (1.2.2)
+    concurrent-ruby (1.3.5)
+    connection_pool (2.5.3)
     crass (1.0.6)
+    csv (3.3.5)
     date (3.3.3)
-    debug (1.8.0)
-      irb (>= 1.5.0)
-      reline (>= 0.3.1)
-    dotenv (2.8.1)
-    dotenv-rails (2.8.1)
-      dotenv (= 2.8.1)
-      railties (>= 3.2)
+    debug (1.11.0)
+      irb (~> 1.10)
+      reline (>= 0.3.8)
+    dotenv (3.1.8)
+    dotenv-rails (3.1.8)
+      dotenv (= 3.1.8)
+      railties (>= 6.1)
+    drb (2.2.3)
+    erb (5.0.1)
     erubi (1.12.0)
     ethon (0.16.0)
       ffi (>= 1.15.0)
@@ -169,10 +180,14 @@ GEM
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     io-console (0.6.0)
-    irb (1.7.4)
-      reline (>= 0.3.6)
+    irb (1.15.2)
+      pp (>= 0.6.0)
+      rdoc (>= 4.0.0)
+      reline (>= 0.4.2)
     json (2.12.2)
-    jwt (2.7.1)
+    jwt (3.1.2)
+      base64
+    logger (1.7.0)
     loofah (2.21.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -183,15 +198,15 @@ GEM
       net-smtp
     mail_safe (0.3.4)
       actionmailer (>= 3.0.0)
-    marcel (1.0.2)
-    method_source (1.0.0)
+    marcel (1.0.4)
     mime-types (3.5.2)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2024.0507)
     mini_mime (1.1.5)
-    minitest (5.19.0)
-    msgpack (1.7.2)
-    multi_json (1.16.0)
+    mini_portile2 (2.8.9)
+    minitest (5.25.5)
+    msgpack (1.8.0)
+    multi_json (1.17.0)
     multi_xml (0.7.1)
       bigdecimal (~> 3.1)
     net-imap (0.3.7)
@@ -204,48 +219,57 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.9)
-    nokogiri (1.15.4-arm64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.15.4-x86_64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.15.4-x86_64-linux)
+    nokogiri (1.15.4)
+      mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     oj (3.16.11)
       bigdecimal (>= 3.0)
       ostruct (>= 0.2)
-    ostruct (0.6.2)
+    ostruct (0.6.3)
     pagy (5.10.1)
       activesupport
-    pg (1.5.3)
+    pg (1.5.9)
     postmark (1.25.1)
       json
     postmark-rails (0.22.1)
       actionmailer (>= 3.0.0)
       postmark (>= 1.21.3, < 2.0)
-    puma (5.6.7)
+    pp (0.6.2)
+      prettyprint
+    prettyprint (0.2.0)
+    psych (5.2.6)
+      date
+      stringio
+    puma (6.6.0)
       nio4r (~> 2.0)
     pundit (2.3.1)
       activesupport (>= 3.0.0)
     racc (1.7.1)
-    rack (2.2.8)
-    rack-cors (2.0.1)
-      rack (>= 2.0.0)
+    rack (3.1.16)
+    rack-cors (3.0.0)
+      logger
+      rack (>= 3.0.14)
+    rack-session (2.1.1)
+      base64 (>= 0.1.0)
+      rack (>= 3.0.0)
     rack-test (2.1.0)
       rack (>= 1.3)
-    rails (7.0.7)
-      actioncable (= 7.0.7)
-      actionmailbox (= 7.0.7)
-      actionmailer (= 7.0.7)
-      actionpack (= 7.0.7)
-      actiontext (= 7.0.7)
-      actionview (= 7.0.7)
-      activejob (= 7.0.7)
-      activemodel (= 7.0.7)
-      activerecord (= 7.0.7)
-      activestorage (= 7.0.7)
-      activesupport (= 7.0.7)
+    rackup (2.2.1)
+      rack (>= 3)
+    rails (8.0.2)
+      actioncable (= 8.0.2)
+      actionmailbox (= 8.0.2)
+      actionmailer (= 8.0.2)
+      actionpack (= 8.0.2)
+      actiontext (= 8.0.2)
+      actionview (= 8.0.2)
+      activejob (= 8.0.2)
+      activemodel (= 8.0.2)
+      activerecord (= 8.0.2)
+      activestorage (= 8.0.2)
+      activesupport (= 8.0.2)
       bundler (>= 1.15.0)
-      railties (= 7.0.7)
+      railties (= 8.0.2)
     rails-dom-testing (2.2.0)
       activesupport (>= 5.0.0)
       minitest
@@ -253,25 +277,30 @@ GEM
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
       nokogiri (~> 1.14)
-    railties (7.0.7)
-      actionpack (= 7.0.7)
-      activesupport (= 7.0.7)
-      method_source
+    railties (8.0.2)
+      actionpack (= 8.0.2)
+      activesupport (= 8.0.2)
+      irb (~> 1.13)
+      rackup (>= 1.0.0)
       rake (>= 12.2)
-      thor (~> 1.0)
-      zeitwerk (~> 2.5)
+      thor (~> 1.0, >= 1.2.2)
+      zeitwerk (~> 2.6)
     rake (13.0.6)
-    reline (0.3.8)
+    rdoc (6.14.2)
+      erb
+      psych (>= 4.0.0)
+    reline (0.6.1)
       io-console (~> 0.5)
-    rexml (3.4.1)
     rgeo (3.0.1)
-    rgeo-activerecord (7.0.1)
-      activerecord (>= 5.0)
-      rgeo (>= 1.0.0)
+    rgeo-activerecord (8.0.0)
+      activerecord (>= 7.0)
+      rgeo (>= 3.0)
     rgeo-geojson (2.2.0)
       multi_json (~> 1.15)
       rgeo (>= 1.0.0)
     rubyzip (2.3.2)
+    securerandom (0.4.1)
+    stringio (3.1.7)
     thor (1.2.2)
     timeout (0.4.0)
     typesense (0.15.0)
@@ -281,7 +310,10 @@ GEM
       ethon (>= 0.9.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    websocket-driver (0.7.6)
+    uri (1.0.3)
+    useragent (0.16.11)
+    websocket-driver (0.8.0)
+      base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     zeitwerk (2.6.11)
@@ -294,28 +326,27 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  bcrypt (~> 3.1.18)
+  bcrypt (~> 3.1.20)
   bootsnap
   core_data_connector!
-  debug
-  dotenv-rails
+  csv (~> 3.3.5)
+  debug (~> 1.11.0)
+  dotenv-rails (~> 3.1.8)
   fuzzy_dates!
-  jwt (~> 2.4, >= 2.4.1)
+  jwt (~> 3.1.2)
   jwt_auth!
   mail_safe (~> 0.3.4)
-  pagy (~> 5.10)
-  pg (~> 1.5.3)
+  pg (~> 1.5.9)
   postmark-rails (~> 0.22.1)
-  puma (~> 5.0)
-  rack-cors (~> 2.0.1)
-  rails (~> 7.0.7)
+  puma (~> 6.6.0)
+  rails (~> 8.0.2)
   resource_api!
   triple_eye_effable!
   tzinfo-data
   user_defined_fields!
 
 RUBY VERSION
-   ruby 3.2.2p53
+   ruby 3.4.4p34
 
 BUNDLED WITH
    2.4.19

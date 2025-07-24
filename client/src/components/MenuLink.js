@@ -1,11 +1,7 @@
 // @flow
 
 import React, { type ComponentType, type Node } from 'react';
-import {
-  Link,
-  useMatch,
-  useResolvedPath
-} from 'react-router-dom';
+import { Link, useMatch, useResolvedPath } from 'react-router';
 import { Menu } from 'semantic-ui-react';
 import _ from 'underscore';
 

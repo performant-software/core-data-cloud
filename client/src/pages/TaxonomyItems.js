@@ -4,7 +4,7 @@ import { ListTable } from '@performant-software/semantic-components';
 import { useUserDefinedColumns } from '@performant-software/user-defined-fields';
 import React, { useContext, useMemo, useState } from 'react';
 import { FaTag, FaTags } from 'react-icons/fa6';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 import { Icon } from 'semantic-ui-react';
 import ListViewMenu from '../components/ListViewMenu';
 import MergeButton from '../components/MergeButton';
@@ -85,7 +85,7 @@ const TaxonomyItems = () => {
             <MergeButton
               attributes={[{
                 name: 'uuid',
-                label: t('Common.actions.merge.uuid'),
+                label: t('Common.actions.merge.uuid')
               }, {
                 name: 'name',
                 label: t('TaxonomyItems.actions.merge.name')

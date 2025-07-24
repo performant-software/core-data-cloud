@@ -154,8 +154,9 @@ const ItemLayout = (props: Props) => {
         className={className}
         fluid
       >
-        { _.map(visibleToasters, (toaster) => (
+        { _.map(visibleToasters, (toaster, index) => (
           <Toaster
+            key={index}
             onDismiss={toaster.props.onDismiss}
             timeout={toaster.props.timeout}
             type={toaster.props.type}

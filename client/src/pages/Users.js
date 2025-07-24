@@ -3,7 +3,7 @@
 import { BooleanIcon, ListTable } from '@performant-software/semantic-components';
 import React, { type AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import DateTimeUtils from '../utils/DateTime';
 import PermissionsService from '../services/Permissions';
 import UnauthorizedRedirect from '../components/UnauthorizedRedirect';

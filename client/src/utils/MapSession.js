@@ -10,7 +10,7 @@ const SESSION_DEFAULT = '{ "geocoding": "point" }';
  *
  * @returns {{}|any}
  */
-const restoreSession = (key, storage) => {
+const restoreSession = (key: string, storage): any => {
   if (!(key && storage)) {
     return {};
   }

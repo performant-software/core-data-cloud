@@ -1,7 +1,7 @@
 import { SimpleEditPage, Toaster } from '@performant-software/semantic-components';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router';
 import { MessageHeader } from 'semantic-ui-react';
 import ItemHeader from '../components/ItemHeader';
 import PermissionsService from '../services/Permissions';

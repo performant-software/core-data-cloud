@@ -6,7 +6,7 @@ import cx from 'classnames';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IoSearchOutline } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import {
   Button,
   Confirm,

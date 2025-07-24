@@ -1,9 +1,9 @@
 // @flow
 
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Form, Header } from "semantic-ui-react";
-import WebIdentifierDropdown from "./WebIdentifierDropdown";
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Form, Header } from 'semantic-ui-react';
+import WebIdentifierDropdown from './WebIdentifierDropdown';
 
 type Props = {
   authorityId: number,
@@ -17,9 +17,9 @@ const GeonamesIdentifierForm = (props: Props) => {
   const { t } = useTranslation();
 
   return (
-    <Form.Input error={props.error} label={t("Common.labels.identifier")}>
+    <Form.Input error={props.error} label={t('Common.labels.identifier')}>
       <WebIdentifierDropdown
-        id="geonameId"
+        id='geonameId'
         authorityId={props.authorityId}
         onLoad={({ data }) => setSelectedItem(data)}
         onSelection={(identifier) => props.onSelection(identifier)}
@@ -27,7 +27,7 @@ const GeonamesIdentifierForm = (props: Props) => {
         renderOption={(item) => (
           <Header
             content={item.name}
-            size="small"
+            size='small'
             subheader={`${item.fcodeName}: ${item.adminName1}, ${item.countryCode}`}
           />
         )}

@@ -11,7 +11,7 @@ import { useUserDefinedColumns } from '@performant-software/user-defined-fields'
 import { Icon } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { IoBulb, IoBulbOutline } from 'react-icons/io5';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import ListViewMenu from '../components/ListViewMenu';
 import MergeButton from '../components/MergeButton';
 import PermissionsService from '../services/Permissions';
@@ -90,7 +90,7 @@ const Works: AbstractComponent<any> = () => {
             <MergeButton
               attributes={[{
                 name: 'uuid',
-                label: t('Common.actions.merge.uuid'),
+                label: t('Common.actions.merge.uuid')
               }, {
                 name: 'source_names',
                 label: t('Works.actions.merge.names'),

@@ -5,7 +5,7 @@ import cx from 'classnames';
 import React, { type AbstractComponent, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IoSearchOutline } from 'react-icons/io5';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { Icon } from 'semantic-ui-react';
 import PermissionsService from '../services/Permissions';
 import ProjectDescription from '../components/ProjectDescription';

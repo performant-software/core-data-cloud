@@ -23,6 +23,11 @@
 
 Use `bundle exec rake start` to start a live development build.
 
+### Flow
+To install Flow types run `yarn flow-typed install`. To run Flow server run `yarn flow`.
+
+**Note:** Currently, Flow is throwing errors for most files. Instead of updating these all at once, we should fix the Flow errors as other changes are made to the files. Eventually, we should convert this code-base to Typescript.
+
 ## Docker
 
 #### Prerequsites

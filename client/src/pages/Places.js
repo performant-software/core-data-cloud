@@ -12,7 +12,7 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import { BiWorld } from 'react-icons/bi';
 import { TfiMapAlt } from 'react-icons/tfi';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { Icon } from 'semantic-ui-react';
 import ListViewMenu from '../components/ListViewMenu';
 import MergeButton from '../components/MergeButton';

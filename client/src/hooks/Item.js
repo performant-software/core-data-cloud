@@ -6,7 +6,7 @@ import _ from 'underscore';
 import ProjectContext from '../context/Project';
 import PeopleUtils from '../utils/People';
 import { Types } from '../utils/ProjectModels';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import useParams from './ParsedParams';
 import useProjectModelRelationship from './ProjectModelRelationship';
 

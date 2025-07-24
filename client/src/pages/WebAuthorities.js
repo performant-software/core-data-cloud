@@ -3,7 +3,7 @@
 import React from 'react';
 import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import { ListTable } from '@performant-software/semantic-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import PermissionsService from '../services/Permissions';
 import UnauthorizedRedirect from '../components/UnauthorizedRedirect';

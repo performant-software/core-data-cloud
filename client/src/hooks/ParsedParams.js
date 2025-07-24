@@ -1,6 +1,6 @@
 // @flow
 
-import { useParams as useDefaultParams } from 'react-router-dom';
+import { useParams as useDefaultParams } from 'react-router';
 import _ from 'underscore';
 
 type ParamsType = {

@@ -3,7 +3,7 @@
 import cx from 'classnames';
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { Breadcrumb } from 'semantic-ui-react';
 import ProjectContext from '../context/Project';
 import styles from './ProjectTitle.module.css';

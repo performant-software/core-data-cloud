@@ -4,7 +4,7 @@ import cx from 'classnames';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { RiLockPasswordLine } from 'react-icons/ri';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { Dropdown, Header, Icon } from 'semantic-ui-react';
 import PermissionsService from '../services/Permissions';
 import SessionService from '../services/Session';
