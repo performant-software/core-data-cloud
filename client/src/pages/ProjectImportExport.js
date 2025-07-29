@@ -369,6 +369,7 @@ const ProjectImportExport = () => {
       { success && (
         <Toaster
           onDismiss={() => setSuccess(false)}
+          timeout={5000}
           type='positive'
         >
           <Message.Header

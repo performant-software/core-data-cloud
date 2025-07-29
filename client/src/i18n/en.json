@@ -681,8 +681,8 @@
     },
     "messages": {
       "import": {
-        "content": "Your file has been imported.",
-        "header": "Success!"
+        "content": "Your file has been uploaded. Use the \"Jobs\" tab to check the status of your import.",
+        "header": "File Uploaded Successfully"
       }
     },
     "title": "Import"

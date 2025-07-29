@@ -75,6 +75,8 @@ const Users: AbstractComponent<any> = () => {
           resolve: (job) => job.user.name,
           sortable: true
         }]}
+        defaultSort='created_at'
+        defaultSortDirection='descending'
         onDelete={(job) => JobsService.delete(job)}
         onLoad={(params) => JobsService.fetchAll({ ...params, project_id: projectId })}
         searchable
