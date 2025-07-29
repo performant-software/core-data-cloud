@@ -24,6 +24,15 @@ class Permissions {
   }
 
   /**
+   * An admin user can manage jobs.
+   *
+   * @returns {boolean}
+   */
+  canCreateJobs(): boolean {
+    return this.isAdmin();
+  }
+
+  /**
    * An admin user or a member user can create a new project.
    *
    * @returns {boolean}

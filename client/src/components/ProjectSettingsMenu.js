@@ -43,6 +43,13 @@ const ProjectSettingsMenu = () => {
             parent
             to={`/projects/${projectId}/web_authorities`}
           />
+          { PermissionsService.canCreateJobs() && (
+            <MenuLink
+              content={t('ProjectSettingsMenu.labels.jobs')}
+              parent
+              to={`/projects/${projectId}/jobs`}
+            />
+          )}
         </>
       )}
     </Menu>

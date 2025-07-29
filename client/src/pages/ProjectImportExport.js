@@ -11,7 +11,9 @@ import {
   BsDatabaseFillUp
 } from 'react-icons/bs';
 import { FaCode } from 'react-icons/fa';
+import { FaGears } from 'react-icons/fa6';
 import { SlGraph } from 'react-icons/sl';
+import { Link } from 'react-router';
 import {
   Button,
   Container,
@@ -305,6 +307,25 @@ const ProjectImportExport = () => {
                   />
                 </Segment>
               </>
+            )}
+            { PermissionsService.canCreateJobs() && (
+              <Segment
+                as={Link}
+                className={cx(styles.ui, styles.segment)}
+                padded
+                to={`/projects/${projectId}/jobs`}
+              >
+                <Header
+                  content={t('ProjectImportExport.actions.data.jobs.header')}
+                  icon={(
+                    <Icon>
+                      <FaGears />
+                    </Icon>
+                  )}
+                  size='small'
+                  subheader={t('ProjectImportExport.actions.data.jobs.content')}
+                />
+              </Segment>
             )}
           </SegmentGroup>
         </>

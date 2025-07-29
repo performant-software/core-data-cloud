@@ -8,3 +8,9 @@
   border: none;
   margin: 0px;
 }
+
+.projectImport > .ui.segments > a.ui.segment:hover {
+  background-color: #cacbcd;
+  background-image: none;
+  color: #000c;
+}

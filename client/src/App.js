@@ -5,6 +5,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { BrowserRouter as Router, Routes, Route } from 'react-router';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
+import Jobs from './pages/Jobs';
 import Layout from './components/Layout';
 import Login from './pages/Login';
 import Logout from './pages/Logout';
@@ -132,6 +133,10 @@ const App: ComponentType<any> = () => (
                 />
               </Route>
               <Route
+                path='jobs'
+                element={<Jobs />}
+              />
+              <Route
                 path=':projectModelId'
               >
                 <Route
@@ -188,6 +193,14 @@ const App: ComponentType<any> = () => (
                 />
               </Route>
             </Route>
+          </Route>
+          <Route
+            path='jobs'
+          >
+            <Route
+              index
+              element={<Jobs />}
+            />
           </Route>
           <Route
             path='password_reset'
