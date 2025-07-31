@@ -37,7 +37,9 @@ type Props = EditContainerProps & {
 const ProjectForm = (props: Props) => {
   const [clearModal, setClearModal] = useState(false);
   const [cleared, setCleared] = useState(false);
+  const [clearing, setClearing] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const navigate = useNavigate();
   const { projectId } = useParams();
@@ -48,24 +50,30 @@ const ProjectForm = (props: Props) => {
    *
    * @type {function(): Promise<void>}
    */
-  const onClear = useCallback(() => (
-    ProjectsService
+  const onClear = useCallback(() => {
+    setClearing(true);
+
+    return ProjectsService
       .clear(props.item)
       .then(() => setCleared(true))
       .then(() => setClearModal(false))
-  ), [props.item]);
+      .finally(() => setClearing(false));
+  }, [props.item]);
 
   /**
    * Deletes the current project and navigates back to the list.
    *
    * @type {function(): Promise<R>}
    */
-  const onDelete = useCallback(() => (
-    ProjectsService
+  const onDelete = useCallback(() => {
+    setDeleting(true);
+
+    return ProjectsService
       .delete(props.item)
+      .then(() => setDeleteModal(false))
       .then(() => navigate('/projects'))
-      .finally(() => setDeleteModal(false))
-  ), [navigate, props.item]);
+      .finally(() => setDeleting(false));
+  }, [navigate, props.item]);
 
   /**
    * Calls the /core_data/project_models API endpoint.
@@ -231,6 +239,14 @@ const ProjectForm = (props: Props) => {
                   />
                   <Confirm
                     centered={false}
+                    confirmButton={(
+                      <Button
+                        disabled={clearing}
+                        content={t('Common.buttons.ok')}
+                        loading={clearing}
+                        primary
+                      />
+                    )}
                     content={t('Project.messages.clear.content')}
                     header={t('Project.messages.clear.header')}
                     open={clearModal}
@@ -269,6 +285,14 @@ const ProjectForm = (props: Props) => {
                   />
                   <Confirm
                     centered={false}
+                    confirmButton={(
+                      <Button
+                        disabled={deleting}
+                        content={t('Common.buttons.ok')}
+                        loading={deleting}
+                        primary
+                      />
+                    )}
                     content={t('Project.messages.delete.content')}
                     header={t('Project.messages.delete.header')}
                     open={deleteModal}
