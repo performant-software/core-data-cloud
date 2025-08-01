@@ -26,7 +26,6 @@ import {
 } from 'semantic-ui-react';
 import _ from 'underscore';
 import FileUtils from '../utils/File';
-import HttpUtils from '../utils/Http';
 import ImportModal from '../components/ImportModal';
 import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';
@@ -38,13 +37,14 @@ import useParams from '../hooks/ParsedParams';
 
 const ProjectImportExport = () => {
   const [analyzeFile, setAnalyzeFile] = useState();
-  const [importConfiguration, setImportConfiguration] = useState(false);
   const [exportConfiguration, setExportConfiguration] = useState(false);
   const [exportData, setExportData] = useState(false);
+  const [exportSuccess, setExportSuccess] = useState(false);
   const [exportVariables, setExportVariables] = useState(false);
+  const [importConfiguration, setImportConfiguration] = useState(false);
   const [importData, setImportData] = useState(false);
+  const [importSuccess, setImportSuccess] = useState(false);
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
 
   const { project } = useContext(ProjectContext);
   const { projectId } = useParams();
@@ -63,19 +63,6 @@ const ProjectImportExport = () => {
    * @type {function([*]): void}
    */
   const onAnalyze = useCallback(([f]) => setAnalyzeFile(f), []);
-
-  /**
-   * Converts the data in the passed response to a blob, creates a temporary anchor element, and downloads the file.
-   *
-   * @type {(function(*): void)|*}
-   */
-  const onDownloadData = useCallback((response) => {
-    const { data, headers = {} } = response;
-    const disposition = headers['content-disposition'];
-
-    const filename = HttpUtils.getFilename(disposition);
-    FileUtils.downloadZip(data, filename);
-  }, []);
 
   /**
    * Calls the export configuration API endpoint and downloads the resulting file.
@@ -115,7 +102,7 @@ const ProjectImportExport = () => {
 
     ProjectsService
       .exportData(projectId)
-      .then(onDownloadData)
+      .then(() => setExportSuccess(true))
       .catch(onExportError)
       .finally(() => setExportData(false));
   }, [onExportError, projectId]);
@@ -165,7 +152,7 @@ const ProjectImportExport = () => {
 
     ProjectsService
       .importConfiguration(projectId, file)
-      .then(() => setSuccess(true))
+      .then(() => setImportSuccess(true))
       .catch(onImportError)
       .finally(() => setImportConfiguration(false));
   }, [onImportError, projectId]);
@@ -180,7 +167,7 @@ const ProjectImportExport = () => {
 
     ProjectsService
       .importData(projectId, file)
-      .then(() => setSuccess(true))
+      .then(() => setImportSuccess(true))
       .catch(onImportError)
       .finally(() => setImportData(false));
   }, [onImportError, projectId]);
@@ -366,9 +353,21 @@ const ProjectImportExport = () => {
           <p>{ error.content }</p>
         </Toaster>
       )}
-      { success && (
+      { exportSuccess && (
         <Toaster
-          onDismiss={() => setSuccess(false)}
+          onDismiss={() => setExportSuccess(false)}
+          timeout={5000}
+          type='positive'
+        >
+          <Message.Header
+            content={t('ProjectImportExport.messages.export.header')}
+          />
+          <p>{ t('ProjectImportExport.messages.export.content') }</p>
+        </Toaster>
+      )}
+      { importSuccess && (
+        <Toaster
+          onDismiss={() => setImportSuccess(false)}
           timeout={5000}
           type='positive'
         >
@@ -388,7 +387,7 @@ const ProjectImportExport = () => {
           onImport={(data) => (
             ProjectsService
               .importAnalyze(projectId, data)
-              .then(() => setSuccess(true))
+              .then(() => setImportSuccess(true))
           )}
           title={t('ProjectImportExport.labels.importProject', { name: project.name })}
         />
