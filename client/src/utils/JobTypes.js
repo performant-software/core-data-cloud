@@ -11,6 +11,10 @@ type JobTypesType = {
 };
 
 const JobTypes: JobTypesType = {
+  export: {
+    label: i18n.t('JobTypes.labels.export'),
+    value: 'export'
+  },
   import: {
     label: i18n.t('JobTypes.labels.import'),
     value: 'import'

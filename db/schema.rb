@@ -117,6 +117,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_30_114125) do
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.integer "z_media_content_id"
+    t.uuid "import_id"
+    t.string "import_url"
+    t.boolean "import_url_processed", default: false, null: false
     t.index ["project_model_id"], name: "index_core_data_connector_media_contents_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_media_contents_on_user_defined", using: :gin
   end

@@ -53,6 +53,7 @@
       "cancel": "Cancel",
       "delete": "Delete",
       "edit": "Edit",
+      "ok": "OK",
       "save": "Save",
       "upload": "Upload"
     },
@@ -256,6 +257,7 @@
   },
   "JobTypes": {
     "labels": {
+      "export": "Export",
       "import": "Import"
     }
   },
@@ -680,6 +682,10 @@
       "importProject": "Import {{name}}"
     },
     "messages": {
+      "export": {
+        "content": "Your data export has been started. Use the \"Jobs\" tab to check the status of your export.",
+        "header": "Data Export Started"
+      },
       "import": {
         "content": "Your file has been uploaded. Use the \"Jobs\" tab to check the status of your import.",
         "header": "File Uploaded Successfully"
