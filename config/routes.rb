@@ -5,7 +5,7 @@ require 'sidekiq/web'
 Sidekiq::Web.use Rack::Session::Cookie, secret: Rails.application.credentials.secret_key_base, same_site: :lax, max_age: 86400
 
 # Add Basic Authentication for Security
-Sidekiq::Web.use Rack::Auth::Basic  do |email, password|
+Sidekiq::Web.use Rack::Auth::Basic do |email, password|
   user = CoreDataConnector::User.find_by(email:,)
   policy = CoreDataConnector::UserPolicy.new(user, user)
 
