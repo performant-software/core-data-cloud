@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_06_09_160515) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_24_135312) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
-  enable_extension "plpgsql"
   enable_extension "postgis"
 
   create_table "core_data_connector_events", force: :cascade do |t|
@@ -129,7 +129,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_06_09_160515) do
 
   create_table "core_data_connector_place_geometries", force: :cascade do |t|
     t.bigint "place_id", null: false
-    t.geometry "geometry", limit: {:srid=>0, :type=>"geometry"}
+    t.geometry "geometry", limit: {srid: 0, type: "geometry"}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["place_id"], name: "index_core_data_connector_place_geometries_on_place_id"
@@ -179,11 +179,11 @@ ActiveRecord::Schema[7.0].define(version: 2025_06_09_160515) do
   create_table "core_data_connector_project_model_relationships", force: :cascade do |t|
     t.bigint "primary_model_id", null: false
     t.bigint "related_model_id", null: false
+    t.string "name"
+    t.boolean "multiple"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
-    t.boolean "multiple"
-    t.string "name"
     t.boolean "allow_inverse", default: false, null: false
     t.string "inverse_name"
     t.boolean "inverse_multiple", default: false
@@ -225,6 +225,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_06_09_160515) do
     t.integer "faircopy_cloud_project_model_id"
     t.string "map_library_url"
     t.boolean "archived", default: false, null: false
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.boolean "use_storage_key", default: true, null: false
   end
 
   create_table "core_data_connector_record_merges", force: :cascade do |t|
@@ -377,5 +379,4 @@ ActiveRecord::Schema[7.0].define(version: 2025_06_09_160515) do
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.index ["defineable_type", "defineable_id"], name: "index_user_defined_fields_on_defineable"
   end
-
 end

@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: 31ec98b64d3bb084291bd22396591c7e66da5aab
-  tag: v0.1.94
+  revision: 0b1b3036a2f1e383da69677f4124696fcb9f4a98
+  tag: v0.1.95
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 11.0)
@@ -50,8 +50,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/triple-eye-effable.git
-  revision: 2a94435877fb5bf281571247a837d575ce901ed7
-  tag: v0.2.4
+  revision: b0399727e0c5eaa3afc31b127069f5b53a867811
+  tag: v0.2.5
   specs:
     triple_eye_effable (0.1.0)
       httparty (~> 0.20.0)
@@ -199,15 +199,16 @@ GEM
     mail_safe (0.3.4)
       actionmailer (>= 3.0.0)
     marcel (1.0.4)
-    mime-types (3.5.2)
-      mime-types-data (~> 3.2015)
-    mime-types-data (3.2024.0507)
+    mime-types (3.7.0)
+      logger
+      mime-types-data (~> 3.2025, >= 3.2025.0507)
+    mime-types-data (3.2025.0729)
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
     minitest (5.25.5)
     msgpack (1.8.0)
     multi_json (1.17.0)
-    multi_xml (0.7.1)
+    multi_xml (0.7.2)
       bigdecimal (~> 3.1)
     net-imap (0.3.7)
       date
