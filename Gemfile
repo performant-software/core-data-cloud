@@ -37,7 +37,7 @@ gem 'resource_api', git: 'https://github.com/performant-software/resource-api.gi
 gem 'jwt_auth', git: 'https://github.com/performant-software/jwt-auth.git', tag: 'v0.1.3'
 
 # Core data
-gem 'core_data_connector', git: 'https://github.com/performant-software/core-data-connector.git', tag: 'v0.1.95'
+gem 'core_data_connector', git: 'https://github.com/performant-software/core-data-connector.git', tag: 'v0.1.96'
 
 # IIIF
 gem 'triple_eye_effable', git: 'https://github.com/performant-software/triple-eye-effable.git', tag: 'v0.2.5'
@@ -50,6 +50,12 @@ gem 'fuzzy_dates', git: 'https://github.com/performant-software/fuzzy-dates.git'
 
 # Email filtering
 gem 'mail_safe', '~> 0.3.4', group: [:development, :staging]
+
+# Active storage service
+gem 'aws-sdk-s3', '~> 1.193', group: [:production, :staging]
+
+# Background jobs
+gem 'sidekiq', '~> 8.0.6', group: [:production, :staging]
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

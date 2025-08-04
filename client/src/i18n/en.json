@@ -10,6 +10,7 @@
   },
   "AdminMenu": {
     "labels": {
+      "jobs": "Jobs",
       "projects": "Projects",
       "users": "Users"
     }
@@ -228,6 +229,34 @@
     },
     "columns": {
       "name": "Name"
+    }
+  },
+  "Jobs": {
+    "actions": {
+      "download": {
+        "content": "Download the attached file",
+        "title": "Download"
+      }
+    },
+    "columns": {
+      "project": "Project",
+      "status": "Status",
+      "timestamp": "Timestamp",
+      "type": "Type",
+      "user": "User"
+    }
+  },
+  "JobStatuses": {
+    "labels": {
+      "completed": "Completed",
+      "failed": "Failed",
+      "initializing": "Initializing",
+      "processing": "Processing"
+    }
+  },
+  "JobTypes": {
+    "labels": {
+      "import": "Import"
     }
   },
   "ListViewMenu": {
@@ -619,6 +648,10 @@
         "import": {
           "content": "Import a ZIP archive of CSV files to populate your project with data",
           "header": "Import"
+        },
+        "jobs": {
+          "header": "Monitor",
+          "content": "View your import progress from the jobs view"
         }
       },
       "developer": {
@@ -648,8 +681,8 @@
     },
     "messages": {
       "import": {
-        "content": "Your file has been imported.",
-        "header": "Success!"
+        "content": "Your file has been uploaded. Use the \"Jobs\" tab to check the status of your import.",
+        "header": "File Uploaded Successfully"
       }
     },
     "title": "Import"
@@ -740,6 +773,7 @@
       "configure": "Configure",
       "details": "Details",
       "import": "Import / Export",
+      "jobs": "Jobs",
       "newModel": "New Model",
       "newUser": "New User",
       "users": "Users"

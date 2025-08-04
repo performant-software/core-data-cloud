@@ -37,6 +37,11 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
           secure: false
         },
+        '/sidekiq': {
+          target: env.VITE_PROXY_URL,
+          changeOrigin: true,
+          secure: false
+        },
         '/user_defined_fields': {
           target: env.VITE_PROXY_URL,
           changeOrigin: true,
