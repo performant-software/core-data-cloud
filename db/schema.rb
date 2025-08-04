@@ -269,6 +269,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_30_114125) do
     t.integer "faircopy_cloud_project_model_id"
     t.string "map_library_url"
     t.boolean "archived", default: false, null: false
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.boolean "use_storage_key", default: true, null: false
   end
 
   create_table "core_data_connector_record_merges", force: :cascade do |t|
