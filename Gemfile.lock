@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: 0b1b3036a2f1e383da69677f4124696fcb9f4a98
-  tag: v0.1.95
+  revision: fca5bb3e5952c7f61e90361182783668a5cf8caf
+  tag: v0.1.96
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 11.0)
@@ -143,6 +143,25 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
+    aws-eventstream (1.4.0)
+    aws-partitions (1.1140.0)
+    aws-sdk-core (3.228.0)
+      aws-eventstream (~> 1, >= 1.3.0)
+      aws-partitions (~> 1, >= 1.992.0)
+      aws-sigv4 (~> 1.9)
+      base64
+      bigdecimal
+      jmespath (~> 1, >= 1.6.1)
+      logger
+    aws-sdk-kms (1.109.0)
+      aws-sdk-core (~> 3, >= 3.228.0)
+      aws-sigv4 (~> 1.5)
+    aws-sdk-s3 (1.195.0)
+      aws-sdk-core (~> 3, >= 3.228.0)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.5)
+    aws-sigv4 (1.12.1)
+      aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.3.0)
     bcrypt (3.1.20)
     benchmark (0.4.1)
@@ -184,6 +203,7 @@ GEM
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
+    jmespath (1.6.2)
     json (2.12.2)
     jwt (3.1.2)
       base64
@@ -290,6 +310,8 @@ GEM
     rdoc (6.14.2)
       erb
       psych (>= 4.0.0)
+    redis-client (0.25.1)
+      connection_pool
     reline (0.6.1)
       io-console (~> 0.5)
     rgeo (3.0.1)
@@ -301,6 +323,12 @@ GEM
       rgeo (>= 1.0.0)
     rubyzip (2.3.2)
     securerandom (0.4.1)
+    sidekiq (8.0.6)
+      connection_pool (>= 2.5.0)
+      json (>= 2.9.0)
+      logger (>= 1.6.2)
+      rack (>= 3.1.0)
+      redis-client (>= 0.23.2)
     stringio (3.1.7)
     thor (1.2.2)
     timeout (0.4.0)
@@ -327,6 +355,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  aws-sdk-s3 (~> 1.193)
   bcrypt (~> 3.1.20)
   bootsnap
   core_data_connector!
@@ -342,6 +371,7 @@ DEPENDENCIES
   puma (~> 6.6.0)
   rails (~> 8.0.2)
   resource_api!
+  sidekiq (~> 8.0.6)
   triple_eye_effable!
   tzinfo-data
   user_defined_fields!
