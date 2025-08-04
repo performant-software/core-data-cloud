@@ -10,39 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_29_013404) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_24_135312) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
   enable_extension "postgis"
-
-  create_table "active_storage_attachments", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
-    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
-    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
-  end
-
-  create_table "active_storage_blobs", force: :cascade do |t|
-    t.string "key", null: false
-    t.string "filename", null: false
-    t.string "content_type"
-    t.text "metadata"
-    t.string "service_name", null: false
-    t.bigint "byte_size", null: false
-    t.string "checksum"
-    t.datetime "created_at", null: false
-    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
-  end
-
-  create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
-    t.string "variation_digest", null: false
-    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
-  end
 
   create_table "core_data_connector_events", force: :cascade do |t|
     t.bigint "project_model_id"
@@ -81,18 +53,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_29_013404) do
     t.uuid "import_id"
     t.index ["project_model_id"], name: "index_core_data_connector_items_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_items_on_user_defined", using: :gin
-  end
-
-  create_table "core_data_connector_jobs", force: :cascade do |t|
-    t.bigint "project_id", null: false
-    t.bigint "user_id", null: false
-    t.string "job_type"
-    t.string "status", default: "initializing"
-    t.jsonb "extra", default: {}
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["project_id"], name: "index_core_data_connector_jobs_on_project_id"
-    t.index ["user_id"], name: "index_core_data_connector_jobs_on_user_id"
   end
 
   create_table "core_data_connector_manifests", force: :cascade do |t|
@@ -219,11 +179,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_29_013404) do
   create_table "core_data_connector_project_model_relationships", force: :cascade do |t|
     t.bigint "primary_model_id", null: false
     t.bigint "related_model_id", null: false
+    t.string "name"
+    t.boolean "multiple"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
-    t.boolean "multiple"
-    t.string "name"
     t.boolean "allow_inverse", default: false, null: false
     t.string "inverse_name"
     t.boolean "inverse_multiple", default: false
@@ -265,6 +225,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_29_013404) do
     t.integer "faircopy_cloud_project_model_id"
     t.string "map_library_url"
     t.boolean "archived", default: false, null: false
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.boolean "use_storage_key", default: true, null: false
   end
 
   create_table "core_data_connector_record_merges", force: :cascade do |t|
@@ -417,7 +379,4 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_29_013404) do
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.index ["defineable_type", "defineable_id"], name: "index_user_defined_fields_on_defineable"
   end
-
-  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
 end

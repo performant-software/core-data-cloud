@@ -1,4 +1,26 @@
 GIT
+  remote: https://github.com/performant-software/core-data-connector.git
+  revision: 0b1b3036a2f1e383da69677f4124696fcb9f4a98
+  tag: v0.1.95
+  specs:
+    core_data_connector (0.1.0)
+      activerecord-postgis-adapter (~> 11.0)
+      faker
+      fuzzy_dates
+      jwt (~> 3.1.2)
+      jwt_auth
+      postmark-rails (~> 0.22.1)
+      rack-cors (~> 3.0.0)
+      rails (>= 8.0, < 9)
+      resource_api
+      rgeo-geojson (~> 2.2)
+      rubyzip (~> 2.3.2)
+      triple_eye_effable
+      typesense (~> 0.14)
+      typhoeus (~> 1.4)
+      user_defined_fields
+
+GIT
   remote: https://github.com/performant-software/fuzzy-dates.git
   revision: c83271acb4837325d026a63229f89059984648f5
   tag: v0.1.1
@@ -28,8 +50,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/triple-eye-effable.git
-  revision: 2a94435877fb5bf281571247a837d575ce901ed7
-  tag: v0.2.4
+  revision: b0399727e0c5eaa3afc31b127069f5b53a867811
+  tag: v0.2.5
   specs:
     triple_eye_effable (0.1.0)
       httparty (~> 0.20.0)
@@ -43,26 +65,6 @@ GIT
     user_defined_fields (0.1.0)
       rails (>= 6.0.3.2, < 9)
       resource_api
-
-PATH
-  remote: ../core-data-connector
-  specs:
-    core_data_connector (0.1.0)
-      activerecord-postgis-adapter (~> 11.0)
-      faker
-      fuzzy_dates
-      jwt (~> 3.1.2)
-      jwt_auth
-      postmark-rails (~> 0.22.1)
-      rack-cors (~> 3.0.0)
-      rails (>= 8.0, < 9)
-      resource_api
-      rgeo-geojson (~> 2.2)
-      rubyzip (~> 2.3.2)
-      triple_eye_effable
-      typesense (~> 0.14)
-      typhoeus (~> 1.4)
-      user_defined_fields
 
 GEM
   remote: https://rubygems.org/
@@ -141,24 +143,6 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
-    aws-eventstream (1.4.0)
-    aws-partitions (1.1132.0)
-    aws-sdk-core (3.227.0)
-      aws-eventstream (~> 1, >= 1.3.0)
-      aws-partitions (~> 1, >= 1.992.0)
-      aws-sigv4 (~> 1.9)
-      base64
-      jmespath (~> 1, >= 1.6.1)
-      logger
-    aws-sdk-kms (1.107.0)
-      aws-sdk-core (~> 3, >= 3.227.0)
-      aws-sigv4 (~> 1.5)
-    aws-sdk-s3 (1.194.0)
-      aws-sdk-core (~> 3, >= 3.227.0)
-      aws-sdk-kms (~> 1)
-      aws-sigv4 (~> 1.5)
-    aws-sigv4 (1.12.1)
-      aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.3.0)
     bcrypt (3.1.20)
     benchmark (0.4.1)
@@ -200,7 +184,6 @@ GEM
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
-    jmespath (1.6.2)
     json (2.12.2)
     jwt (3.1.2)
       base64
@@ -216,15 +199,16 @@ GEM
     mail_safe (0.3.4)
       actionmailer (>= 3.0.0)
     marcel (1.0.4)
-    mime-types (3.5.2)
-      mime-types-data (~> 3.2015)
-    mime-types-data (3.2024.0507)
+    mime-types (3.7.0)
+      logger
+      mime-types-data (~> 3.2025, >= 3.2025.0507)
+    mime-types-data (3.2025.0729)
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
     minitest (5.25.5)
     msgpack (1.8.0)
     multi_json (1.17.0)
-    multi_xml (0.7.1)
+    multi_xml (0.7.2)
       bigdecimal (~> 3.1)
     net-imap (0.3.7)
       date
@@ -306,8 +290,6 @@ GEM
     rdoc (6.14.2)
       erb
       psych (>= 4.0.0)
-    redis-client (0.25.1)
-      connection_pool
     reline (0.6.1)
       io-console (~> 0.5)
     rgeo (3.0.1)
@@ -319,12 +301,6 @@ GEM
       rgeo (>= 1.0.0)
     rubyzip (2.3.2)
     securerandom (0.4.1)
-    sidekiq (8.0.6)
-      connection_pool (>= 2.5.0)
-      json (>= 2.9.0)
-      logger (>= 1.6.2)
-      rack (>= 3.1.0)
-      redis-client (>= 0.23.2)
     stringio (3.1.7)
     thor (1.2.2)
     timeout (0.4.0)
@@ -351,7 +327,6 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  aws-sdk-s3 (~> 1.193)
   bcrypt (~> 3.1.20)
   bootsnap
   core_data_connector!
@@ -367,7 +342,6 @@ DEPENDENCIES
   puma (~> 6.6.0)
   rails (~> 8.0.2)
   resource_api!
-  sidekiq (~> 8.0.6)
   triple_eye_effable!
   tzinfo-data
   user_defined_fields!
