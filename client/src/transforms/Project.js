@@ -30,7 +30,8 @@ class Project extends BaseTransform {
       'faircopy_cloud_url',
       'faircopy_cloud_project_model_id',
       'map_library_url',
-      'archived'
+      'archived',
+      'reconciliation_credentials'
     ];
   }
 

@@ -590,12 +590,18 @@
       "delete": "Delete Project"
     },
     "labels": {
+      "apiKey": "API key",
+      "collectionName": "Collection name",
       "danger": "Danger Zone",
       "description": "Description",
-      "name": "Name",
+      "host": "Host",
       "fairCopyCloudUrl": "FairCopy.cloud URL",
       "faircopyCloudConnectedModel": "FairCopy.cloud connected model",
-      "mapLibraryUrl": "Map library URL"
+      "mapLibraryUrl": "Map library URL",
+      "name": "Name",
+      "port": "Port",
+      "protocol": "Protocol",
+      "reconcile": "Reconciliation API"
     },
     "messages": {
       "archive": {
