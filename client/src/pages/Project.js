@@ -153,6 +153,44 @@ const ProjectForm = (props: Props) => {
             onChange={props.onTextInputChange.bind(this, 'map_library_url')}
             value={props.item.map_library_url || ''}
           />
+          <Header
+            content={t('Project.labels.reconcile')}
+          />
+          <Form.Input
+            error={props.isError('reconciliation_credentials.host')}
+            label={t('Project.labels.host')}
+            required={props.isRequired('reconciliation_credentials.host')}
+            onChange={props.onJsonInputChange.bind(this, 'reconciliation_credentials', 'host')}
+            value={props.item.reconciliation_credentials?.host || ''}
+          />
+          <Form.Input
+            error={props.isError('reconciliation_credentials.port')}
+            label={t('Project.labels.port')}
+            required={props.isRequired('reconciliation_credentials.port')}
+            onChange={props.onJsonInputChange.bind(this, 'reconciliation_credentials', 'port')}
+            value={props.item.reconciliation_credentials?.port || ''}
+          />
+          <Form.Input
+            error={props.isError('reconciliation_credentials.protocol')}
+            label={t('Project.labels.protocol')}
+            required={props.isRequired('reconciliation_credentials.protocol')}
+            onChange={props.onJsonInputChange.bind(this, 'reconciliation_credentials', 'protocol')}
+            value={props.item.reconciliation_credentials?.protocol || ''}
+          />
+          <Form.Input
+            error={props.isError('reconciliation_credentials.api_key')}
+            label={t('Project.labels.apiKey')}
+            required={props.isRequired('reconciliation_credentials.api_key')}
+            onChange={props.onJsonInputChange.bind(this, 'reconciliation_credentials', 'api_key')}
+            value={props.item.reconciliation_credentials?.api_key || ''}
+          />
+          <Form.Input
+            error={props.isError('reconciliation_credentials.collection_name')}
+            label={t('Project.labels.collectionName')}
+            required={props.isRequired('reconciliation_credentials.collection_name')}
+            onChange={props.onJsonInputChange.bind(this, 'reconciliation_credentials', 'collection_name')}
+            value={props.item.reconciliation_credentials?.collection_name || ''}
+          />
           <div
             className={styles.section}
           >

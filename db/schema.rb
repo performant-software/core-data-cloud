@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_30_114125) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_07_014212) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -271,6 +271,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_30_114125) do
     t.boolean "archived", default: false, null: false
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.boolean "use_storage_key", default: true, null: false
+    t.jsonb "reconciliation_credentials", default: {}
   end
 
   create_table "core_data_connector_record_merges", force: :cascade do |t|
