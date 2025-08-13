@@ -1,4 +1,26 @@
 GIT
+  remote: https://github.com/performant-software/core-data-connector.git
+  revision: 08d0b07a0e4a527528e67f9d43b235281a9b120a
+  tag: v0.1.98
+  specs:
+    core_data_connector (0.1.0)
+      activerecord-postgis-adapter (~> 11.0)
+      faker
+      fuzzy_dates
+      jwt (~> 3.1.2)
+      jwt_auth
+      postmark-rails (~> 0.22.1)
+      rack-cors (~> 3.0.0)
+      rails (>= 8.0, < 9)
+      resource_api
+      rgeo-geojson (~> 2.2)
+      rubyzip (~> 2.3.2)
+      triple_eye_effable
+      typesense (~> 0.14)
+      typhoeus (~> 1.4)
+      user_defined_fields
+
+GIT
   remote: https://github.com/performant-software/fuzzy-dates.git
   revision: c83271acb4837325d026a63229f89059984648f5
   tag: v0.1.1
@@ -43,26 +65,6 @@ GIT
     user_defined_fields (0.1.0)
       rails (>= 6.0.3.2, < 9)
       resource_api
-
-PATH
-  remote: ../core-data-connector
-  specs:
-    core_data_connector (0.1.0)
-      activerecord-postgis-adapter (~> 11.0)
-      faker
-      fuzzy_dates
-      jwt (~> 3.1.2)
-      jwt_auth
-      postmark-rails (~> 0.22.1)
-      rack-cors (~> 3.0.0)
-      rails (>= 8.0, < 9)
-      resource_api
-      rgeo-geojson (~> 2.2)
-      rubyzip (~> 2.3.2)
-      triple_eye_effable
-      typesense (~> 0.14)
-      typhoeus (~> 1.4)
-      user_defined_fields
 
 GEM
   remote: https://rubygems.org/
