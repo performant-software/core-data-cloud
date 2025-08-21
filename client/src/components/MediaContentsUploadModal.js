@@ -4,6 +4,7 @@ import { FileUploadModal } from '@performant-software/semantic-components';
 import { UserDefinedFieldsService } from '@performant-software/user-defined-fields';
 import React, {
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useState
@@ -12,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import _ from 'underscore';
 import MediaContentUploadForm from './MediaContentUploadForm';
 import MediaContentsService from '../services/MediaContents';
+import ProjectContext from '../context/Project';
 import UserDefinedFieldsUtils from '../utils/UserDefinedFields';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 
@@ -31,6 +33,7 @@ const MediaContentsUploadModal = (props: Props) => {
   const [loadingProjectModelRelationshipFields, setLoadingProjectModelRelationshipFields] = useState(false);
   const [projectModelRelationshipFields, setProjectModelRelationshipFields] = useState([]);
 
+  const { project } = useContext(ProjectContext);
   const { foreignProjectModelId, projectModelRelationship } = useProjectModelRelationship();
   const { t } = useTranslation();
 
@@ -39,33 +42,40 @@ const MediaContentsUploadModal = (props: Props) => {
    *
    * @type {function({data: *}): void}
    */
-  const afterSave = useCallback((mediaContent, userDefined) => (
-    setMediaContents((prevMediaContents) => [
-      ...prevMediaContents,
-      { mediaContent, userDefined }
-    ])
-  ), []);
+  const afterSave = useCallback((newMediaContents, userDefined) => {
+    setMediaContents(_.map(newMediaContents, (mediaContent, index) => ({
+      ...mediaContent,
+      relationship_user_defined: userDefined[index]
+    })));
+  }, []);
 
   /**
    * In order to enter user-defined fields on upload, we're going to store values for both the media_content record
    * and the relationships record in the same container. Here we'll separate the user-defined field values for the
    * media_content record from those of the relationships record.
    */
-  const onSave = useCallback((mediaContent) => {
+  const onSave = useCallback((records) => {
     const uuids = _.pluck(projectModelRelationshipFields, 'uuid');
 
-    const relationshipUserDefined = _.pick(mediaContent.user_defined, uuids);
-    const mediaContentUserDefined = _.omit(mediaContent.user_defined, uuids);
+    const payload  = [];
+    const relationshipUserDefined = [];
 
-    const payload = {
-      ...mediaContent,
-      user_defined: mediaContentUserDefined
-    };
+    _.each(records, (mediaContent) => {
+      // Pick out the user-defined fields to store on the relationship
+      relationshipUserDefined.push(_.pick(mediaContent.user_defined, uuids));
+
+      // Prepare the payload and pick out the user-defined fields to store on the media_contents
+      payload.push({
+        ...mediaContent,
+        user_defined: _.omit(mediaContent.user_defined, uuids)
+      });
+    });
 
     return MediaContentsService
-      .save(payload)
-      .then(({ data }) => afterSave(data.media_content, relationshipUserDefined));
-  }, [projectModelRelationshipFields]);
+      .uploadAll(payload, project)
+      .then(({ data }) => data.media_contents)
+      .then((newMediaContents) => afterSave(newMediaContents, relationshipUserDefined));
+  }, [afterSave, project, projectModelRelationshipFields]);
 
   /**
    * Customizes the validation to include user-defined field use cases.
@@ -179,7 +189,6 @@ const MediaContentsUploadModal = (props: Props) => {
       onValidate={onValidate}
       required={required}
       showPageLoader={false}
-      strategy='single'
     />
   );
 };

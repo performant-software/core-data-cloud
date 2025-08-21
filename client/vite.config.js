@@ -42,6 +42,11 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
           secure: false
         },
+        '/triple_eye_effable': {
+          target: env.VITE_PROXY_URL,
+          changeOrigin: true,
+          secure: false
+        },
         '/user_defined_fields': {
           target: env.VITE_PROXY_URL,
           changeOrigin: true,

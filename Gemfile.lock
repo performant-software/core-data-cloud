@@ -1,26 +1,4 @@
 GIT
-  remote: https://github.com/performant-software/core-data-connector.git
-  revision: 08d0b07a0e4a527528e67f9d43b235281a9b120a
-  tag: v0.1.98
-  specs:
-    core_data_connector (0.1.0)
-      activerecord-postgis-adapter (~> 11.0)
-      faker
-      fuzzy_dates
-      jwt (~> 3.1.2)
-      jwt_auth
-      postmark-rails (~> 0.22.1)
-      rack-cors (~> 3.0.0)
-      rails (>= 8.0, < 9)
-      resource_api
-      rgeo-geojson (~> 2.2)
-      rubyzip (~> 2.3.2)
-      triple_eye_effable
-      typesense (~> 0.14)
-      typhoeus (~> 1.4)
-      user_defined_fields
-
-GIT
   remote: https://github.com/performant-software/fuzzy-dates.git
   revision: c83271acb4837325d026a63229f89059984648f5
   tag: v0.1.1
@@ -39,25 +17,6 @@ GIT
       rails (>= 7.1, < 9)
 
 GIT
-  remote: https://github.com/performant-software/resource-api.git
-  revision: ab5afbdfedfd4e89309d748b46167652562a22bf
-  tag: v0.5.14
-  specs:
-    resource_api (0.1.0)
-      pagy (~> 5.10)
-      pundit (~> 2.3.1)
-      rails (>= 7.0, < 9)
-
-GIT
-  remote: https://github.com/performant-software/triple-eye-effable.git
-  revision: b0399727e0c5eaa3afc31b127069f5b53a867811
-  tag: v0.2.5
-  specs:
-    triple_eye_effable (0.1.0)
-      httparty (~> 0.20.0)
-      rails (>= 6.0.3.2, < 9)
-
-GIT
   remote: https://github.com/performant-software/user-defined-fields.git
   revision: 9799f151ab51506eef42177c756b762060a9838a
   tag: v0.1.14
@@ -65,6 +24,41 @@ GIT
     user_defined_fields (0.1.0)
       rails (>= 6.0.3.2, < 9)
       resource_api
+
+PATH
+  remote: ../core-data-connector
+  specs:
+    core_data_connector (0.1.0)
+      activerecord-postgis-adapter (~> 11.0)
+      faker
+      fuzzy_dates
+      jwt (~> 3.1.2)
+      jwt_auth
+      postmark-rails (~> 0.22.1)
+      rack-cors (~> 3.0.0)
+      rails (>= 8.0, < 9)
+      resource_api
+      rgeo-geojson (~> 2.2)
+      rubyzip (~> 2.3.2)
+      triple_eye_effable
+      typesense (~> 0.14)
+      typhoeus (~> 1.4)
+      user_defined_fields
+
+PATH
+  remote: ../resource-api
+  specs:
+    resource_api (0.1.0)
+      pagy (~> 5.10)
+      pundit (~> 2.3.1)
+      rails (>= 7.0, < 9)
+
+PATH
+  remote: ../triple-eye-effable
+  specs:
+    triple_eye_effable (0.1.0)
+      httparty (~> 0.20.0)
+      rails (>= 6.0.3.2, < 9)
 
 GEM
   remote: https://rubygems.org/
@@ -222,7 +216,7 @@ GEM
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
-    mime-types-data (3.2025.0729)
+    mime-types-data (3.2025.0812)
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
     minitest (5.25.5)

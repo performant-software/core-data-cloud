@@ -15,5 +15,7 @@ export type Project = {
     protocol: string,
     api_key: string,
     collection_name: string
-  }
+  },
+  use_storage_key: boolean,
+  uuid: string,
 };

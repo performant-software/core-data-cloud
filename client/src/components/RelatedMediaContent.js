@@ -3,11 +3,12 @@
 import { EditModal, FileInputButton, LazyIIIF } from '@performant-software/semantic-components';
 import { IIIF as IIIFUtils } from '@performant-software/shared-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Form } from 'semantic-ui-react';
 import _ from 'underscore';
 import MediaContentsService from '../services/MediaContents';
+import ProjectContext from '../context/Project';
 import RelatedMediaContentModal from './RelatedMediaContentModal';
 import type { Relationship as RelationshipType } from '../types/Relationship';
 import RelationshipsService from '../services/Relationships';
@@ -22,6 +23,7 @@ type Props = EditContainerProps & {
 const RelatedMediaContentForm = (props: Props) => {
   const [editModal, setEditModal] = useState(false);
 
+  const { project } = useContext(ProjectContext);
   const { foreignProjectModelId } = useProjectModelRelationship();
   const { t } = useTranslation();
 
@@ -70,11 +72,15 @@ const RelatedMediaContentForm = (props: Props) => {
   const onUpload = useCallback((files) => {
     const file = _.first(files);
 
-    MediaContentsService.save({
+    const mediaContent = {
       project_model_id: foreignProjectModelId,
       name: file.name,
       content: file
-    }).then(({ data }) => onSelection(data.media_content));
+    };
+
+    MediaContentsService
+      .uploadOne(mediaContent, project)
+      .then(({ data }) => onSelection(data.media_content))
   }, [foreignProjectModelId, onSelection]);
 
   return (

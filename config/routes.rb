@@ -15,6 +15,7 @@ end
 Rails.application.routes.draw do
   mount CoreDataConnector::Engine, at: '/core_data'
   mount Sidekiq::Web, at: '/sidekiq'
+  mount TripleEyeEffable::Engine, at: '/triple_eye_effable'
   mount UserDefinedFields::Engine, at: '/user_defined_fields'
 
   # Default route for static front-end

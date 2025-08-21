@@ -66,13 +66,13 @@ const RelatedMediaContents = () => {
    *  }
    * }
    */
-  const createRelationship = useCallback((mediaContent, userDefined = null) => ({
+  const createRelationship = useCallback((mediaContent) => ({
     project_model_relationship_id: projectModelRelationship.id,
     primary_record_id: itemId,
     primary_record_type: projectModel?.model_class,
     related_record_id: mediaContent.id,
     related_record_type: 'CoreDataConnector::MediaContent',
-    user_defined: userDefined
+    user_defined: mediaContent.relationship_user_defined
   }), [projectModel, projectModelRelationship]);
 
   /**
@@ -87,13 +87,13 @@ const RelatedMediaContents = () => {
    *  }
    * }
    */
-  const createInverseRelationship = useCallback((mediaContent, userDefined = null) => ({
+  const createInverseRelationship = useCallback((mediaContent) => ({
     project_model_relationship_id: projectModelRelationship.id,
     primary_record_id: mediaContent.id,
     primary_record_type: 'CoreDataConnector::MediaContent',
     related_record_id: itemId,
     related_record_type: projectModel?.model_class,
-    user_defined: userDefined
+    user_defined: mediaContent.relationship_user_defined
   }), [projectModel, projectModelRelationship]);
 
   /**
@@ -159,10 +159,10 @@ const RelatedMediaContents = () => {
    * @type {(function(*): void)|*}
    */
   const onModalSave = useCallback((mediaContents) => {
-    const relationships = _.map(mediaContents, ({ mediaContent, userDefined }) => (
+    const relationships = _.map(mediaContents, (mediaContent) => (
       projectModelRelationship.inverse
-        ? createInverseRelationship(mediaContent, userDefined)
-        : createRelationship(mediaContent, userDefined)
+        ? createInverseRelationship(mediaContent)
+        : createRelationship(mediaContent)
     ));
 
     RelationshipsService
