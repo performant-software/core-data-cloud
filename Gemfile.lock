@@ -1,32 +1,7 @@
 GIT
-  remote: https://github.com/performant-software/fuzzy-dates.git
-  revision: c83271acb4837325d026a63229f89059984648f5
-  tag: v0.1.1
-  specs:
-    fuzzy_dates (0.1.0)
-      rails (>= 6.0.3.2, < 9)
-      resource_api
-
-GIT
-  remote: https://github.com/performant-software/jwt-auth.git
-  revision: 993b47f395d7349c499a0ffda6ef286871ef89dc
-  tag: v0.1.3
-  specs:
-    jwt_auth (0.1.0)
-      jwt (~> 3.1.2)
-      rails (>= 7.1, < 9)
-
-GIT
-  remote: https://github.com/performant-software/user-defined-fields.git
-  revision: 9799f151ab51506eef42177c756b762060a9838a
-  tag: v0.1.14
-  specs:
-    user_defined_fields (0.1.0)
-      rails (>= 6.0.3.2, < 9)
-      resource_api
-
-PATH
-  remote: ../core-data-connector
+  remote: https://github.com/performant-software/core-data-connector.git
+  revision: 221746d3dabb7c71808e51d01d16984dd2814cb8
+  tag: v0.1.100
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 11.0)
@@ -45,20 +20,51 @@ PATH
       typhoeus (~> 1.4)
       user_defined_fields
 
-PATH
-  remote: ../resource-api
+GIT
+  remote: https://github.com/performant-software/fuzzy-dates.git
+  revision: c83271acb4837325d026a63229f89059984648f5
+  tag: v0.1.1
+  specs:
+    fuzzy_dates (0.1.0)
+      rails (>= 6.0.3.2, < 9)
+      resource_api
+
+GIT
+  remote: https://github.com/performant-software/jwt-auth.git
+  revision: 993b47f395d7349c499a0ffda6ef286871ef89dc
+  tag: v0.1.3
+  specs:
+    jwt_auth (0.1.0)
+      jwt (~> 3.1.2)
+      rails (>= 7.1, < 9)
+
+GIT
+  remote: https://github.com/performant-software/resource-api.git
+  revision: 2307a221fec5a06949dc039537d4b24cbcf8b649
+  tag: v0.5.15
   specs:
     resource_api (0.1.0)
       pagy (~> 5.10)
       pundit (~> 2.3.1)
       rails (>= 7.0, < 9)
 
-PATH
-  remote: ../triple-eye-effable
+GIT
+  remote: https://github.com/performant-software/triple-eye-effable.git
+  revision: 924c64241ab2151c9e0e4ea002b352051e838008
+  tag: v0.2.6
   specs:
     triple_eye_effable (0.1.0)
       httparty (~> 0.20.0)
       rails (>= 6.0.3.2, < 9)
+
+GIT
+  remote: https://github.com/performant-software/user-defined-fields.git
+  revision: 9799f151ab51506eef42177c756b762060a9838a
+  tag: v0.1.14
+  specs:
+    user_defined_fields (0.1.0)
+      rails (>= 6.0.3.2, < 9)
+      resource_api
 
 GEM
   remote: https://rubygems.org/
@@ -178,7 +184,7 @@ GEM
     drb (2.2.3)
     erb (5.0.1)
     erubi (1.12.0)
-    ethon (0.16.0)
+    ethon (0.15.0)
       ffi (>= 1.15.0)
     faker (3.5.2)
       i18n (>= 1.8.11, < 2)
@@ -216,7 +222,7 @@ GEM
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
-    mime-types-data (3.2025.0812)
+    mime-types-data (3.2025.0826)
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
     minitest (5.25.5)
@@ -329,8 +335,8 @@ GEM
     typesense (0.15.0)
       oj (~> 3.11)
       typhoeus (~> 1.4)
-    typhoeus (1.4.1)
-      ethon (>= 0.9.0)
+    typhoeus (1.5.0)
+      ethon (>= 0.9.0, < 0.16.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uri (1.0.3)
