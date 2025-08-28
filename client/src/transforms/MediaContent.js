@@ -1,7 +1,6 @@
 // @flow
 
 import {
-  Attachments,
   Form as FormUtils,
   FormDataTransform,
   ObjectJs as ObjectUtils
@@ -31,7 +30,8 @@ class MediaContent extends FormDataTransform {
     return [
       'project_model_id',
       'name',
-      'user_defined'
+      'user_defined',
+      'content'
     ];
   }
 
@@ -60,15 +60,20 @@ class MediaContent extends FormDataTransform {
   }
 
   /**
-   * Appends the media object to the form data.
+   * Sets the passed array of media contents on the form data object.
    *
-   * @param mediaContent
+   * @param mediaContents
    *
-   * @returns {*}
+   * @returns {FormData}
    */
-  toPayload(mediaContent: MediaContentType): FormData {
-    const formData = super.toPayload(mediaContent);
-    Attachments.toPayload(formData, this.getParameterName(), mediaContent, 'content');
+  toUpload(mediaContents: Array<MediaContentType>) {
+    const formData = new FormData();
+
+    _.each(mediaContents, (mediaContent, index) => {
+      _.each(this.getPayloadKeys(), (key) => {
+        FormUtils.setAttribute(formData, `media_contents[${index}]`, mediaContent, key);
+      });
+    });
 
     return formData;
   }

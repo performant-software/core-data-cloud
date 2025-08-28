@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: c888c4dcf915ab228fc38af7b98e1a2d344d223a
-  tag: v0.1.99
+  revision: 221746d3dabb7c71808e51d01d16984dd2814cb8
+  tag: v0.1.100
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 11.0)
@@ -40,8 +40,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/resource-api.git
-  revision: ab5afbdfedfd4e89309d748b46167652562a22bf
-  tag: v0.5.14
+  revision: 2307a221fec5a06949dc039537d4b24cbcf8b649
+  tag: v0.5.15
   specs:
     resource_api (0.1.0)
       pagy (~> 5.10)
@@ -50,8 +50,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/triple-eye-effable.git
-  revision: b0399727e0c5eaa3afc31b127069f5b53a867811
-  tag: v0.2.5
+  revision: 924c64241ab2151c9e0e4ea002b352051e838008
+  tag: v0.2.6
   specs:
     triple_eye_effable (0.1.0)
       httparty (~> 0.20.0)
@@ -184,7 +184,7 @@ GEM
     drb (2.2.3)
     erb (5.0.1)
     erubi (1.12.0)
-    ethon (0.16.0)
+    ethon (0.15.0)
       ffi (>= 1.15.0)
     faker (3.5.2)
       i18n (>= 1.8.11, < 2)
@@ -222,7 +222,7 @@ GEM
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
-    mime-types-data (3.2025.0729)
+    mime-types-data (3.2025.0826)
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
     minitest (5.25.5)
@@ -335,8 +335,8 @@ GEM
     typesense (0.15.0)
       oj (~> 3.11)
       typhoeus (~> 1.4)
-    typhoeus (1.4.1)
-      ethon (>= 0.9.0)
+    typhoeus (1.5.0)
+      ethon (>= 0.9.0, < 0.16.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uri (1.0.3)

@@ -38,7 +38,8 @@ type Props = {
   form: Element<any>,
   loading: boolean,
   onInitialize: (id: number) => Promise<any>,
-  onSave: (item: any) => Promise<any>
+  onSave: (item: any) => Promise<any>,
+  saving?: boolean
 };
 
 type ComponentProps = {
@@ -137,6 +138,7 @@ const ItemPage = ({ form: Form, onInitialize, onSave }: Props) => {
               >
                 <SaveButton
                   onClick={props.onSave}
+                  saving={props.saving}
                 />
                 <Header
                   className={cx(styles.ui, styles.header)}
@@ -147,6 +149,7 @@ const ItemPage = ({ form: Form, onInitialize, onSave }: Props) => {
                 />
                 <SaveButton
                   onClick={props.onSave}
+                  saving={props.saving}
                 />
               </Section>
               <Relationships />
