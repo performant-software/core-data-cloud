@@ -1,16 +1,46 @@
 // @flow
 
 import _ from 'underscore';
-import type { User as UserType } from '../types/User';
+import DateTimeUtils from '../utils/DateTime';
 import type { Ownable as OwnableType } from '../types/Ownable';
 import type { ProjectModel as ProjectModelType } from '../types/ProjectModel';
 import SessionService from './Session';
+import type { User as UserType } from '../types/User';
+import type { UserProject as UserProjectType } from '../types/UserProject';
 import UserProjectRoles from '../utils/UserProjectRoles';
+import UserRoles from '../utils/UserRoles';
 
 /**
  * Class responsible for permissions business logic.
  */
 class Permissions {
+  /**
+   * An admin user can archive a project.
+   *
+   * @returns {boolean}
+   */
+  canArchiveProject(): boolean {
+    return this.isAdmin();
+  }
+
+  /**
+   * An admin user can manage jobs.
+   *
+   * @returns {boolean}
+   */
+  canCreateJobs(): boolean {
+    return this.isAdmin();
+  }
+
+  /**
+   * An admin user or a member user can create a new project.
+   *
+   * @returns {boolean}
+   */
+  canCreateProject(): boolean {
+    return this.isAdmin() || this.isMember();
+  }
+
   /**
    * An admin user or project owner can delete a project.
    *
@@ -24,7 +54,7 @@ class Permissions {
       return false;
     }
 
-    return this.isAdmin() || this.isOwner(projectId);
+    return this.isAdmin() || (this.isOwner(projectId) && !this.isArchived(projectId));
   }
 
   /**
@@ -35,8 +65,15 @@ class Permissions {
    *
    * @returns {boolean}
    */
-  canDeleteRecord(projectModel: ProjectModelType, record: OwnableType) {
+  canDeleteRecord(projectModel: ProjectModelType, record: OwnableType): boolean {
     if (!(projectModel && record)) {
+      return false;
+    }
+
+    /**
+     * Records cannot be deleted from archived projects.
+     */
+    if (this.isArchived(projectModel.project_id)) {
       return false;
     }
 
@@ -58,19 +95,43 @@ class Permissions {
   }
 
   /**
-   * An admin user or project owner can edit a project.
+   * An admin user can always modify project data. A project owner or editor can modify the project data if the project
+   * is not archived.
    *
    * @param projectId
    *
    * @returns {boolean}
    */
-  canEditProject(projectId: number): boolean {
+  canEditProjectData(projectId: number): boolean {
+    return this.isAdmin() || ((this.isOwner(projectId) || this.isEditor(projectId)) && !this.isArchived(projectId));
+  }
+
+  /**
+   * An admin user can always modify project settings. A project owner can modify project settings if the project
+   * is not archived.
+   *
+   * @param projectId
+   *
+   * @returns {boolean}
+   */
+  canEditProjectSettings(projectId: number): boolean {
     // New projects can always be edited
     if (!projectId) {
       return true;
     }
 
-    return this.isAdmin() || this.isOwner(projectId);
+    return this.isAdmin() || (this.isOwner(projectId) && !this.isArchived(projectId));
+  }
+
+  /**
+   * An admin user or a member user who is a project owner can add users to a project.
+   *
+   * @param projectId
+   *
+   * @returns {boolean}
+   */
+  canEditUserProjects(projectId: number): boolean {
+    return this.isAdmin() || (this.isMember() && this.isOwner(projectId) && !this.isArchived(projectId));
   }
 
   /**
@@ -101,6 +162,48 @@ class Permissions {
   }
 
   /**
+   * An admin user can always invite user projects. A non-admin user can invite user projects if they have
+   * permission to edit users in the project, the user has not yet logged in, and the user has not been invited in
+   * the last 24 hours.
+   *
+   * @param userProject
+   *
+   * @returns {boolean}
+   */
+  canInviteUserProject(userProject: UserProjectType): boolean {
+    // Admin users can always invite users
+    if (this.isAdmin()) {
+      return true;
+    }
+
+    // The current user must be able to edit users in the current project
+    if (!this.canEditUserProjects(userProject.project_id)) {
+      return false;
+    }
+
+    // The user cannot be invited if they have already signed in
+    if (userProject.user.last_sign_in_at) {
+      return false;
+    }
+
+    // The user cannot be invited more than once in 24 hours
+    const timeInHours = DateTimeUtils.getDurationInHours(userProject?.user?.last_invited_at);
+    const interval = parseInt(import.meta.env.VITE_POSTMARK_INTERVAL, 10);
+
+    return timeInHours > interval;
+  }
+
+  /**
+   * An admin user and a user who does not log in via SSO can change their password.
+   *
+   * @returns {boolean}
+   */
+  canResetPassword() {
+    const user = this.getUser();
+    return this.isAdmin() || !user.sso;
+  }
+
+  /**
    * Returns a reference to the currently logged in user.
    *
    * @returns {User}
@@ -111,13 +214,78 @@ class Permissions {
   }
 
   /**
-   * Returns true if the current user is an admin.
+   * Returns the user project record for the project with the passed ID for the current user.
+   *
+   * @param projectId
+   *
+   * @returns {*}
+   */
+  getUserProject(projectId: number): UserProjectType {
+    const userProjects = this.getUserProjects();
+    return _.findWhere(userProjects, { project_id: projectId });
+  }
+
+  /**
+   * Returns the user project records for the current user.
+   *
+   * @returns {Array<UserProject>}
+   */
+  getUserProjects(): Array<UserProjectType> {
+    const user = this.getUser();
+    const { user_projects: userProjects } = user || {};
+
+    return userProjects;
+  }
+
+  /**
+   * Returns true if the current user has the "admin" role.
    *
    * @returns {boolean}
    */
   isAdmin(): boolean {
-    const user = this.getUser();
-    return user?.admin || false;
+    return UserRoles.isAdmin(this.getUser());
+  }
+
+  /**
+   * Returns true if the passed project is archived.
+   *
+   * @param projectId
+   *
+   * @returns {boolean}
+   */
+  isArchived(projectId: number): boolean {
+    const userProject = this.getUserProject(projectId);
+    return userProject?.project?.archived;
+  }
+
+  /**
+   * Returns true if the current user has the editor role in the passed project.
+   *
+   * @param projectId
+   *
+   * @returns {boolean}
+   */
+  isEditor(projectId: number): boolean {
+    const userProject = this.getUserProject(projectId);
+    return UserProjectRoles.isEditor(userProject);
+  }
+
+  /**
+   * Returns true if the current user has the "guest" role.
+   *
+   * @returns {boolean}
+   */
+  isGuest(): boolean {
+    return UserRoles.isGuest(this.getUser());
+  }
+
+  /**
+   * Returns true if the current user has the "member" role.
+   *
+   * @returns {boolean}
+   */
+  isMember(): boolean {
+    return UserRoles.isMember(this.getUser());
   }
 
   /**
@@ -128,13 +296,8 @@ class Permissions {
    * @returns {boolean}
    */
   isOwner(projectId: number): boolean {
-    const user = this.getUser();
-    const { user_projects: userProjects } = user || {};
-
-    return !!_.findWhere(userProjects, {
-      project_id: projectId,
-      role: UserProjectRoles.Roles.owner.value
-    });
+    const userProject = this.getUserProject(projectId);
+    return UserProjectRoles.isOwner(userProject);
   }
 }
 

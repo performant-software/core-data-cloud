@@ -2,7 +2,12 @@
 
 import { AssociatedDropdown, SimpleEditPage } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
-import React, { useEffect, useMemo, type AbstractComponent } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  type AbstractComponent
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
 import ItemHeader from '../components/ItemHeader';
@@ -10,15 +15,14 @@ import ItemLayout from '../components/ItemLayout';
 import PermissionsService from '../services/Permissions';
 import Project from '../transforms/Project';
 import ProjectsService from '../services/Projects';
+import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import User from '../transforms/User';
 import type { UserProject as UserProjectType } from '../types/UserProject';
 import UserForm from '../components/UserForm';
 import UserModal from '../components/UserModal';
-import UserPassword from '../components/UserPassword';
 import UserProjectRoles from '../utils/UserProjectRoles';
 import UserProjectsService from '../services/UserProjects';
 import UsersService from '../services/Users';
-import UserUtils from '../utils/User';
 import useParams from '../hooks/ParsedParams';
 import Validation from '../utils/Validation';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
@@ -31,8 +35,33 @@ const UserProjectForm = (props: Props) => {
   const params = useParams();
   const { t } = useTranslation();
 
+  /**
+   * Memo-izes whether we're on a new record.
+   *
+   * @type {boolean}
+   */
   const isNew = useMemo(() => !props.item.id, [props.item.id]);
-  const editable = useMemo(() => PermissionsService.canEditProject(props.item.project_id), [props.item.project_id]);
+
+  /**
+   * Memo-izes if the current user is an owner of the current project.
+   *
+   * @type {boolean}
+   */
+  const isOwner = useMemo(() => PermissionsService.isOwner(props.item.project_id), [props.item.project_id]);
+
+  /**
+   * Callback fired when the project search is executed.
+   *
+   * @type {function(*): Promise<AxiosResponse<T>>}
+   */
+  const onProjectSearch = useCallback((search) => ProjectsService.fetchAll({ search }), []);
+
+  /**
+   * Callback fired when the user search is executed.
+   *
+   * @type {function(*): Promise<AxiosResponse<T>>}
+   */
+  const onUserSearch = useCallback((search) => UsersService.fetchAll({ search }), []);
 
   /*
    * For a new record, set the foreign key ID based on the route parameters.
@@ -46,6 +75,24 @@ const UserProjectForm = (props: Props) => {
       }
     }
   }, []);
+
+  /**
+   * Redirect to the project edit page if we're in a project context and the user cannot edit user projects.
+   */
+  if (params.projectId && !PermissionsService.canEditUserProjects(params.projectId)) {
+    return (
+      <UnauthorizedRedirect
+        to={`/projects/${params.projectId}/edit`}
+      />
+    );
+  }
+
+  /**
+   * Redirect to the projects page if we're in a user context and the users cannot edit users.
+   */
+  if (params.userId && !PermissionsService.canEditUsers()) {
+    return <UnauthorizedRedirect />;
+  }
 
   return (
     <ItemLayout>
@@ -72,7 +119,6 @@ const UserProjectForm = (props: Props) => {
       <ItemLayout.Content>
         <SimpleEditPage
           {...props}
-          editable={editable}
         >
           <SimpleEditPage.Tab
             key='default'
@@ -85,7 +131,7 @@ const UserProjectForm = (props: Props) => {
               >
                 <AssociatedDropdown
                   collectionName='projects'
-                  onSearch={(search) => ProjectsService.fetchAll({ search })}
+                  onSearch={onProjectSearch}
                   onSelection={props.onAssociationInputChange.bind(this, 'project_id', 'project')}
                   renderOption={(project) => Project.toDropdown(project)}
                   searchQuery={props.item.project?.name}
@@ -109,7 +155,7 @@ const UserProjectForm = (props: Props) => {
                         .then(({ data }) => data.user)
                     )
                   }}
-                  onSearch={(search) => UsersService.fetchAll({ search })}
+                  onSearch={onUserSearch}
                   onSelection={props.onAssociationInputChange.bind(this, 'user_id', 'user')}
                   renderOption={(user) => User.toDropdown(user)}
                   searchQuery={props.item.user?.name}
@@ -117,19 +163,11 @@ const UserProjectForm = (props: Props) => {
                 />
               </Form.Input>
             )}
-            { PermissionsService.isOwner(props.item.project_id) && isNew && (
+            { !PermissionsService.canEditUsers() && isOwner && isNew && (
               <UserForm
                 {...props}
               />
             )}
-            { PermissionsService.isOwner(props.item.project_id)
-              && !isNew
-              && UserUtils.showPasswordFields(props.item.user.email)
-              && (
-                <UserPassword
-                  {...props}
-                />
-              )}
             <Form.Dropdown
               error={props.isError('role')}
               label={t('UserProject.labels.role')}

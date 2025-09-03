@@ -270,7 +270,7 @@ const MergeModal = (props: Props) => {
       attrs.push({
         name: 'user_defined',
         label: field.column_name,
-        field,
+        field
       });
     });
 

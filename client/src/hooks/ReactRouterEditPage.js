@@ -1,9 +1,8 @@
 // @flow
 
-import { withEditPage } from '@performant-software/shared-components';
-import { type EditPageConfig } from '@performant-software/shared-components/types';
+import { withEditPage, type EditPageConfig } from '@performant-software/shared-components';
 import React, { useCallback, type AbstractComponent } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import _ from 'underscore';
 
 const ERROR_USER_DEFINED = 'user_defined';
@@ -26,11 +25,21 @@ const withReactRouterEditPage = (WrappedComponent: AbstractComponent<any>, confi
      * After save, navigate to the newly created record. We'll also add the "saved" attribute to indicate a message
      * should be displayed to the user.
      *
+     * If an "afterSave" attribute is passed, determine where to navigate based on the attribute.
+     *
      * @type {function(*, string): *}
      */
-    const afterSave = useCallback((item: any) => (
-      navigate(`${url}/${item.id}`, { state: { saved: true } })
-    ), [navigate, url]);
+    const afterSave = useCallback((item: any) => {
+      if (config.afterSave && _.isFunction(config.afterSave)) {
+        return config.afterSave(navigate, item);
+      }
+
+      if (config.afterSave && _.isString(config.afterSave)) {
+        return navigate(config.afterSave, { state: { saved: true } });
+      }
+
+      return navigate(`${url}/${item.id}`, { state: { saved: true } })
+    }, [navigate, url, config.afterSave]);
 
     /**
      * Navigates to the previous route.

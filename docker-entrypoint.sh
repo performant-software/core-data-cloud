@@ -8,3 +8,4 @@ fi
 
 bundle exec ./bin/rake db:prepare
 bundle exec puma -C config/puma.rb
+bundle exec sidekiq -e production -C config/sidekiq.yml

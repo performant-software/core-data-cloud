@@ -1,10 +1,14 @@
 // @flow
 
-import { DropdownButton, ItemList, ItemViews } from '@performant-software/semantic-components';
+import {
+  DropdownButton,
+  ItemList,
+  ItemViews,
+  LazyImage
+} from '@performant-software/semantic-components';
 import cx from 'classnames';
 import React, { useCallback, useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Image } from 'semantic-ui-react';
 import _ from 'underscore';
 import ItemContext from '../context/Item';
 import ManifestLimitIcon from './ManifestLimitIcon';
@@ -62,13 +66,13 @@ const RelatedMediaContents = () => {
    *  }
    * }
    */
-  const createRelationship = useCallback((mediaContent, userDefined = null) => ({
+  const createRelationship = useCallback((mediaContent) => ({
     project_model_relationship_id: projectModelRelationship.id,
     primary_record_id: itemId,
     primary_record_type: projectModel?.model_class,
     related_record_id: mediaContent.id,
     related_record_type: 'CoreDataConnector::MediaContent',
-    user_defined: userDefined
+    user_defined: mediaContent.relationship_user_defined
   }), [projectModel, projectModelRelationship]);
 
   /**
@@ -83,13 +87,13 @@ const RelatedMediaContents = () => {
    *  }
    * }
    */
-  const createInverseRelationship = useCallback((mediaContent, userDefined = null) => ({
+  const createInverseRelationship = useCallback((mediaContent) => ({
     project_model_relationship_id: projectModelRelationship.id,
     primary_record_id: mediaContent.id,
     primary_record_type: 'CoreDataConnector::MediaContent',
     related_record_id: itemId,
     related_record_type: projectModel?.model_class,
-    user_defined: userDefined
+    user_defined: mediaContent.relationship_user_defined
   }), [projectModel, projectModelRelationship]);
 
   /**
@@ -155,10 +159,10 @@ const RelatedMediaContents = () => {
    * @type {(function(*): void)|*}
    */
   const onModalSave = useCallback((mediaContents) => {
-    const relationships = _.map(mediaContents, ({ mediaContent, userDefined }) => (
+    const relationships = _.map(mediaContents, (mediaContent) => (
       projectModelRelationship.inverse
-        ? createInverseRelationship(mediaContent, userDefined)
-        : createRelationship(mediaContent, userDefined)
+        ? createInverseRelationship(mediaContent)
+        : createRelationship(mediaContent)
     ));
 
     RelationshipsService
@@ -183,9 +187,10 @@ const RelatedMediaContents = () => {
         buttons={[{
           render: () => (
             <DropdownButton
-              color='dark gray'
+              color='grey'
               direction='right'
               icon='plus'
+              key='upload'
               onChange={(e, { value }) => setModal(value)}
               options={[{
                 icon: 'cloud upload',
@@ -205,6 +210,7 @@ const RelatedMediaContents = () => {
         }, {
           render: () => (
             <ManifestUrlButton
+              key='manifest'
               url={MediaContentUtils.getManifestURL(projectModel, uuid, projectModelRelationship.uuid)}
             />
           )
@@ -235,8 +241,12 @@ const RelatedMediaContents = () => {
           </div>
         )}
         renderImage={(relationship) => (
-          <Image
-            src={resolveAttributeValue('content_thumbnail_url', relationship)}
+          <LazyImage
+            className={cx(styles.ui, styles.small, styles.image)}
+            dimmable={false}
+            preview={resolveAttributeValue('content_thumbnail_url', relationship)}
+            size='small'
+            src={resolveAttributeValue('content_iiif_url', relationship)}
           />
         )}
         renderListHeader={() => <ManifestLimitIcon />}

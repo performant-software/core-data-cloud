@@ -1,32 +1,53 @@
 // @flow
 
 import { ItemList, ItemViews } from '@performant-software/semantic-components';
-import React, { type AbstractComponent } from 'react';
+import cx from 'classnames';
+import React, { type AbstractComponent, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IoSearchOutline } from 'react-icons/io5';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { Icon } from 'semantic-ui-react';
+import PermissionsService from '../services/Permissions';
 import ProjectDescription from '../components/ProjectDescription';
 import ProjectsService from '../services/Projects';
+import { SlLock } from 'react-icons/sl';
+import styles from './Projects.module.css';
 
 const Projects: AbstractComponent<any> = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
+  const { saved } = location?.state || {};
+
+  /**
+   * Memo-izes the add button value based on the current user's permissions.
+   *
+   * @type {{basic: boolean, color: string, location: string, onClick: (function(): void)}}
+   */
+  const addButton = useMemo(() => (
+    PermissionsService.canCreateProject() ? ({
+      basic: false,
+      color: 'blue',
+      location: 'top',
+      onClick: () => navigate('new')
+    }) : undefined
+  ), []);
+
   return (
     <ItemList
-      addButton={{
-        basic: false,
-        color: 'blue',
-        location: 'top',
-        onClick: () => navigate('new')
-      }}
+      addButton={addButton}
       as={Link}
       asProps={(project) => ({
-        to: `${project.id}/edit`,
-        raised: true
+        className: cx(
+          styles.card,
+          { [styles.disabled]: project.archived && !PermissionsService.canArchiveProject() }
+        ),
+        raised: true,
+        to: `${project.id}/edit`
       })}
       basic={false}
+      className={styles.projects}
       collectionName='projects'
       defaultView={ItemViews.grid}
       hideToggle
@@ -39,15 +60,33 @@ const Projects: AbstractComponent<any> = () => {
       )}
       renderEmptyList={() => null}
       renderExtra={(project) => (
-        <Icon
-          color='blue'
+        <div
+          className={styles.icons}
         >
-          { project.discoverable && (
-            <IoSearchOutline />
+          { project.archived && (
+            <Icon
+              circular
+              color='grey'
+              inverted
+              size='small'
+            >
+              <SlLock />
+            </Icon>
           )}
-        </Icon>
+          { project.discoverable && (
+            <Icon
+              circular
+              color='blue'
+              inverted
+              size='small'
+            >
+              <IoSearchOutline />
+            </Icon>
+          )}
+        </div>
       )}
       onLoad={(params) => ProjectsService.fetchAll(params)}
+      saved={saved}
       session={{
         key: 'projects',
         storage: localStorage

@@ -1,18 +1,26 @@
 [ignore]
+.*/src/.*
 
 [include]
-./node_modules/
 
 [libs]
 
 [lints]
+untyped-type-import=error
+internal-type=error
+unsafe-object-assign=error
+nested-component=error
+nested-hook=error
+libdef-override=error
+deprecated-type-bool=error
 
 [options]
 module.file_ext=.js
 module.file_ext=.jsx
-module.file_ext=.json
-module.file_ext=.css
-module.file_ext=.scss
-react.runtime=automatic
+module.file_ext=.ts
+module.file_ext=.tsx
+module.file_ext=.cts
+module.file_ext=.cjs
+module.file_ext=.mjs
 
 [strict]

@@ -7,7 +7,7 @@ import { FaShareFromSquare } from 'react-icons/fa6';
 import { Icon, Menu } from 'semantic-ui-react';
 import ProjectContext from '../context/Project';
 import styles from './ListViewMenu.module.css';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 import Views from '../constants/ListViews';
 
 type Props = {

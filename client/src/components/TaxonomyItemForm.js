@@ -22,7 +22,7 @@ const TaxonomyItemForm = (props: Props) => {
         label={t('TaxonomyItems.labels.name')}
         onChange={props.onTextInputChange.bind(this, 'name')}
         required={props.isRequired('name')}
-        value={props.item.name}
+        value={props.item.name || ''}
       />
       { props.item.project_model_id && (
         <UserDefinedFieldsForm

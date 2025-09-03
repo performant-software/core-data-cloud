@@ -16,7 +16,7 @@ import { MdChatBubble } from 'react-icons/md';
 import MergeButton from '../components/MergeButton';
 import PermissionsService from '../services/Permissions';
 import ProjectContext from '../context/Project';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import useParams from '../hooks/ParsedParams';
 import useSelectable from '../hooks/Selectable';
 import { useTranslation } from 'react-i18next';
@@ -92,7 +92,7 @@ const Instances: AbstractComponent<any> = () => {
             <MergeButton
               attributes={[{
                 name: 'uuid',
-                label: t('Common.actions.merge.uuid'),
+                label: t('Common.actions.merge.uuid')
               }, {
                 name: 'source_names',
                 label: t('Instances.actions.merge.names'),
@@ -101,6 +101,7 @@ const Instances: AbstractComponent<any> = () => {
                 resolve: (sourceName) => sourceName.name
               }]}
               ids={selectedItems}
+              key='merge'
               onLoad={(id) => (
                 InstancesService
                   .fetchOne(id)

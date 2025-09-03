@@ -6,9 +6,12 @@ const FILE_TYPE_JSON = 'application/json';
 const FILE_TYPE_TEXT = 'text/plain';
 const FILE_TYPE_ZIP = 'application/zip';
 
+type FileType = 'application/json' | 'text/plain' | 'application/zip';
+
 const FileExtensions = {
   [FILE_TYPE_JSON]: 'json',
-  [FILE_TYPE_ZIP]: 'zip'
+  [FILE_TYPE_ZIP]: 'zip',
+  [FILE_TYPE_TEXT]: 'text'
 };
 
 /**
@@ -20,7 +23,7 @@ const FileExtensions = {
  *
  * @returns {string}
  */
-const createUrl = (data, type, encoding) => {
+const createUrl = (data: any, type: FileType, encoding: string) => {
   const blob = new Blob([data], { type, encoding });
   const url = URL.createObjectURL(blob);
 
@@ -35,7 +38,7 @@ const createUrl = (data, type, encoding) => {
  * @param type
  * @param encoding
  */
-const downloadFile = (data, name, type, encoding = DEFAULT_FILE_ENCODING) => {
+const downloadFile = (data: any, name: string, type: FileType, encoding: string = DEFAULT_FILE_ENCODING) => {
   const url = createUrl(data, type, encoding);
   const filename = getFilename(name, FileExtensions[type]);
 
@@ -46,7 +49,7 @@ const downloadFile = (data, name, type, encoding = DEFAULT_FILE_ENCODING) => {
   const clickHandler = () => setTimeout(() => URL.revokeObjectURL(url), 150);
   link.addEventListener('click', clickHandler, false);
 
-  document.body.appendChild(link);
+  document.body?.appendChild(link);
   link.click();
   link.remove();
 };
@@ -58,7 +61,7 @@ const downloadFile = (data, name, type, encoding = DEFAULT_FILE_ENCODING) => {
  * @param type
  * @param encoding
  */
-const openFile = (data, type, encoding = DEFAULT_FILE_ENCODING) => {
+const openFile = (data: any, type: FileType, encoding: string = DEFAULT_FILE_ENCODING) => {
   const url = createUrl(data, type, encoding);
   window.open(url, '_blank');
 };
@@ -69,7 +72,7 @@ const openFile = (data, type, encoding = DEFAULT_FILE_ENCODING) => {
  * @param data
  * @param name
  */
-const downloadJSON = (data, name) => downloadFile(JSON.stringify(data), name, FILE_TYPE_JSON);
+const downloadJSON = (data: any, name: string): void => downloadFile(JSON.stringify(data), name, FILE_TYPE_JSON);
 
 /**
  * Downloads the passed binary data as a zip file.
@@ -77,7 +80,7 @@ const downloadJSON = (data, name) => downloadFile(JSON.stringify(data), name, FI
  * @param data
  * @param name
  */
-const downloadZip = (data, name) => downloadFile(data, name, FILE_TYPE_ZIP);
+const downloadZip = (data: any, name: string): void => downloadFile(data, name, FILE_TYPE_ZIP);
 
 /**
  * Removes the whitespace from the passed name and appends the passed extension to create a filename.
@@ -87,7 +90,7 @@ const downloadZip = (data, name) => downloadFile(data, name, FILE_TYPE_ZIP);
  *
  * @returns {`${string}.${string}`}
  */
-const getFilename = (name, extension) => {
+const getFilename = (name: string, extension: string): string => {
   const filename = [name];
 
   if (!name.includes(`.${extension}`)) {
@@ -103,7 +106,7 @@ const getFilename = (name, extension) => {
  *
  * @param data
  */
-const openText = (data) => openFile(data, FILE_TYPE_TEXT);
+const openText = (data: any): void => openFile(data, FILE_TYPE_TEXT);
 
 export default {
   downloadJSON,

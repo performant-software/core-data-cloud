@@ -11,7 +11,7 @@ import React, {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TbCalendarShare, TbCalendarTime } from 'react-icons/tb';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { Icon } from 'semantic-ui-react';
 import EventsService from '../services/Events';
 import ListViewMenu from '../components/ListViewMenu';
@@ -101,7 +101,7 @@ const Events: AbstractComponent<any> = () => {
             <MergeButton
               attributes={[{
                 name: 'uuid',
-                label: t('Common.actions.merge.uuid'),
+                label: t('Common.actions.merge.uuid')
               }, {
                 name: 'name',
                 label: t('Events.actions.merge.name')
@@ -118,6 +118,7 @@ const Events: AbstractComponent<any> = () => {
                 resolve: (event) => FuzzyDateUtils.getDateView(event.end_date)
               }]}
               ids={selectedItems}
+              key='merge'
               onLoad={(id) => (
                 EventsService
                   .fetchOne(id)

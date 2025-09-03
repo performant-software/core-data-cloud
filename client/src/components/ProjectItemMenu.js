@@ -51,6 +51,7 @@ const ProjectItemMenu = () => {
     items.push({
       active: activeSection && activeSection === id?.toString(),
       content: name,
+      key: id,
       onClick: () => onSectionClick(id)
     });
   }, [activeSection, onSectionClick]);

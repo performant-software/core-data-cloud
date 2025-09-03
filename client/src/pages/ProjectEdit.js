@@ -1,13 +1,15 @@
 // @flow
 
 import React, { useContext } from 'react';
-import ProjectContext from '../context/Project';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router';
 import _ from 'underscore';
+import PermissionsService from '../services/Permissions';
+import ProjectContext from '../context/Project';
+import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import useParams from '../hooks/ParsedParams';
 
 const ProjectEdit = () => {
-  const { loadedProjectModels, projectModels, setReloadProjectModels } = useContext(ProjectContext);
+  const { loadedProjectModels, projectModels } = useContext(ProjectContext);
   const { projectId } = useParams();
 
   /**
@@ -19,6 +21,16 @@ const ProjectEdit = () => {
     return null;
   }
 
+  /**
+   * Redirect to the projects page if the user does not have permissions to access the project settings or data.
+   */
+  if (!(PermissionsService.canEditProjectSettings(projectId) || PermissionsService.canEditProjectData(projectId))) {
+    return <UnauthorizedRedirect />;
+  }
+
+  /**
+   * Redirect to the project edit page if no models have been added.
+   */
   if (loadedProjectModels && !projectModel) {
     return (
       <Navigate
@@ -27,11 +39,6 @@ const ProjectEdit = () => {
       />
     );
   }
-
-  /**
-   * Reload the list of project models (in case it was modified in settings) and navigate to the edit view.
-   */
-  setReloadProjectModels(true);
 
   return (
     <Navigate

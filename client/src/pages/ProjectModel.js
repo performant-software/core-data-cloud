@@ -9,11 +9,17 @@ import {
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsEmbeddedList } from '@performant-software/user-defined-fields';
 import cx from 'classnames';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaUnlockAlt } from 'react-icons/fa';
 import { FaShareFromSquare } from 'react-icons/fa6';
-import uuid from 'react-uuid';
+import { useLocation } from 'react-router';
+import { v4 as uuid } from 'uuid';
 import {
   Form,
   Header,
@@ -24,6 +30,7 @@ import _ from 'underscore';
 import ItemHeader from '../components/ItemHeader';
 import ItemLayout from '../components/ItemLayout';
 import ModelClassDropdown from '../components/ModelClassDropdown';
+import ProjectContext from '../context/Project';
 import type { ProjectModel as ProjectModelType } from '../types/ProjectModel';
 import ProjectModelRelationshipModal from '../components/ProjectModelRelationshipModal';
 import ProjectModelAccessesService from '../services/ProjectModelAccesses';
@@ -45,8 +52,11 @@ const ProjectModelForm = (props: Props) => {
   const [accessModal, setAccessModal] = useState(false);
   const [shareModal, setShareModal] = useState(false);
 
+  const { state } = useLocation();
   const { projectId } = useParams();
   const { t } = useTranslation();
+
+  const { setReloadProjectModels } = useContext(ProjectContext);
 
   /**
    * Returns the model name for the passed relationship based on context.
@@ -97,6 +107,15 @@ const ProjectModelForm = (props: Props) => {
     props.onDeleteChildAssociation('all_project_model_relationships', relationship);
   }, []);
 
+  /**
+   * If we've saved the record, reload project models.
+   */
+  useEffect(() => {
+    if (state?.saved) {
+      setReloadProjectModels(true);
+    }
+  }, [state?.saved]);
+
   /*
    * For a new record, set the foreign key ID based on the route parameters.
    */
@@ -142,7 +161,7 @@ const ProjectModelForm = (props: Props) => {
               label={t('ProjectModel.labels.name')}
               required={props.isRequired('name')}
               onChange={props.onTextInputChange.bind(this, 'name')}
-              value={props.item.name}
+              value={props.item.name || ''}
             />
             <Form.Input
               error={props.isError('order')}
@@ -150,7 +169,7 @@ const ProjectModelForm = (props: Props) => {
               required={props.isRequired('order')}
               onChange={props.onTextInputChange.bind(this, 'order')}
               type='number'
-              value={props.item.order}
+              value={props.item.order || 0}
             />
             <Form.Checkbox
               checked={props.item.allow_identifiers}

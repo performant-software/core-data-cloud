@@ -7,7 +7,7 @@ import React, {
   useState,
   type AbstractComponent
 } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router';
 import { Container, Ref } from 'semantic-ui-react';
 import _ from 'underscore';
 import LayoutContext from '../context/Layout';

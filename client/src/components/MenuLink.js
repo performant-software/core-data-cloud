@@ -1,11 +1,7 @@
 // @flow
 
 import React, { type ComponentType, type Node } from 'react';
-import {
-  Link,
-  useMatch,
-  useResolvedPath
-} from 'react-router-dom';
+import { Link, useMatch, useResolvedPath } from 'react-router';
 import { Menu } from 'semantic-ui-react';
 import _ from 'underscore';
 
@@ -18,11 +14,11 @@ type Props = {
 const MenuLink: ComponentType<any> = (props: Props) => {
   const url = `${props.to}${props.parent ? '/*' : ''}`;
   const { pathname } = useResolvedPath(url);
-  const active = useMatch({ path: pathname, end: true });
+  const active = !!useMatch({ path: pathname, end: true });
 
   return (
     <Menu.Item
-      {..._.omit(props, 'children')}
+      {..._.omit(props, 'children', 'parent')}
       active={active}
       as={Link}
     >

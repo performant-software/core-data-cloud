@@ -15,7 +15,7 @@ const AdminMenu = () => {
    * Only render the menu if we're not in a project context and the current user can edit users outside
    * the context of a project.
    */
-  if (projectId || !PermissionsService.canEditUsers()) {
+  if (projectId || !(PermissionsService.canEditUsers() || PermissionsService.canCreateJobs())) {
     return null;
   }
 
@@ -28,11 +28,20 @@ const AdminMenu = () => {
         parent
         to='/projects'
       />
-      <MenuLink
-        content={t('AdminMenu.labels.users')}
-        parent
-        to='/users'
-      />
+      { PermissionsService.canEditUsers && (
+        <MenuLink
+          content={t('AdminMenu.labels.users')}
+          parent
+          to='/users'
+        />
+      )}
+      { PermissionsService.canCreateJobs() && (
+        <MenuLink
+          content={t('AdminMenu.labels.jobs')}
+          parent
+          to='/jobs'
+        />
+      )}
     </Menu>
   );
 };

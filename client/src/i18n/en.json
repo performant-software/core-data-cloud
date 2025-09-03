@@ -10,6 +10,7 @@
   },
   "AdminMenu": {
     "labels": {
+      "jobs": "Jobs",
       "projects": "Projects",
       "users": "Users"
     }
@@ -52,6 +53,7 @@
       "cancel": "Cancel",
       "delete": "Delete",
       "edit": "Edit",
+      "ok": "OK",
       "save": "Save",
       "upload": "Upload"
     },
@@ -230,6 +232,35 @@
       "name": "Name"
     }
   },
+  "Jobs": {
+    "actions": {
+      "download": {
+        "content": "Download the attached file",
+        "title": "Download"
+      }
+    },
+    "columns": {
+      "project": "Project",
+      "status": "Status",
+      "timestamp": "Timestamp",
+      "type": "Type",
+      "user": "User"
+    }
+  },
+  "JobStatuses": {
+    "labels": {
+      "completed": "Completed",
+      "failed": "Failed",
+      "initializing": "Initializing",
+      "processing": "Processing"
+    }
+  },
+  "JobTypes": {
+    "labels": {
+      "export": "Export",
+      "import": "Import"
+    }
+  },
   "ListViewMenu": {
     "labels": {
       "all": "All {{name}}",
@@ -357,15 +388,6 @@
       "attributes": "Attributes"
     }
   },
-  "NameModal": {
-    "labels": {
-      "name": "Name"
-    },
-    "title": {
-      "add": "Add Name",
-      "edit": "Edit Name"
-    }
-  },
   "NameRelationModal": {
     "labels": {
       "name": "Name",
@@ -411,6 +433,17 @@
     },
     "columns": {
       "name": "Name"
+    }
+  },
+  "PasswordReset": {
+    "labels": {
+      "back": "Back"
+    },
+    "messages": {
+      "required": {
+        "content": "You must change your password to continue.",
+        "header": "Password Reset Required"
+      }
     }
   },
   "People": {
@@ -557,15 +590,24 @@
       "delete": "Delete Project"
     },
     "labels": {
+      "apiKey": "API key",
+      "collectionName": "Collection name",
       "danger": "Danger Zone",
       "description": "Description",
-      "name": "Name",
-      "sharing": "Sharing",
+      "host": "Host",
       "fairCopyCloudUrl": "FairCopy.cloud URL",
       "faircopyCloudConnectedModel": "FairCopy.cloud connected model",
-      "mapLibraryUrl": "Map library URL"
+      "mapLibraryUrl": "Map library URL",
+      "name": "Name",
+      "port": "Port",
+      "protocol": "Protocol",
+      "reconcile": "Reconciliation API"
     },
     "messages": {
+      "archive": {
+        "content": "Project members will no longer be able to access project data",
+        "header": "Archive Project"
+      },
       "clear": {
         "content": "Do you really want to clear all data from this project? This action cannot be undone.",
         "header": "Are you sure?"
@@ -614,6 +656,10 @@
         "import": {
           "content": "Import a ZIP archive of CSV files to populate your project with data",
           "header": "Import"
+        },
+        "jobs": {
+          "header": "Monitor",
+          "content": "View your import progress from the jobs view"
         }
       },
       "developer": {
@@ -642,9 +688,13 @@
       "importProject": "Import {{name}}"
     },
     "messages": {
+      "export": {
+        "content": "Your data export has been started. Use the \"Jobs\" tab to check the status of your export.",
+        "header": "Data Export Started"
+      },
       "import": {
-        "content": "Your file has been imported.",
-        "header": "Success!"
+        "content": "Your file has been uploaded. Use the \"Jobs\" tab to check the status of your import.",
+        "header": "File Uploaded Successfully"
       }
     },
     "title": "Import"
@@ -735,6 +785,7 @@
       "configure": "Configure",
       "details": "Details",
       "import": "Import / Export",
+      "jobs": "Jobs",
       "newModel": "New Model",
       "newUser": "New User",
       "users": "Users"
@@ -866,7 +917,21 @@
       "name": "Name"
     }
   },
+  "UnauthorizedToaster": {
+    "messages": {
+      "redirect": {
+        "content": "You do not have permission to access that resource.",
+        "header": "Unable to access resource"
+      }
+    }
+  },
   "User": {
+    "errors": {
+      "password": {
+        "format": "The password you entered does not meet the requirements",
+        "match": "The passwords you entered do not match"
+      }
+    },
     "labels": {
       "allUsers": "All Users"
     }
@@ -879,14 +944,16 @@
   },
   "UserForm": {
     "labels": {
-      "admin": "Admin",
       "email": "Email",
-      "name": "Name"
+      "name": "Name",
+      "requirePasswordChange": "Require password change",
+      "role": "Role"
     }
   },
   "UserMenu": {
     "labels": {
-      "logout": "Logout"
+      "logout": "Logout",
+      "resetPassword": "Reset password"
     }
   },
   "UserModal": {
@@ -902,8 +969,12 @@
     },
     "messages": {
       "password": {
-        "content": "Passwords must be at least eight (8) characters.",
-        "header": "Password Policy"
+        "header": "Password Policy",
+        "length": "Passwords must be at least eight (8) characters",
+        "lower": "Passwords must contain at least one lowercase character",
+        "number": "Passwords must contain at least one number",
+        "symbol": "Passwords must contain at least one symbol",
+        "upper": "Passwords must contain at least one uppercase character"
       }
     }
   },
@@ -923,19 +994,52 @@
     }
   },
   "UserProjects": {
+    "actions": {
+      "invite": {
+        "content": "Send an email invitation to the user",
+        "header": "Invite User"
+      }
+    },
     "columns": {
+      "email": "Email",
       "project": "Project",
       "role": "Role",
+      "status": "Status",
+      "type": "Type",
       "user": "User"
     },
     "labels": {
       "allUsers": "All Users"
+    },
+    "messages": {
+      "invitation": {
+        "content": "Your invitation was successfully sent to {{email}}.",
+        "error": "Error Sending Invitation",
+        "header": "Invitation Sent!"
+      }
+    }
+  },
+  "UserRoles": {
+    "labels": {
+      "admin": "Administrator",
+      "guest": "Guest",
+      "member": "Member"
+    }
+  },
+  "UserStatus": {
+    "labels": {
+      "active": "Active",
+      "pending": "Pending"
     }
   },
   "Users": {
     "columns": {
       "email": "Email",
-      "name": "Name"
+      "lastInvited": "Last invited",
+      "lastSignIn": "Last sign in",
+      "name": "Name",
+      "passwordChange": "Password change",
+      "role": "Role"
     }
   },
   "WebAuthorities": {

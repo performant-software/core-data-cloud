@@ -10,24 +10,25 @@ import {
 } from '@performant-software/geospatial';
 import { BooleanIcon, EmbeddedList, FileInputButton } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
-import { FaMapPin } from 'react-icons/fa';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
 import cx from 'classnames';
 import React, {
-  useCallback, useEffect, useMemo, useState
+  useCallback,
+  useEffect,
+  useMemo,
+  useState
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Form, Header, Icon
-} from 'semantic-ui-react';
-import _ from 'underscore';
+import { FaMapPin } from 'react-icons/fa';
 import { PiPolygonBold } from 'react-icons/pi';
+import { Form, Header, Icon } from 'semantic-ui-react';
+import _ from 'underscore';
+import MapSessionUtils from '../utils/MapSession';
 import type { Place as PlaceType } from '../types/Place';
 import PlaceLayerModal from './PlaceLayerModal';
 import PlaceLayerUtils from '../utils/PlaceLayers';
 import PlaceNameModal from './PlaceNameModal';
 import styles from './PlaceForm.module.css';
-import MapSessionUtils from '../utils/MapSession';
 
 type Props = EditContainerProps & {
   item: PlaceType
@@ -78,6 +79,7 @@ const PlaceForm = (props: Props) => {
       return (
         <GeoJsonLayer
           data={layer.content}
+          key={layer.id || layer.uuid}
           url={layer.url}
         />
       );
@@ -87,6 +89,7 @@ const PlaceForm = (props: Props) => {
       return (
         <WarpedImageLayer
           id={layer.id || layer.uid}
+          key={layer.id || layer.uid}
           manifest={layer.content}
           url={layer.url}
         />
@@ -96,6 +99,7 @@ const PlaceForm = (props: Props) => {
     if (layer.layer_type === LayerTypes.raster) {
       return (
         <RasterLayer
+          key={layer.id || layer.uuid}
           url={layer.url}
         />
       );
@@ -140,7 +144,7 @@ const PlaceForm = (props: Props) => {
         }]}
         addButton={{
           basic: false,
-          color: 'dark gray',
+          color: 'grey',
           content: t('Common.buttons.addName'),
           location: 'bottom'
         }}
@@ -173,7 +177,7 @@ const PlaceForm = (props: Props) => {
         }]}
         addButton={{
           basic: false,
-          color: 'dark gray',
+          color: 'grey',
           location: 'bottom'
         }}
         className='compact'
@@ -209,7 +213,7 @@ const PlaceForm = (props: Props) => {
         size='tiny'
       />
       <MapDraw
-        apiKey={process.env.REACT_APP_MAP_TILER_KEY}
+        apiKey={import.meta.env.VITE_MAP_TILER_KEY}
         data={props.item.place_geometry?.geometry_json}
         geocoding={geocoding}
         mapStyle='https://api.maptiler.com/maps/dataviz/style.json'
@@ -249,7 +253,6 @@ const PlaceForm = (props: Props) => {
               styles.button,
               styles.uploadButton
             )}
-            color='white'
             icon={(
               <Icon
                 name='cloud upload'

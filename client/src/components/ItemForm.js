@@ -66,7 +66,7 @@ const ItemForm = (props: Props) => {
         }]}
         addButton={{
           basic: false,
-          color: 'dark gray',
+          color: 'grey',
           content: t('Common.buttons.addName'),
           location: 'bottom'
         }}
@@ -94,7 +94,7 @@ const ItemForm = (props: Props) => {
           label={t('ItemForm.labels.faircopyCloudId')}
           required={props.isRequired('faircopy_cloud_id')}
           onChange={props.onTextInputChange.bind(this, 'faircopy_cloud_id')}
-          value={props.item.faircopy_cloud_id}
+          value={props.item.faircopy_cloud_id || ''}
         >
           <input />
           <Popup

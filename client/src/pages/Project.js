@@ -6,7 +6,7 @@ import cx from 'classnames';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IoSearchOutline } from 'react-icons/io5';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import {
   Button,
   Confirm,
@@ -24,9 +24,11 @@ import ProjectModelTransform from '../transforms/ProjectModel';
 import { type Project as ProjectType } from '../types/Project';
 import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import ProjectsService from '../services/Projects';
+import { SlLock } from 'react-icons/sl';
 import styles from './Project.module.css';
-import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
+import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import useParams from '../hooks/ParsedParams';
+import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
 
 type Props = EditContainerProps & {
   item: ProjectType
@@ -35,7 +37,9 @@ type Props = EditContainerProps & {
 const ProjectForm = (props: Props) => {
   const [clearModal, setClearModal] = useState(false);
   const [cleared, setCleared] = useState(false);
+  const [clearing, setClearing] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const navigate = useNavigate();
   const { projectId } = useParams();
@@ -46,24 +50,30 @@ const ProjectForm = (props: Props) => {
    *
    * @type {function(): Promise<void>}
    */
-  const onClear = useCallback(() => (
-    ProjectsService
+  const onClear = useCallback(() => {
+    setClearing(true);
+
+    return ProjectsService
       .clear(props.item)
       .then(() => setCleared(true))
       .then(() => setClearModal(false))
-  ), [props.item]);
+      .finally(() => setClearing(false));
+  }, [props.item]);
 
   /**
    * Deletes the current project and navigates back to the list.
    *
    * @type {function(): Promise<R>}
    */
-  const onDelete = useCallback(() => (
-    ProjectsService
+  const onDelete = useCallback(() => {
+    setDeleting(true);
+
+    return ProjectsService
       .delete(props.item)
+      .then(() => setDeleteModal(false))
       .then(() => navigate('/projects'))
-      .finally(() => setDeleteModal(false))
-  ), [navigate, props.item]);
+      .finally(() => setDeleting(false));
+  }, [navigate, props.item]);
 
   /**
    * Calls the /core_data/project_models API endpoint.
@@ -81,13 +91,8 @@ const ProjectForm = (props: Props) => {
   /**
    * Return to the projects list if the user does not have permissions to edit this project.
    */
-  if (!PermissionsService.canEditProject(projectId)) {
-    return (
-      <Navigate
-        replace
-        to='/projects'
-      />
-    );
+  if (!PermissionsService.canEditProjectSettings(projectId)) {
+    return <UnauthorizedRedirect />;
   }
 
   return (
@@ -106,7 +111,7 @@ const ProjectForm = (props: Props) => {
             label={t('Project.labels.name')}
             required={props.isRequired('name')}
             onChange={props.onTextInputChange.bind(this, 'name')}
-            value={props.item.name}
+            value={props.item.name || ''}
           />
           <Form.TextArea
             error={props.isError('description')}
@@ -114,14 +119,14 @@ const ProjectForm = (props: Props) => {
             required={props.isRequired('description')}
             rows={5}
             onChange={props.onTextInputChange.bind(this, 'description')}
-            value={props.item.description}
+            value={props.item.description || ''}
           />
           <Form.Input
             error={props.isError('faircopy_cloud_url')}
             label={t('Project.labels.fairCopyCloudUrl')}
             required={props.isRequired('faircopy_cloud_url')}
             onChange={props.onTextInputChange.bind(this, 'faircopy_cloud_url')}
-            value={props.item.faircopy_cloud_url}
+            value={props.item.faircopy_cloud_url || ''}
           />
           <Form.Input
             error={props.isError('faircopy_cloud_project_model_id')}
@@ -146,14 +151,49 @@ const ProjectForm = (props: Props) => {
             label={t('Project.labels.mapLibraryUrl')}
             required={props.isRequired('map_library_url')}
             onChange={props.onTextInputChange.bind(this, 'map_library_url')}
-            value={props.item.map_library_url}
+            value={props.item.map_library_url || ''}
+          />
+          <Header
+            content={t('Project.labels.reconcile')}
+          />
+          <Form.Input
+            error={props.isError('reconciliation_credentials.host')}
+            label={t('Project.labels.host')}
+            required={props.isRequired('reconciliation_credentials.host')}
+            onChange={props.onJsonInputChange.bind(this, 'reconciliation_credentials', 'host')}
+            value={props.item.reconciliation_credentials?.host || ''}
+          />
+          <Form.Input
+            error={props.isError('reconciliation_credentials.port')}
+            label={t('Project.labels.port')}
+            required={props.isRequired('reconciliation_credentials.port')}
+            onChange={props.onJsonInputChange.bind(this, 'reconciliation_credentials', 'port')}
+            value={props.item.reconciliation_credentials?.port || ''}
+          />
+          <Form.Input
+            error={props.isError('reconciliation_credentials.protocol')}
+            label={t('Project.labels.protocol')}
+            required={props.isRequired('reconciliation_credentials.protocol')}
+            onChange={props.onJsonInputChange.bind(this, 'reconciliation_credentials', 'protocol')}
+            value={props.item.reconciliation_credentials?.protocol || ''}
+          />
+          <Form.Input
+            error={props.isError('reconciliation_credentials.api_key')}
+            label={t('Project.labels.apiKey')}
+            required={props.isRequired('reconciliation_credentials.api_key')}
+            onChange={props.onJsonInputChange.bind(this, 'reconciliation_credentials', 'api_key')}
+            value={props.item.reconciliation_credentials?.api_key || ''}
+          />
+          <Form.Input
+            error={props.isError('reconciliation_credentials.collection_name')}
+            label={t('Project.labels.collectionName')}
+            required={props.isRequired('reconciliation_credentials.collection_name')}
+            onChange={props.onJsonInputChange.bind(this, 'reconciliation_credentials', 'collection_name')}
+            value={props.item.reconciliation_credentials?.collection_name || ''}
           />
           <div
             className={styles.section}
           >
-            <Header
-              content={t('Project.labels.sharing')}
-            />
             <Message
               className={cx(styles.ui, styles.message)}
               color='blue'
@@ -179,6 +219,36 @@ const ProjectForm = (props: Props) => {
               </Message.Content>
             </Message>
           </div>
+          { PermissionsService.canArchiveProject() && (
+            <div
+              className={styles.section}
+            >
+              <Message
+                className={cx(styles.ui, styles.message)}
+                color='yellow'
+                icon
+              >
+                <Icon>
+                  <SlLock />
+                </Icon>
+                <Message.Content
+                  className={styles.content}
+                >
+                  <Message.Header
+                    className={styles.header}
+                    content={t('Project.messages.archive.header')}
+                  />
+                  <Form.Checkbox
+                    checked={props.item.archived}
+                    className={styles.field}
+                    label={t('Project.messages.archive.content')}
+                    error={props.isError('archived')}
+                    onChange={props.onCheckboxInputChange.bind(this, 'archived')}
+                  />
+                </Message.Content>
+              </Message>
+            </div>
+          )}
           { PermissionsService.canDeleteProject(props.item.id) && (
             <div
               className={styles.section}
@@ -207,6 +277,14 @@ const ProjectForm = (props: Props) => {
                   />
                   <Confirm
                     centered={false}
+                    confirmButton={(
+                      <Button
+                        disabled={clearing}
+                        content={t('Common.buttons.ok')}
+                        loading={clearing}
+                        primary
+                      />
+                    )}
                     content={t('Project.messages.clear.content')}
                     header={t('Project.messages.clear.header')}
                     open={clearModal}
@@ -245,6 +323,14 @@ const ProjectForm = (props: Props) => {
                   />
                   <Confirm
                     centered={false}
+                    confirmButton={(
+                      <Button
+                        disabled={deleting}
+                        content={t('Common.buttons.ok')}
+                        loading={deleting}
+                        primary
+                      />
+                    )}
                     content={t('Project.messages.delete.content')}
                     header={t('Project.messages.delete.header')}
                     open={deleteModal}

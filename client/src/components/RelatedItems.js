@@ -51,8 +51,8 @@ const RelatedItems = () => {
       actions={actions}
       addButton={{
         basic: false,
-        color: 'dark gray',
-        location: 'top',
+        color: 'grey',
+        location: 'top'
       }}
       className='compact'
       collectionName='relationships'

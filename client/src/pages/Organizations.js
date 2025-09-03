@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { HiBuildingOffice, HiBuildingOffice2 } from 'react-icons/hi2';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { Icon } from 'semantic-ui-react';
 import ListViewMenu from '../components/ListViewMenu';
 import MergeButton from '../components/MergeButton';
@@ -84,7 +84,7 @@ const Organizations: AbstractComponent<any> = () => {
             <MergeButton
               attributes={[{
                 name: 'uuid',
-                label: t('Common.actions.merge.uuid'),
+                label: t('Common.actions.merge.uuid')
               }, {
                 name: 'organization_names',
                 label: t('Organizations.actions.merge.names'),
@@ -96,6 +96,7 @@ const Organizations: AbstractComponent<any> = () => {
                 label: t('Organizations.actions.merge.description')
               }]}
               ids={selectedItems}
+              key='merge'
               onLoad={(id) => (
                 OrganizationsService
                   .fetchOne(id)

@@ -15,13 +15,13 @@ const GeonamesForm = (props: Props) => {
 
   return (
     <Form.Input
-    error={props.isError('access.username')}
-    label={t('GeoNamesForm.labels.username')}
-    required
-    onChange={(e, { value }) => props.onChange('username', value)}
-    value={props.value?.username}
-  />
-);
+      error={props.isError('access.username')}
+      label={t('GeoNamesForm.labels.username')}
+      required
+      onChange={(e, { value }) => props.onChange('username', value)}
+      value={props.value?.username || ''}
+    />
+  );
 };
 
 export default GeonamesForm;

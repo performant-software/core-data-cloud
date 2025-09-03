@@ -2,7 +2,7 @@
 
 import cx from 'classnames';
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { Header, Icon } from 'semantic-ui-react';
 import ItemContext from '../context/Item';
 import styles from './ItemHeader.module.css';

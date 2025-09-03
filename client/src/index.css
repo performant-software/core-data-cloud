@@ -14,12 +14,6 @@ textarea {
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 
-.ui.buttons.dark.gray > .ui.button,
-.ui.button.dark.gray {
-  background-color: #616161;
-  color: #FFFFFF;
-}
-
 .ui.button.basic.borderless,
 .ui.button.basic.borderless:hover,
 .ui.button.basic.borderless:focus {
@@ -61,6 +55,7 @@ textarea {
   right: auto;
 }
 
+.association-dropdown > .ui.buttons > .ui.basic.button:focus,
 .association-dropdown > .ui.buttons > .ui.basic.button:hover {
   background: unset !important;
 }
@@ -85,8 +80,8 @@ textarea {
   min-height: unset;
 }
 
-.list > .header > .ui.grid > .row > .column > .ui.menu .ui.button.dropdown:focus,
-.list > .header > .ui.grid > .row > .column > .ui.menu .ui.button.dropdown:hover {
+.list > .header > .ui.grid > .row > .column > .ui.menu .ui.button.basic.dropdown:focus,
+.list > .header > .ui.grid > .row > .column > .ui.menu .ui.button.basic.dropdown:hover {
   background-color: transparent !important;
 }
 
@@ -162,4 +157,8 @@ textarea {
 
 .import-modal > .content > .embedded-list > table.ui.table > thead > tr > th {
   position: relative;
+}
+
+.ui.grid.simple-edit-page {
+  margin-top: 0px;
 }

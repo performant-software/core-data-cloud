@@ -18,8 +18,6 @@ const Status = {
   resolved: 'resolved'
 };
 
-export default { };
-
 export {
   DefaultSort,
   Status
