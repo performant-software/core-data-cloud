@@ -46,7 +46,7 @@ gem 'triple_eye_effable', git: 'https://github.com/performant-software/triple-ey
 gem 'user_defined_fields', git: 'https://github.com/performant-software/user-defined-fields.git', tag: 'v0.1.14'
 
 # Fuzzy dates
-gem 'fuzzy_dates', git: 'https://github.com/performant-software/fuzzy-dates.git', tag: 'v0.1.1'
+gem 'fuzzy_dates', git: 'https://github.com/performant-software/fuzzy-dates.git', tag: 'v0.1.2'
 
 # Email filtering
 gem 'mail_safe', '~> 0.3.4', group: [:development, :staging]
