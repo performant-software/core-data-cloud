@@ -57,11 +57,7 @@ class Event extends MergeableTransform {
    * @returns {*}
    */
   toPayload(event: EventType, attributes: any = {}) {
-    return super.toPayload(event, {
-      ...FuzzyDateTransform.toPayload(event, 'start_date'),
-      ...FuzzyDateTransform.toPayload(event, 'end_date'),
-      ...attributes
-    });
+    return super.toPayload(event, attributes);
   }
 }
 
