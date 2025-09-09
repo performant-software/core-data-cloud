@@ -47,18 +47,6 @@ class Event extends MergeableTransform {
       text: event.name
     };
   }
-
-  /**
-   * Returns the passed event object serialized for PUT/POST requests.
-   *
-   * @param event
-   * @param attributes
-   *
-   * @returns {*}
-   */
-  toPayload(event: EventType, attributes: any = {}) {
-    return super.toPayload(event, attributes);
-  }
 }
 
 const EventTransform: Event = new Event();
