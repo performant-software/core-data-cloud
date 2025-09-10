@@ -1842,10 +1842,10 @@
     react-map-gl "^8.0.4"
     underscore "^1.13.7"
 
-"@performant-software/semantic-components@^3.1.4":
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/@performant-software/semantic-components/-/semantic-components-3.1.4.tgz#4483d832ba48149327357fcfb144686df55710e5"
-  integrity sha512-TtyBvDj7NdYFuDha0kd2K7RnrUA3BKrI75fV8SWhxp3Vk2A6PiX3IjPttnS7ex+jZ1r7YebFFt1gUxLIDeywRg==
+"@performant-software/semantic-components@^3.1.5":
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/@performant-software/semantic-components/-/semantic-components-3.1.5.tgz#f4df74d1cbb07fab3d67b87ff0f4a846310ea257"
+  integrity sha512-1fRIdEG9ZQOtHGbTRBj5IRrvMzydFdSeWwgyssBdRNAiVoyPSdF++GiletaDwXBY62GhhlAeMxnaxD+Zk/5JDA==
   dependencies:
     "@react-google-maps/api" "^2.20.7"
     axios "^1.10.0"
@@ -1863,10 +1863,10 @@
     zotero-api-client "^0.40.0"
     zotero-translation-client "^5.0.1"
 
-"@performant-software/shared-components@^3.1.4":
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/@performant-software/shared-components/-/shared-components-3.1.4.tgz#308a412a1cb9eee4e6b5f0be384736d6f4516e63"
-  integrity sha512-n33fY3aBPFevVNeqbuCdARoOfFWyMoghUaWyqfzmlh+56pciNrX8ktDgLD/y/+MSxicRd4nn3p0R3PDTsXQozw==
+"@performant-software/shared-components@^3.1.5":
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/@performant-software/shared-components/-/shared-components-3.1.5.tgz#4734383ab95b7b0a5cbbb843627f128212c5dab0"
+  integrity sha512-0EfqlEPq+CzykMjhc9+zHSu9xQkevsqnx917LF9YUn6GvASo8D4Nu/oIeRNeI9h+nPncXM+P3KYR2JnpCOMOjQ==
   dependencies:
     "@rails/activestorage" "^8.0.201"
     "@react-google-maps/api" "^2.20.7"
@@ -1882,10 +1882,10 @@
     underscore "^1.13.7"
     zotero-translation-client "^5.0.1"
 
-"@performant-software/user-defined-fields@^3.1.4":
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/@performant-software/user-defined-fields/-/user-defined-fields-3.1.4.tgz#0df3a485acf5bc9e70e2c28fc1553c9091a244a1"
-  integrity sha512-Desp4Qzv47bYD2uby6bB+k+AOwk2QdaUTDvjz/HUXxQDnsyxaZa1innrfAiG/6i33tngBnQyWkF1ZEj2YXxI7w==
+"@performant-software/user-defined-fields@^3.1.5":
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/@performant-software/user-defined-fields/-/user-defined-fields-3.1.5.tgz#cad63e73605cd54d8eb5ea2794c5f2558b85111e"
+  integrity sha512-AHFiNJz7JJ5lDHbu6QIpl7HSRPS/ivyEwCmWsTWIat0iWOH4Kamiaxb5fhncigr0KFuCxdlJNFeY6TaK8aHI1g==
   dependencies:
     i18next "^25.3.2"
     semantic-ui-react "^2.1.5"
