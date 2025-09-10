@@ -24,7 +24,7 @@ const EventForm = (props: Props) => {
   const onFuzzyDateChange = useCallback((attribute, data) => {
     props.onSetState({
       [attribute]: {
-        ...data,
+        ...FuzzyDateTransform.toData(data),
         id: props.item[attribute]?.id,
         _destroy: !data.startDate
       }
