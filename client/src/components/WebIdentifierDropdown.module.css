@@ -10,3 +10,7 @@
 .webIdentifierDropdown.ui.dropdown.search.selection > .menu > .item > .optionContainer {
   flex-grow: 1;
 }
+
+.webIdentifierDropdown.ui.dropdown.search.selection > .input {
+  width: 100%;
+}
