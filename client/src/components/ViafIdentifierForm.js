@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Header } from 'semantic-ui-react';
 import WebIdentifierDropdown from './WebIdentifierDropdown';
@@ -13,9 +13,28 @@ type Props = {
   value: string | number
 };
 
+const PATH = [
+  'ns1:VIAFCluster',
+  'ns1:mainHeadings',
+  'ns1:data'
+];
+
+const NAME_ATTRIBUTE = 'ns1:text';
+
 const ViafIdentifierForm = (props: Props) => {
   const [selectedItem, setSelectedItem] = useState();
   const { t } = useTranslation();
+
+  /**
+   * Memo-izes the name of the item selected from the VIAF response.
+   */
+  const text = useMemo(() => (
+    _.chain(selectedItem)
+      .get(PATH)
+      .first()
+      .get(NAME_ATTRIBUTE)
+      .value()
+  ), [selectedItem]);
 
   return (
     <Form.Input
@@ -35,7 +54,7 @@ const ViafIdentifierForm = (props: Props) => {
             size='small'
           />
         )}
-        text={_.first(selectedItem?.mainHeadings?.data)?.text}
+        text={text}
         value={props.value}
       />
     </Form.Input>

@@ -192,6 +192,7 @@ const WebIdentifierDropdown = (props: Props) => {
           innerRef={inputRef}
         >
           <DropdownSearchInput
+            className={styles.input}
             value={searchQuery}
           />
         </Ref>
