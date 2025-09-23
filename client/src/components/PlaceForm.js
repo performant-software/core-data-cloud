@@ -50,6 +50,11 @@ const PlaceForm = (props: Props) => {
   const [geocoding, setGeocoding] = useState(MapSessionUtils.restoreSession('mapView', localStorage).geocoding);
 
   /**
+   * Tracks map geometry data independently of props.item
+   */
+  const [mapData, setMapData] = useState(null);
+
+  /**
    * Updates localStorage to persist geocoding setting across pages.
    */
   useEffect(() => {
@@ -109,11 +114,27 @@ const PlaceForm = (props: Props) => {
   }, []);
 
   /**
+   * Sets map geometry data on the item, destroying any existing geometry record
+   * if all geometry is deleted. 
+   */
+  useEffect(() => {
+    if (mapData !== null) {
+      if (props.item.place_geometry?.id && mapData.geometry_json.features?.length === 0) {
+        props.onSetState({
+          place_geometry: { id: props.item.place_geometry.id, _destroy: true }
+        });
+      } else {
+        props.onSetState({ place_geometry: mapData })
+      }
+    }
+  }, [mapData, props.item.place_geometry?.id]);
+
+  /**
    * Sets the new map geometries on the state.
    *
    * @type {function(*): *}
    */
-  const onMapChange = useCallback((data) => props.onSetState({ place_geometry: { geometry_json: data } }), []);
+  const onMapChange = useCallback((data) => setMapData({ geometry_json: data }), []);
 
   /**
    * Sets the uploaded file as the GeoJSON object.
