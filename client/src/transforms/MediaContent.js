@@ -31,7 +31,8 @@ class MediaContent extends FormDataTransform {
       'project_model_id',
       'name',
       'user_defined',
-      'content'
+      'content',
+      'content_warning'
     ];
   }
 
