@@ -53,6 +53,12 @@ const MediaContentForm = (props: Props) => {
         onChange={props.onTextInputChange.bind(this, 'name')}
         value={props.item.name || ''}
       />
+      <Form.Checkbox
+        checked={props.item.content_warning}
+        error={props.isError('content_warning')}
+        label={t('MediaContent.labels.contentWarning')}
+        onChange={props.onCheckboxInputChange.bind(this, 'content_warning')}
+      />
       { props.item.project_model_id && (
         <UserDefinedFieldsForm
           data={props.item.user_defined}
