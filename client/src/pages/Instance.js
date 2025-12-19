@@ -8,6 +8,10 @@ import ItemPage from '../components/ItemPage';
 const Instance = () => (
   <ItemPage
     form={InstanceForm}
+    onCreateManifests={(id, params) => (
+      InstancesService
+        .createManifests(id, params)
+    )}
     onInitialize={(id) => (
       InstancesService
         .fetchOne(id)

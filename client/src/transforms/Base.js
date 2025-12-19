@@ -1,11 +1,23 @@
 // @flow
 
-import { BaseTransform, ObjectJs as ObjectUtils } from '@performant-software/shared-components';
+import { BaseTransform as APIBase, ObjectJs as ObjectUtils } from '@performant-software/shared-components';
+import _ from 'underscore';
 
 /**
  * Class responsible for transforming records for merge requests.
  */
-class MergeableTransform extends BaseTransform {
+class BaseTransform extends APIBase {
+  /**
+   * Returns a hash of the valid parameters for the manifests endpoint.
+   *
+   * @param params
+   *
+   * @returns {*}
+   */
+  toManifestable(params) {
+    return _.pick(params, 'project_model_relationship_id');
+  }
+
   /**
    * Converts the passed item to a mergeable payload by removing any "id" attributes.
    *
@@ -22,4 +34,4 @@ class MergeableTransform extends BaseTransform {
   }
 }
 
-export default MergeableTransform;
+export default BaseTransform;

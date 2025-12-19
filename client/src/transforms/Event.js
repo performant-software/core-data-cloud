@@ -1,13 +1,12 @@
 // @flow
 
-import { FuzzyDateTransform } from '@performant-software/shared-components';
+import BaseTransform from './Base';
 import type { Event as EventType } from '../types/Event';
-import MergeableTransform from './Mergeable';
 
 /**
  * Class responsible for transforming event records for POST/PUT requests.
  */
-class Event extends MergeableTransform {
+class Event extends BaseTransform {
   /**
    * Returns the event parameter name.
    *

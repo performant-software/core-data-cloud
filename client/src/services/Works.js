@@ -1,12 +1,12 @@
 // @flow
 
-import MergeableService from './Mergeable';
+import BaseService from './Base';
 import WorkTransform from '../transforms/Work';
 
 /**
  * Class responsible for handling all work API requests.
  */
-class Works extends MergeableService {
+class Works extends BaseService {
   /**
    * Returns the work base URL.
    *

@@ -49,7 +49,14 @@ type ComponentProps = {
   saved?: boolean
 };
 
-const ItemPage = ({ form: Form, onInitialize, onSave }: Props) => {
+const ItemPage = (props: Props) => {
+  const {
+    form: Form,
+    onCreateManifests,
+    onInitialize,
+    onSave
+  } = props;
+
   const { t } = useTranslation();
 
   const Component = useCallback((props: ComponentProps) => {
@@ -152,7 +159,9 @@ const ItemPage = ({ form: Form, onInitialize, onSave }: Props) => {
                   saving={props.saving}
                 />
               </Section>
-              <Relationships />
+              <Relationships
+                onCreateManifests={onCreateManifests}
+              />
               { projectModel?.allow_identifiers && props.item.id && (
                 <Section
                   id='identifiers'
@@ -186,6 +195,7 @@ const ItemPage = ({ form: Form, onInitialize, onSave }: Props) => {
 
   const Page = withReactRouterEditPage(Component, {
     id: 'itemId',
+    onCreateManifests,
     onSave,
     onInitialize,
     resolveValidationError: Validation.resolveUpdateError.bind(this)

@@ -1,4 +1,4 @@
-// flow
+// @flow
 
 import React, { useMemo } from 'react';
 import RelatedEvent from './RelatedEvent';
@@ -13,7 +13,12 @@ import RelatedWork from './RelatedWork';
 import { Types } from '../utils/ProjectModels';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 
-const ProjectModelRelationshipFactory = (props) => {
+type Props = {
+  onCreateManifests: (id: number, params: { [key: string]: any }) => Promise<any>,
+  relationshipId: number
+};
+
+const ProjectModelRelationshipFactory = (props: Props) => {
   const { projectModelRelationship } = useProjectModelRelationship();
 
   /**
@@ -56,6 +61,7 @@ const ProjectModelRelationshipFactory = (props) => {
       case Types.MediaContent:
         component = (
           <RelatedMediaContent
+            onCreateManifests={props.onCreateManifests}
             relationshipId={props.relationshipId}
           />
         );

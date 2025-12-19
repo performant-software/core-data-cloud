@@ -8,6 +8,10 @@ import PersonForm from '../components/PersonForm';
 const Person = () => (
   <ItemPage
     form={PersonForm}
+    onCreateManifests={(id, params) => (
+      PeopleService
+        .createManifests(id, params)
+    )}
     onInitialize={(id) => (
       PeopleService
         .fetchOne(id)

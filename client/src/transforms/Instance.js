@@ -1,13 +1,13 @@
 // @flow
 
+import BaseTransform from './Base';
 import type { Instance as InstanceType } from '../types/Instance';
-import MergeableTransform from './Mergeable';
 import SourceNames from './SourceNames';
 
 /**
  * Class responsible for transforming instance records for POST/PUT requests.
  */
-class Instance extends MergeableTransform {
+class Instance extends BaseTransform {
   /**
    * Returns the instance parameter name.
    *

@@ -2,14 +2,14 @@
 
 import { DataTypes } from '@performant-software/user-defined-fields';
 import _ from 'underscore';
+import BaseTransform from './Base';
 import type { Item as ItemType } from '../types/Item';
-import MergeableTransform from './Mergeable';
 import SourceNames from './SourceNames';
 
 /**
  * Class responsible for transforming item records for POST/PUT requests.
  */
-class Item extends MergeableTransform {
+class Item extends BaseTransform {
   /**
    * Returns the item parameter name.
    *
