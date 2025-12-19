@@ -44,8 +44,10 @@ const MediaContentsUploadModal = (props: Props) => {
    */
   const afterSave = useCallback((newMediaContents, userDefined) => {
     setMediaContents(_.map(newMediaContents, (mediaContent, index) => ({
-      ...mediaContent,
-      relationship_user_defined: userDefined[index]
+      mediaContent: {
+        ...mediaContent,
+        relationship_user_defined: userDefined[index]
+      }
     })));
   }, []);
 

@@ -159,7 +159,7 @@ const RelatedMediaContents = () => {
    * @type {(function(*): void)|*}
    */
   const onModalSave = useCallback((mediaContents) => {
-    const relationships = _.map(mediaContents, (mediaContent) => (
+    const relationships = _.map(mediaContents, ({ mediaContent }) => (
       projectModelRelationship.inverse
         ? createInverseRelationship(mediaContent)
         : createRelationship(mediaContent)

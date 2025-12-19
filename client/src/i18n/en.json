@@ -304,6 +304,7 @@
   "MediaContent": {
     "labels": {
       "content": "Content",
+      "contentWarning": "Content warning",
       "name": "Name"
     }
   },

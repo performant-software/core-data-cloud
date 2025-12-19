@@ -10,9 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_07_014212) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_02_200433) do
+  create_schema "heroku_ext"
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+  enable_extension "pg_stat_statements"
   enable_extension "pgcrypto"
   enable_extension "postgis"
 
@@ -121,6 +124,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_07_014212) do
     t.uuid "import_id"
     t.string "import_url"
     t.boolean "import_url_processed", default: false, null: false
+    t.boolean "content_warning", default: false, null: false
     t.index ["project_model_id"], name: "index_core_data_connector_media_contents_on_project_model_id"
     t.index ["user_defined"], name: "index_core_data_connector_media_contents_on_user_defined", using: :gin
   end
@@ -223,11 +227,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_07_014212) do
   create_table "core_data_connector_project_model_relationships", force: :cascade do |t|
     t.bigint "primary_model_id", null: false
     t.bigint "related_model_id", null: false
+    t.string "name"
+    t.boolean "multiple"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
-    t.boolean "multiple"
-    t.string "name"
     t.boolean "allow_inverse", default: false, null: false
     t.string "inverse_name"
     t.boolean "inverse_multiple", default: false
