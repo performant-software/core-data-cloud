@@ -12,6 +12,10 @@ const MediaContent = () => {
   return (
     <ItemPage
       form={MediaContentForm}
+      onCreateManifests={(id, params) => (
+        MediaContentsService
+          .createManifests(id, params)
+      )}
       onInitialize={(id) => (
         MediaContentsService
           .fetchOne(id)

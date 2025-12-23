@@ -67,7 +67,7 @@ const withRelationshipEditForm = (WrappedComponent) => (props: Props) => {
    *
    * @type {unknown}
    */
-  const Component = useMemo(() => <EditPage {...props} />, [props]);
+  const Component = useMemo(() => <EditPage {...props} />, [id, props]);
 
   return Component;
 };

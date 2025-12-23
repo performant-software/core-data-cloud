@@ -1,12 +1,12 @@
 // @flow
 
-import MergeableService from './Mergeable';
+import BaseService from './Base';
 import PlaceTransform from '../transforms/Place';
 
 /**
  * Class responsible for handling all place API requests.
  */
-class Places extends MergeableService {
+class Places extends BaseService {
   /**
    * Returns the places base URL.
    *

@@ -1,12 +1,12 @@
 // @flow
 
-import MergeableService from './Mergeable';
+import BaseService from './Base';
 import OrganizationTransform from '../transforms/Organization';
 
 /**
  * Class responsible for handling all organization API requests.
  */
-class Organization extends MergeableService {
+class Organization extends BaseService {
   /**
    * Returns the organization base URL.
    *

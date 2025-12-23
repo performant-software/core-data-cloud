@@ -1,14 +1,14 @@
 // @flow
 
 import _ from 'underscore';
-import MergeableTransform from './Mergeable';
+import BaseTransform from './Base';
 import type { Person as PersonType } from '../types/Person';
 import PersonNames from './PersonNames';
 
 /**
  * Class responsible for transforming person records for POST/PUT requests.
  */
-class Person extends MergeableTransform {
+class Person extends BaseTransform {
   /**
    * Returns the person parameter name.
    *

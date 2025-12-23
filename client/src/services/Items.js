@@ -1,13 +1,13 @@
 // @flow
 
+import BaseService from './Base';
 import Importable from '../transforms/Importable';
 import ItemTransform from '../transforms/Item';
-import MergeableService from './Mergeable';
 
 /**
  * Class responsible for handling all item API requests.
  */
-class Items extends MergeableService {
+class Items extends BaseService {
   /**
    * Calls the `/items/:id/analyze_import` API endpoint.
    *

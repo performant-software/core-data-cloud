@@ -1,30 +1,37 @@
 // @flow
 
 import { EditModal, FileInputButton, LazyIIIF } from '@performant-software/semantic-components';
-import { IIIF as IIIFUtils } from '@performant-software/shared-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Form } from 'semantic-ui-react';
 import _ from 'underscore';
+import ItemContext from '../context/Item';
+import ManifestUrlButton from './ManifestUrlButton';
+import MediaContentUtils from '../utils/MediaContent';
 import MediaContentsService from '../services/MediaContents';
 import ProjectContext from '../context/Project';
 import RelatedMediaContentModal from './RelatedMediaContentModal';
 import type { Relationship as RelationshipType } from '../types/Relationship';
 import RelationshipsService from '../services/Relationships';
-import { useRelationship } from '../hooks/Relationship';
+import useParams from '../hooks/ParsedParams';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
+import { useRelationship } from '../hooks/Relationship';
 import withRelationshipEditForm from '../hooks/RelationshipEditForm';
 
 type Props = EditContainerProps & {
-  item: RelationshipType
+  item: RelationshipType,
+  onCreateManifests: (id: number, params: { [key: string] : any }) => Promise<any>
 };
 
 const RelatedMediaContentForm = (props: Props) => {
   const [editModal, setEditModal] = useState(false);
+  const [saving, setSaving] = useState(false);
 
-  const { project } = useContext(ProjectContext);
-  const { foreignProjectModelId } = useProjectModelRelationship();
+  const { project, projectModel } = useContext(ProjectContext);
+  const { uuid } = useContext(ItemContext);
+  const { itemId } = useParams();
+  const { foreignProjectModelId, projectModelRelationship } = useProjectModelRelationship();
   const { t } = useTranslation();
 
   const {
@@ -35,11 +42,27 @@ const RelatedMediaContentForm = (props: Props) => {
   } = useRelationship(props);
 
   /**
-   * Sets the manifest URL.
-   *
-   * @type {string|string|*}
+   * Memo-izes the manifest URL.
    */
-  const manifest = useMemo(() => (IIIFUtils.createManifestURL(foreignObject?.manifest)), [foreignObject?.manifest]);
+  const manifestUrl = useMemo(() => (
+    MediaContentUtils.getManifestURL(projectModel, uuid, projectModelRelationship.uuid)
+  ), [projectModel, projectModelRelationship, uuid])
+
+  /**
+   * Calls the onCreateManifests callback.
+   *
+   * @type {(function(): void)|*}
+   */
+  const onCreateManifest = useCallback(() => {
+    setSaving(true);
+
+    const params = {
+      project_model_relationship_id: projectModelRelationship.id
+    };
+
+    props.onCreateManifests(itemId, params)
+      .then(() => setSaving(false));
+  }, [itemId, projectModelRelationship])
 
   /**
    * Deletes the current relationship.
@@ -93,7 +116,7 @@ const RelatedMediaContentForm = (props: Props) => {
           contentType={foreignObject?.content_type}
           downloadUrl={foreignObject?.content_download_url}
           key={foreignObject?.id}
-          manifest={manifest}
+          manifest={manifestUrl}
           preview={foreignObject?.content_preview_url}
           src={foreignObject?.content_url}
         >
@@ -116,10 +139,21 @@ const RelatedMediaContentForm = (props: Props) => {
           { props.item.id && (
             <>
               <Button
-                color='teal'
+                color='green'
                 content={t('Common.buttons.edit')}
                 icon='pencil'
                 onClick={onNavigate}
+              />
+              <ManifestUrlButton
+                url={manifestUrl}
+              />
+              <Button
+                color='grey'
+                content={t('RelatedMediaContent.buttons.refreshManifest')}
+                disabled={saving}
+                icon='redo'
+                loading={saving}
+                onClick={onCreateManifest}
               />
               <Button
                 color='red'

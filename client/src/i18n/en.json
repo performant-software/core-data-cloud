@@ -842,7 +842,15 @@
       "name": "Name"
     }
   },
+  "RelatedMediaContent": {
+    "buttons": {
+      "refreshManifest": "Refresh Manifest"
+    }
+  },
   "RelatedMediaContents": {
+    "buttons": {
+      "refreshManifest": "Refresh Manifest"
+    },
     "options": {
       "link": "Link existing record",
       "upload": "Upload from your computer"

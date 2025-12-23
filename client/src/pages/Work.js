@@ -8,6 +8,10 @@ import WorksService from '../services/Works';
 const Work = () => (
   <ItemPage
     form={WorkForm}
+    onCreateManifests={(id, params) => (
+      WorksService
+        .createManifests(id, params)
+    )}
     onInitialize={(id) => (
       WorksService
         .fetchOne(id)
