@@ -4,7 +4,7 @@
 
 - macOS or Linux
 - Ruby version that matches the `.ruby-version` file. ([rbenv](https://github.com/rbenv/rbenv) is recommended for managing Ruby versions)
-- Node 18 ([nvm](https://github.com/nvm-sh/nvm) is likewise recommended)
+- Node 20.19 ([nvm](https://github.com/nvm-sh/nvm) is likewise recommended)
 - Postgres (this template is confirmed to work with Postgres 18, but any reasonably recent version should work)
 - Heroku CLI (optional, if you want to deploy on Heroku)
 
@@ -30,11 +30,36 @@ To install Flow types run `yarn flow-typed install`. To run Flow server run `yar
 
 ## Docker
 
-#### Prerequsites
-To run via Docker requires a IIIF Cloud instance as well. This can be run as a separate Docker application, or pointed to a IIIF Cloud application hosted somewhere else. All that's required is the `IIIF_CLOUD_*` environment variables are set properly and a MapTiler account/API key.
+### Prerequisites
 
-#### Running
-To run via a Docker container (for development or production) set your environment variables in `.env`, you can use `.env.example` as a template. If an image has not yet been built, run `docker compose up --build` to build the image and start the container. Subsequent starts of the container can be done with `docker compose up` if no code changes have been made.
+#### Required: S3 (AWS)
+The default Docker setup requires an S3 bucket for storage. 
+Make sure the bucket already exists and the credentials have permission to read/write to it.
+
+#### Required: MapTiler API Key
+Map rendering requires a MapTiler Cloud API key. You can obtain a testing key by following the MapTiler docs:
+https://docs.maptiler.com/cloud/api/authentication-key/#get-a-testing-key
+
+#### Optional: IIIF Cloud
+IIIF Cloud is only required for IIIF-related functionality. The app can start without IIIF configured, but certain features will not work.
+
+### Running
+
+#### First-time run (recommended)
+This starts the database in the background, waits for it to initialize, then starts the app with the required environment variables.
+
+```bash
+dc up db -d && \
+sleep 35 && \
+AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+AWS_REGION=${AWS_REGION} \
+AWS_BUCKET_NAME=${AWS_BUCKET_NAME} \
+VITE_MAP_TILER_KEY=${VITE_MAP_TILER_KEY} \
+dc up app
+```
+
+**Note:** For a long term solution rename `.env.example` to `.env` to use with the Compose [env_file](https://docs.docker.com/compose/how-tos/environment-variables/set-environment-variables/#use-the-env_file-attribute) attribute
 
 ## Production
 
