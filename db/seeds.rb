@@ -5,4 +5,10 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-CoreDataConnector::User.create!(name: 'Administrator', email: 'admin@example.com', password: 'password', password_confirmation: 'password', admin: true)
+admin = CoreDataConnector::User.find_or_initialize_by(email: "admin@example.com")
+admin.assign_attributes(
+  name: "Administrator",
+  password: "P@ssw0rd",
+  role: "admin"
+)
+admin.save!

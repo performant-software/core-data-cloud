@@ -1,30 +1,37 @@
-# Use the Ruby 3.2.2 image from Docker Hub as the base image (https://hub.docker.com/_/ruby)
-FROM ruby:3.2.2
+FROM node:20.19-alpine AS builder
 
-RUN apt-get update -qq && apt-get install -y postgresql-client git libvips npm
-RUN npm install --global yarn
+WORKDIR /code
 
-WORKDIR /app
-
-ARG RAILS_ENV
 ARG VITE_HOSTNAME
 ARG VITE_IIIF_MANIFEST_ITEM_LIMIT
 ARG VITE_MAP_TILER_KEY
+ARG VITE_POSTMARK_INTERVAL
 
-# Add Rails gems
-COPY Gemfile Gemfile
-COPY Gemfile.lock Gemfile.lock
+COPY client/ .
+
+ARG GENERATE_SOURCEMAP=false
+ARG DISABLE_ESLINT_PLUGIN=true
+
+RUN yarn install && yarn build
+
+FROM ruby:3.4.4
+
+RUN apt-get update -qq && apt-get install -y postgresql-client git libvips npm
+
+WORKDIR /app
+
+COPY . .
+COPY --from=builder /code/build /app/public
 
 RUN bundle install
 
-COPY . .
-
-ENV DISABLE_ESLINT_PLUGIN=true
-ENV GENERATE_SOURCEMAP=false
+# COnfigure some runtime defaults for rails and node
+ENV RAILS_ENV=docker
+ENV RAILS_LOG_TO_STDOUT=true
+ENV RAILS_SERVE_STATIC_FILES=true
 ENV NODE_OPTIONS="--max-old-space-size=16384"
-
-# Build and deploy React front-end
-RUN yarn build && yarn deploy
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+ENTRYPOINT ["/bin/sh", "-c", "./docker-entrypoint.sh"]
