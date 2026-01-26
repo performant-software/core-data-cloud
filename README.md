@@ -49,14 +49,14 @@ IIIF Cloud is only required for IIIF-related functionality. The app can start wi
 This starts the database in the background, waits for it to initialize, then starts the app with the required environment variables.
 
 ```bash
-dc up db -d && \
+docker compose up db -d && \
 sleep 35 && \
 AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
 AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
 AWS_REGION=${AWS_REGION} \
 AWS_BUCKET_NAME=${AWS_BUCKET_NAME} \
 VITE_MAP_TILER_KEY=${VITE_MAP_TILER_KEY} \
-dc up app
+docker compose up app
 ```
 
 **Note:** For a long term solution rename `.env.example` to `.env` to use with the Compose [env_file](https://docs.docker.com/compose/how-tos/environment-variables/set-environment-variables/#use-the-env_file-attribute) attribute
