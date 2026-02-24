@@ -8,6 +8,10 @@ import TaxonomyItemForm from '../components/TaxonomyItemForm';
 const TaxonomyItem = () => (
   <ItemPage
     form={TaxonomyItemForm}
+    onCreateManifests={(id, params) => (
+      TaxonomiesService
+        .createManifests(id, params)
+    )}
     onInitialize={(id) => (
       TaxonomiesService
         .fetchOne(id)

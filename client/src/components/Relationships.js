@@ -33,13 +33,15 @@ const Relationship = (props: Props) => {
             ? projectModelRelationship.inverse_name
             : projectModelRelationship.name}
         />
-        <ProjectModelRelationshipsFactory />
+        <ProjectModelRelationshipsFactory
+          onCreateManifests={props.onCreateManifests}
+        />
       </Section>
     </ProjectModelRelationshipContext.Provider>
   );
 };
 
-const Relationships = () => {
+const Relationships = (props) => {
   const { projectModel } = useContext(ProjectContext);
   const { itemId } = useParams();
 
@@ -53,6 +55,7 @@ const Relationships = () => {
   return _.map(projectModel.all_project_model_relationships, (projectModelRelationship) => (
     <Relationship
       key={projectModelRelationship.id}
+      onCreateManifests={props.onCreateManifests}
       projectModelRelationship={projectModelRelationship}
     />
   ));

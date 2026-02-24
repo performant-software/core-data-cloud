@@ -1,13 +1,13 @@
 // @flow
 
-import MergeableTransform from './Mergeable';
+import BaseTransform from './Base';
 import type { Organization as OrganizationType } from '../types/Organization';
 import OrganizationNames from './OrganizationNames';
 
 /**
  * Class responsible for transforming organization records for POST/PUT requests.
  */
-class Organization extends MergeableTransform {
+class Organization extends BaseTransform {
   /**
    * Returns the person parameter name.
    *

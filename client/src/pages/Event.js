@@ -8,6 +8,10 @@ import EventsService from '../services/Events';
 const Person = () => (
   <ItemPage
     form={EventForm}
+    onCreateManifests={(id, params) => (
+      EventsService
+        .createManifests(id, params)
+    )}
     onInitialize={(id) => (
       EventsService
         .fetchOne(id)

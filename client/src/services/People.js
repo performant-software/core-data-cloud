@@ -1,12 +1,12 @@
 // @flow
 
-import MergeableService from './Mergeable';
+import BaseService from './Base';
 import PersonTransform from '../transforms/Person';
 
 /**
  * Class responsible for handling all person API requests.
  */
-class People extends MergeableService {
+class People extends BaseService {
   /**
    * Returns the person base URL.
    *

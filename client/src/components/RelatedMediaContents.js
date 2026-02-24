@@ -27,16 +27,22 @@ import useParams from '../hooks/ParsedParams';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 import useRelationships from '../hooks/Relationships';
 
+type Props = {
+  onCreateManifests: (id: number, params: { [key: string] : any }) => Promise<any>
+};
+
 const Modal = {
   upload: 0,
   link: 1
 };
 
-const RelatedMediaContents = () => {
+const RelatedMediaContents = (props: Props) => {
   const [count, setCount] = useState(0);
   const [errors, setErrors] = useState(null);
   const [modal, setModal] = useState(null);
+  const [creatingManifests, setCreatingManifests] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [showUploadMessage, setShowUploadMessage] = useState(false);
 
   const { uuid } = useContext(ItemContext);
   const { projectModel } = useContext(ProjectContext);
@@ -116,7 +122,25 @@ const RelatedMediaContents = () => {
   const afterSave = useCallback(() => {
     setModal(null);
     setSaved(true);
+    setShowUploadMessage(true);
   }, []);
+
+  /**
+   * Calls the onCreateManifests callback.
+   *
+   * @type {(function(): void)|*}
+   */
+  const onCreateManifest = useCallback(() => {
+    setCreatingManifests(true);
+
+    const params = {
+      project_model_relationship_id: projectModelRelationship.id
+    };
+
+    props.onCreateManifests(itemId, params)
+      .then(() => setCreatingManifests(false))
+      .then(() => setSaved(true));
+  }, [itemId, projectModelRelationship]);
 
   /**
    * Resolves any error messages for user-defined fields and sets them on the state.
@@ -173,7 +197,7 @@ const RelatedMediaContents = () => {
 
   return (
     <>
-      { saved && (
+      { showUploadMessage && (
         <MediaUploadingMessage
           multiple
         />
@@ -214,6 +238,13 @@ const RelatedMediaContents = () => {
               url={MediaContentUtils.getManifestURL(projectModel, uuid, projectModelRelationship.uuid)}
             />
           )
+        }, {
+          color: 'grey',
+          disabled: creatingManifests,
+          icon: 'redo',
+          content: t('RelatedMediaContents.buttons.refreshManifest'),
+          loading: creatingManifests,
+          onClick: onCreateManifest
         }]}
         className={cx('compact', styles.relatedMediaContents)}
         collectionName='relationships'

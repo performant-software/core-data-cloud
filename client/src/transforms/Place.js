@@ -1,7 +1,7 @@
 // @flow
 
 import _ from 'underscore';
-import MergeableTransform from './Mergeable';
+import BaseTransform from './Base';
 import type { Place as PlaceType } from '../types/Place';
 import PlaceGeometry from './PlaceGeometry';
 import PlaceLayers from './PlaceLayers';
@@ -10,7 +10,7 @@ import PlaceNames from './PlaceNames';
 /**
  * Class responsible for transforming place records for POST/PUT requests.
  */
-class Place extends MergeableTransform {
+class Place extends BaseTransform {
   /**
    * Returns the place parameter name.
    *

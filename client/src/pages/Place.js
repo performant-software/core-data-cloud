@@ -8,6 +8,10 @@ import PlacesService from '../services/Places';
 const Place = () => (
   <ItemPage
     form={PlaceForm}
+    onCreateManifests={(id, params) => (
+      PlacesService
+        .createManifests(id, params)
+    )}
     onInitialize={(id) => (
       PlacesService
         .fetchOne(id)

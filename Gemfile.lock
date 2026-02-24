@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: 727ca617ce80b2d9dc29f2cb0f80f707df31335d
-  tag: v0.1.109
+  revision: b7786f958414034ed449c89350fff768ec4f94be
+  tag: v0.1.111
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 11.0)
@@ -59,8 +59,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/user-defined-fields.git
-  revision: 9799f151ab51506eef42177c756b762060a9838a
-  tag: v0.1.14
+  revision: 3fe09c999fa5193e8de9e1253e60d25c95a40af8
+  tag: v0.1.15
   specs:
     user_defined_fields (0.1.0)
       rails (>= 6.0.3.2, < 9)
@@ -245,7 +245,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.9-x86_64-linux-gnu)
       racc (~> 1.4)
-    oj (3.16.12)
+    oj (3.16.13)
       bigdecimal (>= 3.0)
       ostruct (>= 0.2)
     ostruct (0.6.3)

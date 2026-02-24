@@ -1,12 +1,12 @@
 // @flow
 
+import BaseService from './Base';
 import InstanceTransform from '../transforms/Instance';
-import MergeableService from './Mergeable';
 
 /**
  * Class responsible for handling all Instance API requests.
  */
-class Instances extends MergeableService {
+class Instances extends BaseService {
   /**
    * Returns the Instance base URL.
    *

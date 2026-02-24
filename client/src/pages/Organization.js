@@ -8,6 +8,10 @@ import OrganizationService from '../services/Organizations';
 const Organization = () => (
   <ItemPage
     form={OrganizationForm}
+    onCreateManifests={(id, params) => (
+      OrganizationService
+        .createManifests(id, params)
+    )}
     onInitialize={(id) => (
       OrganizationService
         .fetchOne(id)

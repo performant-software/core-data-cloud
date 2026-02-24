@@ -16,7 +16,11 @@ import RelationshipsService from '../services/Relationships';
 import { Types } from '../utils/ProjectModels';
 import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 
-const ProjectModelRelationshipsFactory = () => {
+type Props = {
+  onCreateManifests: (id: number, params: { [key: string] : any }) => Promise<any>
+};
+
+const ProjectModelRelationshipsFactory = (props: Props) => {
   const [loaded, setLoaded] = useState(false);
   const [relationships, setRelationships] = useState();
 
@@ -87,7 +91,9 @@ const ProjectModelRelationshipsFactory = () => {
 
     if (classView === Types.MediaContent) {
       return (
-        <RelatedMediaContents />
+        <RelatedMediaContents
+          onCreateManifests={props.onCreateManifests}
+        />
       );
     }
 
@@ -136,6 +142,7 @@ const ProjectModelRelationshipsFactory = () => {
 
   return (
     <ProjectModelRelationshipFactory
+      onCreateManifests={props.onCreateManifests}
       relationshipId={relationship?.id}
     />
   );

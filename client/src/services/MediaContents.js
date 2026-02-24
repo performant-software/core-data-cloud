@@ -1,8 +1,8 @@
 // @flow
 
 import { TripleEyeEffable } from '@performant-software/shared-components';
+import BaseService from './Base';
 import MediaContentTransform from '../transforms/MediaContent';
-import MergeableService from './Mergeable';
 import type { MediaContent as MediaContentType } from '../types/MediaContent';
 import type { Project as ProjectType } from '../types/Project';
 import SessionService from './Session';
@@ -10,7 +10,7 @@ import SessionService from './Session';
 /**
  * Class responsible for handling all media contents API requests.
  */
-class MediaContents extends MergeableService {
+class MediaContents extends BaseService {
   /**
    * Returns the media contents base URL.
    *

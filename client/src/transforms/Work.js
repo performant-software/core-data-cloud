@@ -1,10 +1,10 @@
 // @flow
 
-import MergeableTransform from './Mergeable';
+import BaseTransform from './Base';
 import SourceNames from './SourceNames';
 import type { Work as WorkType } from '../types/Work';
 
-class Work extends MergeableTransform {
+class Work extends BaseTransform {
   /**
    * Returns the work parameter name.
    *

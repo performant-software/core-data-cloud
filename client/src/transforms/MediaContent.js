@@ -37,6 +37,17 @@ class MediaContent extends FormDataTransform {
   }
 
   /**
+   * Returns the valid parameters for the create_manifests endpoint.
+   *
+   * @param params
+   *
+   * @returns {*}
+   */
+  toManifestable(params: { [key: string]: any }) {
+    return _.pick(params, 'project_model_relationship_id');
+  }
+
+  /**
    * Converts the passed media contents to a mergeable payload by removing any "id" attributes.
    *
    * @param item
