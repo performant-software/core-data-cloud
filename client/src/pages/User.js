@@ -21,6 +21,7 @@ type Props = EditContainerProps & {
 
 const UserFormComponent = (props: Props) => {
   const { t } = useTranslation();
+  const isNew = !props.item.id;
 
   if (!PermissionsService.canEditUsers()) {
     return <UnauthorizedRedirect />;
@@ -33,7 +34,7 @@ const UserFormComponent = (props: Props) => {
           label: t('User.labels.allUsers'),
           url: '/users'
         }}
-        name={props.item.name}
+        name={isNew ? t('User.labels.inviteUser') : props.item.name}
       />
       <UserEditMenu />
       <SimpleEditPage
@@ -45,7 +46,7 @@ const UserFormComponent = (props: Props) => {
           <UserForm
             {...props}
           />
-          { !UserUtils.isSingleSignOn(props.item.email) && (
+          { !isNew && !UserUtils.isSingleSignOn(props.item.email) && (
             <UserPassword
               {...props}
             />
@@ -69,7 +70,12 @@ const User: AbstractComponent<any> = withReactRouterEditPage(UserFormComponent, 
       .then(({ data }) => data.user)
   ),
   required: ['name', 'email', 'role'],
-  validate: UserUtils.validatePassword.bind(this)
+  validate: (user) => {
+    if (user.id && (user.password || user.password_confirmation)) {
+      return UserUtils.validatePassword(user);
+    }
+    return null;
+  }
 });
 
 export default User;
