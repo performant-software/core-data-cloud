@@ -40,7 +40,23 @@ const validatePassword = (user: UserType) => {
   return null;
 };
 
+/**
+ * Validates individual requirements for the passed password.
+ *
+ * @param password
+ *
+ * @returns {*}
+ */
+const validatePasswordGranular = (password) => ({
+  len: password.length >= 8,
+  lower: /[a-z]/.test(password),
+  number: /\d/.test(password),
+  symbol: /[^a-zA-Z0-9\s]/.test(password),
+  upper: /[A-Z]/.test(password)
+});
+
 export default {
   isSingleSignOn,
-  validatePassword
+  validatePassword,
+  validatePasswordGranular
 };
