@@ -942,7 +942,8 @@
       }
     },
     "labels": {
-      "allUsers": "All Users"
+      "allUsers": "All Users",
+      "inviteUser": "Invite User"
     }
   },
   "UserEditMenu": {
@@ -1042,6 +1043,15 @@
     }
   },
   "Users": {
+    "actions": {
+      "resendInvite": {
+        "title": "Resend invite",
+        "content": "Resends the invite email"
+      }
+    },
+    "buttons": {
+      "invite": "Invite user"
+    },
     "columns": {
       "email": "Email",
       "lastInvited": "Last invited",
@@ -1049,6 +1059,13 @@
       "name": "Name",
       "passwordChange": "Password change",
       "role": "Role"
+    },
+    "messages": {
+      "invitation": {
+        "content": "Your invitation was successfully sent to {{email}}.",
+        "error": "Error Sending Invitation",
+        "header": "Invitation Sent!"
+      }
     }
   },
   "WebAuthorities": {
