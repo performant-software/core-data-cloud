@@ -16,12 +16,13 @@ import { useTranslation } from 'react-i18next';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
 
 type Props = EditContainerProps & {
-  item: UserType
+  item: UserType,
+  isNew?: boolean
 };
 
 const UserFormComponent = (props: Props) => {
   const { t } = useTranslation();
-  const isNew = !props.item.id;
+  const isNew = props.isNew || !props.item.id;
 
   if (!PermissionsService.canEditUsers()) {
     return <UnauthorizedRedirect />;
@@ -45,6 +46,7 @@ const UserFormComponent = (props: Props) => {
         >
           <UserForm
             {...props}
+            isNew={isNew}
           />
           { !isNew && !UserUtils.isSingleSignOn(props.item.email) && (
             <UserPassword

@@ -9,12 +9,13 @@ import type { User } from '../types/User';
 import UserRoles from '../utils/UserRoles';
 
 type Props = EditContainerProps & {
-  item: User
+  item: User,
+  isNew?: boolean
 };
 
 const UserForm: AbstractComponent<any> = (props: Props) => {
   const { t } = useTranslation();
-  const isNew = !props.item.id;
+  const isNew = props.isNew || !props.item.id;
 
   return (
     <>

@@ -15,6 +15,7 @@ type Props = EditContainerProps & {
 
 const UserModal: AbstractComponent<any> = (props: Props) => {
   const { t } = useTranslation();
+  const isNew = !props.item.id;
 
   return (
     <Modal
@@ -30,8 +31,9 @@ const UserModal: AbstractComponent<any> = (props: Props) => {
       <Modal.Content>
         <UserForm
           {...props}
+          isNew={isNew}
         />
-        { !UserUtils.isSingleSignOn(props.item.email) && (
+        { !isNew && !UserUtils.isSingleSignOn(props.item.email) && (
           <UserPassword
             {...props}
           />
