@@ -166,6 +166,7 @@ const UserProjectForm = (props: Props) => {
             { !PermissionsService.canEditUsers() && isOwner && isNew && (
               <UserForm
                 {...props}
+                isNew
               />
             )}
             <Form.Dropdown
