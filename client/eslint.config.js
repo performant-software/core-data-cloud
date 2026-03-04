@@ -1,5 +1,3 @@
-// @flow
-
 import js from '@eslint/js';
 import babelParser from '@babel/eslint-parser';
 import flowtype from 'eslint-plugin-flowtype';

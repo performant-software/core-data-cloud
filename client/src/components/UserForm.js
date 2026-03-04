@@ -9,11 +9,13 @@ import type { User } from '../types/User';
 import UserRoles from '../utils/UserRoles';
 
 type Props = EditContainerProps & {
-  item: User
+  item: User,
+  isNew?: boolean
 };
 
 const UserForm: AbstractComponent<any> = (props: Props) => {
   const { t } = useTranslation();
+  const isNew = props.isNew || !props.item.id;
 
   return (
     <>
@@ -46,13 +48,15 @@ const UserForm: AbstractComponent<any> = (props: Props) => {
             selectOnBlur={false}
             value={props.item.role}
           />
-          <Form.Checkbox
-            checked={props.item.require_password_change}
-            error={props.isError('require_password_change')}
-            label={t('UserForm.labels.requirePasswordChange')}
-            onChange={props.onCheckboxInputChange.bind(this, 'require_password_change')}
-            required={props.isRequired('require_password_change')}
-          />
+          {!isNew && (
+            <Form.Checkbox
+              checked={props.item.require_password_change}
+              error={props.isError('require_password_change')}
+              label={t('UserForm.labels.requirePasswordChange')}
+              onChange={props.onCheckboxInputChange.bind(this, 'require_password_change')}
+              required={props.isRequired('require_password_change')}
+            />
+          )}
         </>
       )}
     </>

@@ -4,7 +4,7 @@ import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import type { User as UserType } from '../types/User';
 
-const PASSWORD_FORMAT = /(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])/;
+const PASSWORD_FORMAT = /(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9\s])/;
 
 const SSO_DOMAINS = import.meta.env.VITE_SSO_DOMAINS
   ? import.meta.env.VITE_SSO_DOMAINS.split(',')
@@ -40,7 +40,23 @@ const validatePassword = (user: UserType) => {
   return null;
 };
 
+/**
+ * Validates individual requirements for the passed password.
+ *
+ * @param password
+ *
+ * @returns {*}
+ */
+const validatePasswordGranular = (password) => ({
+  len: password.length >= 8,
+  lower: /[a-z]/.test(password),
+  number: /\d/.test(password),
+  symbol: /[^a-zA-Z0-9\s]/.test(password),
+  upper: /[A-Z]/.test(password)
+});
+
 export default {
   isSingleSignOn,
-  validatePassword
+  validatePassword,
+  validatePasswordGranular
 };
