@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 
 // Configuration
-import './config/Api';
 import './i18n/i18n';
 
 // CSS

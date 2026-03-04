@@ -1,50 +1,22 @@
 // @flow
 
-import React, { useCallback, useState, type ComponentType } from 'react';
-import LoginModal from '../components/LoginModal';
+import React, {
+  useContext,
+  type ComponentType
+} from 'react';
+import LocalLoginModal from '../components/LocalLoginModal';
 import { Navigate } from 'react-router';
-import { Image } from 'semantic-ui-react';
-import AuthenticationService from '../services/Authentication';
+import { AuthenticationContext } from '../context/Authentication';
 import { useTranslation } from 'react-i18next';
 import styles from './Login.module.css';
-
-const SSO_CALLBACK_URL = `\
-${import.meta.env.VITE_SSO_BASE_URL}\
-/realms/\
-${import.meta.env.VITE_SSO_REALM}\
-/protocol/openid-connect/auth?client_id=\
-${import.meta.env.VITE_SSO_CLIENT}\
-&redirect_uri=\
-${import.meta.env.VITE_SSO_REDIRECT_URI}\
-&response_type=code`;
+import { SignIn } from '@clerk/clerk-react';
 
 const Login: ComponentType<any> = () => {
-  const [disabled, setDisabled] = useState(false);
-  const [email, setEmail] = useState();
-  const [error, setError] = useState(false);
-  const [password, setPassword] = useState();
+  const { authenticated, provider } = useContext(AuthenticationContext);
 
   const { t } = useTranslation();
 
-  /**
-   * Attempts to authenticate then navigates to the admin page.
-   *
-   * @type {(function(): void)|*}
-   */
-  const onLogin = useCallback(() => {
-    setDisabled(true);
-
-    AuthenticationService
-      .login({ email, password })
-      .catch(() => setError(true))
-      .finally(() => setDisabled(false));
-  }, [email, password]);
-
-  const onSSO = useCallback(() => {
-    window.location.href = SSO_CALLBACK_URL;
-  }, []);
-
-  if (AuthenticationService.isAuthenticated()) {
+  if (authenticated) {
     return <Navigate to='/projects' />;
   }
 
@@ -52,20 +24,14 @@ const Login: ComponentType<any> = () => {
     <div
       className={styles.login}
     >
-      <Image
-        className={styles.background}
-        src='/assets/background.jpg'
-      />
-      <LoginModal
-        disabled={disabled}
-        loginFailed={error}
-        onLogin={onLogin}
-        onPasswordChange={(e, { value }) => setPassword(value)}
-        onSSO={onSSO}
-        onUsernameChange={(e, { value }) => setEmail(value)}
-        open
-        placeholder={t('LoginModal.email')}
-      />
+      { provider === 'local' && (
+        <LocalLoginModal
+          open
+        />
+      )}
+      { provider === 'clerk' && (
+        <SignIn />
+      )}
     </div>
   );
 };

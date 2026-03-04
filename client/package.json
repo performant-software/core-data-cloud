@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@bunchtogether/vite-plugin-flow": "^1.0.2",
+    "@clerk/clerk-react": "^5.61.3",
     "@performant-software/geospatial": "^3.1.7",
     "@performant-software/semantic-components": "^3.1.7",
     "@performant-software/shared-components": "^3.1.7",

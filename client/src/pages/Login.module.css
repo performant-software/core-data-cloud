@@ -1,5 +1,9 @@
-.login .background {
-  object-fit: cover;
-  width: 100vw;
+.login {
+  background-size: cover;
+  background: url('/assets/background.jpg') center;
   height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
