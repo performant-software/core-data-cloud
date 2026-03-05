@@ -1,66 +1,48 @@
-version: "3.5"
 services:
   app:
     build:
       args:
-        - RAILS_ENV=docker
-        - VITE_HOSTNAME=$VITE_HOSTNAME
-        - VITE_IIIF_MANIFEST_ITEM_LIMIT=$VITE_IIIF_MANIFEST_ITEM_LIMIT
-        - VITE_MAP_TILER_KEY=$VITE_MAP_TILER_KEY
+        - VITE_HOSTNAME=${VITE_HOSTNAME:-http://localhost:3000}
+        - VITE_MAP_TILER_KEY=${VITE_MAP_TILER_KEY}
+        - VITE_IIIF_MANIFEST_ITEM_LIMIT=${VITE_IIIF_MANIFEST_ITEM_LIMIT:-1000}
+        - VITE_POSTMARK_INTERVAL=${VITE_POSTMARK_INTERVAL:-24}
       context: .
     container_name: core-data-cloud-app
     depends_on:
       - db
-    entrypoint: /app/docker-entrypoint.sh
     environment:
-      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-      - AWS_REGION=$AWS_REGION
-      - AWS_BUCKET_NAME=$AWS_BUCKET_NAME
-      - DATABASE_HOST=db
-      - DATABASE_USERNAME=$DATABASE_USERNAME
-      - DATABASE_PASSWORD=$DATABASE_PASSWORD
-      - DATABASE_NAME=$DATABASE_NAME
-      - DATABASE_POOL=$DATABASE_POOL
-      - DATABASE_PORT=5432
-      - IIIF_CLOUD_API_KEY=$IIIF_CLOUD_API_KEY
-      - IIIF_CLOUD_URL=$IIIF_CLOUD_URL
-      - IIIF_CLOUD_PROJECT_ID=$IIIF_CLOUD_PROJECT_ID
-      - IIIF_MANIFEST_ITEM_LIMIT=$IIIF_MANIFEST_ITEM_LIMIT
-      - PORT=3000
-      - RAILS_ENV=docker
-      - RAILS_LOG_TO_STDOUT=true
-      - RAILS_SERVE_STATIC_FILES=true
-      - SECRET_KEY_BASE=$SECRET_KEY_BASE
-    networks:
-      - default
-      - shared
+      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+      AWS_REGION: $AWS_REGION
+      AWS_BUCKET_NAME: $AWS_BUCKET_NAME
+      DATABASE_HOST: ${DATABASE_HOST:-db}
+      DATABASE_USERNAME: ${DATABASE_USERNAME:-core_data}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD:-change-me}
+      DATABASE_NAME: ${DATABASE_NAME:-core_data}
+      IIIF_CLOUD_API_KEY: $IIIF_CLOUD_API_KEY
+      IIIF_CLOUD_URL: $IIIF_CLOUD_URL
+      IIIF_CLOUD_PROJECT_ID: ${IIIF_CLOUD_PROJECT_ID:-1}
+      IIIF_MANIFEST_ITEM_LIMIT: ${IIIF_MANIFEST_ITEM_LIMIT:-1000}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE:-339485u34895u4398u58394u543u59834u958u347y62347632t47235467235674}
+      # TYPESENSE_API_KEY: ${TYPESENSE_API_KEY:-75bcbf52-c291-4121-acf2-288c8c762b3e}
     ports:
-      - "3000:3000"
-    working_dir: /app
+      - 3000:3000
   db:
     container_name: core-data-cloud-db
-    environment:
-      - POSTGRES_PASSWORD=$DATABASE_PASSWORD
-      - POSTGRES_USER=$DATABASE_USERNAME
-      - PGDATA=$DATABASE_VOLUME:/var/lib/postgresql/data/pgdata
     image: postgis/postgis:16-3.4-alpine
-    ports:
-      - "54334:5432"
-    volumes:
-      - $DATABASE_VOLUME:/var/lib/postgresql/data
-    working_dir: /app
-  typesense:
-    container_name: core-data-cloud-typesense
     environment:
-      TYPESENSE_API_KEY: $TYPESENSE_API_KEY
-      TYPESENSE_DATA_DIR: /data
-    image: typesense/typesense:0.25.1
-    ports:
-      - "8108:8108"
-    volumes:
-      - $TYPESENSE_VOLUME:/data
-networks:
-  shared:
-    name: pssexternal
-    external: true
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-change-me}
+      POSTGRES_USER: ${DATABASE_USERNAME:-core_data}
+    expose:
+      - 5432
+  # If you need to reconcile, enable this section and include corresponding API key in app service
+  # typesense:
+  #   image: typesense/typesense:0.25.1
+  #   container_name: core-data-cloud-typesense
+  #   environment:
+  #     TYPESENSE_API_KEY: ${TYPESENSE_API_KEY:-75bcbf52-c291-4121-acf2-288c8c762b3e}
+  #     TYPESENSE_DATA_DIR: /data
+  #   expose:
+  #     - 8108
+  #   volumes:
+  #     - ${TYPESENSE_VOLUME:-./_data/ts_vol}:/data
