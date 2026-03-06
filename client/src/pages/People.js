@@ -16,7 +16,7 @@ import ListViewMenu from '../components/ListViewMenu';
 import MergeButton from '../components/MergeButton';
 import PeopleService from '../services/People';
 import PeopleUtils from '../utils/People';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import ProjectContext from '../context/Project';
 import Views from '../constants/ListViews';
 import useParams from '../hooks/ParsedParams';
@@ -30,6 +30,7 @@ const People: AbstractComponent<any> = () => {
   const navigate = useNavigate();
   const { projectModelId } = useParams();
   const { t } = useTranslation();
+  const { canDeleteRecord } = usePermissions();
 
   const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
@@ -80,7 +81,7 @@ const People: AbstractComponent<any> = () => {
           icon: 'pencil',
           onClick: (person) => navigate(`${person.id}`)
         }, {
-          accept: (person) => PermissionsService.canDeleteRecord(projectModel, person),
+          accept: (person) => canDeleteRecord(projectModel, person),
           icon: 'times',
           name: 'delete'
         }]}

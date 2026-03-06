@@ -7,7 +7,7 @@ import React, { type AbstractComponent, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import DateTimeUtils from '../utils/DateTime';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import UserRoles from '../utils/UserRoles';
 import UsersService from '../services/Users';
@@ -17,6 +17,7 @@ const Users: AbstractComponent<any> = () => {
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { canEditUsers } = usePermissions();
 
   /**
    * Tracks user for invite toaster
@@ -35,7 +36,7 @@ const Users: AbstractComponent<any> = () => {
       .catch((e) => setErrors(Validation.resolveDeleteError(e)))
   ), []);
 
-  if (!PermissionsService.canEditUsers()) {
+  if (!canEditUsers()) {
     return <UnauthorizedRedirect />;
   }
 

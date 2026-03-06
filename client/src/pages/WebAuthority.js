@@ -10,7 +10,7 @@ import DplaForm from '../components/DplaForm';
 import GeonamesForm from '../components/GeonamesForm';
 import ItemLayout from '../components/ItemLayout';
 import ItemHeader from '../components/ItemHeader';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import styles from './ProjectModel.module.css';
 import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import useParams from '../hooks/ParsedParams';
@@ -27,6 +27,7 @@ type Props = EditContainerProps & {
 const WebAuthorityPage = (props: Props) => {
   const { projectId } = useParams();
   const { t } = useTranslation();
+  const { canEditProjectSettings } = usePermissions();
 
   /**
    * Sets the passed value/key in the access JSON.
@@ -58,7 +59,7 @@ const WebAuthorityPage = (props: Props) => {
     }
   }, []);
 
-  if (!PermissionsService.canEditProjectSettings(projectId)) {
+  if (!canEditProjectSettings(projectId)) {
     return <UnauthorizedRedirect />;
   }
 

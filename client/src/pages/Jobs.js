@@ -8,7 +8,7 @@ import DateTimeUtils from '../utils/DateTime';
 import { getTypeView } from '../utils/JobTypes';
 import JobsService from '../services/Jobs';
 import JobStatus from '../components/JobStatus';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import useParams from '../hooks/ParsedParams';
@@ -16,8 +16,9 @@ import useParams from '../hooks/ParsedParams';
 const Users: AbstractComponent<any> = () => {
   const { t } = useTranslation();
   const { projectId } = useParams();
+  const { canCreateJobs } = usePermissions();
 
-  if (!PermissionsService.canCreateJobs()) {
+  if (!canCreateJobs()) {
     return <UnauthorizedRedirect />;
   }
 

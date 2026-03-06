@@ -4,7 +4,7 @@ import { SimpleEditPage } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import React, { type AbstractComponent } from 'react';
 import ItemHeader from '../components/ItemHeader';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import { type User as UserType } from '../types/User';
 import UserEditMenu from '../components/UserEditMenu';
@@ -22,9 +22,10 @@ type Props = EditContainerProps & {
 
 const UserFormComponent = (props: Props) => {
   const { t } = useTranslation();
+  const { canEditUsers } = usePermissions();
   const isNew = props.isNew || !props.item.id;
 
-  if (!PermissionsService.canEditUsers()) {
+  if (!canEditUsers()) {
     return <UnauthorizedRedirect />;
   }
 

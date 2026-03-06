@@ -8,7 +8,7 @@ import { useNavigate, useParams } from 'react-router';
 import { Icon } from 'semantic-ui-react';
 import ListViewMenu from '../components/ListViewMenu';
 import MergeButton from '../components/MergeButton';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import ProjectContext from '../context/Project';
 import TaxonomiesService from '../services/Taxonomies';
 import useSelectable from '../hooks/Selectable';
@@ -24,6 +24,7 @@ const TaxonomyItems = () => {
 
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { canDeleteRecord } = usePermissions();
 
   const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
@@ -70,7 +71,7 @@ const TaxonomyItems = () => {
           icon: 'pencil',
           onClick: (taxonomy) => navigate(`${taxonomy.id}`)
         }, {
-          accept: (taxonomy) => PermissionsService.canDeleteRecord(projectModel, taxonomy),
+          accept: (taxonomy) => canDeleteRecord(projectModel, taxonomy),
           icon: 'times',
           name: 'delete'
         }]}

@@ -18,7 +18,7 @@ import {
   Segment,
   SegmentGroup
 } from 'semantic-ui-react';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import ProjectModelsService from '../services/ProjectModels';
 import ProjectModelTransform from '../transforms/ProjectModel';
 import { type Project as ProjectType } from '../types/Project';
@@ -44,6 +44,11 @@ const ProjectForm = (props: Props) => {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const { t } = useTranslation();
+  const {
+    canArchiveProject,
+    canDeleteProject,
+    canEditProjectSettings
+  } = usePermissions();
 
   /**
    * Clears all of the data from the current project.
@@ -91,7 +96,7 @@ const ProjectForm = (props: Props) => {
   /**
    * Return to the projects list if the user does not have permissions to edit this project.
    */
-  if (!PermissionsService.canEditProjectSettings(projectId)) {
+  if (!canEditProjectSettings(projectId)) {
     return <UnauthorizedRedirect />;
   }
 
@@ -219,7 +224,7 @@ const ProjectForm = (props: Props) => {
               </Message.Content>
             </Message>
           </div>
-          { PermissionsService.canArchiveProject() && (
+          { canArchiveProject() && (
             <div
               className={styles.section}
             >
@@ -249,7 +254,7 @@ const ProjectForm = (props: Props) => {
               </Message>
             </div>
           )}
-          { PermissionsService.canDeleteProject(props.item.id) && (
+          { canDeleteProject(props.item.id) && (
             <div
               className={styles.section}
             >

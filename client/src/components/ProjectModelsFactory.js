@@ -7,7 +7,7 @@ import Items from '../pages/Items';
 import MediaContents from '../pages/MediaContents';
 import Organizations from '../pages/Organizations';
 import People from '../pages/People';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import Places from '../pages/Places';
 import ProjectContext from '../context/Project';
 import TaxonomyItems from '../pages/TaxonomyItems';
@@ -19,11 +19,12 @@ import Works from '../pages/Works';
 const ProjectModelsFactory = () => {
   const { projectModel } = useContext(ProjectContext);
   const { projectId } = useParams();
+  const { canEditProjectData } = usePermissions();
 
   /**
    * Return to the projects list if the user does not have permissions to edit this project.
    */
-  if (!PermissionsService.canEditProjectData(projectId)) {
+  if (!canEditProjectData(projectId)) {
     return <UnauthorizedRedirect />;
   }
 

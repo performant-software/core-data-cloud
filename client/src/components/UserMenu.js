@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { Link } from 'react-router';
 import { Dropdown, Header, Icon } from 'semantic-ui-react';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import styles from './UserMenu.module.css';
 import UserAvatar from './UserAvatar';
 import { AuthenticationContext } from '../context/Authentication';
@@ -14,6 +14,7 @@ import { AuthenticationContext } from '../context/Authentication';
 const UserMenu = () => {
   const { t } = useTranslation();
   const { user } = useContext(AuthenticationContext);
+  const { canResetPassword } = usePermissions();
 
   const trigger = (
     <>
@@ -38,7 +39,7 @@ const UserMenu = () => {
       <Dropdown.Menu
         className={styles.menu}
       >
-        { PermissionsService.canResetPassword() && (
+        { canResetPassword() && (
           <Dropdown.Item
             as={Link}
             className={styles.item}

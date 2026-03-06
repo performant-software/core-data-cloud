@@ -49,6 +49,7 @@ PATH
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 11.0)
+      clerk-sdk-ruby (~> 5.1, >= 5.1.2)
       faker
       fuzzy_dates
       jwt (~> 3.1.2)

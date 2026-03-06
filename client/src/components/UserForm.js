@@ -4,7 +4,7 @@ import type { EditContainerProps } from '@performant-software/shared-components/
 import React, { type AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import type { User } from '../types/User';
 import UserRoles from '../utils/UserRoles';
 
@@ -15,6 +15,7 @@ type Props = EditContainerProps & {
 
 const UserForm: AbstractComponent<any> = (props: Props) => {
   const { t } = useTranslation();
+  const { isAdmin } = usePermissions();
   const isNew = props.isNew || !props.item.id;
 
   return (
@@ -36,7 +37,7 @@ const UserForm: AbstractComponent<any> = (props: Props) => {
         onChange={props.onTextInputChange.bind(this, 'email')}
         value={props.item.email || ''}
       />
-      { PermissionsService.isAdmin() && (
+      { isAdmin() && (
         <>
           <Form.Dropdown
             error={props.isError('role')}

@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router';
 import { Icon } from 'semantic-ui-react';
 import EventsService from '../services/Events';
 import ListViewMenu from '../components/ListViewMenu';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
 import Views from '../constants/ListViews';
@@ -30,6 +30,7 @@ const Events: AbstractComponent<any> = () => {
   const navigate = useNavigate();
   const { projectModelId } = useParams();
   const { t } = useTranslation();
+  const { canDeleteRecord } = usePermissions();
 
   const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
@@ -86,7 +87,7 @@ const Events: AbstractComponent<any> = () => {
           icon: 'pencil',
           onClick: (event) => navigate(`${event.id}`)
         }, {
-          accept: (event) => PermissionsService.canDeleteRecord(projectModel, event),
+          accept: (event) => canDeleteRecord(projectModel, event),
           icon: 'times',
           name: 'delete'
         }]}
