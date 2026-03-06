@@ -1,19 +1,19 @@
 // @flow
 
 import cx from 'classnames';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { Link } from 'react-router';
 import { Dropdown, Header, Icon } from 'semantic-ui-react';
 import PermissionsService from '../services/Permissions';
-import SessionService from '../services/Session';
 import styles from './UserMenu.module.css';
 import UserAvatar from './UserAvatar';
+import { AuthenticationContext } from '../context/Authentication';
 
 const UserMenu = () => {
   const { t } = useTranslation();
-  const { user } = SessionService.getSession();
+  const { user } = useContext(AuthenticationContext);
 
   const trigger = (
     <>

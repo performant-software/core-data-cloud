@@ -7,14 +7,11 @@ import React, {
 import LocalLoginModal from '../components/LocalLoginModal';
 import { Navigate } from 'react-router';
 import { AuthenticationContext } from '../context/Authentication';
-import { useTranslation } from 'react-i18next';
 import styles from './Login.module.css';
-import { SignIn } from '@clerk/clerk-react';
+import { SignIn } from '@clerk/react';
 
 const Login: ComponentType<any> = () => {
   const { authenticated, provider } = useContext(AuthenticationContext);
-
-  const { t } = useTranslation();
 
   if (authenticated) {
     return <Navigate to='/projects' />;

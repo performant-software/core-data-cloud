@@ -26,7 +26,7 @@ import UserProjects from './pages/UserProjects';
 import Users from './pages/Users';
 import WebAuthorities from './pages/WebAuthorities';
 import WebAuthority from './pages/WebAuthority';
-import { ClerkProvider } from '@clerk/clerk-react';
+import { ClerkProvider } from '@clerk/react';
 import LocalAuthenticationContextProvider from './components/LocalAuthenticationContextProvider';
 
 const App: ComponentType<any> = () => (

@@ -1,6 +1,6 @@
 // @flow
 import { BaseService } from '@performant-software/shared-components';
-import { useAuth, useUser } from '@clerk/clerk-react';
+import { useAuth, useUser } from '@clerk/react';
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { AuthenticationContext, LocalAuthenticationContext } from '../context/Authentication';
 import _ from 'underscore';
