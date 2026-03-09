@@ -1,16 +1,32 @@
 // @flow
 import { BaseService } from '@performant-software/shared-components';
-import { useAuth, useUser } from '@clerk/react';
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useAuth } from '@clerk/react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { AuthenticationContext, LocalAuthenticationContext } from '../context/Authentication';
 import _ from 'underscore';
 import SessionService from '../services/Session';
+import UsersService from '../services/Users';
 
 const PROVIDER = import.meta.env.VITE_AUTH_PROVIDER || 'local';
 
+/**
+ * Transforms the Clerk auth data into the same format as username/password auth data.
+ * @type {function(*): {authenticated: *, user: *}}
+ */
+const transformClerkData  = (auth, user) => {
+  return {
+    authenticated: auth.isSignedIn,
+    logout: auth.signOut,
+    user: {
+      ...user,
+      role: user?.publicMetadata?.role
+    }
+  }
+}
+
 const AuthenticationContextProvider = (props: any) => {
   const clerkAuth = useAuth();
-  const clerkUser = useUser();
+  const [clerkUser, setClerkUser] = useState(null);
   const localData = useContext(LocalAuthenticationContext);
 
   /**
@@ -19,15 +35,13 @@ const AuthenticationContextProvider = (props: any) => {
   const [ready, setReady] = useState(false);
 
   /**
-   * Transforms the Clerk auth data into the same format as username/password auth data.
-   * @type {function(*): {authenticated: *, user: *}}
+   * Call the /me endpoint to get the current user's data.
    */
-  const transformClerkData  = useCallback((auth, user) => {
-    return {
-      authenticated: auth,
-      user: user
+  useEffect(() => {
+    if (PROVIDER === 'clerk' && clerkAuth.isLoaded && !clerkUser) {
+      UsersService.getMe().then(res => setClerkUser(res.data));
     }
-  }, []);
+  }, [clerkAuth.isLoaded]);
 
   const data = useMemo(() => {
     if (PROVIDER === 'clerk') {
@@ -49,9 +63,13 @@ const AuthenticationContextProvider = (props: any) => {
       }
 
       axiosConfigId.current = axios.interceptors.request.use(async (config) => {
-        const token = PROVIDER === 'local'
-          ? SessionService.getSession()?.token
-          : await clerkAuth.getToken();
+        let token
+
+        if (PROVIDER === 'local') {
+          token = SessionService.getSession()?.token
+        } else {
+          token = await clerkAuth.getToken();
+        }
 
         _.extend(config.headers, { Authorization: `Bearer ${token}` });
 
@@ -59,14 +77,19 @@ const AuthenticationContextProvider = (props: any) => {
       }, (error) => Promise.reject(error));
     });
 
-    setReady(true);
-  }, [data]);
+    const clerkReady = clerkAuth.isLoaded;
+    const localReady = PROVIDER === 'local' && SessionService.getSession()?.token;
+
+    if (clerkReady || localReady) {
+      setReady(true);
+    }
+  }, [data, clerkAuth.isLoaded]);
 
   return (
     <AuthenticationContext.Provider
       value={{ ...data, provider: PROVIDER }}
     >
-      {ready && props.children }
+      { ready && props.children }
     </AuthenticationContext.Provider>
   )
 }

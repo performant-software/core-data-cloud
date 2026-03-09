@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_02_200433) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_09_183617) do
   create_schema "heroku_ext"
 
   # These are extensions that must be enabled in order to support this database
@@ -346,7 +346,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_02_200433) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "sso_id"
+    t.string "sso_id"
     t.string "role"
     t.boolean "require_password_change", default: false, null: false
     t.datetime "last_sign_in_at", precision: nil

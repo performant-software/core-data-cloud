@@ -5,7 +5,6 @@ import _ from 'underscore';
 import DateTimeUtils from '../utils/DateTime';
 import type { Ownable as OwnableType } from '../types/Ownable';
 import type { ProjectModel as ProjectModelType } from '../types/ProjectModel';
-import type { User as UserType } from '../types/User';
 import type { UserProject as UserProjectType } from '../types/UserProject';
 import UserProjectRoles from '../utils/UserProjectRoles';
 import UserRoles from '../utils/UserRoles';
@@ -16,13 +15,6 @@ import { AuthenticationContext } from '../context/Authentication';
  */
 const usePermissions = () => {
   const { user } = useContext(AuthenticationContext);
-
-  /**
-   * Returns a reference to the currently logged in user.
-   *
-   * @returns {User}
-   */
-  const getUser = (): UserType => user;
 
   /**
    * Returns the user project records for the current user.
@@ -51,21 +43,21 @@ const usePermissions = () => {
    *
    * @returns {boolean}
    */
-  const isAdmin = (): boolean => UserRoles.isAdmin(getUser());
+  const isAdmin = (): boolean => UserRoles.isAdmin(user);
 
   /**
    * Returns true if the current user has the "guest" role.
    *
    * @returns {boolean}
    */
-  const isGuest = (): boolean => UserRoles.isGuest(getUser());
+  const isGuest = (): boolean => UserRoles.isGuest(user);
 
   /**
    * Returns true if the current user has the "member" role.
    *
    * @returns {boolean}
    */
-  const isMember = (): boolean => UserRoles.isMember(getUser());
+  const isMember = (): boolean => UserRoles.isMember(user);
 
   /**
    * Returns true if the passed project is archived.
@@ -291,7 +283,6 @@ const usePermissions = () => {
     canImportData,
     canInviteUserProject,
     canResetPassword,
-    getUser,
     getUserProject,
     getUserProjects,
     isAdmin,
