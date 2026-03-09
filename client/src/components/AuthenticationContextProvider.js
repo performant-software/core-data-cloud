@@ -9,21 +9,6 @@ import UsersService from '../services/Users';
 
 const PROVIDER = import.meta.env.VITE_AUTH_PROVIDER || 'local';
 
-/**
- * Transforms the Clerk auth data into the same format as username/password auth data.
- * @type {function(*): {authenticated: *, user: *}}
- */
-const transformClerkData  = (auth, user) => {
-  return {
-    authenticated: auth.isSignedIn,
-    logout: auth.signOut,
-    user: {
-      ...user,
-      role: user?.publicMetadata?.role
-    }
-  }
-}
-
 const AuthenticationContextProvider = (props: any) => {
   const clerkAuth = useAuth();
   const [clerkUser, setClerkUser] = useState(null);
@@ -38,14 +23,18 @@ const AuthenticationContextProvider = (props: any) => {
    * Call the /me endpoint to get the current user's data.
    */
   useEffect(() => {
-    if (PROVIDER === 'clerk' && clerkAuth.isLoaded && !clerkUser) {
+    if (PROVIDER === 'clerk' && clerkAuth.isSignedIn && !clerkUser) {
       UsersService.getMe().then(res => setClerkUser(res.data));
     }
-  }, [clerkAuth.isLoaded]);
+  }, [clerkAuth.isSignedIn]);
 
   const data = useMemo(() => {
     if (PROVIDER === 'clerk') {
-      return transformClerkData(clerkAuth, clerkUser);
+      return {
+        authenticated: clerkAuth.isSignedIn,
+        logout: clerkAuth.signOut,
+        user: clerkUser
+      };
     } else {
       return localData;
     }
@@ -77,7 +66,7 @@ const AuthenticationContextProvider = (props: any) => {
       }, (error) => Promise.reject(error));
     });
 
-    const clerkReady = clerkAuth.isLoaded;
+    const clerkReady = clerkAuth.isLoaded && (clerkUser || !clerkAuth.isSignedIn);
     const localReady = PROVIDER === 'local' && SessionService.getSession()?.token;
 
     if (clerkReady || localReady) {
