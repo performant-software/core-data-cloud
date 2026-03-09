@@ -15,14 +15,14 @@ type Props = EditContainerProps & {
 
 const UserForm: AbstractComponent<any> = (props: Props) => {
   const { t } = useTranslation();
-  const { isAdmin } = usePermissions();
+  const { isAdmin, isSSO } = usePermissions();
   const isNew = props.isNew || !props.item.id;
 
   return (
     <>
       <Form.Input
         autoFocus
-        disabled={props.disabled}
+        disabled={props.disabled || isSSO()}
         error={props.isError('name')}
         label={t('UserForm.labels.name')}
         required={props.isRequired('name')}
@@ -30,7 +30,7 @@ const UserForm: AbstractComponent<any> = (props: Props) => {
         value={props.item.name || ''}
       />
       <Form.Input
-        disabled={props.disabled}
+        disabled={props.disabled || isSSO()}
         error={props.isError('email')}
         label={t('UserForm.labels.email')}
         required={props.isRequired('email')}
@@ -49,7 +49,7 @@ const UserForm: AbstractComponent<any> = (props: Props) => {
             selectOnBlur={false}
             value={props.item.role}
           />
-          {!isNew && (
+          {!isNew && !isSSO() && (
             <Form.Checkbox
               checked={props.item.require_password_change}
               error={props.isError('require_password_change')}

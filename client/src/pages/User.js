@@ -22,7 +22,7 @@ type Props = EditContainerProps & {
 
 const UserFormComponent = (props: Props) => {
   const { t } = useTranslation();
-  const { canEditUsers } = usePermissions();
+  const { canEditUsers, isSSO } = usePermissions();
   const isNew = props.isNew || !props.item.id;
 
   if (!canEditUsers()) {
@@ -49,7 +49,7 @@ const UserFormComponent = (props: Props) => {
             {...props}
             isNew={isNew}
           />
-          { !isNew && !UserUtils.isSingleSignOn(props.item.email) && (
+          { !isNew && !isSSO() && (
             <UserPassword
               {...props}
             />

@@ -14,7 +14,7 @@ import { AuthenticationContext } from '../context/Authentication';
  * Custom hook for permissions business logic.
  */
 const usePermissions = () => {
-  const { user } = useContext(AuthenticationContext);
+  const { provider, user } = useContext(AuthenticationContext);
 
   /**
    * Returns the user project records for the current user.
@@ -263,11 +263,17 @@ const usePermissions = () => {
   };
 
   /**
+   * Whether the configured authentication provider is local.
+   * @returns {boolean}
+   */
+  const isSSO = () => provider !== 'local';
+
+  /**
    * An admin user and a user who does not log in via SSO can change their password.
    *
    * @returns {boolean}
    */
-  const canResetPassword = () => isAdmin() || !user?.sso;
+  const canResetPassword = () => isSSO() && isAdmin();
 
   return useMemo(() => ({
     canArchiveProject,
@@ -289,6 +295,7 @@ const usePermissions = () => {
     isArchived,
     isEditor,
     isGuest,
+    isSSO,
     isMember,
     isOwner
   }), [user]);

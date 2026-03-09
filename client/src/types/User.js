@@ -12,6 +12,5 @@ export type User = {
   password_confirmation: string,
   require_password_change: boolean,
   role: 'admin' | 'member' | 'guest',
-  sso: boolean,
   user_projects: Array<UserProject>
 };

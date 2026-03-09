@@ -1,23 +1,9 @@
 // @flow
 
-import _ from 'underscore';
 import i18n from '../i18n/i18n';
 import type { User as UserType } from '../types/User';
 
 const PASSWORD_FORMAT = /(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9\s])/;
-
-const SSO_DOMAINS = import.meta.env.VITE_SSO_DOMAINS
-  ? import.meta.env.VITE_SSO_DOMAINS.split(',')
-  : [];
-
-/**
- * Returns `true` if the pass email matches any of the SSO domains.
- *
- * @param email
- *
- * @returns {*}
- */
-const isSingleSignOn = (email: string) => _.some(SSO_DOMAINS, (domain) => email?.endsWith(domain));
 
 /**
  * Validates the password for the passed user.
@@ -56,7 +42,6 @@ const validatePasswordGranular = (password) => ({
 });
 
 export default {
-  isSingleSignOn,
   validatePassword,
   validatePasswordGranular
 };
