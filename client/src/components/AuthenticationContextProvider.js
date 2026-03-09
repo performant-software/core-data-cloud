@@ -67,9 +67,8 @@ const AuthenticationContextProvider = (props: any) => {
     });
 
     const clerkReady = clerkAuth.isLoaded && (clerkUser || !clerkAuth.isSignedIn);
-    const localReady = PROVIDER === 'local' && SessionService.getSession()?.token;
 
-    if (clerkReady || localReady) {
+    if (clerkReady || PROVIDER === 'local') {
       setReady(true);
     }
   }, [data, clerkAuth.isLoaded]);
