@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_10_133417) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_10_203200) do
   create_schema "heroku_ext"
 
   # These are extensions that must be enabled in order to support this database
@@ -352,6 +352,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_10_133417) do
     t.datetime "last_sign_in_at", precision: nil
     t.datetime "last_invited_at", precision: nil
     t.string "avatar_url"
+    t.index ["sso_id"], name: "index_core_data_connector_users_on_sso_id", unique: true
   end
 
   create_table "core_data_connector_web_authorities", force: :cascade do |t|
