@@ -6,6 +6,7 @@ export type User = {
   id: number,
   name: string,
   email: string,
+  avatar_url: string,
   last_invited_at: number,
   last_sign_in_at: number,
   password: string,

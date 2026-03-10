@@ -19,6 +19,7 @@ const UserMenu = () => {
   const trigger = (
     <>
       <UserAvatar
+        href={user.avatar_url}
         name={user.email}
         size={40}
       />

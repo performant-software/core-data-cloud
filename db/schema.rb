@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_09_183617) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_10_133417) do
   create_schema "heroku_ext"
 
   # These are extensions that must be enabled in order to support this database
@@ -351,6 +351,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_09_183617) do
     t.boolean "require_password_change", default: false, null: false
     t.datetime "last_sign_in_at", precision: nil
     t.datetime "last_invited_at", precision: nil
+    t.string "avatar_url"
   end
 
   create_table "core_data_connector_web_authorities", force: :cascade do |t|
