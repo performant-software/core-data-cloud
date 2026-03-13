@@ -1,4 +1,27 @@
 GIT
+  remote: https://github.com/performant-software/core-data-connector.git
+  revision: 065e49c6c45ec922d0b00f4182f6b246f073695d
+  branch: cm/clerk
+  specs:
+    core_data_connector (0.1.0)
+      activerecord-postgis-adapter (~> 11.0)
+      clerk-sdk-ruby (~> 5.1, >= 5.1.2)
+      faker
+      fuzzy_dates
+      jwt (~> 3.1.2)
+      jwt_auth
+      postmark-rails (~> 0.22.1)
+      rack-cors (~> 3.0.0)
+      rails (>= 8.0, < 9)
+      resource_api
+      rgeo-geojson (~> 2.2)
+      rubyzip (~> 2.3.2)
+      triple_eye_effable
+      typesense (~> 0.14)
+      typhoeus (~> 1.4)
+      user_defined_fields
+
+GIT
   remote: https://github.com/performant-software/fuzzy-dates.git
   revision: 1572b9c3370922aace98e9e2db139a30c55fda48
   tag: v0.1.2
@@ -43,27 +66,6 @@ GIT
     user_defined_fields (0.1.0)
       rails (>= 6.0.3.2, < 9)
       resource_api
-
-PATH
-  remote: ../core-data-connector
-  specs:
-    core_data_connector (0.1.0)
-      activerecord-postgis-adapter (~> 11.0)
-      clerk-sdk-ruby (~> 5.1, >= 5.1.2)
-      faker
-      fuzzy_dates
-      jwt (~> 3.1.2)
-      jwt_auth
-      postmark-rails (~> 0.22.1)
-      rack-cors (~> 3.0.0)
-      rails (>= 8.0, < 9)
-      resource_api
-      rgeo-geojson (~> 2.2)
-      rubyzip (~> 2.3.2)
-      triple_eye_effable
-      typesense (~> 0.14)
-      typhoeus (~> 1.4)
-      user_defined_fields
 
 GEM
   remote: https://rubygems.org/
@@ -190,8 +192,9 @@ GEM
     drb (2.2.3)
     erb (5.0.1)
     erubi (1.12.0)
-    ethon (0.15.0)
+    ethon (0.18.0)
       ffi (>= 1.15.0)
+      logger
     faker (3.6.1)
       i18n (>= 1.8.11, < 2)
     faraday (2.14.1)
@@ -264,7 +267,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.9-x86_64-linux-gnu)
       racc (~> 1.4)
-    oj (3.16.15)
+    oj (3.16.16)
       bigdecimal (>= 3.0)
       ostruct (>= 0.2)
     ostruct (0.6.3)
@@ -356,8 +359,8 @@ GEM
     typesense (0.15.0)
       oj (~> 3.11)
       typhoeus (~> 1.4)
-    typhoeus (1.5.0)
-      ethon (>= 0.9.0, < 0.16.0)
+    typhoeus (1.6.0)
+      ethon (>= 0.18.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uri (1.0.3)
