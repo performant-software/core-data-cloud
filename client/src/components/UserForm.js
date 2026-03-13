@@ -22,7 +22,7 @@ const UserForm: AbstractComponent<any> = (props: Props) => {
     <>
       <Form.Input
         autoFocus
-        disabled={props.disabled || isSSO()}
+        disabled={props.disabled || (!isNew && isSSO())}
         error={props.isError('name')}
         label={t('UserForm.labels.name')}
         required={props.isRequired('name')}
@@ -30,7 +30,7 @@ const UserForm: AbstractComponent<any> = (props: Props) => {
         value={props.item.name || ''}
       />
       <Form.Input
-        disabled={props.disabled || isSSO()}
+        disabled={props.disabled || (!isNew && isSSO())}
         error={props.isError('email')}
         label={t('UserForm.labels.email')}
         required={props.isRequired('email')}

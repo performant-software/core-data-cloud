@@ -32,7 +32,9 @@ import LocalAuthenticationContextProvider from './components/LocalAuthentication
 const ClerkWrapper = () => {
   if (import.meta.env.VITE_CLERK_PUBLISHABLE_KEY) {
     return (
-      <ClerkProvider publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}>
+      <ClerkProvider
+        publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}
+      >
         <App />
       </ClerkProvider>);
   }
