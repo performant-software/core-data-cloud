@@ -6,7 +6,7 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
-  type AbstractComponent
+  type AbstractComponent, useContext
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
@@ -26,6 +26,7 @@ import UsersService from '../services/Users';
 import useParams from '../hooks/ParsedParams';
 import Validation from '../utils/Validation';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
+import { AuthenticationContext } from '../context/Authentication';
 
 type Props = EditContainerProps & {
   item: UserProjectType
@@ -39,6 +40,7 @@ const UserProjectForm = (props: Props) => {
     canEditUsers,
     isOwner: isOwnerPermission
   } = usePermissions();
+  const { provider } = useContext(AuthenticationContext);
 
   /**
    * Memo-izes whether we're on a new record.
@@ -99,6 +101,19 @@ const UserProjectForm = (props: Props) => {
     return <UnauthorizedRedirect />;
   }
 
+  const modal = useMemo(() => {
+    if (provider === 'local') {
+      return {
+        component: UserModal,
+        onSave: (user) => (
+          UsersService
+            .save(user)
+            .then(({ data }) => data.user)
+        )
+      }
+    }
+  }, []);
+
   return (
     <ItemLayout>
       <ItemLayout.Header>
@@ -152,14 +167,7 @@ const UserProjectForm = (props: Props) => {
               >
                 <AssociatedDropdown
                   collectionName='users'
-                  modal={{
-                    component: UserModal,
-                    onSave: (user) => (
-                      UsersService
-                        .save(user)
-                        .then(({ data }) => data.user)
-                    )
-                  }}
+                  modal={modal}
                   onSearch={onUserSearch}
                   onSelection={props.onAssociationInputChange.bind(this, 'user_id', 'user')}
                   renderOption={(user) => User.toDropdown(user)}

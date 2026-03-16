@@ -10,9 +10,6 @@ import UserProjectRoles from '../utils/UserProjectRoles';
 import UserRoles from '../utils/UserRoles';
 import { AuthenticationContext } from '../context/Authentication';
 
-/**
- * Custom hook for permissions business logic.
- */
 const usePermissions = () => {
   const { provider, user } = useContext(AuthenticationContext);
 
