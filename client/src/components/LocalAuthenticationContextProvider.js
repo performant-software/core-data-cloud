@@ -7,7 +7,7 @@ import React, {
   useState,
   type Node
 } from 'react';
-import { LocalAuthenticationContext } from '../context/Authentication';
+import { AuthenticationContext } from '../context/Authentication';
 import LocalAuthenticationService from '../services/LocalAuthentication';
 import SessionService from '../services/Session';
 
@@ -69,15 +69,16 @@ const LocalAuthenticationContextProvider = (props: Props) => {
     authenticated,
     login,
     logout,
-    user
+    user,
+    provider: 'local'
   }), [authenticated, login, logout, user]);
 
   return (
-    <LocalAuthenticationContext.Provider
+    <AuthenticationContext.Provider
       value={value}
     >
       { props.children }
-    </LocalAuthenticationContext.Provider>
+    </AuthenticationContext.Provider>
   );
 };
 

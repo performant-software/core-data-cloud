@@ -11,14 +11,6 @@ type AuthenticationContextType = {
   user: User
 };
 
-export const LocalAuthenticationContext = createContext<AuthenticationContextType>({
-  authenticated: false,
-  login: () => Promise.resolve(),
-  logout: () => Promise.resolve(),
-  provider: 'local',
-  user: undefined
-});
-
 export const AuthenticationContext = createContext<AuthenticationContextType>({
   authenticated: false,
   login: () => Promise.resolve(),
