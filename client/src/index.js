@@ -3,10 +3,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import { addInterceptor } from './config/Api';
 
 // Configuration
-import './config/Api';
 import './i18n/i18n';
+
+if (!import.meta.env.VITE_AUTH_PROVIDER || import.meta.env.VITE_AUTH_PROVIDER === 'local') {
+  addInterceptor()
+}
 
 // CSS
 import '@performant-software/shared-components/style.css';

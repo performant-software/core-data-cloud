@@ -273,7 +273,7 @@
       "login": "Login"
     }
   },
-  "LoginModal": {
+  "LocalLoginModal": {
     "buttonCancel": "Cancel",
     "buttonLogin": "Login",
     "email": "Email",

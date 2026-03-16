@@ -4,12 +4,13 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Menu } from 'semantic-ui-react';
 import MenuLink from './MenuLink';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import useParams from '../hooks/ParsedParams';
 
 const ProjectSettingsMenu = () => {
   const { projectId } = useParams();
   const { t } = useTranslation();
+  const { canCreateJobs, canEditUserProjects } = usePermissions();
 
   return (
     <Menu
@@ -26,7 +27,7 @@ const ProjectSettingsMenu = () => {
             parent
             to={`/projects/${projectId}/project_models`}
           />
-          { PermissionsService.canEditUserProjects(projectId) && (
+          { canEditUserProjects(projectId) && (
             <MenuLink
               content={t('ProjectSettingsMenu.labels.users')}
               parent
@@ -43,7 +44,7 @@ const ProjectSettingsMenu = () => {
             parent
             to={`/projects/${projectId}/web_authorities`}
           />
-          { PermissionsService.canCreateJobs() && (
+          { canCreateJobs() && (
             <MenuLink
               content={t('ProjectSettingsMenu.labels.jobs')}
               parent

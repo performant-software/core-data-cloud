@@ -1,8 +1,13 @@
 // @flow
 
-import React, { type ComponentType, type Node, useCallback } from 'react';
+import React, {
+  type ComponentType,
+  type Node,
+  useCallback,
+  useContext
+} from 'react';
 import { matchPath, Navigate, useLocation } from 'react-router';
-import AuthenticationService from '../services/Authentication';
+import { AuthenticationContext } from '../context/Authentication';
 import SessionService from '../services/Session';
 import UnauthorizedToaster from './UnauthorizedToaster';
 
@@ -11,6 +16,7 @@ type Props = {
 };
 
 const AuthenticatedRoute: ComponentType<any> = ({ children }: Props) => {
+  const { authenticated } = useContext(AuthenticationContext);
   const location = useLocation();
 
   /**
@@ -23,7 +29,7 @@ const AuthenticatedRoute: ComponentType<any> = ({ children }: Props) => {
   /**
    * Navigate to the root route if the user is not authenticated.
    */
-  if (!AuthenticationService.isAuthenticated()) {
+  if (!authenticated) {
     return <Navigate to='/' />;
   }
 

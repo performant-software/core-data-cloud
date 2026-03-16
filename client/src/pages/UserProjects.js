@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router';
 import { Message } from 'semantic-ui-react';
 import _ from 'underscore';
 import ItemHeader from '../components/ItemHeader';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import UserEditMenu from '../components/UserEditMenu';
@@ -33,6 +33,11 @@ const UserProjects: AbstractComponent<any> = () => {
   const navigate = useNavigate();
   const { projectId, userId } = useParams();
   const { t } = useTranslation();
+  const {
+    canEditUserProjects,
+    canEditUsers,
+    canInviteUserProject
+  } = usePermissions();
 
   const ids = useMemo(() => ({ project_id: projectId, user_id: userId }), [projectId, userId]);
 
@@ -88,7 +93,7 @@ const UserProjects: AbstractComponent<any> = () => {
       sortable: true
     });
 
-    if (projectId && PermissionsService.canEditUsers()) {
+    if (projectId && canEditUsers()) {
       value.push({
         name: 'core_data_connector_users.role',
         label: t('UserProjects.columns.type'),
@@ -126,7 +131,7 @@ const UserProjects: AbstractComponent<any> = () => {
    * Navigates to the project edit page if the current user does not have permissions to edit users
    * in the current project.
    */
-  if (projectId && !PermissionsService.canEditUserProjects(projectId)) {
+  if (projectId && !canEditUserProjects(projectId)) {
     return (
       <UnauthorizedRedirect
         to={`/projects/${projectId}/edit`}
@@ -137,7 +142,7 @@ const UserProjects: AbstractComponent<any> = () => {
   /**
    * Return to the projects list if the user does not have permissions to edit users.
    */
-  if (userId && !PermissionsService.canEditUsers()) {
+  if (userId && !canEditUsers()) {
     return <UnauthorizedRedirect />;
   }
 
@@ -167,7 +172,7 @@ const UserProjects: AbstractComponent<any> = () => {
           icon: 'times',
           name: 'delete'
         }, {
-          accept: (item) => PermissionsService.canInviteUserProject(item),
+          accept: (item) => canInviteUserProject(item),
           icon: 'mail outline',
           name: 'invite',
           onClick: onInviteUser,

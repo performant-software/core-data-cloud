@@ -14,7 +14,7 @@ import { IoDocumentsSharp } from 'react-icons/io5';
 import ItemsService from '../services/Items';
 import ListViewMenu from '../components/ListViewMenu';
 import MergeButton from '../components/MergeButton';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
 import { useNavigate } from 'react-router';
@@ -31,6 +31,7 @@ const Items: AbstractComponent<any> = () => {
   const { projectModel } = useContext(ProjectContext);
   const navigate = useNavigate();
   const { projectModelId } = useParams();
+  const { canDeleteRecord } = usePermissions();
 
   const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
@@ -77,7 +78,7 @@ const Items: AbstractComponent<any> = () => {
           icon: 'pencil',
           onClick: (item) => navigate(`${item.id}`)
         }, {
-          accept: (item) => PermissionsService.canDeleteRecord(projectModel, item),
+          accept: (item) => canDeleteRecord(projectModel, item),
           icon: 'times',
           name: 'delete'
         }]}

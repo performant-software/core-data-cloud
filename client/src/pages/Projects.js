@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { IoSearchOutline } from 'react-icons/io5';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { Icon } from 'semantic-ui-react';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import ProjectDescription from '../components/ProjectDescription';
 import ProjectsService from '../services/Projects';
 import { SlLock } from 'react-icons/sl';
@@ -17,6 +17,7 @@ const Projects: AbstractComponent<any> = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { canArchiveProject, canCreateProject } = usePermissions();
 
   const { saved } = location?.state || {};
 
@@ -26,13 +27,13 @@ const Projects: AbstractComponent<any> = () => {
    * @type {{basic: boolean, color: string, location: string, onClick: (function(): void)}}
    */
   const addButton = useMemo(() => (
-    PermissionsService.canCreateProject() ? ({
+    canCreateProject() ? ({
       basic: false,
       color: 'blue',
       location: 'top',
       onClick: () => navigate('new')
     }) : undefined
-  ), []);
+  ), [canCreateProject, navigate]);
 
   return (
     <ItemList
@@ -41,7 +42,7 @@ const Projects: AbstractComponent<any> = () => {
       asProps={(project) => ({
         className: cx(
           styles.card,
-          { [styles.disabled]: project.archived && !PermissionsService.canArchiveProject() }
+          { [styles.disabled]: project.archived && !canArchiveProject() }
         ),
         raised: true,
         to: `${project.id}/edit`

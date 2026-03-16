@@ -14,7 +14,7 @@ import { IoBulb, IoBulbOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router';
 import ListViewMenu from '../components/ListViewMenu';
 import MergeButton from '../components/MergeButton';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
 import useSelectable from '../hooks/Selectable';
@@ -29,6 +29,7 @@ const Works: AbstractComponent<any> = () => {
   const navigate = useNavigate();
   const { projectModelId } = useParams();
   const { t } = useTranslation();
+  const { canDeleteRecord } = usePermissions();
 
   const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
@@ -75,7 +76,7 @@ const Works: AbstractComponent<any> = () => {
           icon: 'pencil',
           onClick: (work) => navigate(`${work.id}`)
         }, {
-          accept: (work) => PermissionsService.canDeleteRecord(projectModel, work),
+          accept: (work) => canDeleteRecord(projectModel, work),
           icon: 'times',
           name: 'delete'
         }]}

@@ -8,7 +8,7 @@ import { Icon } from 'semantic-ui-react';
 import ListViewMenu from '../components/ListViewMenu';
 import MediaContentsService from '../services/MediaContents';
 import MergeButton from '../components/MergeButton';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
 import useSelectable from '../hooks/Selectable';
@@ -23,6 +23,7 @@ const MediaContents = () => {
   const navigate = useNavigate();
   const { projectModelId } = useParams();
   const { t } = useTranslation();
+  const { canDeleteRecord } = usePermissions();
 
   const { isSelected, onRowSelect, selectedItems } = useSelectable();
 
@@ -65,7 +66,7 @@ const MediaContents = () => {
           name: 'edit',
           onClick: (mediaContent) => navigate(`${mediaContent.id}`)
         }, {
-          accept: (mediaContent) => PermissionsService.canDeleteRecord(projectModel, mediaContent),
+          accept: (mediaContent) => canDeleteRecord(projectModel, mediaContent),
           basic: false,
           name: 'delete'
         }]}

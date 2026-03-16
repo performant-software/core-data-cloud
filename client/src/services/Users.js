@@ -18,6 +18,15 @@ class Users extends BaseService {
   }
 
   /**
+   * Returns the current user.
+   * Only used for Clerk authentication.
+   * @returns {*}
+   */
+  getMe(): UserType {
+    return this.getAxios().get(`${this.getBaseUrl()}/me`)
+  }
+
+  /**
    * Returns the user transform object.
    *
    * @returns {User}

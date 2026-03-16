@@ -14,7 +14,7 @@ import { ListTable } from '@performant-software/semantic-components';
 import ListViewMenu from '../components/ListViewMenu';
 import { MdChatBubble } from 'react-icons/md';
 import MergeButton from '../components/MergeButton';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import ProjectContext from '../context/Project';
 import { useNavigate } from 'react-router';
 import useParams from '../hooks/ParsedParams';
@@ -31,6 +31,7 @@ const Instances: AbstractComponent<any> = () => {
   const { projectModel } = useContext(ProjectContext);
   const navigate = useNavigate();
   const { projectModelId } = useParams();
+  const { canDeleteRecord } = usePermissions();
 
   const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
@@ -77,7 +78,7 @@ const Instances: AbstractComponent<any> = () => {
           icon: 'pencil',
           onClick: (instance) => navigate(`${instance.id}`)
         }, {
-          accept: (instance) => PermissionsService.canDeleteRecord(projectModel, instance),
+          accept: (instance) => canDeleteRecord(projectModel, instance),
           icon: 'times',
           name: 'delete'
         }]}

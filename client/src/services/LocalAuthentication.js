@@ -5,7 +5,7 @@ import _ from 'underscore';
 import AuthenticationTransform from '../transforms/Authentication';
 import SessionService from './Session';
 
-class Authentication extends BaseService {
+class LocalAuthentication extends BaseService {
   /**
    * Returns the authentication base URL.
    *
@@ -68,5 +68,5 @@ class Authentication extends BaseService {
   }
 }
 
-const AuthenticationService: Authentication = new Authentication();
-export default AuthenticationService;
+const LocalAuthenticationService: LocalAuthentication = new LocalAuthentication();
+export default LocalAuthenticationService;

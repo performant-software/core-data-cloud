@@ -15,7 +15,7 @@ import { Icon } from 'semantic-ui-react';
 import ListViewMenu from '../components/ListViewMenu';
 import MergeButton from '../components/MergeButton';
 import OrganizationsService from '../services/Organizations';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import ProjectContext from '../context/Project';
 import useParams from '../hooks/ParsedParams';
 import useSelectable from '../hooks/Selectable';
@@ -29,6 +29,7 @@ const Organizations: AbstractComponent<any> = () => {
   const navigate = useNavigate();
   const { projectModelId } = useParams();
   const { t } = useTranslation();
+  const { canDeleteRecord } = usePermissions();
 
   const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
@@ -75,7 +76,7 @@ const Organizations: AbstractComponent<any> = () => {
           icon: 'pencil',
           onClick: (organization) => navigate(`${organization.id}`)
         }, {
-          accept: (organization) => PermissionsService.canDeleteRecord(projectModel, organization),
+          accept: (organization) => canDeleteRecord(projectModel, organization),
           icon: 'times',
           name: 'delete'
         }]}

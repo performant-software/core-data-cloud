@@ -6,13 +6,13 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
-  type AbstractComponent
+  type AbstractComponent, useContext
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
 import ItemHeader from '../components/ItemHeader';
 import ItemLayout from '../components/ItemLayout';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import Project from '../transforms/Project';
 import ProjectsService from '../services/Projects';
 import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
@@ -26,6 +26,7 @@ import UsersService from '../services/Users';
 import useParams from '../hooks/ParsedParams';
 import Validation from '../utils/Validation';
 import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
+import { AuthenticationContext } from '../context/Authentication';
 
 type Props = EditContainerProps & {
   item: UserProjectType
@@ -34,6 +35,12 @@ type Props = EditContainerProps & {
 const UserProjectForm = (props: Props) => {
   const params = useParams();
   const { t } = useTranslation();
+  const {
+    canEditUserProjects,
+    canEditUsers,
+    isOwner: isOwnerPermission
+  } = usePermissions();
+  const { provider } = useContext(AuthenticationContext);
 
   /**
    * Memo-izes whether we're on a new record.
@@ -47,7 +54,7 @@ const UserProjectForm = (props: Props) => {
    *
    * @type {boolean}
    */
-  const isOwner = useMemo(() => PermissionsService.isOwner(props.item.project_id), [props.item.project_id]);
+  const isOwner = useMemo(() => isOwnerPermission(props.item.project_id), [isOwnerPermission, props.item.project_id]);
 
   /**
    * Callback fired when the project search is executed.
@@ -79,7 +86,7 @@ const UserProjectForm = (props: Props) => {
   /**
    * Redirect to the project edit page if we're in a project context and the user cannot edit user projects.
    */
-  if (params.projectId && !PermissionsService.canEditUserProjects(params.projectId)) {
+  if (params.projectId && !canEditUserProjects(params.projectId)) {
     return (
       <UnauthorizedRedirect
         to={`/projects/${params.projectId}/edit`}
@@ -90,9 +97,22 @@ const UserProjectForm = (props: Props) => {
   /**
    * Redirect to the projects page if we're in a user context and the users cannot edit users.
    */
-  if (params.userId && !PermissionsService.canEditUsers()) {
+  if (params.userId && !canEditUsers()) {
     return <UnauthorizedRedirect />;
   }
+
+  const modal = useMemo(() => {
+    if (provider === 'local') {
+      return {
+        component: UserModal,
+        onSave: (user) => (
+          UsersService
+            .save(user)
+            .then(({ data }) => data.user)
+        )
+      }
+    }
+  }, [provider]);
 
   return (
     <ItemLayout>
@@ -123,7 +143,7 @@ const UserProjectForm = (props: Props) => {
           <SimpleEditPage.Tab
             key='default'
           >
-            { PermissionsService.canEditUsers() && params.userId && (
+            { canEditUsers() && params.userId && (
               <Form.Input
                 error={props.isError('project_id')}
                 label={t('UserProject.labels.project')}
@@ -139,7 +159,7 @@ const UserProjectForm = (props: Props) => {
                 />
               </Form.Input>
             )}
-            { PermissionsService.canEditUsers() && params.projectId && (
+            { canEditUsers() && params.projectId && (
               <Form.Input
                 error={props.isError('user_id')}
                 label={t('UserProject.labels.user')}
@@ -147,14 +167,7 @@ const UserProjectForm = (props: Props) => {
               >
                 <AssociatedDropdown
                   collectionName='users'
-                  modal={{
-                    component: UserModal,
-                    onSave: (user) => (
-                      UsersService
-                        .save(user)
-                        .then(({ data }) => data.user)
-                    )
-                  }}
+                  modal={modal}
                   onSearch={onUserSearch}
                   onSelection={props.onAssociationInputChange.bind(this, 'user_id', 'user')}
                   renderOption={(user) => User.toDropdown(user)}
@@ -163,7 +176,7 @@ const UserProjectForm = (props: Props) => {
                 />
               </Form.Input>
             )}
-            { !PermissionsService.canEditUsers() && isOwner && isNew && (
+            { !canEditUsers() && isOwner && isNew && (
               <UserForm
                 {...props}
                 isNew

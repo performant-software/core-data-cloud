@@ -1,15 +1,17 @@
 // @flow
 
-import { useEffect } from 'react';
-import AuthenticationService from '../services/Authentication';
+import { useContext, useEffect } from 'react';
+import { AuthenticationContext } from '../context/Authentication';
 import { useNavigate } from 'react-router';
 
 const Logout = () => {
+  const { logout } = useContext(AuthenticationContext);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    AuthenticationService.logout().then(() => navigate('/'));
-  }, []);
+    logout().then(() => navigate('/'));
+  }, [logout, navigate]);
 
   return null;
 };
