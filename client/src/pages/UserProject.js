@@ -112,7 +112,7 @@ const UserProjectForm = (props: Props) => {
         )
       }
     }
-  }, []);
+  }, [provider]);
 
   return (
     <ItemLayout>

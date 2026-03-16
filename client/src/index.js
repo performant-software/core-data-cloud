@@ -8,7 +8,7 @@ import { addInterceptor } from './config/Api';
 // Configuration
 import './i18n/i18n';
 
-if (!import.meta.env.AUTH_PROVIDER || import.meta.env.AUTH_PROVIDER === 'local') {
+if (!import.meta.env.VITE_AUTH_PROVIDER || import.meta.env.VITE_AUTH_PROVIDER === 'local') {
   addInterceptor()
 }
 

@@ -16,7 +16,9 @@ const AuthenticationContextProvider = (props: any) => {
    */
   useEffect(() => {
     if (PROVIDER === 'clerk' && clerkAuth.isSignedIn && !user) {
-      UsersService.getMe().then(res => setUser(res.data));
+      UsersService.getMe()
+        .then(res => setUser(res.data))
+        .catch(() => clerkAuth.signOut());
     }
   }, [clerkAuth.isSignedIn]);
 
@@ -37,7 +39,7 @@ const AuthenticationContextProvider = (props: any) => {
    */
   const ready = useMemo(() => (
     PROVIDER === 'local' || clerkAuth.isLoaded && (user || !clerkAuth.isSignedIn)),
-    [clerkAuth.isLoaded, user]
+    [clerkAuth.isLoaded, user, clerkAuth.isSignedIn]
   );
 
   return (
