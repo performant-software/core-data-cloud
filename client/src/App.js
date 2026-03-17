@@ -32,6 +32,7 @@ const ClerkWrapper = () => {
   if (import.meta.env.VITE_CLERK_PUBLISHABLE_KEY) {
     return (
       <ClerkProvider
+        allowedRedirectOrigins={[import.meta.env.VITE_CLERK_DOMAIN]}
         publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}
       >
         <App />
