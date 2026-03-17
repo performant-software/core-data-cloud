@@ -270,7 +270,7 @@ const usePermissions = () => {
    *
    * @returns {boolean}
    */
-  const canResetPassword = () => isSSO() && isAdmin();
+  const canResetPassword = () => !isSSO() || isAdmin();
 
   return useMemo(() => ({
     canArchiveProject,
