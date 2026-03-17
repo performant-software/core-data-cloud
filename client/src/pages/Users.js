@@ -43,7 +43,7 @@ const Users: AbstractComponent<any> = () => {
   }
 
   const listTableActions = useMemo(() => {
-    const baseList = [
+    let list = [
       {
         name: 'edit',
         onClick: (item) => navigate(`${item.id}`)
@@ -53,7 +53,7 @@ const Users: AbstractComponent<any> = () => {
     ];
 
     if (provider === 'local') {
-      return baseList.splice(1, 0, {
+      list.splice(1, 0, {
         accept: (item) => !item.last_sign_in_at,
         name: 'resend_invite',
         icon: 'mail outline',
@@ -65,7 +65,8 @@ const Users: AbstractComponent<any> = () => {
       });
     }
 
-    return baseList;
+
+    return list;
   }, [canEditUsers]);
 
   const addButton = useMemo(() => {
