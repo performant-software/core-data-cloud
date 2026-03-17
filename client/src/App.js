@@ -33,7 +33,10 @@ const ClerkWrapper = () => {
     return (
       <ClerkProvider
         allowedRedirectOrigins={[import.meta.env.VITE_CLERK_DOMAIN]}
+        domain={import.meta.env.VITE_CLERK_DOMAIN}
         publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}
+        signInUrl={import.meta.env.VITE_CLERK_SIGN_IN_URL}
+        satelliteDomain={import.meta.env.VITE_CLERK_IS_SATELLITE}
       >
         <App />
       </ClerkProvider>);
