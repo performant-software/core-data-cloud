@@ -1,11 +1,13 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
-import { SignInButton } from '@clerk/react';
+import { SignInButton, useClerk } from '@clerk/react';
 import { useTranslation } from 'react-i18next';
 import styles from './ClerkLoginModal.module.css';
 
 const ClerkLoginModal = () => {
   const { t } = useTranslation();
+
+  const { buildSignInUrl } = useClerk();
 
   return (
     <div
@@ -16,7 +18,9 @@ const ClerkLoginModal = () => {
       </h1>
       <SignInButton>
         <Button
+          as='a'
           color='blue'
+          href={buildSignInUrl()}
         >
           {t('ClerkLoginModal.login')}
         </Button>
