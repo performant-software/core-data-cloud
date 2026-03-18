@@ -28,6 +28,10 @@
       "subject": "Subject Access Points"
     }
   },
+  "ClerkLoginModal": {
+    "header": "Welcome to Core Data Cloud",
+    "login": "Sign in with Performant Studio"
+  },
   "GeoNamesForm": {
     "labels": {
       "username": "Username"

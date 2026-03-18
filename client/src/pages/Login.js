@@ -9,6 +9,7 @@ import { Navigate } from 'react-router';
 import { AuthenticationContext } from '../context/Authentication';
 import styles from './Login.module.css';
 import { SignIn } from '@clerk/react';
+import ClerkLoginModal from '../components/ClerkLoginModal';
 
 const Login: ComponentType<any> = () => {
   const { authenticated, provider } = useContext(AuthenticationContext);
@@ -27,7 +28,14 @@ const Login: ComponentType<any> = () => {
         />
       )}
       { provider === 'clerk' && (
-        <SignIn />
+        <>
+          { import.meta.env.VITE_ENV === 'development' && (
+            <SignIn />
+          )}
+          { import.meta.env.VITE_ENV !== 'development' && (
+            <ClerkLoginModal />
+          )}
+        </>
       )}
     </div>
   );
