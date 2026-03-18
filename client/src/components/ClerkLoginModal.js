@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
-import { SignInButton, useClerk } from '@clerk/react';
+import { useClerk } from '@clerk/react';
 import { useTranslation } from 'react-i18next';
 import styles from './ClerkLoginModal.module.css';
 
@@ -16,15 +16,13 @@ const ClerkLoginModal = () => {
       <h1 className={styles.clerkModalHeader}>
         {t('ClerkLoginModal.header')}
       </h1>
-      <SignInButton>
-        <Button
-          as='a'
-          color='blue'
-          href={buildSignInUrl()}
-        >
-          {t('ClerkLoginModal.login')}
-        </Button>
-      </SignInButton>
+      <Button
+        as='a'
+        color='blue'
+        href={buildSignInUrl()}
+      >
+        {t('ClerkLoginModal.login')}
+      </Button>
     </div>
   );
 }
