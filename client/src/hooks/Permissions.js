@@ -237,6 +237,11 @@ const usePermissions = () => {
    * @returns {boolean}
    */
   const canInviteUserProject = (userProject: UserProjectType): boolean => {
+    // CD invitation system is not used in SSO mode
+    if (isSSO()) {
+      return false;
+    }
+
     // Admin users can always invite users
     if (isAdmin()) {
       return true;
