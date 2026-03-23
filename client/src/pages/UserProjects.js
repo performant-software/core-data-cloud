@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useMemo,
   useState,
-  type AbstractComponent
+  type AbstractComponent, useContext
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
@@ -24,6 +24,7 @@ import UserRoles from '../utils/UserRoles';
 import UsersService from '../services/Users';
 import useParams from '../hooks/ParsedParams';
 import Validation from '../utils/Validation';
+import { AuthenticationContext } from '../context/Authentication';
 
 const UserProjects: AbstractComponent<any> = () => {
   const [errors, setErrors] = useState([]);
@@ -38,6 +39,7 @@ const UserProjects: AbstractComponent<any> = () => {
     canEditUsers,
     canInviteUserProject
   } = usePermissions();
+  const { provider } = useContext(AuthenticationContext);
 
   const ids = useMemo(() => ({ project_id: projectId, user_id: userId }), [projectId, userId]);
 
@@ -102,16 +104,18 @@ const UserProjects: AbstractComponent<any> = () => {
       });
     }
 
-    value.push({
-      name: 'core_data_connector_users.last_sign_in_at',
-      label: t('UserProjects.columns.status'),
-      render: (userProject) => (
-        <UserStatus
-          user={userProject.user}
-        />
-      ),
-      sortable: true
-    });
+    if (provider === 'local') {
+      value.push({
+        name: 'core_data_connector_users.last_sign_in_at',
+        label: t('UserProjects.columns.status'),
+        render: (userProject) => (
+          <UserStatus
+            user={userProject.user}
+          />
+        ),
+        sortable: true
+      });
+    }
 
     return value;
   }, [projectId, userId]);
