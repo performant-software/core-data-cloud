@@ -7,7 +7,7 @@ import React, {
   useEffect,
   useMemo,
   useState,
-  type AbstractComponent, useContext
+  type AbstractComponent
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
