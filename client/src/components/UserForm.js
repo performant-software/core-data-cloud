@@ -41,6 +41,7 @@ const UserForm: AbstractComponent<any> = (props: Props) => {
         <>
           <Form.Dropdown
             error={props.isError('role')}
+            disabled={isSSO()}
             label={t('UserForm.labels.role')}
             onChange={props.onTextInputChange.bind(this, 'role')}
             options={UserRoles.getRoleOptions()}

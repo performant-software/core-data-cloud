@@ -79,34 +79,35 @@ const Users: AbstractComponent<any> = () => {
         onClick: () => navigate('new')
       };
     }
-  }, [])
+  }, []);
 
-  return (
-    <>
-      <ListTable
-        actions={listTableActions}
-        addButton={addButton}
-        collectionName='users'
-        columns={[{
-          name: 'name',
-          label: t('Users.columns.name'),
-          sortable: true
-        }, {
-          name: 'email',
-          label: t('Users.columns.email'),
-          sortable: true
-        }, {
-          name: 'role',
-          label: t('Users.columns.role'),
-          resolve: (user) => UserRoles.getRoleView(user.role),
-          sortable: true
-        }, {
-          name: 'last_sign_in_at',
-          label: t('Users.columns.lastSignIn'),
-          resolve: (user) => DateTimeUtils.getTimestamp(user.last_sign_in_at),
-          sortable: true,
-          hidden: true
-        }, {
+  const columns = useMemo(() => {
+    const baseList = [
+      {
+        name: 'name',
+        label: t('Users.columns.name'),
+        sortable: true
+      }, {
+        name: 'email',
+        label: t('Users.columns.email'),
+        sortable: true
+      }, {
+        name: 'role',
+        label: t('Users.columns.role'),
+        resolve: (user) => UserRoles.getRoleView(user.role),
+        sortable: true
+      }, {
+        name: 'last_sign_in_at',
+        label: t('Users.columns.lastSignIn'),
+        resolve: (user) => DateTimeUtils.getTimestamp(user.last_sign_in_at),
+        sortable: true,
+        hidden: true
+      }
+    ];
+
+    if (provider === 'local') {
+      baseList.push(
+        {
           name: 'last_invited_at',
           label: t('Users.columns.lastInvited'),
           resolve: (user) => DateTimeUtils.getTimestamp(user.last_invited_at),
@@ -122,7 +123,20 @@ const Users: AbstractComponent<any> = () => {
           ),
           sortable: true,
           hidden: true
-        }]}
+        }
+      );
+    }
+
+    return baseList;
+  }, []);
+
+  return (
+    <>
+      <ListTable
+        actions={listTableActions}
+        addButton={addButton}
+        collectionName='users'
+        columns={columns}
         onDelete={(user) => UsersService.delete(user)}
         onLoad={(params) => UsersService.fetchAll(params)}
         searchable
