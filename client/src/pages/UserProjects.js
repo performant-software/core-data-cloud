@@ -3,6 +3,7 @@
 import { ListTable, Toaster } from '@performant-software/semantic-components';
 import React, {
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useState,
@@ -150,6 +151,45 @@ const UserProjects: AbstractComponent<any> = () => {
     return <UnauthorizedRedirect />;
   }
 
+  const actions = useMemo(() => {
+    let list = [
+      {
+        name: 'edit',
+        icon: 'pencil',
+        onClick: (item) => navigate(`${item.id}`)
+      }, {
+        icon: 'times',
+        name: 'delete'
+      }
+    ];
+
+    if (provider === 'local') {
+      list.push(
+        {
+          accept: (item) => canInviteUserProject(item),
+          icon: 'mail outline',
+          name: 'invite',
+          onClick: onInviteUser,
+          popup: {
+            content: t('UserProjects.actions.invite.content'),
+            title: t('UserProjects.actions.invite.header')
+          }
+        }
+      );
+    }
+
+    list.push(
+      {
+        accept: () => !!userId,
+        icon: 'arrow right',
+        name: 'navigate',
+        onClick: (item) => navigate(`/projects/${item.project_id}`)
+      }
+    );
+
+    return list;
+  }, [])
+
   return (
     <>
       { userId && user && (
@@ -168,28 +208,7 @@ const UserProjects: AbstractComponent<any> = () => {
         <UserEditMenu />
       )}
       <ListTable
-        actions={[{
-          name: 'edit',
-          icon: 'pencil',
-          onClick: (item) => navigate(`${item.id}`)
-        }, {
-          icon: 'times',
-          name: 'delete'
-        }, {
-          accept: (item) => canInviteUserProject(item),
-          icon: 'mail outline',
-          name: 'invite',
-          onClick: onInviteUser,
-          popup: {
-            content: t('UserProjects.actions.invite.content'),
-            title: t('UserProjects.actions.invite.header')
-          }
-        }, {
-          accept: () => !!userId,
-          icon: 'arrow right',
-          name: 'navigate',
-          onClick: (item) => navigate(`/projects/${item.project_id}`)
-        }]}
+        actions={actions}
         addButton={{
           basic: false,
           color: 'blue',
