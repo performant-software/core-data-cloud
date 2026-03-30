@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: 263c047db0d1e460e8910f6d85ebcf8045f2cb99
-  tag: v0.1.120
+  revision: c29a4f5d0ac39ecac405b08481dd21db171be081
+  tag: v0.1.121
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 11.0)
@@ -207,9 +207,9 @@ GEM
       net-http (~> 0.5)
     faraday-retry (2.4.0)
       faraday (~> 2.0)
-    ffi (1.17.3-arm64-darwin)
-    ffi (1.17.3-x86_64-darwin)
-    ffi (1.17.3-x86_64-linux-gnu)
+    ffi (1.17.4-arm64-darwin)
+    ffi (1.17.4-x86_64-darwin)
+    ffi (1.17.4-x86_64-linux-gnu)
     globalid (1.1.0)
       activesupport (>= 5.0)
     httparty (0.20.0)
