@@ -1,8 +1,10 @@
 // @flow
 
 import {
+  CertaintyLayer,
   GeoJsonLayer,
   LayerMenu,
+  MapCertaintyControl,
   MapControl,
   MapDraw,
   RasterLayer,
@@ -62,7 +64,7 @@ const PlaceForm = (props: Props) => {
   }, [geocoding]);
 
   /**
-   * Memo-izes the names of the passed place layers.
+   * Memoizes the names of the passed place layers.
    */
   const layerNames = useMemo(() => _.pluck(props.item.place_layers, 'name'), [props.item.place_layers]);
 
@@ -115,7 +117,7 @@ const PlaceForm = (props: Props) => {
 
   /**
    * Sets map geometry data on the item, destroying any existing geometry record
-   * if all geometry is deleted. 
+   * if all geometry is deleted.
    */
   useEffect(() => {
     if (mapData !== null) {
@@ -124,7 +126,12 @@ const PlaceForm = (props: Props) => {
           place_geometry: { id: props.item.place_geometry.id, _destroy: true }
         });
       } else {
-        props.onSetState({ place_geometry: mapData })
+        props.onSetState({
+          place_geometry: {
+            geometry_json: mapData.geometry_json || props.item.place_geometry?.geometry_json,
+            properties: mapData.properties || props.item.place_geometry?.properties
+          }
+        });
       }
     }
   }, [mapData, props.item.place_geometry?.id]);
@@ -134,7 +141,20 @@ const PlaceForm = (props: Props) => {
    *
    * @type {function(*): *}
    */
-  const onMapChange = useCallback((data) => setMapData({ geometry_json: data }), []);
+  const onMapChange = (data) => setMapData({
+    properties: props.item.place_geometry?.properties,
+    geometry_json: data
+  });
+
+  /**
+   * Sets the new map properties on the state.
+   *
+   * @type {function(*): *}
+   */
+  const onPropertiesChange = (data) => setMapData({
+    geometry_json: props.item.place_geometry?.geometry_json,
+    properties: data
+  });
 
   /**
    * Sets the uploaded file as the GeoJSON object.
@@ -246,6 +266,10 @@ const PlaceForm = (props: Props) => {
           WebkitBoxShadow: 'rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px'
         }}
       >
+        <CertaintyLayer
+          geometry={props.item.place_geometry?.geometry_json}
+          certaintyRadius={props.item.place_geometry?.properties?.certainty_radius || 0}
+        />
         <MapControl
           position='bottom-left'
         >
@@ -282,6 +306,10 @@ const PlaceForm = (props: Props) => {
             onSelection={onUpload}
           />
         </MapControl>
+        <MapCertaintyControl
+          data={props.item.place_geometry?.properties}
+          onChange={onPropertiesChange}
+        />
         <LayerMenu
           names={layerNames}
         >

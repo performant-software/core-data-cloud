@@ -34,7 +34,7 @@ class PlaceGeometry extends BaseTransform {
    *
    * @param place
    *
-   * @returns {{place_geometry: (*&{geometry_json: string})}}
+   * @returns {{place_geometry: (*&{geometry_json: string, properties: string})}}
    */
   toPayload(place: PlaceType) {
     const { place_geometry: placeGeometry } = place;
@@ -42,7 +42,8 @@ class PlaceGeometry extends BaseTransform {
     return {
       [this.getParameterName()]: {
         ..._.pick(placeGeometry, this.getPayloadKeys()),
-        geometry_json: JSON.stringify(placeGeometry?.geometry_json)
+        geometry_json: JSON.stringify(placeGeometry?.geometry_json),
+        properties: placeGeometry?.properties
       }
     };
   }
