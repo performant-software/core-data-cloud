@@ -4,7 +4,6 @@ import {
   CertaintyLayer,
   GeoJsonLayer,
   LayerMenu,
-  MapCertaintyControl,
   MapControl,
   MapDraw,
   RasterLayer,
@@ -31,6 +30,7 @@ import PlaceLayerModal from './PlaceLayerModal';
 import PlaceLayerUtils from '../utils/PlaceLayers';
 import PlaceNameModal from './PlaceNameModal';
 import styles from './PlaceForm.module.css';
+import MapCertaintyControl from './MapCertaintyControl';
 
 type Props = EditContainerProps & {
   item: PlaceType
@@ -267,7 +267,7 @@ const PlaceForm = (props: Props) => {
         }}
       >
         <CertaintyLayer
-          geometry={props.item.place_geometry?.geometry_json}
+          geometry={{ geometry: props.item.place_geometry?.geometry_json }}
           certaintyRadius={props.item.place_geometry?.properties?.certainty_radius || 0}
         />
         <MapControl
