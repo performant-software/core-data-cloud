@@ -69,7 +69,7 @@ class Place extends BaseTransform {
   }
 
   /**
-   * Returns the place for POST/PUT requests as a plain Javascript object.
+   * Returns the place for POST/PUT requests as a plain JavaScript object.
    *
    * @param place
    *

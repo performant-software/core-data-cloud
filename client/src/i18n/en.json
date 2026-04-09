@@ -504,7 +504,8 @@
       "location": "Location",
       "names": "Names",
       "polygonMode": "Polygon mode",
-      "pointMode": "Point mode"
+      "pointMode": "Point mode",
+      "certaintyRadius": "Certainty radius (in KM)"
     },
     "placeLayers": {
       "columns": {

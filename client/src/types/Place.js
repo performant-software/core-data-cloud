@@ -16,7 +16,8 @@ export type PlaceName = {
 
 export type PlaceGeometry = {
   id: number,
-  geometry_json: string
+  geometry_json: string,
+  properties: string
 };
 
 export type Place = {

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_10_203200) do
+ActiveRecord::Schema[8.0].define(version: 2026_04_02_204332) do
   create_schema "heroku_ext"
 
   # These are extensions that must be enabled in order to support this database
@@ -180,6 +180,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_10_203200) do
     t.geometry "geometry", limit: {srid: 0, type: "geometry"}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "properties", default: {}
     t.index ["place_id"], name: "index_core_data_connector_place_geometries_on_place_id"
   end
 

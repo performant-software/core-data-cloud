@@ -1,0 +1,21 @@
+.certaintyRadiusControl {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.certaintyRadiusControl .certaintyRadiusInputContainer {
+  margin: 0;
+  height: 20px;
+  position: absolute;
+  left: 40px;
+  top: -2px;
+  width: 100px;
+  background-color: white;
+}
+
+.certaintyRadiusControl > .ui.input {
+  margin: 0;
+}
