@@ -25,14 +25,14 @@ import UserProjectsService from '../services/UserProjects';
 import UsersService from '../services/Users';
 import useParams from '../hooks/ParsedParams';
 import Validation from '../utils/Validation';
-import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
+import useReactRouterEditPage from '../hooks/useReactRouterEditPage';
 import { AuthenticationContext } from '../context/Authentication';
 
 type Props = EditContainerProps & {
   item: UserProjectType
 };
 
-const UserProjectForm = (props: Props) => {
+const UserProject = (props: Props) => {
   const params = useParams();
   const { t } = useTranslation();
   const {
@@ -42,19 +42,37 @@ const UserProjectForm = (props: Props) => {
   } = usePermissions();
   const { provider } = useContext(AuthenticationContext);
 
+  const editPageProps = useReactRouterEditPage({
+    id: 'userProjectId',
+    onInitialize: (id) => (
+      UserProjectsService
+        .fetchOne(id)
+        .then(({ data }) => data.user_project)
+    ),
+    onSave: (userProject) => (
+      UserProjectsService
+        .save(userProject)
+        .then(({ data }) => data.user_project)
+    ),
+    required: ['project_id', 'role'],
+    resolveValidationError: Validation.resolveUpdateError
+  });
+
+  const { item, onSetState } = editPageProps;
+
   /**
    * Memo-izes whether we're on a new record.
    *
    * @type {boolean}
    */
-  const isNew = useMemo(() => !props.item.id, [props.item.id]);
+  const isNew = useMemo(() => !item.id, [item.id]);
 
   /**
    * Memo-izes if the current user is an owner of the current project.
    *
    * @type {boolean}
    */
-  const isOwner = useMemo(() => isOwnerPermission(props.item.project_id), [isOwnerPermission, props.item.project_id]);
+  const isOwner = useMemo(() => isOwnerPermission(item.project_id), [isOwnerPermission, item.project_id]);
 
   /**
    * Callback fired when the project search is executed.
@@ -74,11 +92,11 @@ const UserProjectForm = (props: Props) => {
    * For a new record, set the foreign key ID based on the route parameters.
    */
   useEffect(() => {
-    if (!props.item.id) {
+    if (!item.id) {
       if (params.projectId) {
-        props.onSetState({ project_id: params.projectId });
+        onSetState({ project_id: params.projectId });
       } else if (params.userId) {
-        props.onSetState({ user_id: params.userId });
+        onSetState({ user_id: params.userId });
       }
     }
   }, []);
@@ -123,7 +141,7 @@ const UserProjectForm = (props: Props) => {
               label: t('UserProject.labels.allUsers'),
               url: `/projects/${params.projectId}/user_projects`
             }}
-            name={props.item.user?.name}
+            name={item.user?.name}
           />
         )}
         { params.userId && (
@@ -132,36 +150,37 @@ const UserProjectForm = (props: Props) => {
               label: t('UserProject.labels.allProjects'),
               url: `/users/${params.userId}/user_projects`
             }}
-            name={props.item.project?.name}
+            name={item.project?.name}
           />
         )}
       </ItemLayout.Header>
       <ItemLayout.Content>
         <SimpleEditPage
           {...props}
+          {...editPageProps}
         >
           <SimpleEditPage.Tab
             key='default'
           >
             { canEditUsers() && params.userId && (
               <Form.Input
-                error={props.isError('project_id')}
+                error={editPageProps.isError('project_id')}
                 label={t('UserProject.labels.project')}
                 required
               >
                 <AssociatedDropdown
                   collectionName='projects'
                   onSearch={onProjectSearch}
-                  onSelection={props.onAssociationInputChange.bind(this, 'project_id', 'project')}
+                  onSelection={editPageProps.onAssociationInputChange.bind(this, 'project_id', 'project')}
                   renderOption={(project) => Project.toDropdown(project)}
-                  searchQuery={props.item.project?.name}
-                  value={props.item.project_id}
+                  searchQuery={item.project?.name}
+                  value={item.project_id}
                 />
               </Form.Input>
             )}
             { canEditUsers() && params.projectId && (
               <Form.Input
-                error={props.isError('user_id')}
+                error={editPageProps.isError('user_id')}
                 label={t('UserProject.labels.user')}
                 required
               >
@@ -169,28 +188,29 @@ const UserProjectForm = (props: Props) => {
                   collectionName='users'
                   modal={modal}
                   onSearch={onUserSearch}
-                  onSelection={props.onAssociationInputChange.bind(this, 'user_id', 'user')}
+                  onSelection={editPageProps.onAssociationInputChange.bind(this, 'user_id', 'user')}
                   renderOption={(user) => User.toDropdown(user)}
-                  searchQuery={props.item.user?.name}
-                  value={props.item.user_id}
+                  searchQuery={item.user?.name}
+                  value={item.user_id}
                 />
               </Form.Input>
             )}
             { !canEditUsers() && isOwner && isNew && (
               <UserForm
                 {...props}
+                {...editPageProps}
                 isNew
               />
             )}
             <Form.Dropdown
-              error={props.isError('role')}
+              error={editPageProps.isError('role')}
               label={t('UserProject.labels.role')}
-              onChange={props.onTextInputChange.bind(this, 'role')}
+              onChange={editPageProps.onTextInputChange.bind(this, 'role')}
               options={UserProjectRoles.getRoleOptions()}
-              required={props.isRequired('role')}
+              required={editPageProps.isRequired('role')}
               selection
               selectOnBlur={false}
-              value={props.item.role}
+              value={item.role}
             />
           </SimpleEditPage.Tab>
         </SimpleEditPage>
@@ -198,21 +218,5 @@ const UserProjectForm = (props: Props) => {
     </ItemLayout>
   );
 };
-
-const UserProject: AbstractComponent<any> = withReactRouterEditPage(UserProjectForm, {
-  id: 'userProjectId',
-  onInitialize: (id) => (
-    UserProjectsService
-      .fetchOne(id)
-      .then(({ data }) => data.user_project)
-  ),
-  onSave: (userProject) => (
-    UserProjectsService
-      .save(userProject)
-      .then(({ data }) => data.user_project)
-  ),
-  required: ['project_id', 'role'],
-  resolveValidationError: Validation.resolveUpdateError.bind(this)
-});
 
 export default UserProject;

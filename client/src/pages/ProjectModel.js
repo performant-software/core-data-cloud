@@ -39,7 +39,7 @@ import ProjectModelsUtils from '../utils/ProjectModels';
 import ProjectsService from '../services/Projects';
 import styles from './ProjectModel.module.css';
 import useParams from '../hooks/ParsedParams';
-import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
+import useReactRouterEditPage from '../hooks/useReactRouterEditPage';
 
 const INVERSE_RELATIONSHIP_KEY = 'inverse_project_model_relationships';
 const RELATIONSHIP_KEY = 'project_model_relationships';
@@ -48,7 +48,7 @@ type Props = EditContainerProps & {
   item: ProjectModelType
 };
 
-const ProjectModelForm = (props: Props) => {
+const ProjectModel = (props: Props) => {
   const [accessModal, setAccessModal] = useState(false);
   const [shareModal, setShareModal] = useState(false);
 
@@ -57,6 +57,24 @@ const ProjectModelForm = (props: Props) => {
   const { t } = useTranslation();
 
   const { setReloadProjectModels } = useContext(ProjectContext);
+
+  const editPageProps = useReactRouterEditPage({
+    id: 'projectModelId',
+    onInitialize: (id) => (
+      ProjectModelsService
+        .fetchOne(id)
+        .then(({ data }) => data.project_model)
+    ),
+    onSave: (projectModel) => (
+      ProjectModelsService
+        .save(projectModel)
+        .then(({ data }) => data.project_model)
+    ),
+    required: ['model_class', 'name'],
+    resolveValidationError: ProjectModelsUtils.resolveValidationError
+  });
+
+  const { item, onSetState } = editPageProps;
 
   /**
    * Returns the model name for the passed relationship based on context.
@@ -92,9 +110,9 @@ const ProjectModelForm = (props: Props) => {
    */
   const onSaveRelationship = useCallback((relationship) => {
     const association = relationship.inverse ? INVERSE_RELATIONSHIP_KEY : RELATIONSHIP_KEY;
-    props.onSaveChildAssociation(association, relationship);
-    props.onSaveChildAssociation('all_project_model_relationships', relationship);
-  }, []);
+    editPageProps.onSaveChildAssociation(association, relationship);
+    editPageProps.onSaveChildAssociation('all_project_model_relationships', relationship);
+  }, [editPageProps.onSaveChildAssociation]);
 
   /**
    * Deletes the passed relationship from the appropriate collection.
@@ -103,9 +121,9 @@ const ProjectModelForm = (props: Props) => {
    */
   const onDeleteRelationship = useCallback((relationship) => {
     const association = relationship.inverse ? INVERSE_RELATIONSHIP_KEY : RELATIONSHIP_KEY;
-    props.onDeleteChildAssociation(association, relationship);
-    props.onDeleteChildAssociation('all_project_model_relationships', relationship);
-  }, []);
+    editPageProps.onDeleteChildAssociation(association, relationship);
+    editPageProps.onDeleteChildAssociation('all_project_model_relationships', relationship);
+  }, [editPageProps.onDeleteChildAssociation]);
 
   /**
    * If we've saved the record, reload project models.
@@ -120,8 +138,8 @@ const ProjectModelForm = (props: Props) => {
    * For a new record, set the foreign key ID based on the route parameters.
    */
   useEffect(() => {
-    if (!props.item.id && projectId) {
-      props.onSetState({ project_id: projectId });
+    if (!item.id && projectId) {
+      onSetState({ project_id: projectId });
     }
   }, []);
 
@@ -133,12 +151,13 @@ const ProjectModelForm = (props: Props) => {
             label: t('ProjectModel.labels.all'),
             url: `/projects/${projectId}/project_models`
           }}
-          name={props.item.name}
+          name={item.name}
         />
       </ItemLayout.Header>
       <ItemLayout.Content>
         <SimpleEditPage
           {...props}
+          {...editPageProps}
           className={styles.projectModel}
         >
           <SimpleEditPage.Tab
@@ -146,37 +165,37 @@ const ProjectModelForm = (props: Props) => {
             name={t('ProjectModel.tabs.details')}
           >
             <Form.Input
-              error={props.isError('model_class')}
+              error={editPageProps.isError('model_class')}
               label={t('ProjectModel.labels.type')}
-              required={props.isRequired('model_class')}
+              required={editPageProps.isRequired('model_class')}
             >
               <ModelClassDropdown
                 fluid
-                onChange={props.onTextInputChange.bind(this, 'model_class')}
-                value={props.item.model_class}
+                onChange={editPageProps.onTextInputChange.bind(this, 'model_class')}
+                value={item.model_class}
               />
             </Form.Input>
             <Form.Input
-              error={props.isError('name')}
+              error={editPageProps.isError('name')}
               label={t('ProjectModel.labels.name')}
-              required={props.isRequired('name')}
-              onChange={props.onTextInputChange.bind(this, 'name')}
-              value={props.item.name || ''}
+              required={editPageProps.isRequired('name')}
+              onChange={editPageProps.onTextInputChange.bind(this, 'name')}
+              value={item.name || ''}
             />
             <Form.Input
-              error={props.isError('order')}
+              error={editPageProps.isError('order')}
               label={t('ProjectModel.labels.order')}
-              required={props.isRequired('order')}
-              onChange={props.onTextInputChange.bind(this, 'order')}
+              required={editPageProps.isRequired('order')}
+              onChange={editPageProps.onTextInputChange.bind(this, 'order')}
               type='number'
-              value={props.item.order || 0}
+              value={item.order || 0}
             />
             <Form.Checkbox
-              checked={props.item.allow_identifiers}
-              error={props.isError('allow_identifiers')}
+              checked={item.allow_identifiers}
+              error={editPageProps.isError('allow_identifiers')}
               label={t('ProjectModel.labels.allowIdentifiers')}
-              onChange={props.onCheckboxInputChange.bind(this, 'allow_identifiers')}
-              required={props.isRequired('allow_identifiers')}
+              onChange={editPageProps.onCheckboxInputChange.bind(this, 'allow_identifiers')}
+              required={editPageProps.isRequired('allow_identifiers')}
             />
           </SimpleEditPage.Tab>
           <SimpleEditPage.Tab
@@ -197,12 +216,12 @@ const ProjectModelForm = (props: Props) => {
                 location: 'top'
               }}
               defaults={{
-                table_name: props.item.model_class
+                table_name: item.model_class
               }}
               excludeColumns={['table_name', 'uuid']}
-              items={props.item.user_defined_fields}
-              onDelete={props.onDeleteChildAssociation.bind(this, 'user_defined_fields')}
-              onSave={props.onSaveChildAssociation.bind(this, 'user_defined_fields')}
+              items={item.user_defined_fields}
+              onDelete={editPageProps.onDeleteChildAssociation.bind(this, 'user_defined_fields')}
+              onSave={editPageProps.onSaveChildAssociation.bind(this, 'user_defined_fields')}
             />
           </SimpleEditPage.Tab>
           <SimpleEditPage.Tab
@@ -242,7 +261,7 @@ const ProjectModelForm = (props: Props) => {
                 label: t('Common.columns.uuid'),
                 hidden: true
               }]}
-              items={props.item.all_project_model_relationships}
+              items={item.all_project_model_relationships}
               modal={{
                 component: ProjectModelRelationshipModal
               }}
@@ -266,7 +285,7 @@ const ProjectModelForm = (props: Props) => {
                   size='1rem'
                 />
               </Icon>
-              { t('ProjectModel.accesses.message', { name: props.item.name }) }
+              { t('ProjectModel.accesses.message', { name: item.name }) }
             </Message>
             <EmbeddedList
               actions={[{
@@ -284,9 +303,9 @@ const ProjectModelForm = (props: Props) => {
                 label: t('ProjectModel.accesses.columns.name'),
                 resolve: (projectModelAccess) => projectModelAccess.project?.name
               }]}
-              items={props.item.project_model_accesses}
-              onDelete={props.onDeleteChildAssociation.bind(this, 'project_model_accesses')}
-              onSave={props.onSaveChildAssociation.bind(this, 'project_model_accesses')}
+              items={item.project_model_accesses}
+              onDelete={editPageProps.onDeleteChildAssociation.bind(this, 'project_model_accesses')}
+              onSave={editPageProps.onSaveChildAssociation.bind(this, 'project_model_accesses')}
             />
             { accessModal && (
               <Selectize
@@ -295,14 +314,14 @@ const ProjectModelForm = (props: Props) => {
                 onLoad={(params) => ProjectsService.fetchAll({
                   ...params,
                   discoverable: true,
-                  project_id: props.item.project_id,
+                  project_id: item.project_id,
                   sort_by: 'name'
                 })}
                 onSave={(projects) => {
-                  const find = (project) => _.findWhere(props.item.project_model_accesses, { project_id: project.id });
+                  const find = (project) => _.findWhere(item.project_model_accesses, { project_id: project.id });
                   const create = (project) => ({ uid: uuid(), project_id: project.id, project });
 
-                  props.onMultiAddChildAssociations(
+                  editPageProps.onMultiAddChildAssociations(
                     'project_model_accesses',
                     _.map(projects, (project) => find(project) || create(project))
                   );
@@ -310,7 +329,7 @@ const ProjectModelForm = (props: Props) => {
                   setAccessModal(false);
                 }}
                 renderItem={(project) => project.name}
-                selectedItems={_.pluck(props.item.project_model_accesses, 'project')}
+                selectedItems={_.pluck(item.project_model_accesses, 'project')}
                 title={t('ProjectModel.accesses.title')}
                 width='60%'
               />
@@ -332,7 +351,7 @@ const ProjectModelForm = (props: Props) => {
                   size='1rem'
                 />
               </Icon>
-              { t('ProjectModel.shares.message', { name: props.item.name }) }
+              { t('ProjectModel.shares.message', { name: item.name }) }
             </Message>
             <EmbeddedList
               actions={[{
@@ -354,9 +373,9 @@ const ProjectModelForm = (props: Props) => {
                 label: t('ProjectModel.shares.columns.modelName'),
                 resolve: (projectModelShare) => projectModelShare.project_model_access?.project_model?.name
               }]}
-              items={props.item.project_model_shares}
-              onDelete={props.onDeleteChildAssociation.bind(this, 'project_model_shares')}
-              onSave={props.onSaveChildAssociation.bind(this, 'project_model_shares')}
+              items={item.project_model_shares}
+              onDelete={editPageProps.onDeleteChildAssociation.bind(this, 'project_model_shares')}
+              onSave={editPageProps.onSaveChildAssociation.bind(this, 'project_model_shares')}
             />
             { shareModal && (
               <Selectize
@@ -364,15 +383,15 @@ const ProjectModelForm = (props: Props) => {
                 onClose={() => setShareModal(false)}
                 onLoad={(params) => ProjectModelAccessesService.fetchAll({
                   ...params,
-                  project_id: props.item.project_id,
-                  model_class: props.item.model_class,
+                  project_id: item.project_id,
+                  model_class: item.model_class,
                   sort_by: [
                     'core_data_connector_projects.name',
                     'core_data_connector_project_models.name'
                   ]
                 })}
                 onSave={(projectModelAccesses) => {
-                  const find = (projectModelAccess) => _.findWhere(props.item.project_model_shares, {
+                  const find = (projectModelAccess) => _.findWhere(item.project_model_shares, {
                     project_model_access_id: projectModelAccess.id
                   });
 
@@ -382,7 +401,7 @@ const ProjectModelForm = (props: Props) => {
                     project_model_access: projectModelAccess
                   });
 
-                  props.onMultiAddChildAssociations(
+                  editPageProps.onMultiAddChildAssociations(
                     'project_model_shares',
                     _.map(
                       projectModelAccesses,
@@ -398,7 +417,7 @@ const ProjectModelForm = (props: Props) => {
                     subheader={projectModelAccess.project_model.name}
                   />
                 )}
-                selectedItems={_.pluck(props.item.project_model_shares, 'project_model_access')}
+                selectedItems={_.pluck(item.project_model_shares, 'project_model_access')}
                 title={t('ProjectModel.shares.title')}
                 width='60%'
               />
@@ -409,21 +428,5 @@ const ProjectModelForm = (props: Props) => {
     </ItemLayout>
   );
 };
-
-const ProjectModel = withReactRouterEditPage(ProjectModelForm, {
-  id: 'projectModelId',
-  onInitialize: (id) => (
-    ProjectModelsService
-      .fetchOne(id)
-      .then(({ data }) => data.project_model)
-  ),
-  onSave: (projectModel) => (
-    ProjectModelsService
-      .save(projectModel)
-      .then(({ data }) => data.project_model)
-  ),
-  required: ['model_class', 'name'],
-  resolveValidationError: ProjectModelsUtils.resolveValidationError.bind(this)
-});
 
 export default ProjectModel;
