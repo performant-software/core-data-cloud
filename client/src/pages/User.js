@@ -13,17 +13,40 @@ import UserPassword from '../components/UserPassword';
 import UserUtils from '../utils/User';
 import UsersService from '../services/Users';
 import { useTranslation } from 'react-i18next';
-import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
+import useReactRouterEditPage from '../hooks/useReactRouterEditPage';
 
 type Props = EditContainerProps & {
   item: UserType,
   isNew?: boolean
 };
 
-const UserFormComponent = (props: Props) => {
+const User = (props: Props) => {
   const { t } = useTranslation();
   const { canEditUsers, isSSO } = usePermissions();
-  const isNew = props.isNew || !props.item.id;
+
+  const editPageProps = useReactRouterEditPage({
+    id: 'userId',
+    onInitialize: (id) => (
+      UsersService
+        .fetchOne(id)
+        .then(({ data }) => data.user)
+    ),
+    onSave: (user) => (
+      UsersService
+        .save(user)
+        .then(({ data }) => data.user)
+    ),
+    required: ['name', 'email', 'role'],
+    validate: (user) => {
+      if (user.id && (user.password || user.password_confirmation)) {
+        return UserUtils.validatePassword(user);
+      }
+      return null;
+    }
+  });
+
+  const { item } = editPageProps;
+  const isNew = props.isNew || !item.id;
 
   if (!canEditUsers()) {
     return <UnauthorizedRedirect />;
@@ -36,22 +59,25 @@ const UserFormComponent = (props: Props) => {
           label: t('User.labels.allUsers'),
           url: '/users'
         }}
-        name={isNew ? t('User.labels.inviteUser') : props.item.name}
+        name={isNew ? t('User.labels.inviteUser') : item.name}
       />
       <UserEditMenu />
       <SimpleEditPage
         {...props}
+        {...editPageProps}
       >
         <SimpleEditPage.Tab
           key='default'
         >
           <UserForm
             {...props}
+            {...editPageProps}
             isNew={isNew}
           />
           { !isNew && !isSSO() && (
             <UserPassword
               {...props}
+              {...editPageProps}
             />
           )}
         </SimpleEditPage.Tab>
@@ -59,26 +85,5 @@ const UserFormComponent = (props: Props) => {
     </>
   );
 };
-
-const User: AbstractComponent<any> = withReactRouterEditPage(UserFormComponent, {
-  id: 'userId',
-  onInitialize: (id) => (
-    UsersService
-      .fetchOne(id)
-      .then(({ data }) => data.user)
-  ),
-  onSave: (user) => (
-    UsersService
-      .save(user)
-      .then(({ data }) => data.user)
-  ),
-  required: ['name', 'email', 'role'],
-  validate: (user) => {
-    if (user.id && (user.password || user.password_confirmation)) {
-      return UserUtils.validatePassword(user);
-    }
-    return null;
-  }
-});
 
 export default User;

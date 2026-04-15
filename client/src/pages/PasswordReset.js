@@ -9,15 +9,33 @@ import SessionService from '../services/Session';
 import UserPassword from '../components/UserPassword';
 import UsersService from '../services/Users';
 import UserUtils from '../utils/User';
-import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
+import useReactRouterEditPage from '../hooks/useReactRouterEditPage';
 import { AuthenticationContext } from '../context/Authentication';
 
-const PasswordResetForm = (props) => {
+const PasswordReset = (props) => {
   const [toaster, setToaster] = useState(SessionService.isPasswordChangeRequired());
 
   const { t } = useTranslation();
   const { user } = useContext(AuthenticationContext);
   const { canResetPassword } = usePermissions();
+
+  const editPageProps = useReactRouterEditPage({
+    afterSave: (navigate) => (
+      SessionService
+        .reset()
+        .then(() => navigate('/projects', { state: { saved: true } }))
+    ),
+    onSave: (user) => {
+      const { user: currentUser } = SessionService.getSession();
+      const { id } = currentUser;
+
+      return UsersService
+        .save({ ...user, id })
+        .then(({ data }) => data.user);
+    },
+    required: ['password', 'password_confirmation'],
+    validate: UserUtils.validatePassword
+  });
 
   /**
    * Navigate to the projects list if the current user does not have permissions to reset passwords.
@@ -42,12 +60,14 @@ const PasswordResetForm = (props) => {
       />
       <SimpleEditPage
         {...props}
+        {...editPageProps}
       >
         <SimpleEditPage.Tab
           key='default'
         >
           <UserPassword
             {...props}
+            {...editPageProps}
             autoFocus
           />
         </SimpleEditPage.Tab>
@@ -67,23 +87,5 @@ const PasswordResetForm = (props) => {
     </>
   );
 };
-
-const PasswordReset = withReactRouterEditPage(PasswordResetForm, {
-  afterSave: (navigate) => (
-    SessionService
-      .reset()
-      .then(() => navigate('/projects', { state: { saved: true } }))
-  ),
-  onSave: (user) => {
-    const { user: currentUser } = SessionService.getSession();
-    const { id } = currentUser;
-
-    return UsersService
-      .save({ ...user, id })
-      .then(({ data }) => data.user);
-  },
-  required: ['password', 'password_confirmation'],
-  validate: UserUtils.validatePassword.bind(this)
-});
 
 export default PasswordReset;
