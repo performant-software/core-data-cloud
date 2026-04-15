@@ -80,7 +80,7 @@ const Component = (props: ComponentProps) => {
     if (props.saved) {
       setSaved(true);
     }
-  }, []);
+  }, [props.saved]);
 
   return (
     <ItemLayoutContext.Provider

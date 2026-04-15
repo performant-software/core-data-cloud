@@ -1,6 +1,6 @@
 // @flow
 
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import _ from 'underscore';
 import useEditPage from './useEditPage';
@@ -21,13 +21,22 @@ const useReactRouterEditPage = (config: Config) => {
   const navigate = useNavigate();
   const params = useParams();
 
+  const { state } = location;
+  const { saved: initialSavedState, tab: defaultTab } = state || {};
+
+  const [saved, setSaved] = useState(initialSavedState);
+
+  const timeoutRef = useRef();
+
+  useEffect(() => {
+    timeoutRef.current = setTimeout(() => setSaved(false), 1000);
+    return () => clearTimeout(timeoutRef.current);
+  }, [saved]);
+
   const { pathname } = location;
   const url = pathname.substring(0, pathname.lastIndexOf('/'));
 
   const id = params[config.id];
-
-  const { state } = location;
-  const { saved, tab: defaultTab } = state || {};
 
   /**
    * After save, navigate to the newly created record. We'll also add the "saved" attribute to indicate a message
@@ -40,11 +49,13 @@ const useReactRouterEditPage = (config: Config) => {
       return config.afterSave(navigate, item);
     }
 
+    setSaved(true);
+
     if (config.afterSave && _.isString(config.afterSave)) {
-      return navigate(config.afterSave, { state: { saved: true }, replace: true });
+      return navigate(config.afterSave, { state: { saved: true } });
     }
 
-    return navigate(`${url}/${item.id}`, { state: { saved: true }, replace: true });
+    return navigate(`${url}/${item.id}`, { state: { saved: true } });
   }, [navigate, url, config.afterSave]);
 
   /**
