@@ -7,18 +7,14 @@ import {
   MapControl,
   MapDraw,
   RasterLayer,
-  WarpedImageLayer
+  WarpedImageLayer,
+  Map as MapUtils
 } from '@performant-software/geospatial';
 import { BooleanIcon, EmbeddedList, FileInputButton } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import { UserDefinedFieldsForm } from '@performant-software/user-defined-fields';
 import cx from 'classnames';
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaMapPin } from 'react-icons/fa';
 import { PiPolygonBold } from 'react-icons/pi';
@@ -167,6 +163,20 @@ const PlaceForm = (props: Props) => {
       .then((json) => props.onSetState({ place_geometry: { geometry_json: json } }));
   }, []);
 
+  const data = useMemo(() => {
+    if (props.item.place_geometry?.geometry_json) {
+      const certaintyRadius = props.item.place_geometry?.properties?.certainty_radius || 0;
+      return MapUtils.toCertaintyCircle({ geometry: props.item.place_geometry.geometry_json }, certaintyRadius);
+    } else {
+      return {};
+    }
+  }, [props.item]);
+
+  console.log('input')
+  console.log(props.item.place_geometry?.geometry_json)
+  console.log('output')
+  console.log(data)
+
   return (
     <Form
       className={styles.placeForm}
@@ -266,10 +276,12 @@ const PlaceForm = (props: Props) => {
           WebkitBoxShadow: 'rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px'
         }}
       >
-        <CertaintyLayer
-          geometry={{ geometry: props.item.place_geometry?.geometry_json }}
-          certaintyRadius={props.item.place_geometry?.properties?.certainty_radius || 0}
-        />
+        { props.item.place_geometry?.geometry_json && (
+          <CertaintyLayer
+            geometry={{ geometry: props.item.place_geometry?.geometry_json }}
+            certaintyRadius={props.item.place_geometry?.properties?.certainty_radius || 0}
+          />
+        )}
         <MapControl
           position='bottom-left'
         >
