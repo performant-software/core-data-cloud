@@ -152,6 +152,14 @@ const Project = (props: Props) => {
             value={item.faircopy_cloud_url || ''}
           />
           <Form.Input
+            error={editPageProps.isError('faircopy_cloud_project_id')}
+            label={t('Project.labels.fairCopyCloudProjectId')}
+            required={editPageProps.isRequired('faircopy_cloud_project_id')}
+            onChange={editPageProps.onTextInputChange.bind(this, 'faircopy_cloud_project_id')}
+            type='number'
+            value={item.faircopy_cloud_project_id}
+          />
+          <Form.Input
             error={editPageProps.isError('faircopy_cloud_project_model_id')}
             label={t('Project.labels.faircopyCloudConnectedModel')}
             required={editPageProps.isRequired('faircopy_cloud_project_model_id')}

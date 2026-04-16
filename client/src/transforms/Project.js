@@ -28,6 +28,7 @@ class Project extends BaseTransform {
       'description',
       'discoverable',
       'faircopy_cloud_url',
+      'faircopy_cloud_project_id',
       'faircopy_cloud_project_model_id',
       'map_library_url',
       'archived',
