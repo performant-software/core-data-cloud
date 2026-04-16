@@ -7,8 +7,7 @@ import {
   MapControl,
   MapDraw,
   RasterLayer,
-  WarpedImageLayer,
-  Map as MapUtils
+  WarpedImageLayer
 } from '@performant-software/geospatial';
 import { BooleanIcon, EmbeddedList, FileInputButton } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
@@ -162,20 +161,6 @@ const PlaceForm = (props: Props) => {
       .then((text) => JSON.parse(text))
       .then((json) => props.onSetState({ place_geometry: { geometry_json: json } }));
   }, []);
-
-  const data = useMemo(() => {
-    if (props.item.place_geometry?.geometry_json) {
-      const certaintyRadius = props.item.place_geometry?.properties?.certainty_radius || 0;
-      return MapUtils.toCertaintyCircle({ geometry: props.item.place_geometry.geometry_json }, certaintyRadius);
-    } else {
-      return {};
-    }
-  }, [props.item]);
-
-  console.log('input')
-  console.log(props.item.place_geometry?.geometry_json)
-  console.log('output')
-  console.log(data)
 
   return (
     <Form
