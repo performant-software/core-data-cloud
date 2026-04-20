@@ -55,7 +55,7 @@ const useEditContainer = (options: Options) => {
   }, []);
 
   useEffect(() => {
-    if (itemProp && !_.isEqual(itemProp, originalItem)) {
+    if (itemProp && !ObjectUtils.isEqual(itemProp, originalItem)) {
       setItem(itemProp);
       setOriginalItem(itemProp);
     }
