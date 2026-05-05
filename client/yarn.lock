@@ -1099,20 +1099,20 @@
     flow-remove-types "^2.158.0"
     rollup-pluginutils "^2.8.2"
 
-"@clerk/react@^6.3.0":
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/@clerk/react/-/react-6.3.0.tgz#af146c18fe777e904dc84dc99ee555ccb7a13ccb"
-  integrity sha512-etqEqdP5WlVn1Bb1NF2Drgvn3UzBSXmrkKtluObTQeqOoCsTO0uFv40oDi7QBs9WQWY1tvavI5aIHzY+uHKcdw==
+"@clerk/react@^6.4.7":
+  version "6.4.7"
+  resolved "https://registry.yarnpkg.com/@clerk/react/-/react-6.4.7.tgz#9681968d69afb6f7ee0a035a9f8fe813d6e3f7d7"
+  integrity sha512-wVF4u1vGwjitB6P8AXy4FiydiqyEM0X5EYCWJvi6kfpXS6jrLLdr5tPjZ9tPCq3GKGs/Gub3QHue2MLMAmEsQw==
   dependencies:
-    "@clerk/shared" "^4.7.0"
+    "@clerk/shared" "^4.8.7"
     tslib "2.8.1"
 
-"@clerk/shared@^4.7.0":
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/@clerk/shared/-/shared-4.7.0.tgz#b442a734d937fcc6d89441e0df4e741a103ac4bd"
-  integrity sha512-pm2dpxHS2teY87jmpatprG2uBAuuXuHHWvuezL3a5pRoUiIWXgWlLvwRZRgKXwDeIkIT9UCAIQBkcjueSEzqHA==
+"@clerk/shared@^4.8.7":
+  version "4.8.7"
+  resolved "https://registry.yarnpkg.com/@clerk/shared/-/shared-4.8.7.tgz#3cc0cf160fc21ddf6e179ad8261fc397528d040a"
+  integrity sha512-rnQnsYy4Rb4WPEmVCF4CLmIn1359SP17IAH7fDqWc3agaOcEaP/iQPSxmC9PMuzVBA7S+LtfO/dGH2dLOczsTQ==
   dependencies:
-    "@tanstack/query-core" "5.90.16"
+    "@tanstack/query-core" "^5.100.6"
     dequal "2.0.3"
     glob-to-regexp "0.4.1"
     js-cookie "3.0.5"
@@ -1846,10 +1846,10 @@
     remark-rehype "^11.1.0"
     unified "^11.0.4"
 
-"@performant-software/geospatial@^3.1.17":
-  version "3.1.17"
-  resolved "https://registry.yarnpkg.com/@performant-software/geospatial/-/geospatial-3.1.17.tgz#7ef6dc4663a7e6b4333a5fa3d9a836ef00b360a6"
-  integrity sha512-kfb3DC5KV6AaE85whW1c15UXdRlacbLeyhhzxBsh64YHORORuIvKF4MKOTO9nQzcjwuuDDkWhuIg9oVWTsefEg==
+"@performant-software/geospatial@^3.1.18":
+  version "3.1.18"
+  resolved "https://registry.yarnpkg.com/@performant-software/geospatial/-/geospatial-3.1.18.tgz#622b719ba549c0587813e03268db158f9e027b9f"
+  integrity sha512-3S2Fpy7qXJH+dPEq2LSUyMhYMa+cq9ObwswQSyedJd+tseDklx7QVrRgh8z8oHG9YBp4Ie/vTyADwuG2u2caPw==
   dependencies:
     "@allmaps/maplibre" "^1.0.0-beta.25"
     "@mapbox/mapbox-gl-draw" "1.4.3"
@@ -1861,10 +1861,10 @@
     react-map-gl "^8.0.4"
     underscore "^1.13.7"
 
-"@performant-software/semantic-components@^3.1.17":
-  version "3.1.17"
-  resolved "https://registry.yarnpkg.com/@performant-software/semantic-components/-/semantic-components-3.1.17.tgz#9aeede214994dc5dd802743671623251e2d92235"
-  integrity sha512-D8nCVALu91lM+YAu6zUpDHX9shhxJjUhkD/qmKPhaOgYhzsOGUzy72wuUYRcNu1Y1MTx14d1f09K/qeBAEcmaA==
+"@performant-software/semantic-components@^3.1.18":
+  version "3.1.18"
+  resolved "https://registry.yarnpkg.com/@performant-software/semantic-components/-/semantic-components-3.1.18.tgz#ee39fd2c1bb3267cf6d51082d1d86ad2e9b154b3"
+  integrity sha512-NiNIEnYAGhdQyev0KXw3GAWLIfX+UVOamCY3neRwwrynO33YDYw7HHmoGo/A2NLR9xmCskChCN5kYpYVTAW+/A==
   dependencies:
     "@react-google-maps/api" "^2.20.7"
     axios "^1.10.0"
@@ -1882,10 +1882,10 @@
     zotero-api-client "^0.40.0"
     zotero-translation-client "^5.0.1"
 
-"@performant-software/shared-components@^3.1.17":
-  version "3.1.17"
-  resolved "https://registry.yarnpkg.com/@performant-software/shared-components/-/shared-components-3.1.17.tgz#f57880443a40b72f2ce415ac6a641b2bcfd8e108"
-  integrity sha512-LMXFiUHKmjX223aWqiui+wRzGuLPhPw6hS2YbPudfE+2Fx0jhoMfq0Ks4tMXmhgfdms7bNw8XAfyD+OG6CEGDg==
+"@performant-software/shared-components@^3.1.18":
+  version "3.1.18"
+  resolved "https://registry.yarnpkg.com/@performant-software/shared-components/-/shared-components-3.1.18.tgz#f013d9ef85eef44cecb7e0773bcf211de18eae7c"
+  integrity sha512-oaf5HRhHduViWwi1uZI+2No7P3852mMdfvBufJeMOmGuDyQoWru+3egeeQLCDIWgPORVmAkJYN2rGam01FjUug==
   dependencies:
     "@rails/activestorage" "^8.0.201"
     "@react-google-maps/api" "^2.20.7"
@@ -1901,10 +1901,10 @@
     underscore "^1.13.7"
     zotero-translation-client "^5.0.1"
 
-"@performant-software/user-defined-fields@^3.1.17":
-  version "3.1.17"
-  resolved "https://registry.yarnpkg.com/@performant-software/user-defined-fields/-/user-defined-fields-3.1.17.tgz#95b5a58151f3f61a1f4ab5f018fd8b06f4b87e3c"
-  integrity sha512-3U4bWTIvvfAZvVce4ue3xIQrJOJ/nU4mFsAYxKltBll65ZTL6I1LZ3yadVE2UTGirUKPwjzIh7UbwM9u4nZdfw==
+"@performant-software/user-defined-fields@^3.1.18":
+  version "3.1.18"
+  resolved "https://registry.yarnpkg.com/@performant-software/user-defined-fields/-/user-defined-fields-3.1.18.tgz#0da4115df0620f90dde98987759d566131f50ac2"
+  integrity sha512-nm8oUW2lRHzs0IfGirIRzBZHq9msyPSp9R/Gb47i4rnYKIVe1l2wfKRfZD96Bt+95TpZiEHW6s4gX7RLNdoU7A==
   dependencies:
     i18next "^25.3.2"
     semantic-ui-react "^2.1.5"
@@ -2569,10 +2569,10 @@
   resolved "https://registry.yarnpkg.com/@stitches/react/-/react-1.2.8.tgz#954f8008be8d9c65c4e58efa0937f32388ce3a38"
   integrity sha512-9g9dWI4gsSVe8bNLlb+lMkBYsnIKCZTmvqvDG+Avnn69XfmHZKiaMrx7cgTaddq7aTPPmXiTsbFcUy0xgI4+wA==
 
-"@tanstack/query-core@5.90.16":
-  version "5.90.16"
-  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.90.16.tgz#19a972c2ffbc47727ab6649028af1bee70e28cdf"
-  integrity sha512-MvtWckSVufs/ja463/K4PyJeqT+HMlJWtw6PrCpywznd2NSgO3m4KwO9RqbFqGg6iDE8vVMFWMeQI4Io3eEYww==
+"@tanstack/query-core@^5.100.6":
+  version "5.100.7"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.100.7.tgz#dbdc082b803824edac7caf5a787dc3ba01c35459"
+  integrity sha512-5R7i6ENJLhVeeJrrUz7jKBXUXv/BJrxf9FQJSkR13bPrb3zOcE8A0Z0PxYCcsKPOsiIlTibrBL/zZbtUO1TFyQ==
 
 "@turf/along@^7.2.0":
   version "7.2.0"

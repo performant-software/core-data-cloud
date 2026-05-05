@@ -37,7 +37,7 @@ gem 'resource_api', git: 'https://github.com/performant-software/resource-api.gi
 gem 'jwt_auth', git: 'https://github.com/performant-software/jwt-auth.git', tag: 'v0.1.3'
 
 # Core data
-gem 'core_data_connector', git: 'https://github.com/performant-software/core-data-connector.git', tag: 'v0.1.123'
+gem 'core_data_connector', git: 'https://github.com/performant-software/core-data-connector.git', tag: 'v0.1.125'
 
 # IIIF
 gem 'triple_eye_effable', git: 'https://github.com/performant-software/triple-eye-effable.git', tag: 'v0.2.7'
@@ -58,7 +58,7 @@ gem 'aws-sdk-s3', '~> 1.193', group: [:production, :staging]
 gem 'sidekiq', '~> 8.0.6', group: [:production, :staging]
 
 # Clerk
-gem 'clerk-sdk-ruby', '~> 5.1', '>= 5.1.2'
+gem 'clerk-sdk-ruby', '~> 5.1', '>= 5.1.3'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

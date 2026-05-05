@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: 79dbd3e601e6e40b8935ed16e9bb8cee62d16f15
-  tag: v0.1.123
+  revision: 487ac25911fd6942d9242fb24772233f76fb0dcf
+  tag: v0.1.125
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 11.0)
@@ -170,7 +170,7 @@ GEM
     bootsnap (1.18.6)
       msgpack (~> 1.2)
     builder (3.2.4)
-    clerk-sdk-ruby (5.1.2)
+    clerk-sdk-ruby (5.1.3)
       base64 (>= 0.2.0, < 1.0)
       concurrent-ruby (~> 1.3.5)
       faraday (>= 2.14.1)
@@ -195,7 +195,7 @@ GEM
     ethon (0.18.0)
       ffi (>= 1.15.0)
       logger
-    faker (3.6.1)
+    faker (3.8.0)
       i18n (>= 1.8.11, < 2)
     faraday (2.14.1)
       faraday-net_http (>= 2.0, < 3.5)
@@ -245,7 +245,7 @@ GEM
     mini_mime (1.1.5)
     minitest (5.25.5)
     msgpack (1.8.0)
-    multi_json (1.19.1)
+    multi_json (1.21.1)
     multi_xml (0.7.2)
       bigdecimal (~> 3.1)
     multipart-post (2.4.1)
@@ -267,7 +267,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.9-x86_64-linux-gnu)
       racc (~> 1.4)
-    oj (3.16.16)
+    oj (3.17.0)
       bigdecimal (>= 3.0)
       ostruct (>= 0.2)
     ostruct (0.6.3)
@@ -383,7 +383,7 @@ DEPENDENCIES
   aws-sdk-s3 (~> 1.193)
   bcrypt (~> 3.1.20)
   bootsnap
-  clerk-sdk-ruby (~> 5.1, >= 5.1.2)
+  clerk-sdk-ruby (~> 5.1, >= 5.1.3)
   core_data_connector!
   csv (~> 3.3.5)
   debug (~> 1.11.0)
