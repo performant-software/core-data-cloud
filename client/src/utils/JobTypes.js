@@ -18,6 +18,10 @@ const JobTypes: JobTypesType = {
   import: {
     label: i18n.t('JobTypes.labels.import'),
     value: 'import'
+  },
+  iiif_manfest: {
+    label: i18n.t('JobTypes.labels.iiif_manfest'),
+    value: 'iiif_manfest'
   }
 };
 

@@ -262,7 +262,8 @@
   "JobTypes": {
     "labels": {
       "export": "Export",
-      "import": "Import"
+      "import": "Import",
+      "iiif_manfest": "Generate IIIF Manifest"
     }
   },
   "ListViewMenu": {
