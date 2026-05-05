@@ -3,7 +3,7 @@
 import React, { useContext } from 'react';
 import { Navigate } from 'react-router';
 import _ from 'underscore';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import ProjectContext from '../context/Project';
 import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import useParams from '../hooks/ParsedParams';
@@ -11,6 +11,7 @@ import useParams from '../hooks/ParsedParams';
 const ProjectEdit = () => {
   const { loadedProjectModels, projectModels } = useContext(ProjectContext);
   const { projectId } = useParams();
+  const { canEditProjectData, canEditProjectSettings } = usePermissions();
 
   /**
    * Navigate to the first model, if exists.
@@ -24,7 +25,7 @@ const ProjectEdit = () => {
   /**
    * Redirect to the projects page if the user does not have permissions to access the project settings or data.
    */
-  if (!(PermissionsService.canEditProjectSettings(projectId) || PermissionsService.canEditProjectData(projectId))) {
+  if (!(canEditProjectSettings(projectId) || canEditProjectData(projectId))) {
     return <UnauthorizedRedirect />;
   }
 

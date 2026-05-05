@@ -8,6 +8,7 @@ import type { User } from '../types/User';
 import UserForm from './UserForm';
 import UserPassword from './UserPassword';
 import UserUtils from '../utils/User';
+import usePermissions from '../hooks/Permissions';
 
 type Props = EditContainerProps & {
   item: User
@@ -16,6 +17,7 @@ type Props = EditContainerProps & {
 const UserModal: AbstractComponent<any> = (props: Props) => {
   const { t } = useTranslation();
   const isNew = !props.item.id;
+  const { isSSO } = usePermissions();
 
   return (
     <Modal
@@ -33,7 +35,7 @@ const UserModal: AbstractComponent<any> = (props: Props) => {
           {...props}
           isNew={isNew}
         />
-        { !isNew && !UserUtils.isSingleSignOn(props.item.email) && (
+        { !isNew && !isSSO() && (
           <UserPassword
             {...props}
           />

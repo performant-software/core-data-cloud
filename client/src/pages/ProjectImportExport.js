@@ -27,7 +27,7 @@ import {
 import _ from 'underscore';
 import FileUtils from '../utils/File';
 import ImportModal from '../components/ImportModal';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import ProjectContext from '../context/Project';
 import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import ProjectsService from '../services/Projects';
@@ -49,6 +49,12 @@ const ProjectImportExport = () => {
   const { project } = useContext(ProjectContext);
   const { projectId } = useParams();
   const { t } = useTranslation();
+  const {
+    canCreateJobs,
+    canEditProjectSettings,
+    canExportData,
+    canImportData
+  } = usePermissions();
 
   /**
    * Transforms the passed data into a string.
@@ -175,7 +181,7 @@ const ProjectImportExport = () => {
   /**
    * Return to the projects list if the user does not have permissions to edit this project.
    */
-  if (!PermissionsService.canEditProjectSettings(projectId)) {
+  if (!canEditProjectSettings(projectId)) {
     return <UnauthorizedRedirect />;
   }
 
@@ -228,7 +234,7 @@ const ProjectImportExport = () => {
           />
         </Segment>
       </SegmentGroup>
-      { (PermissionsService.canImportData() || PermissionsService.canExportData()) && (
+      { (canImportData() || canExportData()) && (
         <>
           <Header
             content={t('ProjectImportExport.labels.data')}
@@ -236,7 +242,7 @@ const ProjectImportExport = () => {
           <SegmentGroup
             className={cx(styles.ui, styles.segments)}
           >
-            { PermissionsService.canExportData() && (
+            { canExportData() && (
               <Segment
                 as={Button}
                 className={cx(styles.ui, styles.segment)}
@@ -256,7 +262,7 @@ const ProjectImportExport = () => {
                 />
               </Segment>
             )}
-            { PermissionsService.canImportData() && (
+            { canImportData() && (
               <>
                 <Segment
                   as={FileInputButton}
@@ -295,7 +301,7 @@ const ProjectImportExport = () => {
                 </Segment>
               </>
             )}
-            { PermissionsService.canCreateJobs() && (
+            { canCreateJobs() && (
               <Segment
                 as={Link}
                 className={cx(styles.ui, styles.segment)}

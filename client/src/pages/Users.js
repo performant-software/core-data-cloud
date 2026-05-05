@@ -3,20 +3,23 @@
 import _ from 'underscore';
 import { Message } from 'semantic-ui-react';
 import { BooleanIcon, ListTable, Toaster } from '@performant-software/semantic-components';
-import React, { type AbstractComponent, useCallback, useState } from 'react';
+import React, { type AbstractComponent, useCallback, useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import DateTimeUtils from '../utils/DateTime';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import UserRoles from '../utils/UserRoles';
 import UsersService from '../services/Users';
 import Validation from '../utils/Validation';
+import { AuthenticationContext } from '../context/Authentication';
 
 const Users: AbstractComponent<any> = () => {
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { canEditUsers } = usePermissions();
+  const { provider } = useContext(AuthenticationContext);
 
   /**
    * Tracks user for invite toaster
@@ -35,56 +38,76 @@ const Users: AbstractComponent<any> = () => {
       .catch((e) => setErrors(Validation.resolveDeleteError(e)))
   ), []);
 
-  if (!PermissionsService.canEditUsers()) {
+  if (!canEditUsers()) {
     return <UnauthorizedRedirect />;
   }
 
-  return (
-    <>
-      <ListTable
-        actions={[{
-          name: 'edit',
-          onClick: (item) => navigate(`${item.id}`)
-        }, {
-          accept: (item) => !item.last_sign_in_at,
-          name: 'resend_invite',
-          icon: 'mail outline',
-          popup: {
-            title: t('Users.actions.resendInvite.title'),
-            content: t('Users.actions.resendInvite.content')
-          },
-          onClick: (item) => onInviteUser(item)
-        }, {
-          name: 'delete'
-        }]}
-        addButton={{
-          basic: false,
-          color: 'blue',
-          content: t('Users.buttons.invite'),
-          location: 'top',
-          onClick: () => navigate('new')
-        }}
-        collectionName='users'
-        columns={[{
-          name: 'name',
-          label: t('Users.columns.name'),
-          sortable: true
-        }, {
-          name: 'email',
-          label: t('Users.columns.email'),
-          sortable: true
-        }, {
-          name: 'role',
-          label: t('Users.columns.role'),
-          resolve: (user) => UserRoles.getRoleView(user.role),
-          sortable: true
-        }, {
-          name: 'last_sign_in_at',
-          label: t('Users.columns.lastSignIn'),
-          resolve: (user) => DateTimeUtils.getTimestamp(user.last_sign_in_at),
-          sortable: true,
-          hidden: true
-        }, {
+  const listTableActions = useMemo(() => {
+    let list = [
+      {
+        name: 'edit',
+        onClick: (item) => navigate(`${item.id}`)
+      }, {
+        name: 'delete'
+      }
+    ];
+
+    if (provider === 'local') {
+      list.splice(1, 0, {
+        accept: (item) => !item.last_sign_in_at,
+        name: 'resend_invite',
+        icon: 'mail outline',
+        popup: {
+          title: t('Users.actions.resendInvite.title'),
+          content: t('Users.actions.resendInvite.content')
+        },
+        onClick: (item) => onInviteUser(item)
+      });
+    }
+
+
+    return list;
+  }, [canEditUsers]);
+
+  const addButton = useMemo(() => {
+    if (provider === 'local') {
+      return {
+        basic: false,
+        color: 'blue',
+        content: t('Users.buttons.invite'),
+        location: 'top',
+        onClick: () => navigate('new')
+      };
+    }
+  }, []);
+
+  const columns = useMemo(() => {
+    const baseList = [
+      {
+        name: 'name',
+        label: t('Users.columns.name'),
+        sortable: true
+      }, {
+        name: 'email',
+        label: t('Users.columns.email'),
+        sortable: true
+      }, {
+        name: 'role',
+        label: t('Users.columns.role'),
+        resolve: (user) => UserRoles.getRoleView(user.role),
+        sortable: true
+      }, {
+        name: 'last_sign_in_at',
+        label: t('Users.columns.lastSignIn'),
+        resolve: (user) => DateTimeUtils.getTimestamp(user.last_sign_in_at),
+        sortable: true,
+        hidden: true
+      }
+    ];
+
+    if (provider === 'local') {
+      baseList.push(
+        {
           name: 'last_invited_at',
           label: t('Users.columns.lastInvited'),
           resolve: (user) => DateTimeUtils.getTimestamp(user.last_invited_at),
@@ -100,7 +123,20 @@ const Users: AbstractComponent<any> = () => {
           ),
           sortable: true,
           hidden: true
-        }]}
+        }
+      );
+    }
+
+    return baseList;
+  }, []);
+
+  return (
+    <>
+      <ListTable
+        actions={listTableActions}
+        addButton={addButton}
+        collectionName='users'
+        columns={columns}
         onDelete={(user) => UsersService.delete(user)}
         onLoad={(params) => UsersService.fetchAll(params)}
         searchable

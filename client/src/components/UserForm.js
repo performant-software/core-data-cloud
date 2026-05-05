@@ -4,7 +4,7 @@ import type { EditContainerProps } from '@performant-software/shared-components/
 import React, { type AbstractComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'semantic-ui-react';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import type { User } from '../types/User';
 import UserRoles from '../utils/UserRoles';
 
@@ -15,13 +15,14 @@ type Props = EditContainerProps & {
 
 const UserForm: AbstractComponent<any> = (props: Props) => {
   const { t } = useTranslation();
+  const { isAdmin, isSSO } = usePermissions();
   const isNew = props.isNew || !props.item.id;
 
   return (
     <>
       <Form.Input
         autoFocus
-        disabled={props.disabled}
+        disabled={props.disabled || (!isNew && isSSO())}
         error={props.isError('name')}
         label={t('UserForm.labels.name')}
         required={props.isRequired('name')}
@@ -29,17 +30,18 @@ const UserForm: AbstractComponent<any> = (props: Props) => {
         value={props.item.name || ''}
       />
       <Form.Input
-        disabled={props.disabled}
+        disabled={props.disabled || (!isNew && isSSO())}
         error={props.isError('email')}
         label={t('UserForm.labels.email')}
         required={props.isRequired('email')}
         onChange={props.onTextInputChange.bind(this, 'email')}
         value={props.item.email || ''}
       />
-      { PermissionsService.isAdmin() && (
+      { isAdmin() && (
         <>
           <Form.Dropdown
             error={props.isError('role')}
+            disabled={isSSO()}
             label={t('UserForm.labels.role')}
             onChange={props.onTextInputChange.bind(this, 'role')}
             options={UserRoles.getRoleOptions()}
@@ -48,7 +50,7 @@ const UserForm: AbstractComponent<any> = (props: Props) => {
             selectOnBlur={false}
             value={props.item.role}
           />
-          {!isNew && (
+          {!isNew && !isSSO() && (
             <Form.Checkbox
               checked={props.item.require_password_change}
               error={props.isError('require_password_change')}

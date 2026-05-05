@@ -4,18 +4,19 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Menu } from 'semantic-ui-react';
 import MenuLink from './MenuLink';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import useParams from '../hooks/ParsedParams';
 
 const AdminMenu = () => {
   const { projectId } = useParams();
   const { t } = useTranslation();
+  const { canCreateJobs, canEditUsers } = usePermissions();
 
   /**
    * Only render the menu if we're not in a project context and the current user can edit users outside
    * the context of a project.
    */
-  if (projectId || !(PermissionsService.canEditUsers() || PermissionsService.canCreateJobs())) {
+  if (projectId || !(canEditUsers() || canCreateJobs())) {
     return null;
   }
 
@@ -28,14 +29,14 @@ const AdminMenu = () => {
         parent
         to='/projects'
       />
-      { PermissionsService.canEditUsers && (
+      { canEditUsers() && (
         <MenuLink
           content={t('AdminMenu.labels.users')}
           parent
           to='/users'
         />
       )}
-      { PermissionsService.canCreateJobs() && (
+      { canCreateJobs() && (
         <MenuLink
           content={t('AdminMenu.labels.jobs')}
           parent

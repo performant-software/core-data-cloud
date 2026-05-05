@@ -28,6 +28,10 @@
       "subject": "Subject Access Points"
     }
   },
+  "ClerkLoginModal": {
+    "header": "Welcome to Core Data Cloud",
+    "login": "Sign in with Performant Studio"
+  },
   "GeoNamesForm": {
     "labels": {
       "username": "Username"
@@ -273,7 +277,7 @@
       "login": "Login"
     }
   },
-  "LoginModal": {
+  "LocalLoginModal": {
     "buttonCancel": "Cancel",
     "buttonLogin": "Login",
     "email": "Email",
@@ -500,7 +504,8 @@
       "location": "Location",
       "names": "Names",
       "polygonMode": "Polygon mode",
-      "pointMode": "Point mode"
+      "pointMode": "Point mode",
+      "certaintyRadius": "Certainty radius (in KM)"
     },
     "placeLayers": {
       "columns": {

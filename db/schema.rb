@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_02_200433) do
-  create_schema "heroku_ext"
+ActiveRecord::Schema[8.0].define(version: 2026_05_04_182505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
@@ -180,6 +179,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_02_200433) do
     t.geometry "geometry", limit: {srid: 0, type: "geometry"}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "properties", default: {}
     t.index ["place_id"], name: "index_core_data_connector_place_geometries_on_place_id"
   end
 
@@ -276,6 +276,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_02_200433) do
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.boolean "use_storage_key", default: true, null: false
     t.jsonb "reconciliation_credentials", default: {}
+    t.integer "faircopy_cloud_project_id"
   end
 
   create_table "core_data_connector_record_merges", force: :cascade do |t|
@@ -346,11 +347,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_02_200433) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "sso_id"
+    t.string "sso_id"
     t.string "role"
     t.boolean "require_password_change", default: false, null: false
     t.datetime "last_sign_in_at", precision: nil
     t.datetime "last_invited_at", precision: nil
+    t.string "avatar_url"
+    t.index ["sso_id"], name: "index_core_data_connector_users_on_sso_id", unique: true
   end
 
   create_table "core_data_connector_web_authorities", force: :cascade do |t|

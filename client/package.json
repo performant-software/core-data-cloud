@@ -3,17 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --no-open",
     "build": "vite build",
     "preview": "vite preview",
     "flow": "flow"
   },
   "dependencies": {
     "@bunchtogether/vite-plugin-flow": "^1.0.2",
-    "@performant-software/geospatial": "^3.1.7",
-    "@performant-software/semantic-components": "^3.1.7",
-    "@performant-software/shared-components": "^3.1.7",
-    "@performant-software/user-defined-fields": "^3.1.7",
+    "@clerk/react": "^6.4.7",
+    "@performant-software/geospatial": "^3.1.18",
+    "@performant-software/semantic-components": "^3.1.18",
+    "@performant-software/shared-components": "^3.1.18",
+    "@performant-software/user-defined-fields": "^3.1.18",
     "@peripleo/maplibre": "^0.8.7",
     "@peripleo/peripleo": "^0.8.7",
     "@samvera/clover-iiif": "^2.18.3",

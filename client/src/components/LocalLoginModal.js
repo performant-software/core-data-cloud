@@ -2,10 +2,9 @@
 
 import cx from 'classnames';
 import { ModalContext } from '@performant-software/shared-components';
-import React, { type Element } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import {
   Button,
-  Divider,
   Form,
   Grid,
   Header,
@@ -15,22 +14,35 @@ import {
   Modal
 } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
-import styles from './LoginModal.module.css';
+import styles from './LocalLoginModal.module.css';
+import { AuthenticationContext } from '../context/Authentication';
 
 type Props = {
-  disabled: boolean,
-  loginFailed: boolean,
-  onLogin: () => void,
-  onPasswordChange: () => void,
-  onSSO: () => void,
-  onUsernameChange: () => void,
   open: boolean,
-  trigger?: () => Element<any>,
-  placeholder: string
 };
 
-const LoginModal = (props: Props) => {
+const LocalLoginModal = (props: Props) => {
+  const [disabled, setDisabled] = useState(false);
+  const [email, setEmail] = useState();
+  const [error, setError] = useState(false);
+  const [password, setPassword] = useState();
+
+  const { login } = useContext(AuthenticationContext);
+
   const { t } = useTranslation();
+
+  /**
+   * Attempts to authenticate then navigates to the admin page.
+   *
+   * @type {(function(): void)|*}
+   */
+  const onLogin = useCallback(() => {
+    setDisabled(true);
+
+    login({ email, password })
+      .catch(() => setError(true))
+      .finally(() => setDisabled(false));
+  }, [email, login, password]);
 
   return (
     <ModalContext.Consumer>
@@ -38,20 +50,19 @@ const LoginModal = (props: Props) => {
         <Modal
           as={Form}
           className={styles.loginModal}
-          error={props.loginFailed}
+          error={error}
           mountNode={mountNode}
           open={props.open}
           size='small'
-          trigger={props.trigger}
         >
           <Header
             icon='user circle'
-            content={t('LoginModal.header')}
+            content={t('LocalLoginModal.header')}
           />
           <Message
             error
-            header={t('LoginModal.loginErrorHeader')}
-            content={t('LoginModal.loginErrorContent')}
+            header={t('LocalLoginModal.loginErrorHeader')}
+            content={t('LocalLoginModal.loginErrorContent')}
           />
           <Grid
             className={cx(styles.grid, styles.ui)}
@@ -66,8 +77,8 @@ const LoginModal = (props: Props) => {
                   autoFocus
                   className={cx(styles.ui, styles.formField, styles.input)}
                   icon={<Icon name='at' />}
-                  onChange={props.onUsernameChange.bind(this)}
-                  placeholder={props.placeholder}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder={t('LocalLoginModal.email')}
                   size='huge'
                 />
               </Grid.Row>
@@ -77,8 +88,8 @@ const LoginModal = (props: Props) => {
                 <Input
                   className={cx(styles.ui, styles.formField, styles.input)}
                   icon={<Icon name='lock' />}
-                  onChange={props.onPasswordChange.bind(this)}
-                  placeholder={t('LoginModal.password')}
+                  onChange={e => setPassword(e.target.value)}
+                  placeholder={t('LocalLoginModal.password')}
                   size='huge'
                   type='password'
                 />
@@ -87,28 +98,13 @@ const LoginModal = (props: Props) => {
                 className={styles.row}
               >
                 <Button
-                  disabled={props.disabled}
+                  disabled={disabled}
                   fluid
-                  onClick={props.onLogin.bind(this)}
+                  onClick={onLogin}
                   primary
                   type='submit'
                 >
-                  { t('LoginModal.buttonLogin') }
-                </Button>
-              </Grid.Row>
-              <Divider horizontal>
-                {t('Common.words.or')}
-              </Divider>
-              <Grid.Row
-                className={cx(styles.row, styles.ssoRow)}
-              >
-                <Button
-                  fluid
-                  onClick={props.onSSO.bind(this)}
-                  secondary
-                  type='button'
-                >
-                  {t('LoginModal.logInWithSso')}
+                  { t('LocalLoginModal.buttonLogin') }
                 </Button>
               </Grid.Row>
             </Grid.Column>
@@ -119,4 +115,4 @@ const LoginModal = (props: Props) => {
   );
 };
 
-export default LoginModal;
+export default LocalLoginModal;

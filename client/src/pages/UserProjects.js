@@ -3,6 +3,7 @@
 import { ListTable, Toaster } from '@performant-software/semantic-components';
 import React, {
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useState,
@@ -13,7 +14,7 @@ import { useNavigate } from 'react-router';
 import { Message } from 'semantic-ui-react';
 import _ from 'underscore';
 import ItemHeader from '../components/ItemHeader';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import UserEditMenu from '../components/UserEditMenu';
@@ -24,6 +25,7 @@ import UserRoles from '../utils/UserRoles';
 import UsersService from '../services/Users';
 import useParams from '../hooks/ParsedParams';
 import Validation from '../utils/Validation';
+import { AuthenticationContext } from '../context/Authentication';
 
 const UserProjects: AbstractComponent<any> = () => {
   const [errors, setErrors] = useState([]);
@@ -33,6 +35,12 @@ const UserProjects: AbstractComponent<any> = () => {
   const navigate = useNavigate();
   const { projectId, userId } = useParams();
   const { t } = useTranslation();
+  const {
+    canEditUserProjects,
+    canEditUsers,
+    canInviteUserProject
+  } = usePermissions();
+  const { provider } = useContext(AuthenticationContext);
 
   const ids = useMemo(() => ({ project_id: projectId, user_id: userId }), [projectId, userId]);
 
@@ -88,7 +96,7 @@ const UserProjects: AbstractComponent<any> = () => {
       sortable: true
     });
 
-    if (projectId && PermissionsService.canEditUsers()) {
+    if (projectId && canEditUsers()) {
       value.push({
         name: 'core_data_connector_users.role',
         label: t('UserProjects.columns.type'),
@@ -97,16 +105,18 @@ const UserProjects: AbstractComponent<any> = () => {
       });
     }
 
-    value.push({
-      name: 'core_data_connector_users.last_sign_in_at',
-      label: t('UserProjects.columns.status'),
-      render: (userProject) => (
-        <UserStatus
-          user={userProject.user}
-        />
-      ),
-      sortable: true
-    });
+    if (provider === 'local') {
+      value.push({
+        name: 'core_data_connector_users.last_sign_in_at',
+        label: t('UserProjects.columns.status'),
+        render: (userProject) => (
+          <UserStatus
+            user={userProject.user}
+          />
+        ),
+        sortable: true
+      });
+    }
 
     return value;
   }, [projectId, userId]);
@@ -126,7 +136,7 @@ const UserProjects: AbstractComponent<any> = () => {
    * Navigates to the project edit page if the current user does not have permissions to edit users
    * in the current project.
    */
-  if (projectId && !PermissionsService.canEditUserProjects(projectId)) {
+  if (projectId && !canEditUserProjects(projectId)) {
     return (
       <UnauthorizedRedirect
         to={`/projects/${projectId}/edit`}
@@ -137,9 +147,48 @@ const UserProjects: AbstractComponent<any> = () => {
   /**
    * Return to the projects list if the user does not have permissions to edit users.
    */
-  if (userId && !PermissionsService.canEditUsers()) {
+  if (userId && !canEditUsers()) {
     return <UnauthorizedRedirect />;
   }
+
+  const actions = useMemo(() => {
+    let list = [
+      {
+        name: 'edit',
+        icon: 'pencil',
+        onClick: (item) => navigate(`${item.id}`)
+      }, {
+        icon: 'times',
+        name: 'delete'
+      }
+    ];
+
+    if (provider === 'local') {
+      list.push(
+        {
+          accept: (item) => canInviteUserProject(item),
+          icon: 'mail outline',
+          name: 'invite',
+          onClick: onInviteUser,
+          popup: {
+            content: t('UserProjects.actions.invite.content'),
+            title: t('UserProjects.actions.invite.header')
+          }
+        }
+      );
+    }
+
+    list.push(
+      {
+        accept: () => !!userId,
+        icon: 'arrow right',
+        name: 'navigate',
+        onClick: (item) => navigate(`/projects/${item.project_id}`)
+      }
+    );
+
+    return list;
+  }, [])
 
   return (
     <>
@@ -159,28 +208,7 @@ const UserProjects: AbstractComponent<any> = () => {
         <UserEditMenu />
       )}
       <ListTable
-        actions={[{
-          name: 'edit',
-          icon: 'pencil',
-          onClick: (item) => navigate(`${item.id}`)
-        }, {
-          icon: 'times',
-          name: 'delete'
-        }, {
-          accept: (item) => PermissionsService.canInviteUserProject(item),
-          icon: 'mail outline',
-          name: 'invite',
-          onClick: onInviteUser,
-          popup: {
-            content: t('UserProjects.actions.invite.content'),
-            title: t('UserProjects.actions.invite.header')
-          }
-        }, {
-          accept: () => !!userId,
-          icon: 'arrow right',
-          name: 'navigate',
-          onClick: (item) => navigate(`/projects/${item.project_id}`)
-        }]}
+        actions={actions}
         addButton={{
           basic: false,
           color: 'blue',

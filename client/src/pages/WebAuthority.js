@@ -10,7 +10,7 @@ import DplaForm from '../components/DplaForm';
 import GeonamesForm from '../components/GeonamesForm';
 import ItemLayout from '../components/ItemLayout';
 import ItemHeader from '../components/ItemHeader';
-import PermissionsService from '../services/Permissions';
+import usePermissions from '../hooks/Permissions';
 import styles from './ProjectModel.module.css';
 import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import useParams from '../hooks/ParsedParams';
@@ -18,15 +18,35 @@ import Validation from '../utils/Validation';
 import type { WebAuthority as WebAuthorityType } from '../types/WebAuthority';
 import WebAuthoritiesService from '../services/WebAuthorities';
 import WebAuthorityUtils from '../utils/WebAuthorities';
-import withReactRouterEditPage from '../hooks/ReactRouterEditPage';
+import useReactRouterEditPage from '../hooks/useReactRouterEditPage';
 
 type Props = EditContainerProps & {
   item: WebAuthorityType
 };
 
-const WebAuthorityPage = (props: Props) => {
+const WebAuthority = (props: Props) => {
   const { projectId } = useParams();
   const { t } = useTranslation();
+  const { canEditProjectSettings } = usePermissions();
+
+  const editPageProps = useReactRouterEditPage({
+    id: 'webAuthorityId',
+    onInitialize: (id) => (
+      WebAuthoritiesService
+        .fetchOne(id)
+        .then(({ data }) => data.web_authority)
+    ),
+    onSave: (authority) => (
+      WebAuthoritiesService
+        .save(authority)
+        .then(({ data }) => data.web_authority)
+    ),
+    required: ['source_type'],
+    resolveValidationError: Validation.resolveUpdateError,
+    validate: WebAuthorityUtils.validate
+  });
+
+  const { item, onSetState } = editPageProps;
 
   /**
    * Sets the passed value/key in the access JSON.
@@ -34,31 +54,31 @@ const WebAuthorityPage = (props: Props) => {
    * @type {(function(*, *): void)|*}
    */
   const onChange = useCallback((key, value) => {
-    props.onSetState({
+    onSetState({
       access: {
-        ...props.item.access || {},
+        ...item.access || {},
         [key]: value
       }
     });
-  }, [props.onSetState, props.item.access]);
+  }, [onSetState, item.access]);
 
   /**
    * Clear "access" on source_type change
    */
   useEffect(() => {
-    props.onSetState({ access: {} });
-  }, [props.item.source_type]);
+    onSetState({ access: {} });
+  }, [item.source_type]);
 
   /**
    * Set the project_id on the state for new records.
    */
   useEffect(() => {
-    if (!props.item.id && projectId) {
-      props.onSetState({ project_id: projectId });
+    if (!item.id && projectId) {
+      onSetState({ project_id: projectId });
     }
   }, []);
 
-  if (!PermissionsService.canEditProjectSettings(projectId)) {
+  if (!canEditProjectSettings(projectId)) {
     return <UnauthorizedRedirect />;
   }
 
@@ -70,46 +90,47 @@ const WebAuthorityPage = (props: Props) => {
             label: t('WebAuthority.labels.all'),
             url: `/projects/${projectId}/web_authorities`
           }}
-          name={WebAuthorityUtils.getSourceView(props.item)}
+          name={WebAuthorityUtils.getSourceView(item)}
         />
       </ItemLayout.Header>
       <ItemLayout.Content>
         <SimpleEditPage
           {...props}
+          {...editPageProps}
           className={styles.projectModel}
         >
           <SimpleEditPage.Tab
             key='default'
           >
             <Form.Dropdown
-              error={props.isError('source_type')}
+              error={editPageProps.isError('source_type')}
               label={t('WebAuthority.labels.sourceType')}
-              onChange={props.onTextInputChange.bind(this, 'source_type')}
+              onChange={editPageProps.onTextInputChange.bind(this, 'source_type')}
               options={WebAuthorityUtils.getSourceTypeOptions()}
-              required={props.isRequired('source_type')}
+              required={editPageProps.isRequired('source_type')}
               selectOnBlur={false}
               selection
-              value={props.item.source_type}
+              value={item.source_type}
             />
-            { props.item.source_type === WebAuthorityUtils.SourceTypes.atom && (
+            { item.source_type === WebAuthorityUtils.SourceTypes.atom && (
               <AtomForm
-                isError={props.isError}
+                isError={editPageProps.isError}
                 onChange={onChange}
-                value={props.item.access}
+                value={item.access}
               />
             )}
-            { props.item.source_type === WebAuthorityUtils.SourceTypes.geonames && (
+            { item.source_type === WebAuthorityUtils.SourceTypes.geonames && (
               <GeonamesForm
-                isError={props.isError}
+                isError={editPageProps.isError}
                 onChange={onChange}
-                value={props.item.access}
+                value={item.access}
               />
             )}
-            { props.item.source_type === WebAuthorityUtils.SourceTypes.dpla && (
+            { item.source_type === WebAuthorityUtils.SourceTypes.dpla && (
               <DplaForm
-                isError={props.isError}
+                isError={editPageProps.isError}
                 onChange={onChange}
-                value={props.item.access}
+                value={item.access}
               />
             )}
           </SimpleEditPage.Tab>
@@ -118,22 +139,5 @@ const WebAuthorityPage = (props: Props) => {
     </ItemLayout>
   );
 };
-
-const WebAuthority = withReactRouterEditPage(WebAuthorityPage, {
-  id: 'webAuthorityId',
-  onInitialize: (id) => (
-    WebAuthoritiesService
-      .fetchOne(id)
-      .then(({ data }) => data.web_authority)
-  ),
-  onSave: (authority) => (
-    WebAuthoritiesService
-      .save(authority)
-      .then(({ data }) => data.web_authority)
-  ),
-  required: ['source_type'],
-  resolveValidationError: Validation.resolveUpdateError.bind(this),
-  validate: WebAuthorityUtils.validate.bind(this)
-});
 
 export default WebAuthority;

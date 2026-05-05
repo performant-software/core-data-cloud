@@ -1099,6 +1099,25 @@
     flow-remove-types "^2.158.0"
     rollup-pluginutils "^2.8.2"
 
+"@clerk/react@^6.4.7":
+  version "6.4.7"
+  resolved "https://registry.yarnpkg.com/@clerk/react/-/react-6.4.7.tgz#9681968d69afb6f7ee0a035a9f8fe813d6e3f7d7"
+  integrity sha512-wVF4u1vGwjitB6P8AXy4FiydiqyEM0X5EYCWJvi6kfpXS6jrLLdr5tPjZ9tPCq3GKGs/Gub3QHue2MLMAmEsQw==
+  dependencies:
+    "@clerk/shared" "^4.8.7"
+    tslib "2.8.1"
+
+"@clerk/shared@^4.8.7":
+  version "4.8.7"
+  resolved "https://registry.yarnpkg.com/@clerk/shared/-/shared-4.8.7.tgz#3cc0cf160fc21ddf6e179ad8261fc397528d040a"
+  integrity sha512-rnQnsYy4Rb4WPEmVCF4CLmIn1359SP17IAH7fDqWc3agaOcEaP/iQPSxmC9PMuzVBA7S+LtfO/dGH2dLOczsTQ==
+  dependencies:
+    "@tanstack/query-core" "^5.100.6"
+    dequal "2.0.3"
+    glob-to-regexp "0.4.1"
+    js-cookie "3.0.5"
+    std-env "^3.9.0"
+
 "@emnapi/core@^1.4.3":
   version "1.4.5"
   resolved "https://registry.yarnpkg.com/@emnapi/core/-/core-1.4.5.tgz#bfbb0cbbbb9f96ec4e2c4fd917b7bbe5495ceccb"
@@ -1827,10 +1846,10 @@
     remark-rehype "^11.1.0"
     unified "^11.0.4"
 
-"@performant-software/geospatial@^3.1.7":
-  version "3.1.7"
-  resolved "https://registry.yarnpkg.com/@performant-software/geospatial/-/geospatial-3.1.7.tgz#59a3db0f97888ecdba3e3fac4306712412f6c2e1"
-  integrity sha512-TZC7BJKetg8YFWdcCqCWe/ThCmSHEpISiT6b/QFCwjp/Lat2UBee/qpsfBybDesL24ainMfEit5ZsHS0fNh/4w==
+"@performant-software/geospatial@^3.1.18":
+  version "3.1.18"
+  resolved "https://registry.yarnpkg.com/@performant-software/geospatial/-/geospatial-3.1.18.tgz#622b719ba549c0587813e03268db158f9e027b9f"
+  integrity sha512-3S2Fpy7qXJH+dPEq2LSUyMhYMa+cq9ObwswQSyedJd+tseDklx7QVrRgh8z8oHG9YBp4Ie/vTyADwuG2u2caPw==
   dependencies:
     "@allmaps/maplibre" "^1.0.0-beta.25"
     "@mapbox/mapbox-gl-draw" "1.4.3"
@@ -1842,10 +1861,10 @@
     react-map-gl "^8.0.4"
     underscore "^1.13.7"
 
-"@performant-software/semantic-components@^3.1.7":
-  version "3.1.7"
-  resolved "https://registry.yarnpkg.com/@performant-software/semantic-components/-/semantic-components-3.1.7.tgz#bc4a130ca9a95fe7f9abb2ec39b88d34d8e739fc"
-  integrity sha512-XQ0UyIoO77sZFjhVWp4V3V3VdtqTpZdN8mbL71HlsYA6ZXJfgBeFs58VLX9mEMGpKMnCATpw5FLqikWGrOkhQg==
+"@performant-software/semantic-components@^3.1.18":
+  version "3.1.18"
+  resolved "https://registry.yarnpkg.com/@performant-software/semantic-components/-/semantic-components-3.1.18.tgz#ee39fd2c1bb3267cf6d51082d1d86ad2e9b154b3"
+  integrity sha512-NiNIEnYAGhdQyev0KXw3GAWLIfX+UVOamCY3neRwwrynO33YDYw7HHmoGo/A2NLR9xmCskChCN5kYpYVTAW+/A==
   dependencies:
     "@react-google-maps/api" "^2.20.7"
     axios "^1.10.0"
@@ -1863,10 +1882,10 @@
     zotero-api-client "^0.40.0"
     zotero-translation-client "^5.0.1"
 
-"@performant-software/shared-components@^3.1.7":
-  version "3.1.7"
-  resolved "https://registry.yarnpkg.com/@performant-software/shared-components/-/shared-components-3.1.7.tgz#f4618db460003fa92349cc2d5aa9d93085f20be9"
-  integrity sha512-uLfIdG1kYGUwfa8B28EaI92bnBJz6ya2Idol+b1h/OY9Yu2z643aAMSEiERtAm4ufRnxzMkSeBOzJUWcUd3jnw==
+"@performant-software/shared-components@^3.1.18":
+  version "3.1.18"
+  resolved "https://registry.yarnpkg.com/@performant-software/shared-components/-/shared-components-3.1.18.tgz#f013d9ef85eef44cecb7e0773bcf211de18eae7c"
+  integrity sha512-oaf5HRhHduViWwi1uZI+2No7P3852mMdfvBufJeMOmGuDyQoWru+3egeeQLCDIWgPORVmAkJYN2rGam01FjUug==
   dependencies:
     "@rails/activestorage" "^8.0.201"
     "@react-google-maps/api" "^2.20.7"
@@ -1882,10 +1901,10 @@
     underscore "^1.13.7"
     zotero-translation-client "^5.0.1"
 
-"@performant-software/user-defined-fields@^3.1.7":
-  version "3.1.7"
-  resolved "https://registry.yarnpkg.com/@performant-software/user-defined-fields/-/user-defined-fields-3.1.7.tgz#d6d5b2177f6ec3215db0668abcaa9e6801252a06"
-  integrity sha512-Wx6dIn0avVELoOhnsz6VpaE9w2p6AaeKi8mDxfM01AMoXXYrDMrwea+ch2LAUZ08t5UHfarvHDcyjMqvTW0T7g==
+"@performant-software/user-defined-fields@^3.1.18":
+  version "3.1.18"
+  resolved "https://registry.yarnpkg.com/@performant-software/user-defined-fields/-/user-defined-fields-3.1.18.tgz#0da4115df0620f90dde98987759d566131f50ac2"
+  integrity sha512-nm8oUW2lRHzs0IfGirIRzBZHq9msyPSp9R/Gb47i4rnYKIVe1l2wfKRfZD96Bt+95TpZiEHW6s4gX7RLNdoU7A==
   dependencies:
     i18next "^25.3.2"
     semantic-ui-react "^2.1.5"
@@ -2549,6 +2568,11 @@
   version "1.2.8"
   resolved "https://registry.yarnpkg.com/@stitches/react/-/react-1.2.8.tgz#954f8008be8d9c65c4e58efa0937f32388ce3a38"
   integrity sha512-9g9dWI4gsSVe8bNLlb+lMkBYsnIKCZTmvqvDG+Avnn69XfmHZKiaMrx7cgTaddq7aTPPmXiTsbFcUy0xgI4+wA==
+
+"@tanstack/query-core@^5.100.6":
+  version "5.100.7"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.100.7.tgz#dbdc082b803824edac7caf5a787dc3ba01c35459"
+  integrity sha512-5R7i6ENJLhVeeJrrUz7jKBXUXv/BJrxf9FQJSkR13bPrb3zOcE8A0Z0PxYCcsKPOsiIlTibrBL/zZbtUO1TFyQ==
 
 "@turf/along@^7.2.0":
   version "7.2.0"
@@ -5086,7 +5110,7 @@ delayed-stream@~1.0.0:
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==
 
-dequal@^2.0.0, dequal@^2.0.3:
+dequal@2.0.3, dequal@^2.0.0, dequal@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/dequal/-/dequal-2.0.3.tgz#2644214f1997d39ed0ee0ece72335490a7ac67be"
   integrity sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==
@@ -5945,6 +5969,11 @@ glob-parent@~5.1.2:
   dependencies:
     is-glob "^4.0.1"
 
+glob-to-regexp@0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/glob-to-regexp/-/glob-to-regexp-0.4.1.tgz#c75297087c851b9a578bd217dd59a92f59fe546e"
+  integrity sha512-lkX1HJXwyMcprw/5YUZc2s7DrpAiHB21/V+E1rHUrVNokkvB6bqMzT0VfV6/86ZNabt1k14YOIaT7nDvOX3Iiw==
+
 glob@^7.2.0:
   version "7.2.3"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.2.3.tgz#b8df0fb802bbfa8e89bd1d938b4e16578ed44f2b"
@@ -6694,6 +6723,11 @@ jquery@x.*:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.0.tgz#c72a09f15c1bdce142f49dbf1170bdf8adac2470"
   integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
+
+js-cookie@3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-3.0.5.tgz#0b7e2fd0c01552c58ba86e0841f94dc2557dcdbc"
+  integrity sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
@@ -8820,6 +8854,11 @@ stable-hash-x@^0.2.0:
   resolved "https://registry.yarnpkg.com/stable-hash-x/-/stable-hash-x-0.2.0.tgz#dfd76bfa5d839a7470125c6a6b3c8b22061793e9"
   integrity sha512-o3yWv49B/o4QZk5ZcsALc6t0+eCelPc44zZsLtCQnZPDwFpDYSWcDnrv2TtMmMbQ7uKo3J0HTURCqckw23czNQ==
 
+std-env@^3.9.0:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/std-env/-/std-env-3.10.0.tgz#d810b27e3a073047b2b5e40034881f5ea6f9c83b"
+  integrity sha512-5GS12FdOZNliM5mAOxFRg7Ir0pWz8MdpYm6AY6VPkGpbA7ZzmbzNcBJQ0GPvvyWgcY7QAhCgf9Uy89I03faLkg==
+
 stop-iteration-iterator@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/stop-iteration-iterator/-/stop-iteration-iterator-1.1.0.tgz#f481ff70a548f6124d0312c3aa14cbfa7aa542ad"
@@ -9049,15 +9088,15 @@ trough@^2.0.0:
   resolved "https://registry.yarnpkg.com/trough/-/trough-2.2.0.tgz#94a60bd6bd375c152c1df911a4b11d5b0256f50f"
   integrity sha512-tmMpK00BjZiUyVyvrBK7knerNgmgvcV/KLVyuma/SC+TQN167GrMRciANTz09+k3zW8L8t60jWO1GpfkZdjTaw==
 
+tslib@2.8.1, tslib@^2.4.0, tslib@^2.8.1:
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
+  integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
+
 tslib@^2.0.0, tslib@^2.1.0:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.2.tgz#703ac29425e7b37cd6fd456e92404d46d1f3e4ae"
   integrity sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==
-
-tslib@^2.4.0, tslib@^2.8.1:
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
-  integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
 
 two-product@^1.0.2:
   version "1.0.2"
