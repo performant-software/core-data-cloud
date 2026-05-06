@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: 40972191326d787f6d51186738940aee3b75d9de
-  tag: v0.1.127
+  revision: f608cdffcce37189c566e7b4b2fc292583eb783b
+  tag: v0.1.128
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 11.0)
