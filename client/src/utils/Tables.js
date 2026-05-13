@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router';
 import { Button, Popup } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
@@ -12,9 +12,16 @@ type Props = {
 export const EditButton = ({ item }: Props) => {
   const { t } = useTranslation();
 
+  const TriggerButton = useMemo(() => (
+    <Button
+      basic
+      compact
+      icon='pencil'
+    />
+  ), [])
+
   return (
     <Link
-
       to={`${item.id}`}
     >
       <Popup
@@ -23,11 +30,7 @@ export const EditButton = ({ item }: Props) => {
         hideOnScroll
         mouseEnterDelay={500}
         position='top right'
-        trigger={<Button
-          basic
-          compact
-          icon='edit outline'
-        />}
+        trigger={TriggerButton}
       />
 
     </Link>

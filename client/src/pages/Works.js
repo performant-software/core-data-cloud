@@ -21,6 +21,7 @@ import useSelectable from '../hooks/Selectable';
 import Views from '../constants/ListViews';
 import WindowUtils from '../utils/Window';
 import WorksService from '../services/Works';
+import { getEditButton } from '../utils/Tables';
 
 const Works: AbstractComponent<any> = () => {
   const [view, setView] = useState(Views.all);
@@ -73,8 +74,7 @@ const Works: AbstractComponent<any> = () => {
       <ListTable
         actions={[{
           name: 'edit',
-          icon: 'pencil',
-          onClick: (work) => navigate(`${work.id}`)
+          render: getEditButton
         }, {
           accept: (work) => canDeleteRecord(projectModel, work),
           icon: 'times',

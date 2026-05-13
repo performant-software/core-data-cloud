@@ -10,6 +10,7 @@ import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import useParams from '../hooks/ParsedParams';
 import WebAuthoritiesService from '../services/WebAuthorities';
 import WebAuthorityUtils from '../utils/WebAuthorities';
+import { getEditButton } from '../utils/Tables';
 
 const WebAuthorities = () => {
   const { projectId } = useParams();
@@ -30,8 +31,7 @@ const WebAuthorities = () => {
       <ListTable
         actions={[{
           name: 'edit',
-          icon: 'pencil',
-          onClick: (authority) => navigate(`${authority.id}`)
+          render: getEditButton
         }, {
           name: 'delete',
           icon: 'times'
