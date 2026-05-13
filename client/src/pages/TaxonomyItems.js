@@ -15,6 +15,7 @@ import useSelectable from '../hooks/Selectable';
 import { useTranslation } from 'react-i18next';
 import Views from '../constants/ListViews';
 import WindowUtils from '../utils/Window';
+import { getEditButton } from '../utils/Tables';
 
 const TaxonomyItems = () => {
   const [view, setView] = useState(Views.all);
@@ -68,8 +69,7 @@ const TaxonomyItems = () => {
       <ListTable
         actions={[{
           name: 'edit',
-          icon: 'pencil',
-          onClick: (taxonomy) => navigate(`${taxonomy.id}`)
+          render: getEditButton
         }, {
           accept: (taxonomy) => canDeleteRecord(projectModel, taxonomy),
           icon: 'times',

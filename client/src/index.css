@@ -50,6 +50,11 @@ textarea {
   border-bottom: 1px solid rgba(34, 36, 38, 0.1);
 }
 
+.list.data-table-column-selector > table > tbody > tr > td.actions-cell .ui.basic.button {
+  border: none;
+  box-shadow: none;
+}
+
 .dropdown-button.ui.buttons > .ui.dropdown:last-child .menu.right {
   left: 0;
   right: auto;

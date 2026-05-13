@@ -22,6 +22,7 @@ import useSelectable from '../hooks/Selectable';
 import { useTranslation } from 'react-i18next';
 import Views from '../constants/ListViews';
 import WindowUtils from '../utils/Window';
+import { getEditButton } from '../utils/Tables';
 
 const Items: AbstractComponent<any> = () => {
   const [view, setView] = useState(Views.all);
@@ -75,8 +76,7 @@ const Items: AbstractComponent<any> = () => {
       <ListTable
         actions={[{
           name: 'edit',
-          icon: 'pencil',
-          onClick: (item) => navigate(`${item.id}`)
+          render: getEditButton
         }, {
           accept: (item) => canDeleteRecord(projectModel, item),
           icon: 'times',
