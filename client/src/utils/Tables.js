@@ -14,26 +14,23 @@ export const EditButton = ({ item }: Props) => {
 
   const TriggerButton = useMemo(() => (
     <Button
+      as={Link}
       basic
       compact
       icon='pencil'
+      to={`${item.id}`}
     />
   ), [])
 
   return (
-    <Link
-      to={`${item.id}`}
-    >
-      <Popup
-        content={t('Common.actions.navigate.content')}
-        header={t('Common.actions.navigate.title')}
-        hideOnScroll
-        mouseEnterDelay={500}
-        position='top right'
-        trigger={TriggerButton}
-      />
-
-    </Link>
+    <Popup
+      content={t('Common.actions.navigate.content')}
+      header={t('Common.actions.navigate.title')}
+      hideOnScroll
+      mouseEnterDelay={500}
+      position='top right'
+      trigger={TriggerButton}
+    />
   )
 }
 
