@@ -5,7 +5,7 @@ import { Message } from 'semantic-ui-react';
 import { BooleanIcon, ListTable, Toaster } from '@performant-software/semantic-components';
 import React, { type AbstractComponent, useCallback, useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import DateTimeUtils from '../utils/DateTime';
 import usePermissions from '../hooks/Permissions';
 import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
