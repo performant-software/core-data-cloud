@@ -32,6 +32,16 @@
     "header": "Welcome to Core Data Cloud",
     "login": "Sign in with Performant Studio"
   },
+  "ConfirmDeleteChallenge": {
+    "buttons": {
+      "delete": "Delete"
+    },
+    "header": "Confirm Delete",
+    "messages": {
+      "intro": "This is a destructive action. Please type",
+      "toConfirm": "to confirm."
+    }
+  },
   "GeoNamesForm": {
     "labels": {
       "username": "Username"

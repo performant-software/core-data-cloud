@@ -10,6 +10,7 @@ import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import useParams from '../hooks/ParsedParams';
 import { getEditButton } from '../utils/Tables';
+import ConfirmDeleteChallenge from '../components/ConfirmDeleteChallenge';
 
 const ProjectModels = () => {
   const navigate = useNavigate();
@@ -62,6 +63,13 @@ const ProjectModels = () => {
         }]}
         onDelete={(projectModel) => ProjectModelsService.delete(projectModel)}
         onLoad={(params) => ProjectModelsService.fetchAll({ ...params, project_id: projectId })}
+        renderDeleteModal={({ selectedItem, onConfirm, onCancel }) => (
+          <ConfirmDeleteChallenge
+            name={selectedItem.name}
+            onClose={onCancel}
+            onConfirm={onConfirm}
+          />)
+        }
         searchable
         session={{
           key: `project_models_${projectId}`,
