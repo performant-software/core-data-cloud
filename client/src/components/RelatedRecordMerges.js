@@ -47,7 +47,7 @@ const RelatedRecordMerges = () => {
         sortable: true
       }, {
         name: 'created_at',
-        label: t('RelatedRecordMerges.columns.created'),
+        label: t('RelatedRecordMerges.columns.mergeDate'),
         resolve: (recordMerge) => new Date(recordMerge.created_at).toLocaleDateString(),
         sortable: true
       }]}

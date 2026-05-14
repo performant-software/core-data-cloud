@@ -892,7 +892,7 @@
   },
   "RelatedRecordMerges": {
     "columns": {
-      "created": "Created"
+      "mergeDate": "Merge date"
     }
   },
   "RelatedTaxonomyItems": {
