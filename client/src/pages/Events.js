@@ -22,6 +22,7 @@ import Views from '../constants/ListViews';
 import WindowUtils from '../utils/Window';
 import MergeButton from '../components/MergeButton';
 import useSelectable from '../hooks/Selectable';
+import { getEditButton } from '../utils/Tables';
 
 const Events: AbstractComponent<any> = () => {
   const [view, setView] = useState(Views.all);
@@ -84,8 +85,7 @@ const Events: AbstractComponent<any> = () => {
       <ListTable
         actions={[{
           name: 'edit',
-          icon: 'pencil',
-          onClick: (event) => navigate(`${event.id}`)
+          render: getEditButton
         }, {
           accept: (event) => canDeleteRecord(projectModel, event),
           icon: 'times',

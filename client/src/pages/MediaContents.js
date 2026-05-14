@@ -15,6 +15,7 @@ import useSelectable from '../hooks/Selectable';
 import { useTranslation } from 'react-i18next';
 import Views from '../constants/ListViews';
 import WindowUtils from '../utils/Window';
+import { getEditButton } from '../utils/Tables';
 
 const MediaContents = () => {
   const [view, setView] = useState(Views.all);
@@ -62,9 +63,8 @@ const MediaContents = () => {
       />
       <ItemList
         actions={[{
-          basic: false,
           name: 'edit',
-          onClick: (mediaContent) => navigate(`${mediaContent.id}`)
+          render: getEditButton
         }, {
           accept: (mediaContent) => canDeleteRecord(projectModel, mediaContent),
           basic: false,

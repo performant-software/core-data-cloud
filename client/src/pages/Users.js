@@ -13,6 +13,7 @@ import UserRoles from '../utils/UserRoles';
 import UsersService from '../services/Users';
 import Validation from '../utils/Validation';
 import { AuthenticationContext } from '../context/Authentication';
+import { getEditButton } from '../utils/Tables';
 
 const Users: AbstractComponent<any> = () => {
   const [errors, setErrors] = useState([]);
@@ -46,7 +47,7 @@ const Users: AbstractComponent<any> = () => {
     let list = [
       {
         name: 'edit',
-        onClick: (item) => navigate(`${item.id}`)
+        render: getEditButton
       }, {
         name: 'delete'
       }

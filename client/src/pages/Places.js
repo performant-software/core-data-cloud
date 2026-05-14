@@ -23,6 +23,7 @@ import useParams from '../hooks/ParsedParams';
 import useSelectable from '../hooks/Selectable';
 import Views from '../constants/ListViews';
 import WindowUtils from '../utils/Window';
+import { getEditButton } from '../utils/Tables';
 
 const Places: AbstractComponent<any> = () => {
   const [view, setView] = useState(Views.all);
@@ -86,8 +87,7 @@ const Places: AbstractComponent<any> = () => {
       <ListTable
         actions={[{
           name: 'edit',
-          icon: 'pencil',
-          onClick: (place) => navigate(`${place.id}`)
+          render: getEditButton
         }, {
           accept: (place) => canDeleteRecord(projectModel, place),
           icon: 'times',

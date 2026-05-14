@@ -9,6 +9,7 @@ import ProjectModelsService from '../services/ProjectModels';
 import ProjectSettingsMenu from '../components/ProjectSettingsMenu';
 import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import useParams from '../hooks/ParsedParams';
+import { getEditButton } from '../utils/Tables';
 
 const ProjectModels = () => {
   const navigate = useNavigate();
@@ -29,8 +30,7 @@ const ProjectModels = () => {
       <ListTable
         actions={[{
           name: 'edit',
-          icon: 'pencil',
-          onClick: (projectModel) => navigate(`${projectModel.id}`)
+          render: getEditButton
         }, {
           name: 'delete',
           icon: 'times'

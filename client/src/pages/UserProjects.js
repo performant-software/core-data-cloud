@@ -26,6 +26,7 @@ import UsersService from '../services/Users';
 import useParams from '../hooks/ParsedParams';
 import Validation from '../utils/Validation';
 import { AuthenticationContext } from '../context/Authentication';
+import { getEditButton } from '../utils/Tables';
 
 const UserProjects: AbstractComponent<any> = () => {
   const [errors, setErrors] = useState([]);
@@ -155,8 +156,7 @@ const UserProjects: AbstractComponent<any> = () => {
     let list = [
       {
         name: 'edit',
-        icon: 'pencil',
-        onClick: (item) => navigate(`${item.id}`)
+        render: getEditButton
       }, {
         icon: 'times',
         name: 'delete'
