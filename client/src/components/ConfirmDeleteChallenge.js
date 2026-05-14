@@ -7,6 +7,7 @@ import {
   Form,
   Modal
 } from 'semantic-ui-react';
+import styles from './ConfirmDeleteChallenge.module.css';
 
 type Props = {
   name: string,
@@ -36,7 +37,9 @@ const ConfirmDeleteChallenge = (props: Props) => {
       <Modal.Header
         content={t('ConfirmDeleteChallenge.header')}
       />
-      <Modal.Content>
+      <Modal.Content
+        className={styles.confirmDeleteChallengeContent}
+      >
         <p>
           { t('ConfirmDeleteChallenge.messages.intro') }
           &nbsp;
