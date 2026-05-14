@@ -42,6 +42,10 @@ const RelatedRecordMerges = () => {
       className='compact'
       collectionName='record_merges'
       columns={[{
+        name: 'merged_name',
+        label: t('Common.columns.name'),
+        sortable: true
+      }, {
         name: 'merged_uuid',
         label: t('Common.columns.uuid'),
         sortable: true
