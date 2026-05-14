@@ -33,6 +33,7 @@ import ModelClassDropdown from '../components/ModelClassDropdown';
 import ProjectContext from '../context/Project';
 import type { ProjectModel as ProjectModelType } from '../types/ProjectModel';
 import ProjectModelRelationshipModal from '../components/ProjectModelRelationshipModal';
+import ConfirmDeleteChallenge from '../components/ConfirmDeleteChallenge';
 import ProjectModelAccessesService from '../services/ProjectModelAccesses';
 import ProjectModelsService from '../services/ProjectModels';
 import ProjectModelsUtils from '../utils/ProjectModels';
@@ -222,6 +223,14 @@ const ProjectModel = (props: Props) => {
               items={item.user_defined_fields}
               onDelete={editPageProps.onDeleteChildAssociation.bind(this, 'user_defined_fields')}
               onSave={editPageProps.onSaveChildAssociation.bind(this, 'user_defined_fields')}
+              renderDeleteModal={({ selectedItem, onConfirm, onCancel }) => (
+                <ConfirmDeleteChallenge
+                  name={selectedItem.column_name}
+                  onClose={onCancel}
+                  onConfirm={onConfirm}
+                />
+                )
+              }
             />
           </SimpleEditPage.Tab>
           <SimpleEditPage.Tab
@@ -266,6 +275,13 @@ const ProjectModel = (props: Props) => {
                 component: ProjectModelRelationshipModal
               }}
               onDelete={onDeleteRelationship}
+              renderDeleteModal={({ selectedItem, onConfirm, onCancel }) => (
+                <ConfirmDeleteChallenge
+                  name={selectedItem.name}
+                  onClose={onCancel}
+                  onConfirm={onConfirm}
+                />)
+              }
               onSave={onSaveRelationship}
             />
           </SimpleEditPage.Tab>
