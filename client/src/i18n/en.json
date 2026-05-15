@@ -612,6 +612,7 @@
       "description": "Description",
       "host": "Host",
       "fairCopyCloudUrl": "FairCopy.cloud URL",
+      "fairCopyCloudProjectId": "FairCopy Cloud 2 Associated Project ID",
       "faircopyCloudConnectedModel": "FairCopy.cloud connected model",
       "mapLibraryUrl": "Map library URL",
       "name": "Name",
