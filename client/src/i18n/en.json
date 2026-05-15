@@ -73,7 +73,8 @@
     },
     "columns":{
       "order": "Order",
-      "uuid": "Identifier"
+      "uuid": "Identifier",
+      "name": "Name"
     },
     "errors": {
       "header": "An error occurred saving the record",
@@ -892,7 +893,7 @@
   },
   "RelatedRecordMerges": {
     "columns": {
-      "created": "Created"
+      "mergeDate": "Merge date"
     }
   },
   "RelatedTaxonomyItems": {

@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_05_04_182505) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_14_201623) do
+  create_schema "heroku_ext"
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
@@ -285,6 +286,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_04_182505) do
     t.string "merged_uuid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "merged_name"
     t.index ["mergeable_type", "mergeable_id"], name: "index_core_data_connector_record_merges_on_mergeable"
   end
 
