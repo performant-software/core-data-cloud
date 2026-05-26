@@ -29,7 +29,7 @@
     }
   },
   "ClerkLoginModal": {
-    "header": "Welcome to Core Data Cloud",
+    "header": "Welcome to FairData",
     "login": "Sign in with Performant Studio"
   },
   "ConfirmDeleteChallenge": {
@@ -299,7 +299,7 @@
     "password": "Password"
   },
   "Logo": {
-    "title": "Core Data Cloud"
+    "title": "FairData"
   },
   "ManifestLimitIcon": {
     "labels": {
