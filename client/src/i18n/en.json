@@ -29,8 +29,18 @@
     }
   },
   "ClerkLoginModal": {
-    "header": "Welcome to Core Data Cloud",
+    "header": "Welcome to FairData",
     "login": "Sign in with Performant Studio"
+  },
+  "ConfirmDeleteChallenge": {
+    "buttons": {
+      "delete": "Delete"
+    },
+    "header": "Confirm Delete",
+    "messages": {
+      "intro": "This is a destructive action. Please type",
+      "toConfirm": "to confirm."
+    }
   },
   "GeoNamesForm": {
     "labels": {
@@ -63,7 +73,8 @@
     },
     "columns":{
       "order": "Order",
-      "uuid": "Identifier"
+      "uuid": "Identifier",
+      "name": "Name"
     },
     "errors": {
       "header": "An error occurred saving the record",
@@ -288,7 +299,7 @@
     "password": "Password"
   },
   "Logo": {
-    "title": "Core Data Cloud"
+    "title": "FairData"
   },
   "ManifestLimitIcon": {
     "labels": {
@@ -602,6 +613,7 @@
       "description": "Description",
       "host": "Host",
       "fairCopyCloudUrl": "FairCopy.cloud URL",
+      "fairCopyCloudProjectId": "FairCopy Cloud 2 Associated Project ID",
       "faircopyCloudConnectedModel": "FairCopy.cloud connected model",
       "mapLibraryUrl": "Map library URL",
       "name": "Name",
@@ -882,7 +894,7 @@
   },
   "RelatedRecordMerges": {
     "columns": {
-      "created": "Created"
+      "mergeDate": "Merge date"
     }
   },
   "RelatedTaxonomyItems": {

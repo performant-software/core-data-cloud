@@ -29,6 +29,7 @@ import styles from './Project.module.css';
 import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import useParams from '../hooks/ParsedParams';
 import useReactRouterEditPage from '../hooks/useReactRouterEditPage';
+import ConfirmDeleteChallenge from '../components/ConfirmDeleteChallenge';
 
 type Props = EditContainerProps & {
   item: ProjectType
@@ -150,6 +151,14 @@ const Project = (props: Props) => {
             required={editPageProps.isRequired('faircopy_cloud_url')}
             onChange={editPageProps.onTextInputChange.bind(this, 'faircopy_cloud_url')}
             value={item.faircopy_cloud_url || ''}
+          />
+          <Form.Input
+            error={editPageProps.isError('faircopy_cloud_project_id')}
+            label={t('Project.labels.fairCopyCloudProjectId')}
+            required={editPageProps.isRequired('faircopy_cloud_project_id')}
+            onChange={editPageProps.onTextInputChange.bind(this, 'faircopy_cloud_project_id')}
+            type='number'
+            value={item.faircopy_cloud_project_id}
           />
           <Form.Input
             error={editPageProps.isError('faircopy_cloud_project_model_id')}
@@ -298,22 +307,13 @@ const Project = (props: Props) => {
                     icon='times'
                     onClick={() => setClearModal(true)}
                   />
-                  <Confirm
-                    centered={false}
-                    confirmButton={(
-                      <Button
-                        disabled={clearing}
-                        content={t('Common.buttons.ok')}
-                        loading={clearing}
-                        primary
-                      />
-                    )}
-                    content={t('Project.messages.clear.content')}
-                    header={t('Project.messages.clear.header')}
-                    open={clearModal}
-                    onCancel={() => setClearModal(false)}
-                    onConfirm={onClear}
-                  />
+                  {clearModal && (
+                    <ConfirmDeleteChallenge
+                      name={item.name}
+                      onClose={() => setClearModal(false)}
+                      onConfirm={onClear}
+                    />
+                  )}
                   { cleared && (
                     <Toaster
                       onDismiss={() => setCleared(false)}
@@ -344,22 +344,13 @@ const Project = (props: Props) => {
                     icon='trash'
                     onClick={() => setDeleteModal(true)}
                   />
-                  <Confirm
-                    centered={false}
-                    confirmButton={(
-                      <Button
-                        disabled={deleting}
-                        content={t('Common.buttons.ok')}
-                        loading={deleting}
-                        primary
-                      />
-                    )}
-                    content={t('Project.messages.delete.content')}
-                    header={t('Project.messages.delete.header')}
-                    open={deleteModal}
-                    onCancel={() => setDeleteModal(false)}
-                    onConfirm={onDelete}
-                  />
+                  {deleteModal && (
+                    <ConfirmDeleteChallenge
+                      name={item.name}
+                      onClose={() => setDeleteModal(false)}
+                      onConfirm={onDelete}
+                    />
+                  )}
                 </Segment>
               </SegmentGroup>
             </div>

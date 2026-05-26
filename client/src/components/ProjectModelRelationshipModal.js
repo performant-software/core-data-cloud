@@ -10,6 +10,7 @@ import type { ProjectModelRelationship as ProjectModelRelationshipType } from '.
 import ProjectModelsService from '../services/ProjectModels';
 import ProjectModelTransform from '../transforms/ProjectModel';
 import useParams from '../hooks/ParsedParams';
+import ConfirmDeleteChallenge from './ConfirmDeleteChallenge';
 
 type Props = EditContainerProps & {
   item: ProjectModelRelationshipType
@@ -198,6 +199,13 @@ const ProjectModelRelationshipModal = (props: Props) => {
           items={props.item.user_defined_fields}
           onDelete={props.onDeleteChildAssociation.bind(this, 'user_defined_fields')}
           onSave={props.onSaveChildAssociation.bind(this, 'user_defined_fields')}
+          renderDeleteModal={({ selectedItem, onConfirm, onCancel }) => (
+            <ConfirmDeleteChallenge
+              name={selectedItem.column_name}
+              onClose={onCancel}
+              onConfirm={onConfirm}
+            />)
+          }
         />
       </TabbedModal.Tab>
       { props.children }
