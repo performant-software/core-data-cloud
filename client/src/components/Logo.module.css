@@ -9,7 +9,8 @@
   color: unset;
 }
 
-.logo > .ui.header {
-  margin-left: 0.5rem;
-  margin-top: 0px;
+.logo > .image {
+  display: block;
+  height: 2em;
+  width: auto;
 }
