@@ -37,6 +37,25 @@ const Places: AbstractComponent<any> = () => {
   const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
 
+  const relatedFields = useMemo(() => {
+    const result = []
+    projectModel?.all_project_model_relationships.forEach((relationship) => {
+      const model = relationship.primary_model || relationship.related_model
+      for (const udf of model.user_defined_fields) {
+        result.push({
+          name: `${relationship.id}.${udf.uuid}`,
+          label: `${relationship.name} → ${udf.column_name}`,
+          hidden: true,
+          joined: true
+        })
+      }
+    })
+
+    return result
+  })
+
+  console.log(relatedFields)
+
   /**
    * Memo-izes the places columns.
    */
@@ -49,7 +68,7 @@ const Places: AbstractComponent<any> = () => {
     label: t('Common.columns.uuid'),
     sortable: true,
     hidden: true
-  }, ...userDefinedColumns], [userDefinedColumns]);
+  }, ...userDefinedColumns, ...relatedFields], [userDefinedColumns]);
 
   /**
    * Renders a string representation of the place geometry for the passed place.
@@ -150,6 +169,7 @@ const Places: AbstractComponent<any> = () => {
               project_model_id: projectModelId,
               defineable_id: projectModelId,
               defineable_type: 'CoreDataConnector::ProjectModel',
+              join_columns: columns.filter((column) => column.joined).map((column) => column.name),
               view
             })
             .finally(() => WindowUtils.scrollToTop())
