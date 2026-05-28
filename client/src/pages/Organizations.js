@@ -22,6 +22,7 @@ import useSelectable from '../hooks/Selectable';
 import Views from '../constants/ListViews';
 import WindowUtils from '../utils/Window';
 import { getEditButton } from '../utils/Tables';
+import useRelatedFields from '../hooks/useRelatedFields';
 
 const Organizations: AbstractComponent<any> = () => {
   const [view, setView] = useState(Views.all);
@@ -35,6 +36,8 @@ const Organizations: AbstractComponent<any> = () => {
   const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
 
+  const { joinColumns, relatedFields } = useRelatedFields();
+
   /**
    * Memo-izes the organizations columns.
    */
@@ -47,7 +50,7 @@ const Organizations: AbstractComponent<any> = () => {
     label: t('Common.columns.uuid'),
     sortable: true,
     hidden: true
-  }, ...userDefinedColumns], [userDefinedColumns]);
+  }, ...userDefinedColumns, ...relatedFields], [userDefinedColumns, relatedFields ]);
 
   if (loading) {
     return null;
@@ -131,6 +134,7 @@ const Organizations: AbstractComponent<any> = () => {
               project_model_id: projectModelId,
               defineable_id: projectModelId,
               defineable_type: 'CoreDataConnector::ProjectModel',
+              join_columns: joinColumns,
               view
             })
             .finally(() => WindowUtils.scrollToTop())
