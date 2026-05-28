@@ -24,6 +24,7 @@ import useSelectable from '../hooks/Selectable';
 import Views from '../constants/ListViews';
 import WindowUtils from '../utils/Window';
 import { getEditButton } from '../utils/Tables';
+import useRelatedFields from '../hooks/useRelatedFields';
 
 const Places: AbstractComponent<any> = () => {
   const [view, setView] = useState(Views.all);
@@ -37,24 +38,7 @@ const Places: AbstractComponent<any> = () => {
   const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
 
-  const relatedFields = useMemo(() => {
-    const result = []
-    projectModel?.all_project_model_relationships.forEach((relationship) => {
-      const model = relationship.primary_model || relationship.related_model
-      for (const udf of model.user_defined_fields) {
-        result.push({
-          name: `${relationship.id}.${udf.uuid}`,
-          label: `${relationship.name} → ${udf.column_name}`,
-          hidden: true,
-          joined: true
-        })
-      }
-    })
-
-    return result
-  })
-
-  console.log(relatedFields)
+  const { joinColumns, relatedFields } = useRelatedFields();
 
   /**
    * Memo-izes the places columns.
@@ -169,7 +153,7 @@ const Places: AbstractComponent<any> = () => {
               project_model_id: projectModelId,
               defineable_id: projectModelId,
               defineable_type: 'CoreDataConnector::ProjectModel',
-              join_columns: columns.filter((column) => column.joined).map((column) => column.name),
+              join_columns: joinColumns,
               view
             })
             .finally(() => WindowUtils.scrollToTop())
