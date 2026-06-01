@@ -155,6 +155,7 @@ const Component = (props: ComponentProps) => {
               />
             </Section>
             <Relationships
+              key={props.item?.id}
               onCreateManifests={props.onCreateManifests}
             />
             { projectModel?.allow_identifiers && props.item.id && (

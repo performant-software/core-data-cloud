@@ -52,7 +52,7 @@ const useEditContainer = (options: Options) => {
         }
       });
     }
-  }, []);
+  }, [itemProp.id]);
 
   useEffect(() => {
     if (itemProp && !ObjectUtils.isEqual(itemProp, originalItem)) {
