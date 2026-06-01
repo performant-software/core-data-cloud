@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: 26c55048d67213df21c694ba7496ded2638c41b7
-  tag: v0.1.133
+  revision: e6271a235feaeb17e5d7ac335ac4c4d658aa202b
+  tag: v0.1.134
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 11.0)
@@ -41,8 +41,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/resource-api.git
-  revision: 2307a221fec5a06949dc039537d4b24cbcf8b649
-  tag: v0.5.15
+  revision: d4d79db42c12991dd5c6262b711d6789f6838062
+  tag: v0.5.16
   specs:
     resource_api (0.1.0)
       pagy (~> 5.10)
@@ -267,7 +267,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.9-x86_64-linux-gnu)
       racc (~> 1.4)
-    oj (3.17.0)
+    oj (3.17.1)
       bigdecimal (>= 3.0)
       ostruct (>= 0.2)
     ostruct (0.6.3)

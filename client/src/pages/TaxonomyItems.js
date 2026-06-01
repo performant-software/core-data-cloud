@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import Views from '../constants/ListViews';
 import WindowUtils from '../utils/Window';
 import { getEditButton } from '../utils/Tables';
+import useRelatedFields from '../hooks/useRelatedFields';
 
 const TaxonomyItems = () => {
   const [view, setView] = useState(Views.all);
@@ -30,6 +31,8 @@ const TaxonomyItems = () => {
   const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
 
+  const { joinColumns, relatedFields, reload } = useRelatedFields();
+
   /**
    * Memo-izes the taxonomy items columns.
    */
@@ -42,7 +45,7 @@ const TaxonomyItems = () => {
     label: t('Common.columns.uuid'),
     sortable: true,
     hidden: true
-  }, ...userDefinedColumns], [userDefinedColumns]);
+  }, ...userDefinedColumns, ...relatedFields], [userDefinedColumns, relatedFields]);
 
   if (loading) {
     return null;
@@ -115,11 +118,17 @@ const TaxonomyItems = () => {
         onDelete={(taxonomy) => TaxonomiesService.delete(taxonomy)}
         onLoad={(params) => (
           TaxonomiesService
-            .fetchAll({ ...params, project_model_id: projectModelId, view })
+            .fetchAll({
+              ...params,
+              project_model_id: projectModelId,
+              join_columns: joinColumns,
+              view
+            })
             .finally(() => WindowUtils.scrollToTop())
         )}
         onRowSelect={onRowSelect}
         perPageOptions={[10, 25, 50, 100]}
+        reload={reload}
         searchable
         selectable
         session={{
