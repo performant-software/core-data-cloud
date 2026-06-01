@@ -37,7 +37,7 @@ const People: AbstractComponent<any> = () => {
   const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
 
-  const { joinColumns, relatedFields } = useRelatedFields();
+  const { joinColumns, relatedFields, reload } = useRelatedFields();
 
   /**
    * Memo-izes the people columns.
@@ -146,6 +146,7 @@ const People: AbstractComponent<any> = () => {
         )}
         onRowSelect={onRowSelect}
         perPageOptions={[10, 25, 50, 100]}
+        reload={reload}
         searchable
         selectable
         session={{

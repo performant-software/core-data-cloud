@@ -1,17 +1,20 @@
 import ProjectContext from '../context/Project';
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 
 const useRelatedFields = () => {
   const [relatedColumns, setRelatedColumns] = useState([])
+  const [reload, setReload] = useState(false)
 
   const { projectModel } = useContext(ProjectContext);
 
   const addRelatedColumn = (columnName) => {
     setRelatedColumns(prev => [...prev, columnName])
+    setReload(true)
   }
 
   const removeRelatedColumn = (columnName) => {
     setRelatedColumns(prev => prev.filter(c => c !== columnName))
+    setReload(true)
   }
 
   const relatedFields = useMemo(() => {
@@ -55,7 +58,13 @@ const useRelatedFields = () => {
     return relatedColumns.map(c => c.replace('udf_', 'udf.'))
   }, [relatedColumns])
 
-  return { relatedFields, joinColumns }
+  useEffect(() => {
+    if (reload) {
+      setReload(false)
+    }
+  }, [reload])
+
+  return { relatedFields, joinColumns, reload }
 };
 
 export default useRelatedFields;
