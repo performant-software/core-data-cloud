@@ -7,7 +7,7 @@ import {
   useMemo,
   useState
 } from 'react';
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router';
 import _ from 'underscore';
 import ItemLayoutContext from '../context/ItemLayout';
 import ProjectContext from '../context/Project';
@@ -57,7 +57,6 @@ const useRelationship = (props) => {
   const { projectModel } = useContext(ProjectContext);
   const { setSaved } = useContext(ItemLayoutContext);
 
-  const navigate = useNavigate();
   const { itemId, projectId } = useParams();
   const { projectModelRelationship } = useProjectModelRelationship();
 
@@ -167,12 +166,9 @@ const useRelationship = (props) => {
    *
    * @type {(function(): void)|*}
    */
-  const onNavigate = useCallback(() => {
-    const projectModelId = foreignObject.project_model_id;
-    const recordId = foreignObject.id;
-
-    navigate(`/projects/${projectId}/${projectModelId}/${recordId}`);
-  }, [foreignObject]);
+  const navigateUrl = foreignObject
+    ? `/projects/${projectId}/${foreignObject.project_model_id}/${foreignObject.id}`
+    : '';
 
   /**
    * Calls the onChange or onDelete function based on the passed value.
@@ -201,11 +197,12 @@ const useRelationship = (props) => {
     content: null,
     name: 'clear'
   }, {
+    as: Link,
     basic: true,
     icon: 'arrow right',
     name: 'navigate',
-    onClick: onNavigate
-  }], [foreignKey, onNavigate, props.item]);
+    to: navigateUrl
+  }], [foreignKey, navigateUrl, props.item]);
 
   /**
    * Saves the record after a related record has been changed. We only want to do this when the user makes a
@@ -248,7 +245,6 @@ const useRelationship = (props) => {
     foreignObject,
     foreignObjectName,
     label,
-    onNavigate,
     onSave,
     onSelection
   };

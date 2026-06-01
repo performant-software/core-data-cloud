@@ -52,9 +52,9 @@ const Relationships = (props) => {
     return null;
   }
 
-  return _.map(projectModel.all_project_model_relationships, (projectModelRelationship) => (
+  return projectModel.all_project_model_relationships.map((projectModelRelationship, idx) => (
     <Relationship
-      key={projectModelRelationship.id}
+      key={`${projectModelRelationship.id}-${idx}`}
       onCreateManifests={props.onCreateManifests}
       projectModelRelationship={projectModelRelationship}
     />
