@@ -25,14 +25,15 @@ const useRelatedFields = () => {
 
       const nameColumn = `rel_${relationship.id}_name`
 
-      result.push({
-        name: nameColumn,
-        label: `${isInverse ? relationship.inverse_name : relationship.name}`,
-        hidden: true,
-        onShow: () => addRelatedColumn(nameColumn),
-        onHide: () => removeRelatedColumn(nameColumn),
-        sortable: true
-      })
+      if (!result.some(c => c.name === nameColumn)) {
+        result.push({
+          name: nameColumn,
+          label: `${isInverse ? relationship.inverse_name : relationship.name}`,
+          hidden: true,
+          onShow: () => addRelatedColumn(nameColumn),
+          onHide: () => removeRelatedColumn(nameColumn)
+        })
+      }
 
       for (const udf of model.user_defined_fields) {
         const baseColumnName = `rel_${relationship.id}_udf_${udf.uuid}`
@@ -44,8 +45,7 @@ const useRelatedFields = () => {
             label: `${isInverse ? relationship.inverse_name : relationship.name} → ${udf.column_name}`,
             hidden: true,
             onShow: () => addRelatedColumn(baseColumnName),
-            onHide: () => removeRelatedColumn(baseColumnName),
-            sortable: true
+            onHide: () => removeRelatedColumn(baseColumnName)
           })
         }
       }
