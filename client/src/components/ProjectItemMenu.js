@@ -47,11 +47,11 @@ const ProjectItemMenu = () => {
    *
    * @type {(function(*, *, *): void)|*}
    */
-  const addSection = useCallback((items, id, name) => {
+  const addSection = useCallback((items, id, name, key) => {
     items.push({
       active: activeSection && activeSection === id?.toString(),
       content: name,
-      key: id,
+      key: key || id,
       onClick: () => onSectionClick(id)
     });
   }, [activeSection, onSectionClick]);
@@ -69,12 +69,12 @@ const ProjectItemMenu = () => {
 
     // Relationships are only available if the record has been saved
     if (itemId) {
-      _.each(projectModel?.all_project_model_relationships, (projectModelRelationship) => {
+      projectModel?.all_project_model_relationships.forEach((projectModelRelationship, idx) => {
         const name = projectModelRelationship.inverse
           ? projectModelRelationship.inverse_name
           : projectModelRelationship.name;
 
-        addSection(items, projectModelRelationship.id, name);
+        addSection(items, projectModelRelationship.id, name, `${projectModelRelationship.id}-${idx}`);
       });
 
       // Add web identifiers
