@@ -2,6 +2,7 @@
 
 import { ItemList, LazyMedia } from '@performant-software/semantic-components';
 import React, { useCallback, useContext, useState } from 'react';
+import { Link } from 'react-router';
 import { FaImage, FaImages } from 'react-icons/fa6';
 import { useNavigate } from 'react-router';
 import { Icon } from 'semantic-ui-react';
@@ -15,7 +16,6 @@ import useSelectable from '../hooks/Selectable';
 import { useTranslation } from 'react-i18next';
 import Views from '../constants/ListViews';
 import WindowUtils from '../utils/Window';
-import { getEditButton } from '../utils/Tables';
 
 const MediaContents = () => {
   const [view, setView] = useState(Views.all);
@@ -63,8 +63,11 @@ const MediaContents = () => {
       />
       <ItemList
         actions={[{
-          name: 'edit',
-          render: getEditButton
+          as: Link,
+          asProps: (item) => ({
+            to: `${item.id}`
+          }),
+          name: 'edit'
         }, {
           accept: (mediaContent) => canDeleteRecord(projectModel, mediaContent),
           basic: false,
