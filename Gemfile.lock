@@ -1,27 +1,4 @@
 GIT
-  remote: https://github.com/performant-software/core-data-connector.git
-  revision: e6271a235feaeb17e5d7ac335ac4c4d658aa202b
-  tag: v0.1.134
-  specs:
-    core_data_connector (0.1.0)
-      activerecord-postgis-adapter (~> 11.0)
-      clerk-sdk-ruby (~> 5.1, >= 5.1.2)
-      faker
-      fuzzy_dates
-      jwt (~> 3.1.2)
-      jwt_auth
-      postmark-rails (~> 0.22.1)
-      rack-cors (~> 3.0.0)
-      rails (>= 8.0, < 9)
-      resource_api
-      rgeo-geojson (~> 2.2)
-      rubyzip (~> 2.3.2)
-      triple_eye_effable
-      typesense (~> 0.14)
-      typhoeus (~> 1.4)
-      user_defined_fields
-
-GIT
   remote: https://github.com/performant-software/fuzzy-dates.git
   revision: 1572b9c3370922aace98e9e2db139a30c55fda48
   tag: v0.1.2
@@ -32,12 +9,12 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/jwt-auth.git
-  revision: 993b47f395d7349c499a0ffda6ef286871ef89dc
-  tag: v0.1.3
+  revision: f06a3bf93050387a2597dd2c079e5175822063f2
+  tag: v1.0.0
   specs:
     jwt_auth (0.1.0)
-      jwt (~> 3.1.2)
-      rails (>= 7.1, < 9)
+      jwt (~> 3.2)
+      rails (>= 8.1, < 9)
 
 GIT
   remote: https://github.com/performant-software/resource-api.git
@@ -67,32 +44,55 @@ GIT
       rails (>= 6.0.3.2, < 9)
       resource_api
 
+PATH
+  remote: ../core-data-connector
+  specs:
+    core_data_connector (0.1.0)
+      activerecord-postgis-adapter (~> 11.1)
+      clerk-sdk-ruby (~> 5.1, >= 5.1.2)
+      faker
+      fuzzy_dates
+      jwt (~> 3.2)
+      jwt_auth
+      postmark-rails (~> 0.22.1)
+      rack-cors (~> 3.0.0)
+      rails (>= 8.1, < 9)
+      resource_api
+      rgeo-geojson (~> 2.2)
+      rubyzip (~> 2.3.2)
+      triple_eye_effable
+      typesense (~> 5.0)
+      typhoeus (~> 1.6)
+      user_defined_fields
+
 GEM
   remote: https://rubygems.org/
   specs:
-    actioncable (8.0.2)
-      actionpack (= 8.0.2)
-      activesupport (= 8.0.2)
+    action_text-trix (2.1.19)
+      railties
+    actioncable (8.1.3)
+      actionpack (= 8.1.3)
+      activesupport (= 8.1.3)
       nio4r (~> 2.0)
       websocket-driver (>= 0.6.1)
       zeitwerk (~> 2.6)
-    actionmailbox (8.0.2)
-      actionpack (= 8.0.2)
-      activejob (= 8.0.2)
-      activerecord (= 8.0.2)
-      activestorage (= 8.0.2)
-      activesupport (= 8.0.2)
+    actionmailbox (8.1.3)
+      actionpack (= 8.1.3)
+      activejob (= 8.1.3)
+      activerecord (= 8.1.3)
+      activestorage (= 8.1.3)
+      activesupport (= 8.1.3)
       mail (>= 2.8.0)
-    actionmailer (8.0.2)
-      actionpack (= 8.0.2)
-      actionview (= 8.0.2)
-      activejob (= 8.0.2)
-      activesupport (= 8.0.2)
+    actionmailer (8.1.3)
+      actionpack (= 8.1.3)
+      actionview (= 8.1.3)
+      activejob (= 8.1.3)
+      activesupport (= 8.1.3)
       mail (>= 2.8.0)
       rails-dom-testing (~> 2.2)
-    actionpack (8.0.2)
-      actionview (= 8.0.2)
-      activesupport (= 8.0.2)
+    actionpack (8.1.3)
+      actionview (= 8.1.3)
+      activesupport (= 8.1.3)
       nokogiri (>= 1.8.5)
       rack (>= 2.2.4)
       rack-session (>= 1.0.1)
@@ -100,45 +100,46 @@ GEM
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
       useragent (~> 0.16)
-    actiontext (8.0.2)
-      actionpack (= 8.0.2)
-      activerecord (= 8.0.2)
-      activestorage (= 8.0.2)
-      activesupport (= 8.0.2)
+    actiontext (8.1.3)
+      action_text-trix (~> 2.1.15)
+      actionpack (= 8.1.3)
+      activerecord (= 8.1.3)
+      activestorage (= 8.1.3)
+      activesupport (= 8.1.3)
       globalid (>= 0.6.0)
       nokogiri (>= 1.8.5)
-    actionview (8.0.2)
-      activesupport (= 8.0.2)
+    actionview (8.1.3)
+      activesupport (= 8.1.3)
       builder (~> 3.1)
       erubi (~> 1.11)
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
-    activejob (8.0.2)
-      activesupport (= 8.0.2)
+    activejob (8.1.3)
+      activesupport (= 8.1.3)
       globalid (>= 0.3.6)
-    activemodel (8.0.2)
-      activesupport (= 8.0.2)
-    activerecord (8.0.2)
-      activemodel (= 8.0.2)
-      activesupport (= 8.0.2)
+    activemodel (8.1.3)
+      activesupport (= 8.1.3)
+    activerecord (8.1.3)
+      activemodel (= 8.1.3)
+      activesupport (= 8.1.3)
       timeout (>= 0.4.0)
-    activerecord-postgis-adapter (11.0.0)
-      activerecord (~> 8.0.0)
-      rgeo-activerecord (~> 8.0.0)
-    activestorage (8.0.2)
-      actionpack (= 8.0.2)
-      activejob (= 8.0.2)
-      activerecord (= 8.0.2)
-      activesupport (= 8.0.2)
+    activerecord-postgis-adapter (11.1.1)
+      activerecord (~> 8.1.0)
+      rgeo-activerecord (~> 8.1.0)
+    activestorage (8.1.3)
+      actionpack (= 8.1.3)
+      activejob (= 8.1.3)
+      activerecord (= 8.1.3)
+      activesupport (= 8.1.3)
       marcel (~> 1.0)
-    activesupport (8.0.2)
+    activesupport (8.1.3)
       base64
-      benchmark (>= 0.3)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.3.1)
       connection_pool (>= 2.2.5)
       drb
       i18n (>= 1.6, < 2)
+      json
       logger (>= 1.4.2)
       minitest (>= 5.1)
       securerandom (>= 0.3)
@@ -146,7 +147,7 @@ GEM
       uri (>= 0.13.1)
     aws-eventstream (1.4.0)
     aws-partitions (1.1140.0)
-    aws-sdk-core (3.228.0)
+    aws-sdk-core (3.251.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
       aws-sigv4 (~> 1.9)
@@ -157,19 +158,21 @@ GEM
     aws-sdk-kms (1.109.0)
       aws-sdk-core (~> 3, >= 3.228.0)
       aws-sigv4 (~> 1.5)
-    aws-sdk-s3 (1.195.0)
-      aws-sdk-core (~> 3, >= 3.228.0)
+    aws-sdk-s3 (1.225.0)
+      aws-sdk-core (~> 3, >= 3.248.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
     aws-sigv4 (1.12.1)
       aws-eventstream (~> 1, >= 1.0.2)
-    base64 (0.3.0)
-    bcrypt (3.1.20)
-    benchmark (0.4.1)
+    base64 (0.2.0)
+    bcrypt (3.1.22)
     bigdecimal (3.1.8)
     bootsnap (1.18.6)
       msgpack (~> 1.2)
     builder (3.2.4)
+    bundler-audit (0.9.3)
+      bundler (>= 1.2.0)
+      thor (~> 1.0)
     clerk-sdk-ruby (5.1.3)
       base64 (>= 0.2.0, < 1.0)
       concurrent-ruby (~> 1.3.5)
@@ -178,16 +181,16 @@ GEM
       faraday-retry (~> 2.4.0)
       jwt (~> 3.0)
     concurrent-ruby (1.3.5)
-    connection_pool (2.5.3)
+    connection_pool (3.0.2)
     crass (1.0.6)
     csv (3.3.5)
     date (3.3.3)
     debug (1.11.0)
       irb (~> 1.10)
       reline (>= 0.3.8)
-    dotenv (3.1.8)
-    dotenv-rails (3.1.8)
-      dotenv (= 3.1.8)
+    dotenv (3.2.0)
+    dotenv-rails (3.2.0)
+      dotenv (= 3.2.0)
       railties (>= 6.1)
     drb (2.2.3)
     erb (5.0.1)
@@ -208,8 +211,6 @@ GEM
     faraday-retry (2.4.0)
       faraday (~> 2.0)
     ffi (1.17.4-arm64-darwin)
-    ffi (1.17.4-x86_64-darwin)
-    ffi (1.17.4-x86_64-linux-gnu)
     globalid (1.1.0)
       activesupport (>= 5.0)
     httparty (0.20.0)
@@ -223,8 +224,8 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     jmespath (1.6.2)
-    json (2.12.2)
-    jwt (3.1.2)
+    json (2.19.8)
+    jwt (3.2.0)
       base64
     logger (1.7.0)
     loofah (2.21.3)
@@ -237,13 +238,15 @@ GEM
       net-smtp
     mail_safe (0.3.4)
       actionmailer (>= 3.0.0)
-    marcel (1.0.4)
+    marcel (1.2.1)
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
     mime-types-data (3.2025.0826)
     mini_mime (1.1.5)
-    minitest (5.25.5)
+    minitest (6.0.6)
+      drb (~> 2.0)
+      prism (~> 1.5)
     msgpack (1.8.0)
     multi_json (1.21.1)
     multi_xml (0.7.2)
@@ -261,19 +264,12 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.9)
-    nokogiri (1.18.9-arm64-darwin)
+    nokogiri (1.19.3-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.18.9-x86_64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.18.9-x86_64-linux-gnu)
-      racc (~> 1.4)
-    oj (3.17.1)
-      bigdecimal (>= 3.0)
-      ostruct (>= 0.2)
     ostruct (0.6.3)
     pagy (5.10.1)
       activesupport
-    pg (1.5.9)
+    pg (1.6.3-arm64-darwin)
     postmark (1.25.1)
       json
     postmark-rails (0.22.1)
@@ -282,15 +278,16 @@ GEM
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
+    prism (1.9.0)
     psych (5.2.6)
       date
       stringio
-    puma (6.6.0)
+    puma (8.0.2)
       nio4r (~> 2.0)
     pundit (2.3.1)
       activesupport (>= 3.0.0)
-    racc (1.7.1)
-    rack (3.1.16)
+    racc (1.8.1)
+    rack (3.2.6)
     rack-cors (3.0.0)
       logger
       rack (>= 3.0.14)
@@ -301,20 +298,20 @@ GEM
       rack (>= 1.3)
     rackup (2.2.1)
       rack (>= 3)
-    rails (8.0.2)
-      actioncable (= 8.0.2)
-      actionmailbox (= 8.0.2)
-      actionmailer (= 8.0.2)
-      actionpack (= 8.0.2)
-      actiontext (= 8.0.2)
-      actionview (= 8.0.2)
-      activejob (= 8.0.2)
-      activemodel (= 8.0.2)
-      activerecord (= 8.0.2)
-      activestorage (= 8.0.2)
-      activesupport (= 8.0.2)
+    rails (8.1.3)
+      actioncable (= 8.1.3)
+      actionmailbox (= 8.1.3)
+      actionmailer (= 8.1.3)
+      actionpack (= 8.1.3)
+      actiontext (= 8.1.3)
+      actionview (= 8.1.3)
+      activejob (= 8.1.3)
+      activemodel (= 8.1.3)
+      activerecord (= 8.1.3)
+      activestorage (= 8.1.3)
+      activesupport (= 8.1.3)
       bundler (>= 1.15.0)
-      railties (= 8.0.2)
+      railties (= 8.1.3)
     rails-dom-testing (2.2.0)
       activesupport (>= 5.0.0)
       minitest
@@ -322,88 +319,88 @@ GEM
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
       nokogiri (~> 1.14)
-    railties (8.0.2)
-      actionpack (= 8.0.2)
-      activesupport (= 8.0.2)
+    railties (8.1.3)
+      actionpack (= 8.1.3)
+      activesupport (= 8.1.3)
       irb (~> 1.13)
       rackup (>= 1.0.0)
       rake (>= 12.2)
       thor (~> 1.0, >= 1.2.2)
+      tsort (>= 0.2)
       zeitwerk (~> 2.6)
-    rake (13.0.6)
+    rake (13.4.2)
     rdoc (6.14.2)
       erb
       psych (>= 4.0.0)
-    redis-client (0.25.1)
+    redis-client (0.29.0)
       connection_pool
     reline (0.6.1)
       io-console (~> 0.5)
     rgeo (3.1.0)
-    rgeo-activerecord (8.0.0)
-      activerecord (>= 7.0)
+    rgeo-activerecord (8.1.0)
+      activerecord (>= 8.1, < 8.2)
       rgeo (>= 3.0)
     rgeo-geojson (2.2.0)
       multi_json (~> 1.15)
       rgeo (>= 1.0.0)
     rubyzip (2.3.2)
     securerandom (0.4.1)
-    sidekiq (8.0.6)
-      connection_pool (>= 2.5.0)
-      json (>= 2.9.0)
-      logger (>= 1.6.2)
-      rack (>= 3.1.0)
-      redis-client (>= 0.23.2)
+    sidekiq (8.1.6)
+      connection_pool (>= 3.0.0)
+      json (>= 2.16.0)
+      logger (>= 1.7.0)
+      rack (>= 3.2.0)
+      redis-client (>= 0.29.0)
     stringio (3.1.7)
     thor (1.2.2)
     timeout (0.4.0)
-    typesense (0.15.0)
-      oj (~> 3.11)
-      typhoeus (~> 1.4)
+    tsort (0.2.0)
+    typesense (5.0.0)
+      base64 (~> 0.2.0)
+      faraday (~> 2.8)
+      json (~> 2.9)
     typhoeus (1.6.0)
       ethon (>= 0.18.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uri (1.0.3)
     useragent (0.16.11)
-    websocket-driver (0.8.0)
+    websocket-driver (0.8.1)
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     zeitwerk (2.6.11)
 
 PLATFORMS
-  arm64-darwin-22
   arm64-darwin-23
-  arm64-darwin-24
-  x86_64-darwin-21
-  x86_64-darwin-23
-  x86_64-linux
 
 DEPENDENCIES
-  aws-sdk-s3 (~> 1.193)
-  bcrypt (~> 3.1.20)
+  aws-sdk-s3 (~> 1.225)
+  bcrypt (~> 3.1.22)
   bootsnap
+  bundler-audit (~> 0.9.3)
   clerk-sdk-ruby (~> 5.1, >= 5.1.3)
   core_data_connector!
   csv (~> 3.3.5)
   debug (~> 1.11.0)
-  dotenv-rails (~> 3.1.8)
+  dotenv-rails (~> 3.2.0)
   fuzzy_dates!
-  jwt (~> 3.1.2)
+  jwt (~> 3.2)
   jwt_auth!
   mail_safe (~> 0.3.4)
-  pg (~> 1.5.9)
+  ostruct (~> 0.6.3)
+  pg (~> 1.6.3)
   postmark-rails (~> 0.22.1)
-  puma (~> 6.6.0)
-  rails (~> 8.0.2)
+  puma (~> 8.0.2)
+  rails (~> 8.1.3)
   resource_api!
-  sidekiq (~> 8.0.6)
+  sidekiq (~> 8.1.6)
   triple_eye_effable!
   tzinfo-data
   user_defined_fields!
 
 RUBY VERSION
-   ruby 3.4.4p34
+  ruby 4.0.5p0
 
 BUNDLED WITH
-   2.4.19
+  4.0.13
