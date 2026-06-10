@@ -23,6 +23,7 @@ import WindowUtils from '../utils/Window';
 import MergeButton from '../components/MergeButton';
 import useSelectable from '../hooks/Selectable';
 import { getEditButton } from '../utils/Tables';
+import useRelatedFields from '../hooks/useRelatedFields';
 
 const Events: AbstractComponent<any> = () => {
   const [view, setView] = useState(Views.all);
@@ -35,6 +36,8 @@ const Events: AbstractComponent<any> = () => {
 
   const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
+
+  const { joinColumns, relatedFields, reload } = useRelatedFields();
 
   /**
    * Memo-izes the events columns.
@@ -58,7 +61,7 @@ const Events: AbstractComponent<any> = () => {
     label: t('Common.columns.uuid'),
     sortable: true,
     hidden: true
-  }, ...userDefinedColumns], [userDefinedColumns]);
+  }, ...userDefinedColumns, ...relatedFields], [userDefinedColumns, relatedFields]);
 
   if (loading) {
     return null;
@@ -147,12 +150,14 @@ const Events: AbstractComponent<any> = () => {
               project_model_id: projectModelId,
               defineable_id: projectModelId,
               defineable_type: 'CoreDataConnector::ProjectModel',
+              join_columns: joinColumns,
               view
             })
             .finally(() => WindowUtils.scrollToTop())
         )}
         onRowSelect={onRowSelect}
         perPageOptions={[10, 25, 50, 100]}
+        reload={reload}
         searchable
         selectable
         session={{

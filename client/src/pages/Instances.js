@@ -23,6 +23,7 @@ import { useTranslation } from 'react-i18next';
 import Views from '../constants/ListViews';
 import WindowUtils from '../utils/Window';
 import { getEditButton } from '../utils/Tables';
+import useRelatedFields from '../hooks/useRelatedFields';
 
 const Instances: AbstractComponent<any> = () => {
   const [view, setView] = useState(Views.all);
@@ -37,6 +38,8 @@ const Instances: AbstractComponent<any> = () => {
   const { isSelected, onRowSelect, selectedItems } = useSelectable();
   const { loading, userDefinedColumns } = useUserDefinedColumns(projectModelId, 'CoreDataConnector::ProjectModel');
 
+  const { joinColumns, relatedFields, reload } = useRelatedFields();
+
   /**
    * Memo-izes the instances columns.
    */
@@ -49,7 +52,7 @@ const Instances: AbstractComponent<any> = () => {
     label: t('Common.columns.uuid'),
     sortable: true,
     hidden: true
-  }, ...userDefinedColumns], [userDefinedColumns]);
+  }, ...userDefinedColumns, ...relatedFields], [userDefinedColumns, relatedFields ]);
 
   if (loading) {
     return null;
@@ -130,12 +133,14 @@ const Instances: AbstractComponent<any> = () => {
               project_model_id: projectModelId,
               defineable_id: projectModelId,
               defineable_type: 'CoreDataConnector::ProjectModel',
+              join_columns: joinColumns,
               view
             })
             .finally(() => WindowUtils.scrollToTop())
         )}
         onRowSelect={onRowSelect}
         perPageOptions={[10, 25, 50, 100]}
+        reload={reload}
         searchable
         selectable
         session={{
