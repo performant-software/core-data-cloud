@@ -17,6 +17,10 @@ const Person = () => (
         .fetchOne(id)
         .then(({ data }) => data.event)
     )}
+    onLoadVersions={(id, params) => (
+      EventsService
+        .getVersions(id, params)
+    )}
     onSave={(event) => (
       EventsService
         .save(event)

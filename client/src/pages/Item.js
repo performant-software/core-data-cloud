@@ -17,6 +17,10 @@ const Item = () => (
         .fetchOne(id)
         .then(({ data }) => data.item)
     )}
+    onLoadVersions={(id, params) => (
+      ItemsService
+        .getVersions(id, params)
+    )}
     onSave={(item) => (
       ItemsService
         .save(item)

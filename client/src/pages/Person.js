@@ -17,6 +17,10 @@ const Person = () => (
         .fetchOne(id)
         .then(({ data }) => data.person)
     )}
+    onLoadVersions={(id, params) => (
+      PeopleService
+        .getVersions(id, params)
+    )}
     onSave={(person) => (
       PeopleService
         .save(person)

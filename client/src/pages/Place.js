@@ -17,6 +17,10 @@ const Place = () => (
         .fetchOne(id)
         .then(({ data }) => data.place)
     )}
+    onLoadVersions={(id, params) => (
+      PlacesService
+        .getVersions(id, params)
+    )}
     onSave={(place) => (
       PlacesService
         .save(place)

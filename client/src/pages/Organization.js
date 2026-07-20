@@ -17,6 +17,10 @@ const Organization = () => (
         .fetchOne(id)
         .then(({ data }) => data.organization)
     )}
+    onLoadVersions={(id, params) => (
+      OrganizationService
+        .getVersions(id, params)
+    )}
     onSave={(organization) => (
       OrganizationService
         .save(organization)

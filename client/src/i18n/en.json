@@ -233,7 +233,8 @@
     "labels": {
       "details": "Details",
       "identifiers": "Identifiers",
-      "merges": "Merges"
+      "merges": "Merges",
+      "version_history": "Version History"
     }
   },
   "Items": {
@@ -1083,6 +1084,15 @@
         "error": "Error Sending Invitation",
         "header": "Invitation Sent!"
       }
+    }
+  },
+  "Versions": {
+    "columns": {
+      "changes": "Changes",
+      "date": "Date",
+      "event": "Event",
+      "recordType": "Record Type",
+      "user": "User"
     }
   },
   "WebAuthorities": {

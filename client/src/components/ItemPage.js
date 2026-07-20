@@ -3,6 +3,7 @@
 import { Toaster } from '@performant-software/semantic-components';
 import cx from 'classnames';
 import React, {
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -32,11 +33,13 @@ import Section from './Section';
 import styles from './ItemPage.module.css';
 import useReactRouterEditPage from '../hooks/useReactRouterEditPage';
 import Validation from '../utils/Validation';
+import RecordVersions from './RecordVersions';
 
 type Props = {
   form: Element<any>,
   loading: boolean,
   onInitialize: (id: number) => Promise<any>,
+  onLoadVersions: (id: number, params: any) => Promise<any>,
   onSave: (item: any) => Promise<any>,
   saving?: boolean
 };
@@ -47,6 +50,7 @@ type ComponentProps = {
   item: any,
   loading: boolean,
   onCreateManifests: (item: any) => Promise<any>,
+  onLoadVersions: (id: number, params: any) => Promise<any>,
   onSave: (item: any) => Promise<any>,
   onSaved: (item: any) => void,
   saved?: boolean,
@@ -72,6 +76,15 @@ const Component = (props: ComponentProps) => {
    * @type {{uuid: *}}
    */
   const itemValue = useMemo(() => ({ uuid: props.item.uuid }), [props.item?.uuid]);
+
+  /**
+   * Loads the versions for the current item.
+   *
+   * @type {function(*): Promise<any>}
+   */
+  const onLoadVersions = useCallback((params) => (
+    props.onLoadVersions(props.item.id, params)
+  ), [props.item?.id, props.onLoadVersions]);
 
   /**
    * Sets the saved prop on the state when the component is mounted.
@@ -182,6 +195,21 @@ const Component = (props: ComponentProps) => {
               />
               <RelatedRecordMerges />
             </Section>
+            { props.item.id && (
+              <Section
+                id='versions'
+              >
+                <Divider
+                  section
+                />
+                <Header
+                  content={t('ItemPage.labels.version_history')}
+                />
+                <RecordVersions
+                  onLoad={onLoadVersions}
+                />
+              </Section>
+            )}
           </ItemLayout.Content>
         </ItemLayout>
       </ItemContext.Provider>
