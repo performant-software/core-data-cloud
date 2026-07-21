@@ -9,7 +9,6 @@ import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import useParams from '../hooks/ParsedParams';
 import { useTranslation } from 'react-i18next';
 import { getEditButton } from '../utils/Tables';
-import { modelRoutes } from '../utils/ProjectModels';
 
 const ProjectAuditLog = () => {
   const { projectId } = useParams();

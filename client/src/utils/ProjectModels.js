@@ -19,18 +19,6 @@ const Types = {
   Work: 'Work'
 };
 
-export const modelRoutes = {
-  Event: 'events',
-  Instance: 'instances',
-  Item: 'items',
-  MediaContent: 'media_contents',
-  Organization: 'organizations',
-  Person: 'people',
-  Place: 'places',
-  Taxonomy: 'taxonomies',
-  Work: 'works'
-}
-
 /**
  * Resolves the project models validation errors.
  *
