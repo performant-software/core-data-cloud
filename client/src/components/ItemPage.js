@@ -203,7 +203,7 @@ const Component = (props: ComponentProps) => {
                   section
                 />
                 <Header
-                  content={t('ItemPage.labels.version_history')}
+                  content={t('ItemPage.labels.versionHistory')}
                 />
                 <RecordVersions
                   onLoad={onLoadVersions}

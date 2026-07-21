@@ -1,5 +1,6 @@
 import { flowPlugin, esbuildFlowPlugin } from '@bunchtogether/vite-plugin-flow';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 import { defineConfig, loadEnv } from 'vite';
 
 export default defineConfig(({ mode }) => {
@@ -21,7 +22,8 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       react(),
-      flowPlugin()
+      flowPlugin(),
+      tailwindcss()
     ],
     server: {
       open: true,

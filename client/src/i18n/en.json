@@ -234,7 +234,7 @@
       "details": "Details",
       "identifiers": "Identifiers",
       "merges": "Merges",
-      "version_history": "Version History"
+      "versionHistory": "Version History"
     }
   },
   "Items": {
@@ -800,6 +800,7 @@
       "allModels": "All Models",
       "allProjects": "All Projects",
       "allUsers": "All Users",
+      "auditLog": "Audit Log",
       "authorities": "Authorities",
       "configure": "Configure",
       "details": "Details",
@@ -1091,8 +1092,11 @@
       "changes": "Changes",
       "date": "Date",
       "event": "Event",
+      "name": "Name",
       "recordType": "Record Type",
-      "user": "User"
+      "user": "User",
+      "updateType": "Update Type",
+      "uuid": "UUID"
     }
   },
   "WebAuthorities": {

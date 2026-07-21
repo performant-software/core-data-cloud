@@ -101,6 +101,18 @@ class Projects extends BaseService {
   }
 
   /**
+   * Calls the /projects/:id/versions API endpoint.
+   *
+   * @param id
+   * @param params
+   *
+   * @returns {*}
+   */
+  getVersions(id: number, params: any = {}): Promise<any> {
+    return this.getAxios().get(`${this.getBaseUrl()}/${id}/versions`, { params });
+  }
+
+  /**
    * Calls the `/projects/:id/import_analyze` API endpoint.
    *
    * @param id

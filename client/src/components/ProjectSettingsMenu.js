@@ -44,6 +44,11 @@ const ProjectSettingsMenu = () => {
             parent
             to={`/projects/${projectId}/web_authorities`}
           />
+          <MenuLink
+            content={t('ProjectSettingsMenu.labels.auditLog')}
+            parent
+            to={`/projects/${projectId}/audit_log`}
+          />
           { canCreateJobs() && (
             <MenuLink
               content={t('ProjectSettingsMenu.labels.jobs')}

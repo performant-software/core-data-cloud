@@ -20,6 +20,7 @@ import ProjectModelFactory from './components/ProjectModelFactory';
 import ProjectModels from './pages/ProjectModels';
 import ProjectModelsFactory from './components/ProjectModelsFactory';
 import Projects from './pages/Projects';
+import ProjectAuditLog from './pages/ProjectAuditLog';
 import User from './pages/User';
 import UserProject from './pages/UserProject';
 import UserProjects from './pages/UserProjects';
@@ -29,7 +30,7 @@ import WebAuthority from './pages/WebAuthority';
 import { ClerkProvider } from '@clerk/react';
 
 const ClerkWrapper = () => {
-  if (import.meta.env.VITE_CLERK_PUBLISHABLE_KEY) {
+  if (import.meta.env.VITE_AUTH_PROVIDER === 'clerk') {
     return (
       <ClerkProvider
         allowedRedirectOrigins={[import.meta.env.VITE_CLERK_DOMAIN]}
@@ -152,6 +153,10 @@ const App: ComponentType<any> = () => (
                 <Route
                   path='jobs'
                   element={<Jobs />}
+                />
+                <Route
+                  path='audit_log'
+                  element={<ProjectAuditLog />}
                 />
                 <Route
                   path=':projectModelId'

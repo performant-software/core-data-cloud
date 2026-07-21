@@ -1,11 +1,14 @@
 // @flow
 
 import { ListTable } from '@performant-software/semantic-components';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import _ from 'underscore';
+import styles from './RecordVersions.module.css';
+import UserAvatar from './UserAvatar';
 
 type Props = {
+  extraColumns?: any[],
   onLoad: (params: any) => Promise<any>
 };
 
@@ -28,11 +31,23 @@ const resolveChanges = (version) => (
 const RecordVersions = (props: Props) => {
   const { t } = useTranslation();
 
+  const renderUser = useCallback((version) => {
+    return (
+      <div className={styles.userCell}>
+        <UserAvatar
+          name={version.user?.name}
+          size={24}
+          href={version.user?.avatar_url}
+        />
+        <span>{version.user?.name}</span>
+      </div>
+    )
+  }, [])
+
   return (
     <ListTable
-      className='compact'
       collectionName='versions'
-      columns={[{
+      columns={[...props.extraColumns, {
         name: 'created_at',
         label: t('Versions.columns.date'),
         resolve: (version) => new Date(version.created_at).toLocaleString(),
@@ -43,13 +58,13 @@ const RecordVersions = (props: Props) => {
         sortable: true
       }, {
         name: 'item_type',
-        label: t('Versions.columns.recordType'),
-        resolve: (version) => version.record_type,
-        sortable: true
+        label: t('Versions.columns.updateType'),
+        sortable: true,
+        resolve: (version) => version.record_type
       }, {
         name: 'user',
         label: t('Versions.columns.user'),
-        resolve: (version) => version.user?.name
+        render: renderUser
       }, {
         name: 'changes',
         label: t('Versions.columns.changes'),

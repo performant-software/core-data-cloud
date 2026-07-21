@@ -1,3 +1,6 @@
+@import 'tailwindcss/theme.css';
+@import 'tailwindcss/utilities.css';
+
 body {
   margin: 0;
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
