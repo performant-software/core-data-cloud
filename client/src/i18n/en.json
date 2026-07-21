@@ -1092,11 +1092,12 @@
       "changes": "Changes",
       "date": "Date",
       "event": "Event",
+      "fields": "Fields",
       "name": "Name",
       "recordType": "Record Type",
       "user": "User",
       "updateType": "Update Type",
-      "uuid": "UUID"
+      "uuid": "Record UUID"
     }
   },
   "WebAuthorities": {

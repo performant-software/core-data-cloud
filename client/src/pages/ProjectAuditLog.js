@@ -8,6 +8,8 @@ import usePermissions from '../hooks/Permissions';
 import UnauthorizedRedirect from '../components/UnauthorizedRedirect';
 import useParams from '../hooks/ParsedParams';
 import { useTranslation } from 'react-i18next';
+import { getEditButton } from '../utils/Tables';
+import { modelRoutes } from '../utils/ProjectModels';
 
 const ProjectAuditLog = () => {
   const { projectId } = useParams();
@@ -22,6 +24,13 @@ const ProjectAuditLog = () => {
     <>
       <ProjectSettingsMenu />
       <RecordVersions
+        actions={[{
+          name: 'edit',
+          render: (v) => getEditButton(v, {
+            idField: 'item_id',
+            resolveUrl: (item) => `/projects/${projectId}/${item.root_project_model_id}/${item.root_id}`
+          })
+        }]}
         extraColumns={[
           {
             name: 'root_uuid',
