@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_15_202908) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_21_210536) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -367,6 +367,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_15_202908) do
     t.string "request_uuid"
     t.bigint "root_id"
     t.string "root_type"
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.string "whodunnit"
     t.index ["item_type", "item_id"], name: "index_core_data_connector_versions_on_item_type_and_item_id"
     t.index ["request_uuid"], name: "index_core_data_connector_versions_on_request_uuid"

@@ -19,7 +19,7 @@ import {
 import _ from 'underscore';
 import MergeTable from './MergeTable';
 import styles from './MergeModal.module.css';
-import useMergeable from '../hooks/Mergeable';
+import UserDefinedFieldValue from './UserDefinedFieldValue';
 
 type MergeAttributeType = {
   name: string,
@@ -50,7 +50,6 @@ const MergeModal = (props: Props) => {
   const [record, setRecord] = useState({});
   const [userDefinedFields, setUserDefinedFields] = useState([]);
 
-  const { renderUserDefined } = useMergeable();
   const { t } = useTranslation();
 
   /**
@@ -224,8 +223,12 @@ const MergeModal = (props: Props) => {
     }
 
     if (attribute.name === 'user_defined' && attribute.field && value) {
-      const { field } = attribute;
-      return renderUserDefined(value[field.uuid], field, editable, onRemoveUserDefinedAttribute);
+      return <UserDefinedFieldValue
+        editable={editable}
+        field={attribute.field}
+        onRemove={onRemoveUserDefinedAttribute}
+        value={value[attribute.field.uuid]}
+      />
     }
 
     if (attribute.resolve) {
@@ -233,7 +236,7 @@ const MergeModal = (props: Props) => {
     }
 
     return value;
-  }, [onRemoveArrayItem, onRemoveUserDefinedAttribute, onTogglePrimary, renderUserDefined]);
+  }, [onRemoveArrayItem, onRemoveUserDefinedAttribute, onTogglePrimary]);
 
   /**
    * Loads the records to be merged.

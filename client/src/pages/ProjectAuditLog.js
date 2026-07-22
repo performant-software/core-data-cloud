@@ -30,7 +30,7 @@ const ProjectAuditLog = () => {
             resolveUrl: (item) => `/projects/${projectId}/${item.root_project_model_id}/${item.root_id}`
           })
         }]}
-        extraColumns={[
+        columns={[
           {
             name: 'root_uuid',
             label: t('Versions.columns.uuid')

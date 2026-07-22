@@ -2,6 +2,7 @@
 class CreateCoreDataConnectorVersions < ActiveRecord::Migration[8.1]
   def change
     create_table :core_data_connector_versions do |t|
+      t.uuid :uuid, default: 'gen_random_uuid()', null: false
       t.string :item_type, null: false
       t.bigint :item_id, null: false
       t.string :event, null: false

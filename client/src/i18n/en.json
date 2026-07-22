@@ -65,6 +65,7 @@
       "add": "Add",
       "addName": "Add Name",
       "cancel": "Cancel",
+      "close": "Close",
       "delete": "Delete",
       "edit": "Edit",
       "ok": "OK",
@@ -79,6 +80,18 @@
     "errors": {
       "header": "An error occurred saving the record",
       "required": "{{name}} is required"
+    },
+    "fields": {
+      "biography": "Biography",
+      "content_warning": "Content warning",
+      "description": "Description",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "middle_name": "Middle name",
+      "name": "Name",
+      "start_date": "Start date",
+      "end_date": "End date",
+      "primary": "Primary"
     },
     "labels": {
       "all": "All {{name}}",
@@ -101,6 +114,10 @@
     },
     "words": {
       "or": "or"
+    },
+    "values": {
+      "yes": "Yes",
+      "no": "No"
     }
   },
   "CurrentRecordContextProvider": {
@@ -822,6 +839,18 @@
       "name": "Name",
       "updated": "Last modified"
     }
+  },
+  "RecordVersionModal": {
+    "columns": {
+      "field": "Field",
+      "from": "Previous value",
+      "to": "New value"
+    },
+    "description": "{{name}} updated by {{user}} on {{date}}",
+    "labels": {
+      "empty": "Empty"
+    },
+    "title": "Version Details"
   },
   "RelatedEvents": {
     "columns": {
