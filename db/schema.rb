@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_21_210536) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_23_152829) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -364,14 +364,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_21_210536) do
     t.jsonb "meta"
     t.jsonb "object"
     t.jsonb "object_changes"
+    t.bigint "project_id"
     t.string "request_uuid"
-    t.bigint "root_id"
-    t.string "root_type"
+    t.jsonb "roots"
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.string "whodunnit"
     t.index ["item_type", "item_id"], name: "index_core_data_connector_versions_on_item_type_and_item_id"
+    t.index ["project_id", "created_at", "id"], name: "idx_on_project_id_created_at_id_be0eefd177", order: { created_at: :desc, id: :desc }
     t.index ["request_uuid"], name: "index_core_data_connector_versions_on_request_uuid"
-    t.index ["root_type", "root_id"], name: "index_core_data_connector_versions_on_root_type_and_root_id"
+    t.index ["roots"], name: "index_cdc_versions_on_roots", opclass: :jsonb_path_ops, using: :gin
     t.index ["whodunnit"], name: "index_core_data_connector_versions_on_whodunnit"
   end
 

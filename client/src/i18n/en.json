@@ -28,6 +28,32 @@
       "subject": "Subject Access Points"
     }
   },
+  "AuditLog": {
+    "events": {
+      "create": "Created",
+      "update": "Updated",
+      "destroy": "Deleted"
+    },
+    "models": {
+      "Event": "event",
+      "Instance": "instance",
+      "Item": "taxonomy item",
+      "MediaContent": "media content",
+      "Organization": "organization",
+      "OrganizationName": "organization name",
+      "Person": "person",
+      "PersonName": "person name",
+      "Place": "place",
+      "PlaceGeometry": "place geometry",
+      "PlaceLayer": "place layer",
+      "PlaceName": "place name",
+      "Relationship": "relationship",
+      "SourceName": "source name",
+      "Taxonomy": "taxonomy",
+      "WebIdentifier": "web identifier",
+      "Work": "work"
+    }
+  },
   "ClerkLoginModal": {
     "header": "Welcome to FairData",
     "login": "Sign in with Performant Studio"
@@ -86,6 +112,7 @@
       "content_warning": "Content warning",
       "description": "Description",
       "first_name": "First name",
+      "properties": "Properties",
       "last_name": "Last name",
       "middle_name": "Middle name",
       "name": "Name",
@@ -96,6 +123,7 @@
     "labels": {
       "all": "All {{name}}",
       "identifier": "Identifier",
+      "fields": "Fields",
       "project": "Project",
       "related": {
         "add": "Add {{name}}",
@@ -1120,6 +1148,7 @@
     "columns": {
       "changes": "Changes",
       "date": "Date",
+      "description": "Description",
       "event": "Event",
       "fields": "Fields",
       "name": "Name",

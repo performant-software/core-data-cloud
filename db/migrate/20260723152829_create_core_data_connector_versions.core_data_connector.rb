@@ -9,15 +9,16 @@ class CreateCoreDataConnectorVersions < ActiveRecord::Migration[8.1]
       t.string :whodunnit
       t.jsonb :object
       t.jsonb :object_changes
-      t.string :root_type
-      t.bigint :root_id
+      t.jsonb :roots
+      t.bigint :project_id
       t.jsonb :meta
       t.string :request_uuid
       t.datetime :created_at
     end
 
     add_index :core_data_connector_versions, [:item_type, :item_id]
-    add_index :core_data_connector_versions, [:root_type, :root_id]
+    add_index :core_data_connector_versions, :roots, using: :gin, opclass: :jsonb_path_ops, name: 'index_cdc_versions_on_roots'
+    add_index :core_data_connector_versions, [:project_id, :created_at, :id], order: { created_at: :desc, id: :desc }
     add_index :core_data_connector_versions, :request_uuid
     add_index :core_data_connector_versions, :whodunnit
   end

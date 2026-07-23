@@ -9,10 +9,15 @@ export type Version = {
   item_id: number,
   request_uuid: string,
   created_at: string,
-  root_id: number,
+  roots: {
+    root_id: number,
+    root_record_type: string,
+    root_display_name: string,
+    root_uuid: string,
+    root_project_model_id: number
+  },
   user: User,
   record_type: string,
-  root_record_type: string,
   attributes: {
     [string]: any
   },
@@ -25,8 +30,5 @@ export type Version = {
   }[],
   metadata: {
     [string]: any
-  },
-  root_display_name: string,
-  root_uuid: string,
-  root_project_model_id: number
+  }
 }

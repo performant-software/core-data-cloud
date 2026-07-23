@@ -3,7 +3,6 @@
 import { ListTable } from '@performant-software/semantic-components';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import _ from 'underscore';
 import styles from './RecordVersions.module.css';
 import UserAvatar from './UserAvatar';
 import RecordVersionModal from './RecordVersionModal';
@@ -30,30 +29,30 @@ const RecordVersions = (props: Props) => {
         <span className={styles.userName}>{version.user?.name}</span>
       </div>
     )
-  }, [])
+  }, []);
 
-  /**
-   * Returns a comma-separated summary of the fields changed by the passed version, combining both standard
-   * attributes and user-defined fields.
-   *
-   * @param version
-   *
-   * @returns {string}
-   */
-  const resolveFields = useCallback((version) => (
-    _.chain(version.attributes)
-      .keys()
-      .map((name) => t(`Common.fields.${name}`))
-      .union(_.pluck(version.user_defined, 'label'))
-      .value()
-      .join(', ')
-  ), []);
+  const renderDescription = useCallback((version) => {
+    const eventStr = t(`AuditLog.events.${version.event}`);
+    const summary = `${eventStr} ${t(`AuditLog.models.${version.record_type}`)}`
 
-  const resolveUpdateType = useCallback((version) => {
-    const eventLabel = `${version.event.slice(0, 1).toUpperCase()}${version.event.slice(1)}`
+    if (version.event !== 'update') {
+      return summary;
+    }
 
-    return [eventLabel, version.record_type].join(' ')
-  }, [])
+    const systemFields = Object.keys(version.attributes).map((name) => t(`Common.fields.${name}`));
+    const udfs = version.user_defined.map((udf) => udf.label);
+    const fields = [...systemFields, ...udfs];
+
+    return (
+      <div>
+        <p className='font-bold'>{summary}</p>
+        <div>
+          <p className='uppercase text-xs font-bold'>{t('Common.labels.fields')}</p>
+          <p className='text-xs text-gray-600'>{fields.join(', ')}</p>
+        </div>
+      </div>
+    )
+  }, [t]);
 
   return (
     <>
@@ -83,16 +82,10 @@ const RecordVersions = (props: Props) => {
           resolve: (version) => new Date(version.created_at).toLocaleString(),
           sortable: true
         }, ...props.columns || [], {
-          name: 'item_type',
-          label: t('Versions.columns.updateType'),
-          sortable: true,
-          resolve: resolveUpdateType
-        }, {
-          name: 'changes',
-          label: t('Versions.columns.fields'),
-          resolve: resolveFields
+          name: 'description',
+          label: t('Versions.columns.description'),
+          render: renderDescription
         }]}
-        configurable={false}
         defaultSort='created_at'
         defaultSortDirection='descending'
         onLoad={props.onLoad}
