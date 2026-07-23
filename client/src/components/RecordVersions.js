@@ -36,7 +36,7 @@ const RecordVersions = (props: Props) => {
     const summary = `${eventStr} ${t(`AuditLog.models.${version.record_type}`)}`
 
     if (version.event !== 'update') {
-      return summary;
+      return <p className='font-bold'>{summary}</p>;
     }
 
     const systemFields = Object.keys(version.attributes).map((name) => t(`Common.fields.${name}`));
