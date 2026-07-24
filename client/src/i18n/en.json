@@ -1152,7 +1152,7 @@
       "event": "Event",
       "fields": "Fields",
       "name": "Name",
-      "recordType": "Record Type",
+      "type": "Type",
       "user": "User",
       "updateType": "Update Type",
       "uuid": "Record UUID"

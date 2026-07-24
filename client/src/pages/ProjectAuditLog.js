@@ -53,7 +53,7 @@ const ProjectAuditLog = () => {
           },
           {
             name: 'root_record_type',
-            label: t('Versions.columns.recordType'),
+            label: t('Versions.columns.type'),
             render: (v) => renderRootField(v, 'record_type')
           },
           {
