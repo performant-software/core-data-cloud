@@ -6,11 +6,16 @@ import { Button, Popup } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
-  item: { id: string }
+  item: { id: string },
+  resolveUrl?: (item: any) => string
 }
 
-export const EditButton = ({ item }: Props) => {
+export const EditButton = (props: Props) => {
   const { t } = useTranslation();
+
+  const url = props.resolveUrl
+    ? props.resolveUrl(props.item)
+    : `${props.item.id}`;
 
   const TriggerButton = useMemo(() => (
     <Button
@@ -18,7 +23,7 @@ export const EditButton = ({ item }: Props) => {
       basic
       compact
       icon='pencil'
-      to={`${item.id}`}
+      to={url}
     />
   ), [])
 
@@ -34,9 +39,19 @@ export const EditButton = ({ item }: Props) => {
   )
 }
 
-export const getEditButton = (item: any) => (
-  <EditButton
-    key={`edit-${item.id}`}
-    item={item}
-  />
-);
+type GetEditButtonOptions = {
+  resolveUrl: (item: any) => string,
+  idField?: string
+}
+
+export const getEditButton = (item: any, options?: GetEditButtonOptions) => {
+  const identiferField = options?.idField || 'id';
+
+  return (
+    <EditButton
+      key={`edit-${item[identiferField]}`}
+      item={item}
+      resolveUrl={options?.resolveUrl}
+    />
+  );
+};

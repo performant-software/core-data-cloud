@@ -1,0 +1,9 @@
+.userCell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.userName {
+  font-weight: bold;
+}

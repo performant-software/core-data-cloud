@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Modal } from 'semantic-ui-react';
 import _ from 'underscore';
 import MergeTable from './MergeTable';
-import useMergeable from '../hooks/Mergeable';
+import UserDefinedFieldValue from './UserDefinedFieldValue';
 
 type Attribute = {
   name: string,
@@ -23,7 +23,6 @@ type Props = {
 const ImportCompareModal = (props: Props) => {
   const [item, setItem] = useState(props.item.result);
 
-  const { renderUserDefined } = useMergeable();
   const { t } = useTranslation();
 
   /**
@@ -108,11 +107,16 @@ const ImportCompareModal = (props: Props) => {
     const value = (i || {})[attribute.name];
 
     if (attribute.name.startsWith('udf')) {
-      return renderUserDefined(value, attribute.field, editable, onRemoveArrayItem);
+      return <UserDefinedFieldValue
+        editable={editable}
+        field={attribute.field}
+        onRemove={onRemoveArrayItem}
+        value={value[attribute.field.uuid]}
+      />;
     }
 
     return value;
-  }, []);
+  }, [onRemoveArrayItem]);
 
   return (
     <Modal

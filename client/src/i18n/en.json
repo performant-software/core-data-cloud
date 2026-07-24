@@ -28,6 +28,32 @@
       "subject": "Subject Access Points"
     }
   },
+  "AuditLog": {
+    "events": {
+      "create": "Created",
+      "update": "Updated",
+      "destroy": "Deleted"
+    },
+    "models": {
+      "Event": "event",
+      "Instance": "instance",
+      "Item": "taxonomy item",
+      "MediaContent": "media content",
+      "Organization": "organization",
+      "OrganizationName": "organization name",
+      "Person": "person",
+      "PersonName": "person name",
+      "Place": "place",
+      "PlaceGeometry": "place geometry",
+      "PlaceLayer": "place layer",
+      "PlaceName": "place name",
+      "Relationship": "relationship",
+      "SourceName": "source name",
+      "Taxonomy": "taxonomy",
+      "WebIdentifier": "web identifier",
+      "Work": "work"
+    }
+  },
   "ClerkLoginModal": {
     "header": "Welcome to FairData",
     "login": "Sign in with Performant Studio"
@@ -65,6 +91,7 @@
       "add": "Add",
       "addName": "Add Name",
       "cancel": "Cancel",
+      "close": "Close",
       "delete": "Delete",
       "edit": "Edit",
       "ok": "OK",
@@ -80,9 +107,23 @@
       "header": "An error occurred saving the record",
       "required": "{{name}} is required"
     },
+    "fields": {
+      "biography": "Biography",
+      "content_warning": "Content warning",
+      "description": "Description",
+      "first_name": "First name",
+      "properties": "Properties",
+      "last_name": "Last name",
+      "middle_name": "Middle name",
+      "name": "Name",
+      "start_date": "Start date",
+      "end_date": "End date",
+      "primary": "Primary"
+    },
     "labels": {
       "all": "All {{name}}",
       "identifier": "Identifier",
+      "fields": "Fields",
       "project": "Project",
       "related": {
         "add": "Add {{name}}",
@@ -101,6 +142,10 @@
     },
     "words": {
       "or": "or"
+    },
+    "values": {
+      "yes": "Yes",
+      "no": "No"
     }
   },
   "CurrentRecordContextProvider": {
@@ -233,7 +278,8 @@
     "labels": {
       "details": "Details",
       "identifiers": "Identifiers",
-      "merges": "Merges"
+      "merges": "Merges",
+      "versionHistory": "Version History"
     }
   },
   "Items": {
@@ -799,6 +845,7 @@
       "allModels": "All Models",
       "allProjects": "All Projects",
       "allUsers": "All Users",
+      "auditLog": "Audit Log",
       "authorities": "Authorities",
       "configure": "Configure",
       "details": "Details",
@@ -820,6 +867,18 @@
       "name": "Name",
       "updated": "Last modified"
     }
+  },
+  "RecordVersionModal": {
+    "columns": {
+      "field": "Field",
+      "from": "Previous value",
+      "to": "New value"
+    },
+    "description": "{{name}} updated by {{user}} on {{date}}",
+    "labels": {
+      "empty": "Empty"
+    },
+    "title": "Version Details"
   },
   "RelatedEvents": {
     "columns": {
@@ -1083,6 +1142,20 @@
         "error": "Error Sending Invitation",
         "header": "Invitation Sent!"
       }
+    }
+  },
+  "Versions": {
+    "columns": {
+      "changes": "Changes",
+      "date": "Date",
+      "description": "Description",
+      "event": "Event",
+      "fields": "Fields",
+      "name": "Name",
+      "type": "Type",
+      "user": "User",
+      "updateType": "Update Type",
+      "uuid": "Record UUID"
     }
   },
   "WebAuthorities": {

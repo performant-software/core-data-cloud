@@ -32,6 +32,10 @@ class BaseService extends APIBase {
     return this.getAxios().post(`${this.getBaseUrl()}/${id}/create_manifests`, payload, this.getConfig());
   }
 
+  getVersions(id, params = {}) {
+    return this.getAxios().get(`${this.getBaseUrl()}/${id}/versions`, { params });
+  }
+
   /**
    * Calls the /core_data/<model>/merge API endpoint.
    *

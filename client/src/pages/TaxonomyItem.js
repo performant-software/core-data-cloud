@@ -17,6 +17,10 @@ const TaxonomyItem = () => (
         .fetchOne(id)
         .then(({ data }) => data.taxonomy)
     )}
+    onLoadVersions={(id, params) => (
+      TaxonomiesService
+        .getVersions(id, params)
+    )}
     onSave={(taxonomyItem) => (
       TaxonomiesService
         .save(taxonomyItem)
