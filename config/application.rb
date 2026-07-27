@@ -6,6 +6,8 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require_relative '../lib/canonical_domain_redirect'
+
 module RailsReactTemplate
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -23,6 +25,9 @@ module RailsReactTemplate
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Redirect requests for non-canonical domains before any other processing.
+    config.middleware.insert_before 0, CanonicalDomainRedirect
 
     # Configure Postmark for transactional emails
     config.action_mailer.delivery_method = :postmark
