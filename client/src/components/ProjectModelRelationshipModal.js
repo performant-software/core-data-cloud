@@ -25,8 +25,8 @@ const RelationshipForm = (props: Props) => {
    *
    * @type {function(*): Promise<AxiosResponse<T>>}
    */
-  const onSearch = useCallback((search) => (
-    ProjectModelsService.fetchAll({ search, project_id: projectId })
+  const onSearch = useCallback((search, page) => (
+    ProjectModelsService.fetchAll({ search, page, project_id: projectId })
   ), [projectId]);
 
   return (
@@ -106,7 +106,7 @@ const InverseForm = (props: Props) => {
       >
         <AssociatedDropdown
           collectionName='project_models'
-          onSearch={(search) => ProjectModelsService.fetchAll({ search, project_id: projectId })}
+          onSearch={(search, page) => ProjectModelsService.fetchAll({ search, page, project_id: projectId })}
           onSelection={props.onAssociationInputChange.bind(this, 'primary_model_id', 'primary_model')}
           renderOption={ProjectModelTransform.toDropdown.bind(this)}
           searchQuery={props.item.primary_model?.name}
