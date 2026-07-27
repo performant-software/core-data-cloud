@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/performant-software/core-data-connector.git
-  revision: f0d6c607c7e9cb621cc2f2676d55fbaa052d4be7
-  tag: v0.2.1
+  revision: ebb52fd037a5979101627325e31b1cce2f19b120
+  tag: v0.2.2
   specs:
     core_data_connector (0.1.0)
       activerecord-postgis-adapter (~> 11.1)
@@ -52,8 +52,8 @@ GIT
 
 GIT
   remote: https://github.com/performant-software/triple-eye-effable.git
-  revision: 2fc8e3705f57e0b165e6c144523ab1aad723f3f8
-  tag: v0.2.7
+  revision: 250765e8e799ce7b7b274b698df73de5497d0350
+  tag: v0.2.9
   specs:
     triple_eye_effable (0.1.0)
       httparty (~> 0.20.0)
@@ -214,6 +214,7 @@ GEM
     faraday-retry (2.4.0)
       faraday (~> 2.0)
     ffi (1.17.4-arm64-darwin)
+    ffi (1.17.4-x86_64-darwin)
     ffi (1.17.4-x86_64-linux-gnu)
     globalid (1.1.0)
       activesupport (>= 5.0)
@@ -270,6 +271,8 @@ GEM
     nio4r (2.5.9)
     nokogiri (1.19.3-arm64-darwin)
       racc (~> 1.4)
+    nokogiri (1.19.3-x86_64-darwin)
+      racc (~> 1.4)
     nokogiri (1.19.3-x86_64-linux-gnu)
       racc (~> 1.4)
     ostruct (0.6.3)
@@ -279,6 +282,7 @@ GEM
       activerecord (>= 7.1)
       request_store (~> 1.4)
     pg (1.6.3-arm64-darwin)
+    pg (1.6.3-x86_64-darwin)
     pg (1.6.3-x86_64-linux)
     postmark (1.25.1)
       json
@@ -385,6 +389,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-23
+  x86_64-darwin-23
   x86_64-linux
 
 DEPENDENCIES
