@@ -31,7 +31,7 @@ gem 'postmark-rails', '~> 0.22.1'
 gem 'csv', '~> 3.3.5'
 
 # Resource API
-gem 'resource_api', git: 'https://github.com/performant-software/resource-api.git', tag: 'v0.5.16'
+gem 'resource_api', git: 'https://github.com/performant-software/resource-api.git', tag: 'v0.5.17'
 
 # Authentication
 gem 'jwt_auth', git: 'https://github.com/performant-software/jwt-auth.git', tag: 'v1.0.0'

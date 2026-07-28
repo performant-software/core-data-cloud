@@ -40,9 +40,10 @@ const RelatedPlaceModal = (props: Props) => {
    *
    * @type {function(*): Promise<AxiosResponse<T>>|*}
    */
-  const onSearch = useCallback((search) => (
+  const onSearch = useCallback((search, page) => (
     PlacesService.fetchAll({
       search,
+      page,
       project_model_id: foreignProjectModelId,
       view
     })

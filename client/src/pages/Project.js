@@ -103,9 +103,10 @@ const Project = (props: Props) => {
    *
    * @type {function(*): Promise<AxiosResponse<T>>}
    */
-  const onSearch = useCallback((search) => (
+  const onSearch = useCallback((search, page) => (
     ProjectModelsService.fetchAll({
       search,
+      page,
       project_id: item.id,
       model_class: 'CoreDataConnector::Item'
     })
