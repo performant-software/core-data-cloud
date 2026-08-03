@@ -10,8 +10,6 @@ import useParams from '../hooks/ParsedParams';
 import { useTranslation } from 'react-i18next';
 import { getEditButton } from '../utils/Tables';
 
-const EDITABLE_EVENTS = ['update', 'create'];
-
 const ProjectAuditLog = () => {
   const { projectId } = useParams();
   const { canEditProjectSettings } = usePermissions();
@@ -21,20 +19,14 @@ const ProjectAuditLog = () => {
     return version.roots.map(r => (
       <p key={r.uuid}>{r[fieldName]}</p>
     ));
-  }, [])
+  }, []);
 
   const resolveEditUrl = useCallback((version) => {
     return `/projects/${projectId}/${version.roots[0].project_model_id}/${version.roots[0].id}`
-  }, [])
+  }, []);
 
-  const isEditable = useCallback((version) => {
-    if (EDITABLE_EVENTS.includes(version.event)) {
-      return true;
-    }
-
-    // allow editing the root if the change belongs to a secondary model
-    return !version.roots.map(r => r.record_type).includes(version.record_type);
-  }, [])
+  // allow editing the root if the change belongs to a secondary model
+  const isEditable = useCallback((version) => version.roots.some(r => !r.deleted), []);
 
   if (!canEditProjectSettings(projectId)) {
     return <UnauthorizedRedirect />;
