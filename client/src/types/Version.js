@@ -14,8 +14,9 @@ export type Version = {
     root_record_type: string,
     root_display_name: string,
     root_uuid: string,
-    root_project_model_id: number
-  },
+    root_project_model_id: number,
+    deleted: boolean
+  }[],
   user: User,
   record_type: string,
   attributes: {

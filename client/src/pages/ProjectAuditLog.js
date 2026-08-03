@@ -10,8 +10,6 @@ import useParams from '../hooks/ParsedParams';
 import { useTranslation } from 'react-i18next';
 import { getEditButton } from '../utils/Tables';
 
-const EDITABLE_EVENTS = ['update', 'create'];
-
 const ProjectAuditLog = () => {
   const { projectId } = useParams();
   const { canEditProjectSettings } = usePermissions();
@@ -21,11 +19,14 @@ const ProjectAuditLog = () => {
     return version.roots.map(r => (
       <p key={r.uuid}>{r[fieldName]}</p>
     ));
-  }, [])
+  }, []);
 
   const resolveEditUrl = useCallback((version) => {
     return `/projects/${projectId}/${version.roots[0].project_model_id}/${version.roots[0].id}`
-  }, [])
+  }, []);
+
+  // allow editing the root if the change belongs to a secondary model
+  const isEditable = useCallback((version) => version.roots.some(r => !r.deleted), []);
 
   if (!canEditProjectSettings(projectId)) {
     return <UnauthorizedRedirect />;
@@ -37,7 +38,7 @@ const ProjectAuditLog = () => {
       <RecordVersions
         actions={[{
           // prevent the user from being directed to the edit page for destroyed records
-          accept: (v) => EDITABLE_EVENTS.includes(v.event),
+          accept: isEditable,
           name: 'edit',
           render: (v) => getEditButton(v, {
             idField: 'item_id',
@@ -52,9 +53,9 @@ const ProjectAuditLog = () => {
             hidden: true
           },
           {
-            name: 'root_record_type',
-            label: t('Versions.columns.type'),
-            render: (v) => renderRootField(v, 'record_type')
+            name: 'root_record_name',
+            label: t('Versions.columns.model'),
+            render: (v) => renderRootField(v, 'project_model_name')
           },
           {
             name: 'root_display_name',
