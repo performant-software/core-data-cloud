@@ -27,6 +27,15 @@ const ProjectAuditLog = () => {
     return `/projects/${projectId}/${version.roots[0].project_model_id}/${version.roots[0].id}`
   }, [])
 
+  const isEditable = useCallback((version) => {
+    if (EDITABLE_EVENTS.includes(version.event)) {
+      return true;
+    }
+
+    // allow editing the root if the change belongs to a secondary model
+    return !version.roots.map(r => r.record_type).includes(version.record_type);
+  }, [])
+
   if (!canEditProjectSettings(projectId)) {
     return <UnauthorizedRedirect />;
   }
@@ -37,7 +46,7 @@ const ProjectAuditLog = () => {
       <RecordVersions
         actions={[{
           // prevent the user from being directed to the edit page for destroyed records
-          accept: (v) => EDITABLE_EVENTS.includes(v.event),
+          accept: isEditable,
           name: 'edit',
           render: (v) => getEditButton(v, {
             idField: 'item_id',
@@ -52,9 +61,9 @@ const ProjectAuditLog = () => {
             hidden: true
           },
           {
-            name: 'root_record_type',
-            label: t('Versions.columns.type'),
-            render: (v) => renderRootField(v, 'record_type')
+            name: 'root_record_name',
+            label: t('Versions.columns.model'),
+            render: (v) => renderRootField(v, 'project_model_name')
           },
           {
             name: 'root_display_name',

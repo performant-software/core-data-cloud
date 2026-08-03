@@ -37,7 +37,7 @@
     "models": {
       "Event": "event",
       "Instance": "instance",
-      "Item": "taxonomy item",
+      "Item": "item",
       "MediaContent": "media content",
       "Organization": "organization",
       "OrganizationName": "organization name",
@@ -1152,7 +1152,7 @@
       "event": "Event",
       "fields": "Fields",
       "name": "Name",
-      "type": "Type",
+      "model": "Model",
       "user": "User",
       "updateType": "Update Type",
       "uuid": "Record UUID"
