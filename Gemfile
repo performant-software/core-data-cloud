@@ -44,9 +44,6 @@ gem 'resource_api', git: 'https://github.com/performant-software/resource-api.gi
 # Authentication
 gem 'jwt_auth', git: 'https://github.com/performant-software/jwt-auth.git', tag: 'v1.0.0'
 
-# Core data
-gem 'core_data_connector', path: '../core-data-connector'
-
 # Record versioning / audit log
 gem 'paper_trail', '>= 16.0'
 

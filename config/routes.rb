@@ -13,7 +13,22 @@ Sidekiq::Web.use Rack::Auth::Basic do |email, password|
 end
 
 Rails.application.routes.draw do
-  mount CoreDataConnector::Engine, at: '/core_data'
+  # Preserve `/core_data/**` API routes from the old connector gem
+  scope path: 'core_data', module: 'core_data_connector' do
+    # JWT authentication
+    mount JwtAuth::Engine, at: '/auth'
+
+    # Admin API endpoints
+    draw(:admin)
+
+    # Public API endpoints
+    draw(:v0)
+    draw(:v1)
+
+    # Reconciliation API endpoints
+    draw(:reconcile)
+  end
+
   mount Sidekiq::Web, at: '/sidekiq'
   mount TripleEyeEffable::Engine, at: '/triple_eye_effable'
   mount UserDefinedFields::Engine, at: '/user_defined_fields'

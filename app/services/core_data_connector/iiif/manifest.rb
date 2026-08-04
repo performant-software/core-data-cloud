@@ -7,7 +7,7 @@ module CoreDataConnector
         manifest_key = project_model_relationship_uuid.present? ? 'manifest' : 'manifests'
         method_name = "public_v1_#{route_name}_#{manifest_key}_path"
 
-        router_helpers = Engine.routes.url_helpers
+        router_helpers = Rails.application.routes.url_helpers
         router_helpers.send(method_name.to_sym, uuid, project_model_relationship_uuid)
       end
 

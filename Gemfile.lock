@@ -44,27 +44,6 @@ GIT
       rails (>= 6.0.3.2, < 9)
       resource_api
 
-PATH
-  remote: ../core-data-connector
-  specs:
-    core_data_connector (0.1.0)
-      activerecord-postgis-adapter (~> 11.1)
-      clerk-sdk-ruby (~> 5.1, >= 5.1.2)
-      fuzzy_dates
-      jwt (~> 3.2)
-      jwt_auth
-      paper_trail (>= 16.0)
-      postmark-rails (~> 0.22.1)
-      rack-cors (~> 3.0.0)
-      rails (>= 8.1, < 9)
-      resource_api
-      rgeo-geojson (~> 2.2)
-      rubyzip (~> 2.3.2)
-      triple_eye_effable
-      typesense (~> 5.0)
-      typhoeus (~> 1.6)
-      user_defined_fields
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -394,7 +373,6 @@ DEPENDENCIES
   bootsnap
   bundler-audit (~> 0.9.3)
   clerk-sdk-ruby (~> 5.1, >= 5.1.3)
-  core_data_connector!
   csv (~> 3.3.5)
   debug (~> 1.11.0)
   dotenv-rails (~> 3.2.0)
