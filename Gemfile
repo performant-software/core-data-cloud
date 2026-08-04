@@ -9,6 +9,10 @@ gem 'rails', '~> 8.1.3'
 # Use Postgres as the database for Active Record
 gem 'pg', '~> 1.6.3'
 
+# Geospatial column types and GeoJSON serialization
+gem 'activerecord-postgis-adapter', '~> 11.1'
+gem 'rgeo-geojson', '~> 2.2'
+
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 8.0.2'
 
@@ -30,14 +34,25 @@ gem 'postmark-rails', '~> 0.22.1'
 # CSV processing
 gem 'csv', '~> 3.3.5'
 
+# Zip archive processing for imports and exports.
+# Note: the gem is named `rubyzip` but ships `lib/zip.rb`, so the require path must be given.
+gem 'rubyzip', '~> 2.3.2', require: 'zip'
+
 # Resource API
 gem 'resource_api', git: 'https://github.com/performant-software/resource-api.git', tag: 'v0.5.17'
 
 # Authentication
 gem 'jwt_auth', git: 'https://github.com/performant-software/jwt-auth.git', tag: 'v1.0.0'
 
-# Core data
-gem 'core_data_connector', git: 'https://github.com/performant-software/core-data-connector.git', tag: 'v0.2.4'
+# Record versioning / audit log
+gem 'paper_trail', '>= 16.0'
+
+# CORS for the public and reconciliation APIs
+gem 'rack-cors', '~> 3.0.0', require: 'rack/cors'
+
+# Typesense search and reconciliation
+gem 'typesense', '~> 5.0'
+gem 'typhoeus', '~> 1.6'
 
 # IIIF
 gem 'triple_eye_effable', git: 'https://github.com/performant-software/triple-eye-effable.git', tag: 'v0.2.9'

@@ -6,7 +6,10 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require 'rgeo/active_record'
+
 require_relative '../lib/canonical_domain_redirect'
+require_relative '../lib/core_data_connector'
 
 module RailsReactTemplate
   class Application < Rails::Application
@@ -28,6 +31,17 @@ module RailsReactTemplate
 
     # Redirect requests for non-canonical domains before any other processing.
     config.middleware.insert_before 0, CanonicalDomainRedirect
+
+    # Allow cross-origin reads of the public and reconciliation APIs. Inserted
+    # after CanonicalDomainRedirect to preserve the ordering these had while
+    # Rack::Cors was contributed by the core_data_connector engine.
+    config.middleware.insert_after CanonicalDomainRedirect, Rack::Cors do
+      allow do
+        origins '*'
+        resource '/core_data/public/*', methods: :get
+        resource '/core_data/reconcile/*', methods: [:get, :post]
+      end
+    end
 
     # Configure Postmark for transactional emails
     config.action_mailer.delivery_method = :postmark
