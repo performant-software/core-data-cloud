@@ -17,6 +17,29 @@ module CoreDataConnector
       def load
         super
 
+        # Snapshot the relationships about to be updated. A relationship is rooted in both of its records, so an audit
+        # record is captured for each.
+        relationships_from = <<-SQL.squish
+          FROM #{table_name} z_relationships
+          JOIN core_data_connector_relationships records ON records.id = z_relationships.relationship_id
+        SQL
+
+        audit_updates(
+          CoreDataConnector::Relationship,
+          root_type: 'records.primary_record_type',
+          root_id: 'records.primary_record_id',
+          root_order: 1,
+          from: relationships_from
+        )
+
+        audit_updates(
+          CoreDataConnector::Relationship,
+          root_type: 'records.related_record_type',
+          root_id: 'records.related_record_id',
+          root_order: 2,
+          from: relationships_from
+        )
+
         execute <<-SQL.squish
           UPDATE core_data_connector_relationships relationships
              SET z_relationship_id = z_relationships.id,
@@ -62,14 +85,40 @@ module CoreDataConnector
              AND z_relationships.primary_record_type IS NOT NULL
              AND z_relationships.related_record_id IS NOT NULL
              AND z_relationships.related_record_type IS NOT NULL
-          RETURNING id as relationship_id, z_relationship_id
+          RETURNING id as relationship_id,
+                    z_relationship_id,
+                    primary_record_type,
+                    primary_record_id,
+                    related_record_type,
+                    related_record_id
 
-          )
+          ),
+
+          update_relationships AS (
 
           UPDATE #{table_name} z_relationships
              SET relationship_id = insert_relationships.relationship_id
             FROM insert_relationships
            WHERE insert_relationships.z_relationship_id = z_relationships.id
+
+          )
+
+          INSERT INTO #{audit_table} (item_type, item_id, event, root_type, root_id, root_order)
+          SELECT 'CoreDataConnector::Relationship',
+                 insert_relationships.relationship_id,
+                 'create',
+                 insert_relationships.primary_record_type,
+                 insert_relationships.primary_record_id,
+                 1
+            FROM insert_relationships
+           UNION ALL
+          SELECT 'CoreDataConnector::Relationship',
+                 insert_relationships.relationship_id,
+                 'create',
+                 insert_relationships.related_record_type,
+                 insert_relationships.related_record_id,
+                 2
+            FROM insert_relationships
         SQL
       end
 
