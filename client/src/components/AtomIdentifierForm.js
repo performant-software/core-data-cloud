@@ -78,23 +78,6 @@ const AtomIdentifierForm = (props: Props) => {
           value={props.value}
         />
       </Form.Input>
-      { selectedItem && selectedItem.place_access_points && (
-        <AtomExtraDropdown
-          label={t('AtomIdentifierForm.labels.geographic')}
-          onChange={props.onExtraSelection.bind(this, 'place_access_points')}
-          options={selectedItem.place_access_points}
-          value={props.extra?.place_access_points}
-        />
-      )}
-      { selectedItem && selectedItem.languages_of_material && (
-        <AtomExtraDropdown
-          label={t('AtomIdentifierForm.labels.language')}
-          multiple
-          onChange={props.onExtraSelection.bind(this, 'languages_of_material')}
-          options={selectedItem.languages_of_material}
-          value={props.extra?.languages_of_material}
-        />
-      )}
       { selectedItem && selectedItem.subject_access_points && (
         <AtomExtraDropdown
           label={t('AtomIdentifierForm.labels.subject')}
