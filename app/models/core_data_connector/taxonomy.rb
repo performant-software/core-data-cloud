@@ -8,6 +8,7 @@ module CoreDataConnector
     include Manifestable
     include Mergeable
     include Ownable
+    include Publishable
     include Reconcile::Taxonomy
     include Relateable
     include UserDefinedFields::Fieldable

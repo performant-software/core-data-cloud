@@ -1,6 +1,7 @@
 module CoreDataConnector
   class WorksSerializer < BaseSerializer
     include OwnableSerializer
+    include PublishableSerializer
     include UserDefinedFields::FieldableSerializer
     include RelatedColumnsSerializable
 

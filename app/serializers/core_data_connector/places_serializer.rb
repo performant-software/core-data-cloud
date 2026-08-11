@@ -1,6 +1,7 @@
 module CoreDataConnector
   class PlacesSerializer < BaseSerializer
     include OwnableSerializer
+    include PublishableSerializer
     include UserDefinedFields::FieldableSerializer
     include RelatedColumnsSerializable
 

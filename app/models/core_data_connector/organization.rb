@@ -9,6 +9,7 @@ module CoreDataConnector
     include Mergeable
     include Nameable
     include Ownable
+    include Publishable
     include Reconcile::Organization
     include Relateable
     include Search::Organization

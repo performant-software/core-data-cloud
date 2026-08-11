@@ -6,6 +6,7 @@ module CoreDataConnector
     include ManifestableController
     include MergeableController
     include OwnableController
+    include PublishableController
     include RelatedColumnable
     include TripleEyeEffable::ResourceableController
     include UserDefinedFields::Queryable

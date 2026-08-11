@@ -10,6 +10,7 @@ module CoreDataConnector
     include Mergeable
     include Nameable
     include Ownable
+    include Publishable
     include Reconcile::Item
     include Relateable
     include UserDefinedFields::Fieldable

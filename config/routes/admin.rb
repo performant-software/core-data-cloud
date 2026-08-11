@@ -8,30 +8,34 @@ concern :mergeable do
   post :merge, on: :collection
 end
 
+concern :publishable do
+  post :publish, on: :member
+end
+
 concern :versionable do
   resources :versions, only: [:index]
 end
 
-resources :events, concerns: [:manifestable, :mergeable, :versionable]
+resources :events, concerns: [:manifestable, :mergeable, :publishable, :versionable]
 
-resources :instances, concerns: [:manifestable, :mergeable, :versionable]
+resources :instances, concerns: [:manifestable, :mergeable, :publishable, :versionable]
 
-resources :items, concerns: [:manifestable, :mergeable, :versionable] do
+resources :items, concerns: [:manifestable, :mergeable, :publishable, :versionable] do
   get :analyze_import, on: :member
   post :import, on: :member
 end
 
 resources :jobs, only: [:destroy, :index]
 
-resources :media_contents, concerns: [:manifestable, :mergeable, :versionable] do
+resources :media_contents, concerns: [:manifestable, :mergeable, :publishable, :versionable] do
   post :upload, on: :collection
 end
 
-resources :organizations, concerns: [:manifestable, :mergeable, :versionable]
+resources :organizations, concerns: [:manifestable, :mergeable, :publishable, :versionable]
 
-resources :people, concerns: [:manifestable, :mergeable, :versionable]
+resources :people, concerns: [:manifestable, :mergeable, :publishable, :versionable]
 
-resources :places, concerns: [:manifestable, :mergeable, :versionable]
+resources :places, concerns: [:manifestable, :mergeable, :publishable, :versionable]
 
 resources :project_models do
   get :model_classes, on: :collection
@@ -57,7 +61,7 @@ resources :relationships do
   post :upload, on: :collection
 end
 
-resources :taxonomies, concerns: [:manifestable, :mergeable, :versionable]
+resources :taxonomies, concerns: [:manifestable, :mergeable, :publishable, :versionable]
 
 resources :user_projects do
   post :invite, on: :member
@@ -75,5 +79,5 @@ end
 
 resources :web_identifiers
 
-resources :works, concerns: [:manifestable, :mergeable, :versionable]
+resources :works, concerns: [:manifestable, :mergeable, :publishable, :versionable]
 

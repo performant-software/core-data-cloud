@@ -8,6 +8,7 @@ module CoreDataConnector
     include Manifestable
     include Mergeable
     include Ownable
+    include Publishable
     include Relateable
     include Search::MediaContent
     include Auditable
