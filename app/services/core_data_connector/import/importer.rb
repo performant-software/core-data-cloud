@@ -2,7 +2,7 @@ module CoreDataConnector
   module Import
     class Importer
 
-      attr_reader :importers, :import_id
+      attr_reader :audit, :importers, :import_id
 
       IMPORTERS = [{
         importer_class: Events,
@@ -42,9 +42,10 @@ module CoreDataConnector
         filename: 'web_identifiers.csv'
       }]
 
-      def initialize(directory)
+      def initialize(directory, user_id = nil)
         @importers = []
         @import_id = SecureRandom.uuid
+        @audit = Audit.new(user_id)
 
         IMPORTERS.each do |importer|
           populate_importer(importer, directory)
@@ -60,9 +61,14 @@ module CoreDataConnector
         importers.each do |importer|
           importer.cleanup
         end
+
+        audit.cleanup
       end
 
       def run
+        # Setup the table used to stage the records created for the audit log
+        audit.setup
+
         importers.each do |importer|
           # Setup necessary schema
           importer.setup
@@ -76,6 +82,9 @@ module CoreDataConnector
           # Load the data into the appropriate tables
           importer.load
         end
+
+        # Create the audit log entries for the newly created records
+        audit.create_versions
 
         # Upload any attachments for media_contents
         uploader = Uploader.new(import_id)
@@ -94,7 +103,7 @@ module CoreDataConnector
         filepath = "#{directory}/#{filename}"
 
         if File.exist? filepath
-          @importers << klass.new(filepath, import_id)
+          @importers << klass.new(filepath, import_id, audit)
         end
       end
     end

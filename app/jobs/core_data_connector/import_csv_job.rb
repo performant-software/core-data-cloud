@@ -14,7 +14,7 @@ module CoreDataConnector
       job.file.open do |file|
         begin
           zip_importer = Import::ZipHelper.new
-          success, errors = zip_importer.import_zip(file)
+          success, errors = zip_importer.import_zip(file, job.user_id)
         rescue StandardError => error
           errors = [error]
         end

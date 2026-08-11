@@ -17,6 +17,15 @@ module CoreDataConnector
       def load
         super
 
+        # Snapshot the taxonomies about to be updated
+        audit_updates(
+          CoreDataConnector::Taxonomy,
+          from: <<-SQL.squish
+            FROM #{table_name} z_taxonomies
+            JOIN core_data_connector_taxonomies records ON records.id = z_taxonomies.taxonomy_id
+          SQL
+        )
+
         execute <<-SQL.squish
           UPDATE core_data_connector_taxonomies taxonomies
             SET  z_taxonomy_id = z_taxonomies.id,
@@ -55,12 +64,24 @@ module CoreDataConnector
            WHERE z_taxonomies.taxonomy_id IS NULL
           RETURNING id AS taxonomy_id, z_taxonomy_id
 
-          )
+          ),
+
+          update_taxonomies AS (
 
           UPDATE #{table_name} z_taxonomies
               SET taxonomy_id = insert_taxonomies.taxonomy_id
              FROM insert_taxonomies
             WHERE insert_taxonomies.z_taxonomy_id = z_taxonomies.id
+
+          )
+
+          INSERT INTO #{audit_table} (item_type, item_id, event, root_type, root_id)
+          SELECT 'CoreDataConnector::Taxonomy',
+                 insert_taxonomies.taxonomy_id,
+                 'create',
+                 'CoreDataConnector::Taxonomy',
+                 insert_taxonomies.taxonomy_id
+            FROM insert_taxonomies
         SQL
       end
 

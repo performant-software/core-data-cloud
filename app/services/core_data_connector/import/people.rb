@@ -17,6 +17,15 @@ module CoreDataConnector
       def load
         super
 
+        # Snapshot the people about to be updated
+        audit_updates(
+          CoreDataConnector::Person,
+          from: <<-SQL.squish
+            FROM #{table_name} z_people
+            JOIN core_data_connector_people records ON records.id = z_people.person_id
+          SQL
+        )
+
         # Update existing people
         execute <<-SQL.squish
           UPDATE core_data_connector_people people
@@ -57,12 +66,24 @@ module CoreDataConnector
            WHERE z_people.person_id IS NULL
           RETURNING id AS person_id, z_person_id
 
-          )
+          ),
+
+          update_people AS (
 
           UPDATE #{table_name} z_people
              SET person_id = insert_people.person_id
             FROM insert_people
            WHERE insert_people.z_person_id = z_people.id
+
+          )
+
+          INSERT INTO #{audit_table} (item_type, item_id, event, root_type, root_id)
+          SELECT 'CoreDataConnector::Person',
+                 insert_people.person_id,
+                 'create',
+                 'CoreDataConnector::Person',
+                 insert_people.person_id
+            FROM insert_people
         SQL
 
         # Insert new person_names
@@ -83,21 +104,23 @@ module CoreDataConnector
                  unnest(z_people.additional_middle_names) AS middle_name
             FROM #{table_name} z_people
           
-          )
+          ),
+
+          insert_person_names AS (
 
           INSERT INTO core_data_connector_person_names (
-            person_id, 
+            person_id,
             last_name,
             first_name,
-            middle_name, 
-            created_at, 
+            middle_name,
+            created_at,
             updated_at
           )
-          SELECT all_person_names.person_id, 
+          SELECT all_person_names.person_id,
                  all_person_names.last_name,
                  all_person_names.first_name,
-                 all_person_names.middle_name, 
-                 current_timestamp, 
+                 all_person_names.middle_name,
+                 current_timestamp,
                  current_timestamp
             FROM all_person_names
            WHERE NOT EXISTS ( SELECT 1
@@ -107,9 +130,31 @@ module CoreDataConnector
                                   OR ( person_names.last_name IS NULL AND all_person_names.last_name IS NULL ))
                                  AND ( person_names.first_name = all_person_names.first_name
                                   OR ( person_names.first_name IS NULL AND all_person_names.first_name IS NULL ))
-                                 AND ( person_names.middle_name = all_person_names.middle_name 
+                                 AND ( person_names.middle_name = all_person_names.middle_name
                                   OR ( person_names.middle_name IS NULL AND all_person_names.middle_name IS NULL )))
+          RETURNING id AS person_name_id, person_id
+
+          )
+
+          INSERT INTO #{audit_table} (item_type, item_id, event, root_type, root_id)
+          SELECT 'CoreDataConnector::PersonName',
+                 insert_person_names.person_name_id,
+                 'create',
+                 'CoreDataConnector::Person',
+                 insert_person_names.person_id
+            FROM insert_person_names
         SQL
+
+        # Snapshot the person_names about to have their "primary" indicator reset
+        audit_updates(
+          CoreDataConnector::PersonName,
+          root_type: "'CoreDataConnector::Person'",
+          root_id: 'records.person_id',
+          from: <<-SQL.squish
+            FROM #{table_name} z_people
+            JOIN core_data_connector_person_names records ON records.person_id = z_people.person_id
+          SQL
+        )
 
         # Reset all person_names "primary" indicator to FALSE
         execute <<-SQL.squish

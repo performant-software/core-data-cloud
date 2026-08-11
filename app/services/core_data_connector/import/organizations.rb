@@ -20,6 +20,15 @@ module CoreDataConnector
       def load
         super
 
+        # Snapshot the organizations about to be updated
+        audit_updates(
+          CoreDataConnector::Organization,
+          from: <<-SQL.squish
+            FROM #{table_name} z_organizations
+            JOIN core_data_connector_organizations records ON records.id = z_organizations.organization_id
+          SQL
+        )
+
         # Update existing organizations
         execute <<-SQL.squish
           UPDATE core_data_connector_organizations organizations
@@ -59,12 +68,24 @@ module CoreDataConnector
            WHERE z_organizations.organization_id IS NULL
           RETURNING id AS organization_id, z_organization_id
 
-          )
+          ),
+
+          update_organizations AS (
 
           UPDATE #{table_name} z_organizations
              SET organization_id = insert_organizations.organization_id
             FROM insert_organizations
            WHERE insert_organizations.z_organization_id = z_organizations.id
+
+          )
+
+          INSERT INTO #{audit_table} (item_type, item_id, event, root_type, root_id)
+          SELECT 'CoreDataConnector::Organization',
+                 insert_organizations.organization_id,
+                 'create',
+                 'CoreDataConnector::Organization',
+                 insert_organizations.organization_id
+            FROM insert_organizations
         SQL
 
         # Insert new organization_names
@@ -79,24 +100,48 @@ module CoreDataConnector
           SELECT z_organizations.organization_id AS organization_id, unnest(z_organizations.additional_names) AS name
             FROM #{table_name} z_organizations
           
-          )
+          ),
+
+          insert_organization_names AS (
 
           INSERT INTO core_data_connector_organization_names (
-            organization_id, 
-            name, 
-            created_at, 
+            organization_id,
+            name,
+            created_at,
             updated_at
           )
-          SELECT all_organization_names.organization_id, 
-                 all_organization_names.name, 
-                 current_timestamp, 
+          SELECT all_organization_names.organization_id,
+                 all_organization_names.name,
+                 current_timestamp,
                  current_timestamp
             FROM all_organization_names
            WHERE NOT EXISTS ( SELECT 1
                                 FROM core_data_connector_organization_names organization_names
                                WHERE organization_names.organization_id = all_organization_names.organization_id
                                  AND organization_names.name = all_organization_names.name )
+          RETURNING id AS organization_name_id, organization_id
+
+          )
+
+          INSERT INTO #{audit_table} (item_type, item_id, event, root_type, root_id)
+          SELECT 'CoreDataConnector::OrganizationName',
+                 insert_organization_names.organization_name_id,
+                 'create',
+                 'CoreDataConnector::Organization',
+                 insert_organization_names.organization_id
+            FROM insert_organization_names
         SQL
+
+        # Snapshot the organization_names about to have their "primary" indicator reset
+        audit_updates(
+          CoreDataConnector::OrganizationName,
+          root_type: "'CoreDataConnector::Organization'",
+          root_id: 'records.organization_id',
+          from: <<-SQL.squish
+            FROM #{table_name} z_organizations
+            JOIN core_data_connector_organization_names records ON records.organization_id = z_organizations.organization_id
+          SQL
+        )
 
         # Reset all organization_names "primary" indicator to FALSE
         execute <<-SQL.squish

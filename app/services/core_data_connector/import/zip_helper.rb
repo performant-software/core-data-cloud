@@ -5,7 +5,7 @@ IGNORE_PATTERN = /\.DS_Store|__MACOSX|(^|\/)\._/
 module CoreDataConnector
   module Import
     class ZipHelper
-      def import_zip(temp_file)
+      def import_zip(temp_file, user_id = nil)
         begin
           # Create the target directory
           destination = "#{Rails.root}/tmp/#{SecureRandom.urlsafe_base64}"
@@ -28,7 +28,7 @@ module CoreDataConnector
           import_id = nil
 
           # Create a new importer with the temp directory and run it
-          importer = CoreDataConnector::Import::Importer.new(destination)
+          importer = CoreDataConnector::Import::Importer.new(destination, user_id)
 
           ActiveRecord::Base.transaction do
             import_id = importer.run

@@ -26,7 +26,9 @@ module CoreDataConnector
             :z_organization_id,
             :z_person_id,
             :z_place_id,
+            :z_relationship_id,
             :z_taxonomy_id,
+            :z_web_identifier_id,
             :z_work_id
           ].concat(options[:ignore] || []),
         )

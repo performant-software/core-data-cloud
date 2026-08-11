@@ -20,6 +20,15 @@ module CoreDataConnector
       def load
         super
 
+        # Snapshot the items about to be updated
+        audit_updates(
+          CoreDataConnector::Item,
+          from: <<-SQL.squish
+            FROM #{table_name} z_items
+            JOIN core_data_connector_items records ON records.id = z_items.item_id
+          SQL
+        )
+
         # Update existing items
         execute <<-SQL.squish
           UPDATE core_data_connector_items items
@@ -56,13 +65,25 @@ module CoreDataConnector
             FROM #{table_name} z_items
            WHERE z_items.item_id IS NULL
           RETURNING id AS item_id, z_item_id
-  
-          )
-  
+
+          ),
+
+          update_items AS (
+
           UPDATE #{table_name} z_items
              SET item_id = insert_items.item_id
             FROM insert_items
            WHERE insert_items.z_item_id = z_items.id
+
+          )
+
+          INSERT INTO #{audit_table} (item_type, item_id, event, root_type, root_id)
+          SELECT 'CoreDataConnector::Item',
+                 insert_items.item_id,
+                 'create',
+                 'CoreDataConnector::Item',
+                 insert_items.item_id
+            FROM insert_items
         SQL
 
         # Insert new source_names
@@ -77,19 +98,21 @@ module CoreDataConnector
           SELECT z_items.item_id AS item_id, unnest(z_items.additional_names) AS name
             FROM #{table_name} z_items
           
-          )
-  
+          ),
+
+          insert_item_names AS (
+
           INSERT INTO core_data_connector_source_names (
-            nameable_id, 
-            nameable_type, 
-            name, 
-            created_at, 
+            nameable_id,
+            nameable_type,
+            name,
+            created_at,
             updated_at
           )
-          SELECT all_item_names.item_id, 
-                 'CoreDataConnector::Item', 
-                 all_item_names.name, 
-                 current_timestamp, 
+          SELECT all_item_names.item_id,
+                 'CoreDataConnector::Item',
+                 all_item_names.name,
+                 current_timestamp,
                  current_timestamp
             FROM all_item_names
            WHERE NOT EXISTS ( SELECT 1
@@ -97,7 +120,30 @@ module CoreDataConnector
                                WHERE source_names.nameable_id = all_item_names.item_id
                                  AND source_names.nameable_type = 'CoreDataConnector::Item'
                                  AND source_names.name = all_item_names.name )
+          RETURNING id AS source_name_id, nameable_id
+
+          )
+
+          INSERT INTO #{audit_table} (item_type, item_id, event, root_type, root_id)
+          SELECT 'CoreDataConnector::SourceName',
+                 insert_item_names.source_name_id,
+                 'create',
+                 'CoreDataConnector::Item',
+                 insert_item_names.nameable_id
+            FROM insert_item_names
         SQL
+
+        # Snapshot the source_names about to have their "primary" indicator reset
+        audit_updates(
+          CoreDataConnector::SourceName,
+          root_type: "'CoreDataConnector::Item'",
+          root_id: 'records.nameable_id',
+          from: <<-SQL.squish
+            FROM #{table_name} z_items
+            JOIN core_data_connector_source_names records ON records.nameable_id = z_items.item_id
+                                                         AND records.nameable_type = 'CoreDataConnector::Item'
+          SQL
+        )
 
         # Reset "primary" indicator for all source_names to FALSE
         execute <<-SQL.squish

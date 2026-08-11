@@ -19,6 +19,15 @@ module CoreDataConnector
       def load
         super
 
+        # Snapshot the events about to be updated
+        audit_updates(
+          CoreDataConnector::Event,
+          from: <<-SQL.squish
+            FROM #{table_name} z_events
+            JOIN core_data_connector_events records ON records.id = z_events.event_id
+          SQL
+        )
+
         execute <<-SQL.squish
           UPDATE core_data_connector_events events
              SET z_event_id = z_events.id,
@@ -146,12 +155,24 @@ module CoreDataConnector
             FROM insert_events
             JOIN #{table_name} z_events ON z_events.id = insert_events.z_event_id
 
-          )
+          ),
+
+          update_events AS (
 
           UPDATE #{table_name} z_events
              SET event_id = insert_events.event_id
             FROM insert_events
            WHERE insert_events.z_event_id = z_events.id
+
+          )
+
+          INSERT INTO #{audit_table} (item_type, item_id, event, root_type, root_id)
+          SELECT 'CoreDataConnector::Event',
+                 insert_events.event_id,
+                 'create',
+                 'CoreDataConnector::Event',
+                 insert_events.event_id
+            FROM insert_events
         SQL
       end
 

@@ -20,6 +20,15 @@ module CoreDataConnector
       def load
         super
 
+        # Snapshot the works about to be updated
+        audit_updates(
+          CoreDataConnector::Work,
+          from: <<-SQL.squish
+            FROM #{table_name} z_works
+            JOIN core_data_connector_works records ON records.id = z_works.work_id
+          SQL
+        )
+
         # Update existing works
         execute <<-SQL.squish
           UPDATE core_data_connector_works works
@@ -56,13 +65,25 @@ module CoreDataConnector
             FROM #{table_name} z_works
            WHERE z_works.work_id IS NULL
           RETURNING id AS work_id, z_work_id
-  
-          )
-  
+
+          ),
+
+          update_works AS (
+
           UPDATE #{table_name} z_works
              SET work_id = insert_works.work_id
             FROM insert_works
            WHERE insert_works.z_work_id = z_works.id
+
+          )
+
+          INSERT INTO #{audit_table} (item_type, item_id, event, root_type, root_id)
+          SELECT 'CoreDataConnector::Work',
+                 insert_works.work_id,
+                 'create',
+                 'CoreDataConnector::Work',
+                 insert_works.work_id
+            FROM insert_works
         SQL
 
         # Insert new source_names
@@ -77,19 +98,21 @@ module CoreDataConnector
           SELECT z_works.work_id AS work_id, unnest(z_works.additional_names) AS name
             FROM #{table_name} z_works
           
-          )
-  
+          ),
+
+          insert_work_names AS (
+
           INSERT INTO core_data_connector_source_names (
-            nameable_id, 
-            nameable_type, 
-            name, 
-            created_at, 
+            nameable_id,
+            nameable_type,
+            name,
+            created_at,
             updated_at
           )
-          SELECT all_work_names.work_id, 
-                 'CoreDataConnector::Work', 
-                 all_work_names.name, 
-                 current_timestamp, 
+          SELECT all_work_names.work_id,
+                 'CoreDataConnector::Work',
+                 all_work_names.name,
+                 current_timestamp,
                  current_timestamp
             FROM all_work_names
            WHERE NOT EXISTS ( SELECT 1
@@ -97,7 +120,30 @@ module CoreDataConnector
                                WHERE source_names.nameable_id = all_work_names.work_id
                                  AND source_names.nameable_type = 'CoreDataConnector::Work'
                                  AND source_names.name = all_work_names.name )
+          RETURNING id AS source_name_id, nameable_id
+
+          )
+
+          INSERT INTO #{audit_table} (item_type, item_id, event, root_type, root_id)
+          SELECT 'CoreDataConnector::SourceName',
+                 insert_work_names.source_name_id,
+                 'create',
+                 'CoreDataConnector::Work',
+                 insert_work_names.nameable_id
+            FROM insert_work_names
         SQL
+
+        # Snapshot the source_names about to have their "primary" indicator reset
+        audit_updates(
+          CoreDataConnector::SourceName,
+          root_type: "'CoreDataConnector::Work'",
+          root_id: 'records.nameable_id',
+          from: <<-SQL.squish
+            FROM #{table_name} z_works
+            JOIN core_data_connector_source_names records ON records.nameable_id = z_works.work_id
+                                                         AND records.nameable_type = 'CoreDataConnector::Work'
+          SQL
+        )
 
         # Reset "primary" indicator for all source_names to FALSE
         execute <<-SQL.squish

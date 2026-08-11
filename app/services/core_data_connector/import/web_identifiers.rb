@@ -17,6 +17,17 @@ module CoreDataConnector
       def load
         super
 
+        # Snapshot the web_identifiers about to be updated
+        audit_updates(
+          CoreDataConnector::WebIdentifier,
+          root_type: 'records.identifiable_type',
+          root_id: 'records.identifiable_id',
+          from: <<-SQL.squish
+            FROM #{table_name} z_web_identifiers
+            JOIN core_data_connector_web_identifiers records ON records.id = z_web_identifiers.web_identifier_id
+          SQL
+        )
+
         execute <<-SQL.squish
           UPDATE core_data_connector_web_identifiers web_identifiers
              SET z_web_identifier_id = z_web_identifiers.id,
@@ -48,14 +59,26 @@ module CoreDataConnector
                  current_timestamp
           FROM   #{table_name} z_web_identifiers
           WHERE  z_web_identifiers.web_identifier_id IS NULL
-          RETURNING id AS web_identifier_id, z_web_identifier_id
+          RETURNING id AS web_identifier_id, z_web_identifier_id, identifiable_type, identifiable_id
 
-          )
+          ),
+
+          update_web_identifiers AS (
 
           UPDATE #{table_name} z_web_identifiers
              SET web_identifier_id = insert_web_identifiers.web_identifier_id
             FROM insert_web_identifiers
            WHERE insert_web_identifiers.z_web_identifier_id = z_web_identifiers.id
+
+          )
+
+          INSERT INTO #{audit_table} (item_type, item_id, event, root_type, root_id)
+          SELECT 'CoreDataConnector::WebIdentifier',
+                 insert_web_identifiers.web_identifier_id,
+                 'create',
+                 insert_web_identifiers.identifiable_type,
+                 insert_web_identifiers.identifiable_id
+            FROM insert_web_identifiers
         SQL
       end
 

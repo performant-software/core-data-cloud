@@ -22,6 +22,25 @@ module CoreDataConnector
       def load
         super
 
+        # Snapshot the places and geometries about to be updated
+        audit_updates(
+          CoreDataConnector::Place,
+          from: <<-SQL.squish
+            FROM #{table_name} z_places
+            JOIN core_data_connector_places records ON records.id = z_places.place_id
+          SQL
+        )
+
+        audit_updates(
+          CoreDataConnector::PlaceGeometry,
+          root_type: "'CoreDataConnector::Place'",
+          root_id: 'records.place_id',
+          from: <<-SQL.squish
+            FROM #{table_name} z_places
+            JOIN core_data_connector_place_geometries records ON records.place_id = z_places.place_id
+          SQL
+        )
+
         # Update existing places
         execute <<-SQL.squish
           WITH
@@ -77,17 +96,41 @@ module CoreDataConnector
           insert_place_geometries AS (
 
           INSERT INTO core_data_connector_place_geometries (place_id, geometry, properties, created_at, updated_at)
-          SELECT insert_places.place_id, st_makepoint(z_places.longitude, z_places.latitude), z_places.properties, current_timestamp, current_timestamp
+          SELECT insert_places.place_id, st_makepoint(z_places.longitude, z_places.latitude), COALESCE(z_places.properties, '{}'::jsonb), current_timestamp, current_timestamp
             FROM insert_places
             JOIN #{table_name} z_places ON z_places.id = insert_places.z_place_id
-          RETURNING id
+          RETURNING id AS place_geometry_id, place_id
 
-          )
+          ),
+
+          update_places AS (
 
           UPDATE #{table_name} z_places
              SET place_id = insert_places.place_id
             FROM insert_places
            WHERE insert_places.z_place_id = z_places.id
+
+          ),
+
+          audit_places AS (
+
+          INSERT INTO #{audit_table} (item_type, item_id, event, root_type, root_id)
+          SELECT 'CoreDataConnector::Place',
+                 insert_places.place_id,
+                 'create',
+                 'CoreDataConnector::Place',
+                 insert_places.place_id
+            FROM insert_places
+
+          )
+
+          INSERT INTO #{audit_table} (item_type, item_id, event, root_type, root_id)
+          SELECT 'CoreDataConnector::PlaceGeometry',
+                 insert_place_geometries.place_geometry_id,
+                 'create',
+                 'CoreDataConnector::Place',
+                 insert_place_geometries.place_id
+            FROM insert_place_geometries
         SQL
 
         # Insert new place_names
@@ -102,7 +145,9 @@ module CoreDataConnector
           SELECT z_places.place_id AS place_id, unnest(z_places.additional_names) AS name
             FROM #{table_name} z_places
           
-          )
+          ),
+
+          insert_place_names AS (
 
           INSERT INTO core_data_connector_place_names (place_id, name, created_at, updated_at)
           SELECT all_place_names.place_id, all_place_names.name, current_timestamp, current_timestamp
@@ -111,7 +156,29 @@ module CoreDataConnector
                                 FROM core_data_connector_place_names place_names
                                WHERE place_names.place_id = all_place_names.place_id
                                  AND place_names.name = all_place_names.name )
+          RETURNING id AS place_name_id, place_id
+
+          )
+
+          INSERT INTO #{audit_table} (item_type, item_id, event, root_type, root_id)
+          SELECT 'CoreDataConnector::PlaceName',
+                 insert_place_names.place_name_id,
+                 'create',
+                 'CoreDataConnector::Place',
+                 insert_place_names.place_id
+            FROM insert_place_names
         SQL
+
+        # Snapshot the place_names about to have their "primary" indicator reset
+        audit_updates(
+          CoreDataConnector::PlaceName,
+          root_type: "'CoreDataConnector::Place'",
+          root_id: 'records.place_id',
+          from: <<-SQL.squish
+            FROM #{table_name} z_places
+            JOIN core_data_connector_place_names records ON records.place_id = z_places.place_id
+          SQL
+        )
 
         # Reset all place_names "primary" indicator to FALSE
         execute <<-SQL.squish

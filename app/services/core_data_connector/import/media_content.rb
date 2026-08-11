@@ -18,6 +18,15 @@ module CoreDataConnector
       def load
         super
 
+        # Snapshot the media_contents about to be updated
+        audit_updates(
+          CoreDataConnector::MediaContent,
+          from: <<-SQL.squish
+            FROM #{table_name} z_media_contents
+            JOIN core_data_connector_media_contents records ON records.id = z_media_contents.media_content_id
+          SQL
+        )
+
         execute <<-SQL.squish
          UPDATE core_data_connector_media_contents media_contents
             SET z_media_content_id = z_media_contents.id,
@@ -63,12 +72,24 @@ module CoreDataConnector
            WHERE z_media_contents.media_content_id IS NULL
           RETURNING id AS media_content_id, z_media_content_id
 
-          )
+          ),
+
+          update_media_contents AS (
 
           UPDATE #{table_name} z_media_contents
              SET media_content_id = insert_media_contents.media_content_id
             FROM insert_media_contents
            WHERE insert_media_contents.z_media_content_id = z_media_contents.id
+
+          )
+
+          INSERT INTO #{audit_table} (item_type, item_id, event, root_type, root_id)
+          SELECT 'CoreDataConnector::MediaContent',
+                 insert_media_contents.media_content_id,
+                 'create',
+                 'CoreDataConnector::MediaContent',
+                 insert_media_contents.media_content_id
+            FROM insert_media_contents
         SQL
       end
 

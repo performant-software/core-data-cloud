@@ -3,11 +3,12 @@ require 'csv'
 module CoreDataConnector
   module Import
     class Base
-      attr_reader :filepath, :import_id, :table_name, :user_defined_columns
+      attr_reader :audit, :filepath, :import_id, :table_name, :user_defined_columns
 
-      def initialize(filepath, import_id)
+      def initialize(filepath, import_id, audit)
         @filepath = filepath
         @import_id = import_id
+        @audit = audit
 
         @connection = ActiveRecord::Base.connection
         @csv_headers = CSV.foreach(filepath).first
@@ -102,6 +103,23 @@ module CoreDataConnector
       end
 
       protected
+
+      # Name of the table used to stage the records created and updated by this import for the audit log
+      def audit_table
+        audit.table_name
+      end
+
+      # Snapshots the records this importer is about to update, so that a version can be created for any of them that
+      # actually change. Must be called before the records are modified. See Audit#record_updates_sql.
+      def audit_updates(model, from:, root_type: nil, root_id: nil, root_order: 1)
+        execute audit.record_updates_sql(
+          model,
+          from: from,
+          root_type: root_type,
+          root_id: root_id,
+          root_order: root_order
+        )
+      end
 
       def execute(sql)
         @connection.execute sql
