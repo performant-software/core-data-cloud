@@ -68,6 +68,7 @@ const RelatedInstanceModal = (props: Props) => {
           required={props.isRequired(foreignKey)}
         >
           <AssociatedDropdown
+            autoFocus
             collectionName='instances'
             header={(
               <RelatedViewMenu
@@ -91,7 +92,6 @@ const RelatedInstanceModal = (props: Props) => {
           />
         </Form.Input>
         <Form.Input
-          autoFocus
           error={props.isError('order')}
           label={t('Common.columns.order')}
           min={1}

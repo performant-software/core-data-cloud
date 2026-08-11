@@ -68,6 +68,7 @@ const RelatedWorkModal = (props: Props) => {
           required={props.isRequired(foreignKey)}
         >
           <AssociatedDropdown
+            autoFocus
             collectionName='works'
             header={(
               <RelatedViewMenu
@@ -91,7 +92,6 @@ const RelatedWorkModal = (props: Props) => {
           />
         </Form.Input>
         <Form.Input
-          autoFocus
           error={props.isError('order')}
           label={t('Common.columns.order')}
           min={1}
