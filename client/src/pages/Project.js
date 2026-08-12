@@ -3,9 +3,9 @@
 import { AssociatedDropdown, SimpleEditPage, Toaster } from '@performant-software/semantic-components';
 import type { EditContainerProps } from '@performant-software/shared-components/types';
 import cx from 'classnames';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IoSearchOutline } from 'react-icons/io5';
+import { IoEyeOutline, IoSearchOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router';
 import {
   Button,
@@ -66,6 +66,13 @@ const Project = (props: Props) => {
   });
 
   const { item } = editPageProps;
+
+  /**
+   * New records are published by default, so a project that has not set the value renders as checked.
+   *
+   * @type {boolean}
+   */
+  const defaultToPublished = useMemo(() => item.default_to_published !== false, [item.default_to_published]);
 
   /**
    * Clears all of the data from the current project.
@@ -247,6 +254,34 @@ const Project = (props: Props) => {
                   label={t('Project.messages.share.content')}
                   error={editPageProps.isError('discoverable')}
                   onChange={editPageProps.onCheckboxInputChange.bind(this, 'discoverable')}
+                />
+              </Message.Content>
+            </Message>
+          </div>
+          <div
+            className={styles.section}
+          >
+            <Message
+              className={cx(styles.ui, styles.message)}
+              color='green'
+              icon
+            >
+              <Icon>
+                <IoEyeOutline />
+              </Icon>
+              <Message.Content
+                className={styles.content}
+              >
+                <Message.Header
+                  className={styles.header}
+                  content={t('Project.messages.publish.header')}
+                />
+                <Form.Checkbox
+                  checked={defaultToPublished}
+                  className={styles.field}
+                  label={t('Project.messages.publish.content')}
+                  error={editPageProps.isError('default_to_published')}
+                  onChange={editPageProps.onCheckboxInputChange.bind(this, 'default_to_published')}
                 />
               </Message.Content>
             </Message>

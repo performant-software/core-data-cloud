@@ -121,6 +121,15 @@ module CoreDataConnector
         )
       end
 
+      def default_to_published(table_alias)
+        <<-SQL.squish
+          COALESCE(( SELECT projects.default_to_published
+                       FROM core_data_connector_project_models project_models
+                       JOIN core_data_connector_projects projects ON projects.id = project_models.project_id
+                      WHERE project_models.id = #{table_alias}.project_model_id ), TRUE)
+        SQL
+      end
+
       def execute(sql)
         @connection.execute sql
       end

@@ -52,6 +52,7 @@ module CoreDataConnector
             z_work_id,
             user_defined,
             import_id,
+            published,
             created_at,
             updated_at
           )
@@ -60,6 +61,7 @@ module CoreDataConnector
                  z_works.id,
                  z_works.user_defined,
                  z_works.import_id,
+                 #{default_to_published('z_works')},
                  current_timestamp,
                  current_timestamp
             FROM #{table_name} z_works

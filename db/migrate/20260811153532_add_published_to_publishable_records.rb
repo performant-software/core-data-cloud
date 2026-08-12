@@ -13,7 +13,7 @@ class AddPublishedToPublishableRecords < ActiveRecord::Migration[8.1]
 
   def change
     TABLES.each do |table|
-      add_column table, :published, :boolean, default: false, null: false
+      add_column table, :published, :boolean, default: true, null: false
     end
   end
 end

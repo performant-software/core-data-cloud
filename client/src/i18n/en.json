@@ -684,6 +684,10 @@
         "content": "Do you really want to delete this project? This action cannot be undone.",
         "header": "Are you sure?"
       },
+      "publish": {
+        "content": "Set new records in this project to \"Public\" when they are created. You can always adjust the publication state of an individual record.",
+        "header": "Default Publication State"
+      },
       "share": {
         "content": "Allow other projects to discover this project and share data",
         "header": "Project Discovery"
