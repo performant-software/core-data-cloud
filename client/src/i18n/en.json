@@ -868,6 +868,15 @@
       "updated": "Last modified"
     }
   },
+  "PublishButton": {
+    "buttons": {
+      "private": "Private",
+      "public": "Public"
+    },
+    "errors": {
+      "publish": "An error occurred updating the published state of this record."
+    }
+  },
   "RecordVersionModal": {
     "columns": {
       "field": "Field",

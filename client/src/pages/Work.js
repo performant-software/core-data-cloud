@@ -21,6 +21,10 @@ const Work = () => (
       WorksService
         .getVersions(id, params)
     )}
+    onPublish={(id, published) => (
+      WorksService
+        .publish(id, published)
+    )}
     onSave={(work) => (
       WorksService
         .save(work)

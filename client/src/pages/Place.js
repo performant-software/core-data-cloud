@@ -21,6 +21,10 @@ const Place = () => (
       PlacesService
         .getVersions(id, params)
     )}
+    onPublish={(id, published) => (
+      PlacesService
+        .publish(id, published)
+    )}
     onSave={(place) => (
       PlacesService
         .save(place)

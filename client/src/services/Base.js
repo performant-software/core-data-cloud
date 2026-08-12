@@ -50,6 +50,18 @@ class BaseService extends APIBase {
 
     return this.getAxios().post(`${this.getBaseUrl()}/merge`, payload, this.getConfig());
   }
+
+  /**
+   * Calls the /core_data/<model>/<id>/publish API endpoint.
+   *
+   * @param id
+   * @param published
+   *
+   * @returns {*}
+   */
+  publish(id, published) {
+    return this.getAxios().post(`${this.getBaseUrl()}/${id}/publish`, { published }, this.getConfig());
+  }
 }
 
 export default BaseService;

@@ -21,6 +21,10 @@ const Organization = () => (
       OrganizationService
         .getVersions(id, params)
     )}
+    onPublish={(id, published) => (
+      OrganizationService
+        .publish(id, published)
+    )}
     onSave={(organization) => (
       OrganizationService
         .save(organization)

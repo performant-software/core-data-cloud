@@ -1,3 +1,9 @@
 .itemPage .ui.header {
   padding-bottom: 1em;
 }
+
+.itemPage .publishContainer {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 1em;
+}
