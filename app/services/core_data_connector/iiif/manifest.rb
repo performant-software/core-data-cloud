@@ -103,6 +103,8 @@ module CoreDataConnector
 
               manifest.save
             end
+
+            remove_stale_manifests record, hash, options
           end
         end
       end
@@ -124,6 +126,7 @@ module CoreDataConnector
       def apply_preloads(query, options)
         relationships_scope = Relationship
                                 .joins(:related_media_content)
+                                .where(MediaContent.arel_table[:published].eq(true))
                                 .order(
                                   Relationship.arel_table[:order],
                                   MediaContent.arel_table[:name],
@@ -148,6 +151,7 @@ module CoreDataConnector
                                         .joins(:project_model_relationship)
                                         .joins(:inverse_related_media_content)
                                         .where(project_model_relationship: { allow_inverse: true })
+                                        .where(MediaContent.arel_table[:published].eq(true))
                                         .order(
                                           Relationship.arel_table[:order],
                                           MediaContent.arel_table[:name],
@@ -197,6 +201,24 @@ module CoreDataConnector
 
       def find_manifest(record, project_model_relationship_id)
         record.manifests.select{ |m| m.project_model_relationship_id == project_model_relationship_id }.first
+      end
+
+      # Destroys the manifests for relationships that no longer have any resources to display, so that a manifest is
+      # not left behind for a relationship whose media contents have all been unpublished or deleted. Only the
+      # relationship being reset is considered, if one was passed.
+      def remove_stale_manifests(record, hash, options)
+        project_model_relationship_ids = hash.values.map{ |info| info[:id] }
+
+        manifests = record
+                      .manifests
+                      .reject{ |m| project_model_relationship_ids.include?(m.project_model_relationship_id) }
+
+        if options[:project_model_relationship_id].present?
+          project_model_relationship_id = options[:project_model_relationship_id].to_i
+          manifests = manifests.select{ |m| m.project_model_relationship_id == project_model_relationship_id }
+        end
+
+        manifests.each(&:destroy)
       end
 
     end

@@ -8,15 +8,18 @@ module CoreDataConnector
         protected
 
         def base_query
-          if nested_resource? && current_record.present?
-            item_class.where(build_base_sql)
-          elsif nested_resource?
-            item_class.none
-          elsif params[:project_ids].present?
-            item_class.all_records_by_project(params[:project_ids])
-          else
-            item_class.none
-          end
+          query = if nested_resource? && current_record.present?
+                    item_class.where(build_base_sql)
+                  elsif nested_route?
+                    # The parent record is missing or unpublished, so it has no records to nest
+                    item_class.none
+                  elsif params[:project_ids].present?
+                    item_class.all_records_by_project(params[:project_ids])
+                  else
+                    item_class.none
+                  end
+
+          query.published
         end
 
         def load_records(item)
