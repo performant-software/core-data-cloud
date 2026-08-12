@@ -186,6 +186,9 @@ module CoreDataConnector
           # Base query
           query = all_records_by_project_model(project_model_ids)
 
+          # Unpublished records are not indexed
+          query = query.published if ancestors.include?(Publishable)
+
           # Concrete class query
           query = search_query(query) if self.respond_to?(:search_query)
 
@@ -216,94 +219,130 @@ module CoreDataConnector
 
         # Primary relationships
         has_many :event_relationships, -> {
-          where(Relationship.arel_table.name => { related_record_type: CoreDataConnector::Event.to_s })
+          joins(:related_event)
+            .where(Relationship.arel_table.name => { related_record_type: CoreDataConnector::Event.to_s })
+            .where(CoreDataConnector::Event.arel_table[:published].eq(true))
         }, as: :primary_record, class_name: Relationship.to_s
 
         has_many :instance_relationships, -> {
-          where(Relationship.arel_table.name => { related_record_type: CoreDataConnector::Instance.to_s })
+          joins(:related_instance)
+            .where(Relationship.arel_table.name => { related_record_type: CoreDataConnector::Instance.to_s })
+            .where(CoreDataConnector::Instance.arel_table[:published].eq(true))
         }, as: :primary_record, class_name: Relationship.to_s
 
         has_many :item_relationships, -> {
-          where(Relationship.arel_table.name => { related_record_type: CoreDataConnector::Item.to_s })
+          joins(:related_item)
+            .where(Relationship.arel_table.name => { related_record_type: CoreDataConnector::Item.to_s })
+            .where(CoreDataConnector::Item.arel_table[:published].eq(true))
         }, as: :primary_record, class_name: Relationship.to_s
 
         has_many :media_content_relationships, -> {
-          where(Relationship.arel_table.name => { related_record_type: CoreDataConnector::MediaContent.to_s })
+          joins(:related_media_content)
+            .where(Relationship.arel_table.name => { related_record_type: CoreDataConnector::MediaContent.to_s })
+            .where(CoreDataConnector::MediaContent.arel_table[:published].eq(true))
         }, as: :primary_record, class_name: Relationship.to_s
 
         has_many :organization_relationships, -> {
-          where(Relationship.arel_table.name => { related_record_type: CoreDataConnector::Organization.to_s })
+          joins(:related_organization)
+            .where(Relationship.arel_table.name => { related_record_type: CoreDataConnector::Organization.to_s })
+            .where(CoreDataConnector::Organization.arel_table[:published].eq(true))
         }, as: :primary_record, class_name: Relationship.to_s
 
         has_many :person_relationships, -> {
-          where(Relationship.arel_table.name => { related_record_type: CoreDataConnector::Person.to_s })
+          joins(:related_person)
+            .where(Relationship.arel_table.name => { related_record_type: CoreDataConnector::Person.to_s })
+            .where(CoreDataConnector::Person.arel_table[:published].eq(true))
         }, as: :primary_record, class_name: Relationship.to_s
 
         has_many :place_relationships, -> {
-          where(Relationship.arel_table.name => { related_record_type: CoreDataConnector::Place.to_s })
+          joins(:related_place)
+            .where(Relationship.arel_table.name => { related_record_type: CoreDataConnector::Place.to_s })
+            .where(CoreDataConnector::Place.arel_table[:published].eq(true))
         }, as: :primary_record, class_name: Relationship.to_s
 
         has_many :taxonomy_relationships, -> {
-          where(Relationship.arel_table.name => { related_record_type: CoreDataConnector::Taxonomy.to_s })
+          joins(:related_taxonomy)
+            .where(Relationship.arel_table.name => { related_record_type: CoreDataConnector::Taxonomy.to_s })
+            .where(CoreDataConnector::Taxonomy.arel_table[:published].eq(true))
         }, as: :primary_record, class_name: Relationship.to_s
 
         has_many :work_relationships, -> {
-          where(Relationship.arel_table.name => { related_record_type: CoreDataConnector::Work.to_s })
+          joins(:related_work)
+            .where(Relationship.arel_table.name => { related_record_type: CoreDataConnector::Work.to_s })
+            .where(CoreDataConnector::Work.arel_table[:published].eq(true))
         }, as: :primary_record, class_name: Relationship.to_s
 
         # Related relationships
         has_many :event_related_relationships, -> {
           joins(:project_model_relationship)
+            .joins(:inverse_related_event)
             .where(Relationship.arel_table.name => { primary_record_type: CoreDataConnector::Event.to_s })
             .where(ProjectModelRelationship.arel_table.name => { allow_inverse: true })
+            .where(CoreDataConnector::Event.arel_table[:published].eq(true))
         }, as: :related_record, class_name: Relationship.to_s
 
         has_many :instance_related_relationships, -> {
           joins(:project_model_relationship)
+            .joins(:inverse_related_instance)
             .where(Relationship.arel_table.name => { primary_record_type: CoreDataConnector::Instance.to_s })
             .where(ProjectModelRelationship.arel_table.name => { allow_inverse: true })
+            .where(CoreDataConnector::Instance.arel_table[:published].eq(true))
         }, as: :related_record, class_name: Relationship.to_s
 
         has_many :item_related_relationships, -> {
           joins(:project_model_relationship)
+            .joins(:inverse_related_item)
             .where(Relationship.arel_table.name => { primary_record_type: CoreDataConnector::Item.to_s })
             .where(ProjectModelRelationship.arel_table.name => { allow_inverse: true })
+            .where(CoreDataConnector::Item.arel_table[:published].eq(true))
         }, as: :related_record, class_name: Relationship.to_s
 
         has_many :media_content_related_relationships, -> {
           joins(:project_model_relationship)
+            .joins(:inverse_related_media_content)
             .where(Relationship.arel_table.name => { primary_record_type: CoreDataConnector::MediaContent.to_s })
             .where(ProjectModelRelationship.arel_table.name => { allow_inverse: true })
+            .where(CoreDataConnector::MediaContent.arel_table[:published].eq(true))
         }, as: :related_record, class_name: Relationship.to_s
 
         has_many :organization_related_relationships, -> {
           joins(:project_model_relationship)
+            .joins(:inverse_related_organization)
             .where(Relationship.arel_table.name => { primary_record_type: CoreDataConnector::Organization.to_s })
             .where(ProjectModelRelationship.arel_table.name => { allow_inverse: true })
+            .where(CoreDataConnector::Organization.arel_table[:published].eq(true))
         }, as: :related_record, class_name: Relationship.to_s
 
         has_many :person_related_relationships, -> {
           joins(:project_model_relationship)
+            .joins(:inverse_related_person)
             .where(Relationship.arel_table.name => { primary_record_type: CoreDataConnector::Person.to_s })
             .where(ProjectModelRelationship.arel_table.name => { allow_inverse: true })
+            .where(CoreDataConnector::Person.arel_table[:published].eq(true))
         }, as: :related_record, class_name: Relationship.to_s
 
         has_many :place_related_relationships, -> {
           joins(:project_model_relationship)
+            .joins(:inverse_related_place)
             .where(Relationship.arel_table.name => { primary_record_type: CoreDataConnector::Place.to_s })
             .where(ProjectModelRelationship.arel_table.name => { allow_inverse: true })
+            .where(CoreDataConnector::Place.arel_table[:published].eq(true))
         }, as: :related_record, class_name: Relationship.to_s
 
         has_many :taxonomy_related_relationships, -> {
           joins(:project_model_relationship)
+            .joins(:inverse_related_taxonomy)
             .where(Relationship.arel_table.name => { primary_record_type: CoreDataConnector::Taxonomy.to_s })
             .where(ProjectModelRelationship.arel_table.name => { allow_inverse: true })
+            .where(CoreDataConnector::Taxonomy.arel_table[:published].eq(true))
         }, as: :related_record, class_name: Relationship.to_s
 
         has_many :work_related_relationships, -> {
           joins(:project_model_relationship)
+            .joins(:inverse_related_work)
             .where(Relationship.arel_table.name => { primary_record_type: CoreDataConnector::Work.to_s })
             .where(ProjectModelRelationship.arel_table.name => { allow_inverse: true })
+            .where(CoreDataConnector::Work.arel_table[:published].eq(true))
         }, as: :related_record, class_name: Relationship.to_s
 
         # Include the ID attributes as a string by default

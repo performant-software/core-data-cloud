@@ -178,16 +178,6 @@ const Component = (props: ComponentProps) => {
               }}
               name={name}
             />
-            { canPublish && (
-              <div
-                className={styles.publishContainer}
-              >
-                <PublishButton
-                  onPublish={onPublish}
-                  published={!!props.item.published}
-                />
-              </div>
-            )}
           </ItemLayout.Header>
           <ItemLayout.Sidebar>
             <ProjectItemMenu />
@@ -202,10 +192,24 @@ const Component = (props: ComponentProps) => {
             <Section
               id='details'
             >
-              <SaveButton
-                onClick={props.onSave}
-                saving={props.saving}
-              />
+              <div
+                className={styles.actions}
+              >
+                <div
+                  className={styles.saveContainer}
+                >
+                  <SaveButton
+                    onClick={props.onSave}
+                    saving={props.saving}
+                  />
+                </div>
+                { canPublish && (
+                  <PublishButton
+                    onPublish={onPublish}
+                    published={!!props.item.published}
+                  />
+                )}
+              </div>
               <Header
                 className={cx(styles.ui, styles.header)}
                 content={t('ItemPage.labels.details')}

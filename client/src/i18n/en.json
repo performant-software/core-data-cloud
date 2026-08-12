@@ -118,7 +118,8 @@
       "name": "Name",
       "start_date": "Start date",
       "end_date": "End date",
-      "primary": "Primary"
+      "primary": "Primary",
+      "published": "Published"
     },
     "labels": {
       "all": "All {{name}}",

@@ -2,8 +2,12 @@
   padding-bottom: 1em;
 }
 
-.itemPage .publishContainer {
+.itemPage .actions {
+  align-items: center;
   display: flex;
-  justify-content: flex-end;
-  padding-bottom: 1em;
+  gap: 1em;
+}
+
+.itemPage .actions > .saveContainer {
+  flex: 1;
 }
