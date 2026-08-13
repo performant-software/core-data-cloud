@@ -51,6 +51,7 @@ module CoreDataConnector
             biography, 
             user_defined,
             import_id,
+            published,
             created_at, 
             updated_at
           )
@@ -60,6 +61,7 @@ module CoreDataConnector
                  z_people.biography, 
                  z_people.user_defined,
                  z_people.import_id,
+                 #{default_to_published('z_people')},
                  current_timestamp, 
                  current_timestamp
             FROM #{table_name} z_people

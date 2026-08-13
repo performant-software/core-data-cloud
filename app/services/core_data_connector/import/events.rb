@@ -81,6 +81,7 @@ module CoreDataConnector
             description, 
             user_defined,
             import_id,
+            published,
             created_at, 
             updated_at
           )
@@ -91,6 +92,7 @@ module CoreDataConnector
                  z_events.description, 
                  z_events.user_defined,
                  z_events.import_id,
+                 #{default_to_published('z_events')},
                  current_timestamp, 
                  current_timestamp
             FROM #{table_name} z_events

@@ -21,6 +21,10 @@ const TaxonomyItem = () => (
       TaxonomiesService
         .getVersions(id, params)
     )}
+    onPublish={(id, published) => (
+      TaxonomiesService
+        .publish(id, published)
+    )}
     onSave={(taxonomyItem) => (
       TaxonomiesService
         .save(taxonomyItem)

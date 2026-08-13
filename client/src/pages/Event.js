@@ -21,6 +21,10 @@ const Person = () => (
       EventsService
         .getVersions(id, params)
     )}
+    onPublish={(id, published) => (
+      EventsService
+        .publish(id, published)
+    )}
     onSave={(event) => (
       EventsService
         .save(event)

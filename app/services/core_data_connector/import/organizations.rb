@@ -53,6 +53,7 @@ module CoreDataConnector
             description, 
             user_defined,
             import_id,
+            published,
             created_at, 
             updated_at
           )
@@ -62,6 +63,7 @@ module CoreDataConnector
                  z_organizations.description, 
                  z_organizations.user_defined, 
                  z_organizations.import_id,
+                 #{default_to_published('z_organizations')},
                  current_timestamp, 
                  current_timestamp
             FROM #{table_name} z_organizations

@@ -77,6 +77,7 @@ module CoreDataConnector
             z_place_id, 
             user_defined,
             import_id,
+            published,
             created_at,
             updated_at
           )
@@ -85,6 +86,7 @@ module CoreDataConnector
                  z_places.id,
                  z_places.user_defined,
                  z_places.import_id,
+                 #{default_to_published('z_places')},
                  current_timestamp,
                  current_timestamp
             FROM #{table_name} z_places

@@ -49,6 +49,7 @@ module CoreDataConnector
             name,
             user_defined,
             import_id,
+            published,
             created_at, 
             updated_at
           )
@@ -58,6 +59,7 @@ module CoreDataConnector
                  z_taxonomies.name,
                  z_taxonomies.user_defined,
                  z_taxonomies.import_id,
+                 #{default_to_published('z_taxonomies')},
                  current_timestamp,
                  current_timestamp
             FROM #{table_name} z_taxonomies

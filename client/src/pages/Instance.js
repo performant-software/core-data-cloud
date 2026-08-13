@@ -21,6 +21,10 @@ const Instance = () => (
       InstancesService
         .getVersions(id, params)
     )}
+    onPublish={(id, published) => (
+      InstancesService
+        .publish(id, published)
+    )}
     onSave={(instance) => (
       InstancesService
         .save(instance)

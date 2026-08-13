@@ -55,6 +55,7 @@ module CoreDataConnector
             content_warning,
             user_defined,
             import_id,
+            published,
             created_at, 
             updated_at
           )
@@ -66,6 +67,7 @@ module CoreDataConnector
                  COALESCE(z_media_contents.content_warning, FALSE),
                  z_media_contents.user_defined,
                  z_media_contents.import_id,
+                 #{default_to_published('z_media_contents')},
                  current_timestamp,
                  current_timestamp
             FROM #{table_name} z_media_contents

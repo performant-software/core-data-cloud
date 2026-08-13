@@ -11,6 +11,7 @@ module CoreDataConnector
     include Mergeable
     include Nameable
     include Ownable
+    include Publishable
     include Reconcile::Place
     include Relateable
     include Search::Place

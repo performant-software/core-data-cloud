@@ -1,3 +1,13 @@
 .itemPage .ui.header {
   padding-bottom: 1em;
 }
+
+.itemPage .actions {
+  align-items: center;
+  display: flex;
+  gap: 1em;
+}
+
+.itemPage .actions > .saveContainer {
+  flex: 1;
+}

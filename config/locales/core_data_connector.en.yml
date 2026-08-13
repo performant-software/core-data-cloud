@@ -9,6 +9,7 @@ en:
       create?: "You do not have permission to create an event."
       delete?: "You do not have permission to delete this event."
       import?: "You do not have permission to import data into this event."
+      publish?: "You do not have permission to publish this event."
       show?: "You do not have permission to view this event."
       update?: "You do not have permission to update this event."
 
@@ -16,6 +17,7 @@ en:
       create?: "You do not have permission to create an instance."
       delete?: "You do not have permission to delete this instance."
       import?: "You do not have permission to import data into this instance."
+      publish?: "You do not have permission to publish this instance."
       show?: "You do not have permission to view this instance."
       update?: "You do not have permission to update this instance."
 
@@ -23,6 +25,7 @@ en:
       create?: "You do not have permission to create an item."
       delete?: "You do not have permission to delete this item."
       import?: "You do not have permission to import data into this item."
+      publish?: "You do not have permission to publish this item."
       show?: "You do not have permission to view this item."
       update?: "You do not have permission to update this item."
 
@@ -30,6 +33,7 @@ en:
       create?: "You do not have permission to create a media_content."
       delete?: "You do not have permission to delete this media_content."
       import?: "You do not have permission to import data into this media_content."
+      publish?: "You do not have permission to publish this media_content."
       show?: "You do not have permission to view this media_content."
       update?: "You do not have permission to update this media_content."
 
@@ -37,6 +41,7 @@ en:
       create?: "You do not have permission to create an organization."
       delete?: "You do not have permission to delete this organization."
       import?: "You do not have permission to import data into this organization."
+      publish?: "You do not have permission to publish this organization."
       show?: "You do not have permission to view this organization."
       update?: "You do not have permission to update this organization."
 
@@ -44,6 +49,7 @@ en:
       create?: "You do not have permission to create a person."
       delete?: "You do not have permission to delete this person."
       import?: "You do not have permission to import data into this person."
+      publish?: "You do not have permission to publish this person."
       show?: "You do not have permission to view this person."
       update?: "You do not have permission to update this person."
 
@@ -51,6 +57,7 @@ en:
       create?: "You do not have permission to create a place."
       delete?: "You do not have permission to delete this place."
       import?: "You do not have permission to import data into this place."
+      publish?: "You do not have permission to publish this place."
       show?: "You do not have permission to view this place."
       update?: "You do not have permission to update this place."
 
@@ -79,6 +86,7 @@ en:
       create?: "You do not have permission to create a taxonomy."
       delete?: "You do not have permission to delete this taxonomy."
       import?: "You do not have permission to import data into this taxonomy."
+      publish?: "You do not have permission to publish this taxonomy."
       show?: "You do not have permission to view this taxonomy."
       update?: "You do not have permission to update this taxonomy."
 
@@ -93,6 +101,7 @@ en:
       create?: "You do not have permission to create a work."
       delete?: "You do not have permission to delete this work."
       import?: "You do not have permission to import data into this work."
+      publish?: "You do not have permission to publish this work."
       show?: "You do not have permission to view this work."
       update?: "You do not have permission to update this work."
 

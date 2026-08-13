@@ -9,6 +9,7 @@ module CoreDataConnector
     include Manifestable
     include Mergeable
     include Ownable
+    include Publishable
     include Reconcile::Event
     include Relateable
     include Search::Event

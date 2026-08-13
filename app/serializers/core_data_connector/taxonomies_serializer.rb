@@ -1,6 +1,7 @@
 module CoreDataConnector
   class TaxonomiesSerializer < BaseSerializer
     include OwnableSerializer
+    include PublishableSerializer
     include UserDefinedFields::FieldableSerializer
     include RelatedColumnsSerializable
 

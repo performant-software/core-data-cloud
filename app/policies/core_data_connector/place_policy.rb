@@ -4,6 +4,7 @@ module CoreDataConnector
     include ManifestablePolicy
     include MergeablePolicy
     include OwnablePolicy
+    include PublishablePolicy
 
     attr_reader :current_user, :place, :project_model_id, :project, :project_id
 

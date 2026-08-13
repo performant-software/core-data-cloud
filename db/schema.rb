@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_23_152829) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_12_150000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -51,6 +51,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_23_152829) do
     t.uuid "import_id"
     t.string "name"
     t.bigint "project_model_id"
+    t.boolean "published", default: true, null: false
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
@@ -63,6 +64,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_23_152829) do
     t.datetime "created_at", null: false
     t.uuid "import_id"
     t.bigint "project_model_id"
+    t.boolean "published", default: true, null: false
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
@@ -76,6 +78,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_23_152829) do
     t.string "faircopy_cloud_id"
     t.uuid "import_id"
     t.bigint "project_model_id"
+    t.boolean "published", default: true, null: false
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
@@ -119,6 +122,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_23_152829) do
     t.boolean "import_url_processed", default: false, null: false
     t.string "name"
     t.bigint "project_model_id"
+    t.boolean "published", default: true, null: false
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
@@ -141,6 +145,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_23_152829) do
     t.text "description"
     t.uuid "import_id"
     t.bigint "project_model_id"
+    t.boolean "published", default: true, null: false
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
@@ -154,6 +159,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_23_152829) do
     t.datetime "created_at", null: false
     t.uuid "import_id"
     t.bigint "project_model_id"
+    t.boolean "published", default: true, null: false
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
@@ -206,6 +212,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_23_152829) do
     t.datetime "created_at", null: false
     t.uuid "import_id"
     t.bigint "project_model_id"
+    t.boolean "published", default: true, null: false
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
@@ -265,6 +272,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_23_152829) do
   create_table "core_data_connector_projects", force: :cascade do |t|
     t.boolean "archived", default: false, null: false
     t.datetime "created_at", null: false
+    t.boolean "default_to_published", default: true, null: false
     t.string "description"
     t.boolean "discoverable", default: false, null: false
     t.integer "faircopy_cloud_project_id"
@@ -323,6 +331,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_23_152829) do
     t.uuid "import_id"
     t.string "name"
     t.bigint "project_model_id"
+    t.boolean "published", default: true, null: false
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
@@ -402,6 +411,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_23_152829) do
     t.datetime "created_at", null: false
     t.uuid "import_id"
     t.bigint "project_model_id"
+    t.boolean "published", default: true, null: false
     t.datetime "updated_at", null: false
     t.jsonb "user_defined", default: {}
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false

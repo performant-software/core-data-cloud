@@ -3,6 +3,7 @@ module CoreDataConnector
     # Includes
     include MergeablePolicy
     include OwnablePolicy
+    include PublishablePolicy
 
     attr_reader :current_user, :taxonomy, :project_model_id, :project, :project_id
 

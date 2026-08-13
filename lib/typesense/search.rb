@@ -34,7 +34,8 @@ module Typesense
 
         klass.for_search(ids) do |records|
           documents = records.map { |r| r.to_search_json(options).merge(import_attributes) }
-          collection.documents.import(documents, action: 'emplace')
+
+          collection.documents.import(documents, action: 'upsert')
         end
       end
 

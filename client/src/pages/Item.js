@@ -21,6 +21,10 @@ const Item = () => (
       ItemsService
         .getVersions(id, params)
     )}
+    onPublish={(id, published) => (
+      ItemsService
+        .publish(id, published)
+    )}
     onSave={(item) => (
       ItemsService
         .save(item)

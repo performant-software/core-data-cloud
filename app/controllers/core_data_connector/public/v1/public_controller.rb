@@ -25,7 +25,7 @@ module CoreDataConnector
             query = item_class.none
           end
 
-          query
+          query.published
         end
 
         def find_record(query)
