@@ -17,12 +17,9 @@ module CoreDataConnector
       end
     end
 
-    def publish!
-      update!(published: true)
-    end
-
-    def unpublish!
-      update!(published: false)
+    def update_published(value)
+      self[:published] = value
+      save(validate: false)
     end
   end
 end

@@ -7,7 +7,7 @@ module CoreDataConnector
         item = find_record(item_class)
         authorize item, :publish?
 
-        if item.update(published: published_param)
+        if item.update_published(published_param)
           item = prepare_item(item)
           preloads(item)
 
