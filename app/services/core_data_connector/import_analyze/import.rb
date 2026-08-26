@@ -351,8 +351,14 @@ module CoreDataConnector
           # Create the new relationships row
           new_relationship = relationship[:import].merge({ attribute => new_uuid })
 
-          # Add the new row to the relationships data set
-          relationship_data << { import: new_relationship }
+          # Add the new row to the relationships data set, preserving "db"/"merged" and recomputing "result" so the
+          # row isn't missing the "result" the client relies on to build the import payload
+          relationship_data << {
+            import: new_relationship,
+            db: relationship[:db],
+            merged: relationship[:merged],
+            result: relationship[:db] || new_relationship
+          }
 
           # Delete the existing relationship
           relationship_data.delete(relationship)
