@@ -17,6 +17,14 @@ const Instance = () => (
         .fetchOne(id)
         .then(({ data }) => data.instance)
     )}
+    onLoadVersions={(id, params) => (
+      InstancesService
+        .getVersions(id, params)
+    )}
+    onPublish={(id, published) => (
+      InstancesService
+        .publish(id, published)
+    )}
     onSave={(instance) => (
       InstancesService
         .save(instance)

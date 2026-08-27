@@ -3,6 +3,7 @@
 import { Toaster } from '@performant-software/semantic-components';
 import cx from 'classnames';
 import React, {
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -24,6 +25,7 @@ import ItemLayoutContext from '../context/ItemLayout';
 import initialize from '../hooks/Item';
 import ProjectContext from '../context/Project';
 import ProjectItemMenu from './ProjectItemMenu';
+import PublishButton from './PublishButton';
 import RelatedIdentifiers from './RelatedIdentifiers';
 import RelatedRecordMerges from './RelatedRecordMerges';
 import Relationships from './Relationships';
@@ -31,12 +33,16 @@ import SaveButton from './SaveButton';
 import Section from './Section';
 import styles from './ItemPage.module.css';
 import useReactRouterEditPage from '../hooks/useReactRouterEditPage';
+import usePermissions from '../hooks/Permissions';
 import Validation from '../utils/Validation';
+import RecordVersions from './RecordVersions';
 
 type Props = {
   form: Element<any>,
   loading: boolean,
   onInitialize: (id: number) => Promise<any>,
+  onLoadVersions: (id: number, params: any) => Promise<any>,
+  onPublish: (id: number, published: boolean) => Promise<any>,
   onSave: (item: any) => Promise<any>,
   saving?: boolean
 };
@@ -47,16 +53,22 @@ type ComponentProps = {
   item: any,
   loading: boolean,
   onCreateManifests: (item: any) => Promise<any>,
+  onLoadVersions: (id: number, params: any) => Promise<any>,
+  onPublish: (id: number, published: boolean) => Promise<any>,
   onSave: (item: any) => Promise<any>,
   onSaved: (item: any) => void,
+  onSetState: (props: any) => void,
   saved?: boolean,
   saving?: boolean
 };
 
 const Component = (props: ComponentProps) => {
+  const [publishError, setPublishError] = useState(null);
   const [saved, setSaved] = useState(false);
+
   const { label, name, url } = initialize(props);
   const { projectModel } = useContext(ProjectContext);
+  const { canPublishRecord } = usePermissions();
   const { t } = useTranslation();
 
   /**
@@ -72,6 +84,48 @@ const Component = (props: ComponentProps) => {
    * @type {{uuid: *}}
    */
   const itemValue = useMemo(() => ({ uuid: props.item.uuid }), [props.item?.uuid]);
+
+  /**
+   * Returns true if the current user can publish and unpublish the current record.
+   *
+   * @type {boolean}
+   */
+  const canPublish = useMemo(() => (
+    canPublishRecord(projectModel, props.item)
+  ), [canPublishRecord, projectModel, props.item]);
+
+  /**
+   * Memo-izes the list of errors to display, including any error encountered publishing the record.
+   *
+   * @type {Array<string>}
+   */
+  const errors = useMemo(() => (
+    _.compact([...(props.errors || []), publishError])
+  ), [props.errors, publishError]);
+
+  /**
+   * Loads the versions for the current item.
+   *
+   * @type {function(*): Promise<any>}
+   */
+  const onLoadVersions = useCallback((params) => (
+    props.onLoadVersions(props.item.id, params)
+  ), [props.item?.id, props.onLoadVersions]);
+
+  /**
+   * Sets the published state of the current item.
+   *
+   * @type {function(boolean): Promise<any>}
+   */
+  const onPublish = useCallback((published) => (
+    props
+      .onPublish(props.item.id, published)
+      .then(() => {
+        setPublishError(null);
+        props.onSetState({ published });
+      })
+      .catch(() => setPublishError(t('PublishButton.errors.publish')))
+  ), [props.item?.id, props.onPublish, props.onSetState, t]);
 
   /**
    * Sets the saved prop on the state when the component is mounted.
@@ -107,13 +161,13 @@ const Component = (props: ComponentProps) => {
           <ItemLayout.Toaster
             timeout={0}
             type={Toaster.MessageTypes.negative}
-            visible={!_.isEmpty(props.errors)}
+            visible={!_.isEmpty(errors)}
           >
             <Message.Header
               content={t('Common.errors.header')}
             />
             <Message.List
-              items={props.errors}
+              items={errors}
             />
           </ItemLayout.Toaster>
           <ItemLayout.Header>
@@ -138,10 +192,24 @@ const Component = (props: ComponentProps) => {
             <Section
               id='details'
             >
-              <SaveButton
-                onClick={props.onSave}
-                saving={props.saving}
-              />
+              <div
+                className={styles.actions}
+              >
+                <div
+                  className={styles.saveContainer}
+                >
+                  <SaveButton
+                    onClick={props.onSave}
+                    saving={props.saving}
+                  />
+                </div>
+                { canPublish && (
+                  <PublishButton
+                    onPublish={onPublish}
+                    published={!!props.item.published}
+                  />
+                )}
+              </div>
               <Header
                 className={cx(styles.ui, styles.header)}
                 content={t('ItemPage.labels.details')}
@@ -182,6 +250,21 @@ const Component = (props: ComponentProps) => {
               />
               <RelatedRecordMerges />
             </Section>
+            { props.item.id && (
+              <Section
+                id='versions'
+              >
+                <Divider
+                  section
+                />
+                <Header
+                  content={t('ItemPage.labels.versionHistory')}
+                />
+                <RecordVersions
+                  onLoad={onLoadVersions}
+                />
+              </Section>
+            )}
           </ItemLayout.Content>
         </ItemLayout>
       </ItemContext.Provider>

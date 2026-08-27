@@ -40,9 +40,10 @@ const RelatedInstanceModal = (props: Props) => {
    *
    * @type {function(*): Promise<AxiosResponse<T>>|*}
    */
-  const onSearch = useCallback((search) => (
+  const onSearch = useCallback((search, page) => (
     InstancesService.fetchAll({
       search,
+      page,
       project_model_id: foreignProjectModelId,
       view
     })
@@ -67,6 +68,7 @@ const RelatedInstanceModal = (props: Props) => {
           required={props.isRequired(foreignKey)}
         >
           <AssociatedDropdown
+            autoFocus
             collectionName='instances'
             header={(
               <RelatedViewMenu
@@ -90,7 +92,6 @@ const RelatedInstanceModal = (props: Props) => {
           />
         </Form.Input>
         <Form.Input
-          autoFocus
           error={props.isError('order')}
           label={t('Common.columns.order')}
           min={1}

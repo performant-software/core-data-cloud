@@ -1,0 +1,185 @@
+en:
+  app:
+    name: "Core Data Cloud"
+    company_name: "Performant Software Solutions"
+    company_address: "Charlottesville, VA and Boston, MA"
+
+  authorization:
+    core_data_connector/event_policy:
+      create?: "You do not have permission to create an event."
+      delete?: "You do not have permission to delete this event."
+      import?: "You do not have permission to import data into this event."
+      publish?: "You do not have permission to publish this event."
+      show?: "You do not have permission to view this event."
+      update?: "You do not have permission to update this event."
+
+    core_data_connector/instance_policy:
+      create?: "You do not have permission to create an instance."
+      delete?: "You do not have permission to delete this instance."
+      import?: "You do not have permission to import data into this instance."
+      publish?: "You do not have permission to publish this instance."
+      show?: "You do not have permission to view this instance."
+      update?: "You do not have permission to update this instance."
+
+    core_data_connector/item_policy:
+      create?: "You do not have permission to create an item."
+      delete?: "You do not have permission to delete this item."
+      import?: "You do not have permission to import data into this item."
+      publish?: "You do not have permission to publish this item."
+      show?: "You do not have permission to view this item."
+      update?: "You do not have permission to update this item."
+
+    core_data_connector/media_content_policy:
+      create?: "You do not have permission to create a media_content."
+      delete?: "You do not have permission to delete this media_content."
+      import?: "You do not have permission to import data into this media_content."
+      publish?: "You do not have permission to publish this media_content."
+      show?: "You do not have permission to view this media_content."
+      update?: "You do not have permission to update this media_content."
+
+    core_data_connector/organization_policy:
+      create?: "You do not have permission to create an organization."
+      delete?: "You do not have permission to delete this organization."
+      import?: "You do not have permission to import data into this organization."
+      publish?: "You do not have permission to publish this organization."
+      show?: "You do not have permission to view this organization."
+      update?: "You do not have permission to update this organization."
+
+    core_data_connector/person_policy:
+      create?: "You do not have permission to create a person."
+      delete?: "You do not have permission to delete this person."
+      import?: "You do not have permission to import data into this person."
+      publish?: "You do not have permission to publish this person."
+      show?: "You do not have permission to view this person."
+      update?: "You do not have permission to update this person."
+
+    core_data_connector/place_policy:
+      create?: "You do not have permission to create a place."
+      delete?: "You do not have permission to delete this place."
+      import?: "You do not have permission to import data into this place."
+      publish?: "You do not have permission to publish this place."
+      show?: "You do not have permission to view this place."
+      update?: "You do not have permission to update this place."
+
+    core_data_connector/project_policy:
+      create?: "You do not have permission to create a project."
+      delete?: "You do not have permission to delete this project."
+      import?: "You do not have permission to import data into this project."
+      show?: "You do not have permission to view this project."
+      update?: "You do not have permission to update this project."
+
+    core_data_connector/record_merge_policy:
+      create?: "You do not have permission to create a record merge."
+      delete?: "You do not have permission to delete this record merge."
+      import?: "You do not have permission to import data into this record merge."
+      show?: "You do not have permission to view this record merge."
+      update?: "You do not have permission to update this record merge."
+
+    core_data_connector/relationship_policy:
+      create?: "You do not have permission to create a relationship."
+      delete?: "You do not have permission to delete this relationship."
+      import?: "You do not have permission to import data into this relationship."
+      show?: "You do not have permission to view this relationship."
+      update?: "You do not have permission to update this relationship."
+
+    core_data_connector/taxonomy_policy:
+      create?: "You do not have permission to create a taxonomy."
+      delete?: "You do not have permission to delete this taxonomy."
+      import?: "You do not have permission to import data into this taxonomy."
+      publish?: "You do not have permission to publish this taxonomy."
+      show?: "You do not have permission to view this taxonomy."
+      update?: "You do not have permission to update this taxonomy."
+
+    core_data_connector/user_project_policy:
+      create?: "You do not have permission to create an add users to this project."
+      delete?: "You do not have permission to delete users from this project."
+      invite?: "You do not have permission to invite this user to this project."
+      show?: "You do not have permission to view users in this project."
+      update?: "You do not have permission to update users in this project."
+
+    core_data_connector/work_policy:
+      create?: "You do not have permission to create a work."
+      delete?: "You do not have permission to delete this work."
+      import?: "You do not have permission to import data into this work."
+      publish?: "You do not have permission to publish this work."
+      show?: "You do not have permission to view this work."
+      update?: "You do not have permission to update this work."
+
+    core_data_connector/public/v1/public_policy:
+      create?: "You do not have permission to create a record."
+      delete?: "You do not have permission to delete this record."
+      show?: "You do not have permission to view this record."
+      update?: "You do not have permission to update this record."
+
+  errors:
+    general:
+      not_found: "This record cannot be found"
+    http:
+      general: "An error occurred when making your request"
+      no_response: "No response from the server"
+      timeout: "Your request has timed out"
+    import:
+      authorize: "You do not have permission to import these records. Please contact your system administrator."
+    items_controller:
+      authorize: "You do not have permission to import these records. Please contact your system administrator."
+    manifest:
+      unique: "Only a single manifest can exist per relationship"
+    mergeable:
+      ids: "IDs are required"
+    nameable:
+      primary_name: "This record must have a primary name"
+    projects:
+      authorize: "You do not have permission to import these records. Please contact your system administrator."
+      import_configuration: "Configuration file required"
+      import_data: "Importable contents required"
+    user_projects:
+      role_owner: "Projects must have an owner."
+      roles: "Invalid role"
+      unique: "This user cannot be added to the same project multiple times."
+    users:
+      not_found: "User not found"
+      unauthorized: "Unauthorized"
+      password:
+        sso: "Cannot reset passwords for SSO users"
+      roles: "Invalid role"
+    web_authorities_controller:
+      find:
+        identifier: "An identifier is required"
+      search:
+        query: "A search query is required"
+    web_authority:
+      source_type_unique: "Only one authority per type is allowed per project"
+
+  serialization:
+    linked_open_data:
+      annotation_page_label: "Related %{klass}: %{target}"
+
+  services:
+    iiif:
+      manifest:
+        label: "%{name}: %{relationship}"
+        content_warning: "Content Warning"
+    import_analyze:
+      common:
+        name: "Name"
+        uuid: "Identifier"
+      events:
+        description: "Description"
+        end_date: "End date"
+        end_date_description: "End date description"
+        start_date: "Start date"
+        start_date_description: "Start date description"
+      media_contents:
+        import_url: "Import URL"
+      organizations:
+        description: "Description"
+      people:
+        biography: "Biography"
+        first_name: "First name"
+        last_name: "Last name"
+        middle_name: "Middle name"
+      places:
+        latitude: "Latitude"
+        longitude: "Longitude"
+    reconcile:
+      name: "Core Data Cloud Reconciliation API"

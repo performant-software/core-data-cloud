@@ -40,9 +40,10 @@ const RelatedTaxonomyItemModal = (props: Props) => {
    *
    * @type {function(*): Promise<AxiosResponse<T>>|*}
    */
-  const onSearch = useCallback((search) => (
+  const onSearch = useCallback((search, page) => (
     TaxonomiesService.fetchAll({
       search,
+      page,
       project_model_id: foreignProjectModelId,
       view
     })
@@ -67,6 +68,7 @@ const RelatedTaxonomyItemModal = (props: Props) => {
           required={props.isRequired(foreignKey)}
         >
           <AssociatedDropdown
+            autoFocus
             collectionName='taxonomies'
             header={(
               <RelatedViewMenu
@@ -90,7 +92,6 @@ const RelatedTaxonomyItemModal = (props: Props) => {
           />
         </Form.Input>
         <Form.Input
-          autoFocus
           error={props.isError('order')}
           label={t('Common.columns.order')}
           min={1}

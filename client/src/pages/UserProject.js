@@ -79,14 +79,14 @@ const UserProject = (props: Props) => {
    *
    * @type {function(*): Promise<AxiosResponse<T>>}
    */
-  const onProjectSearch = useCallback((search) => ProjectsService.fetchAll({ search }), []);
+  const onProjectSearch = useCallback((search, page) => ProjectsService.fetchAll({ search, page }), []);
 
   /**
    * Callback fired when the user search is executed.
    *
    * @type {function(*): Promise<AxiosResponse<T>>}
    */
-  const onUserSearch = useCallback((search) => UsersService.fetchAll({ search }), []);
+  const onUserSearch = useCallback((search, page) => UsersService.fetchAll({ search, page }), []);
 
   /*
    * For a new record, set the foreign key ID based on the route parameters.

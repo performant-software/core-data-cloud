@@ -21,6 +21,14 @@ const MediaContent = () => {
           .fetchOne(id)
           .then(({ data }) => data.media_content)
       )}
+      onLoadVersions={(id, params) => (
+        MediaContentsService
+          .getVersions(id, params)
+      )}
+      onPublish={(id, published) => (
+        MediaContentsService
+          .publish(id, published)
+      )}
       onSave={(mediaContent) => (
         MediaContentsService
           .uploadOne(mediaContent, project)

@@ -32,6 +32,10 @@ class BaseService extends APIBase {
     return this.getAxios().post(`${this.getBaseUrl()}/${id}/create_manifests`, payload, this.getConfig());
   }
 
+  getVersions(id, params = {}) {
+    return this.getAxios().get(`${this.getBaseUrl()}/${id}/versions`, { params });
+  }
+
   /**
    * Calls the /core_data/<model>/merge API endpoint.
    *
@@ -45,6 +49,18 @@ class BaseService extends APIBase {
     const payload = transform.toMergeable(item, ids);
 
     return this.getAxios().post(`${this.getBaseUrl()}/merge`, payload, this.getConfig());
+  }
+
+  /**
+   * Calls the /core_data/<model>/<id>/publish API endpoint.
+   *
+   * @param id
+   * @param published
+   *
+   * @returns {*}
+   */
+  publish(id, published) {
+    return this.getAxios().post(`${this.getBaseUrl()}/${id}/publish`, { published }, this.getConfig());
   }
 }
 

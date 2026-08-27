@@ -17,6 +17,14 @@ const Work = () => (
         .fetchOne(id)
         .then(({ data }) => data.work)
     )}
+    onLoadVersions={(id, params) => (
+      WorksService
+        .getVersions(id, params)
+    )}
+    onPublish={(id, published) => (
+      WorksService
+        .publish(id, published)
+    )}
     onSave={(work) => (
       WorksService
         .save(work)

@@ -265,6 +265,30 @@ const usePermissions = () => {
   };
 
   /**
+   * An admin user or a project owner can publish or unpublish a record, as long as the project is not archived and
+   * the record is owned by the passed project model.
+   *
+   * @param projectModel
+   * @param record
+   *
+   * @returns {boolean}
+   */
+  const canPublishRecord = (projectModel: ProjectModelType, record: OwnableType): boolean => {
+    if (!(projectModel && record?.id)) {
+      return false;
+    }
+
+    /**
+     * If the current record is shared by another model, it can only be published by the project that owns it.
+     */
+    if (projectModel.id !== record.project_model_id) {
+      return false;
+    }
+
+    return isAdmin() || (isOwner(projectModel.project_id) && !isArchived(projectModel.project_id));
+  };
+
+  /**
    * Whether the configured authentication provider is local.
    * @returns {boolean}
    */
@@ -290,6 +314,7 @@ const usePermissions = () => {
     canExportData,
     canImportData,
     canInviteUserProject,
+    canPublishRecord,
     canResetPassword,
     getUserProject,
     getUserProjects,

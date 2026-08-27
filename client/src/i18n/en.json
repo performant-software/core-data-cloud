@@ -28,6 +28,32 @@
       "subject": "Subject Access Points"
     }
   },
+  "AuditLog": {
+    "events": {
+      "create": "Created",
+      "update": "Updated",
+      "destroy": "Deleted"
+    },
+    "models": {
+      "Event": "event",
+      "Instance": "instance",
+      "Item": "item",
+      "MediaContent": "media content",
+      "Organization": "organization",
+      "OrganizationName": "organization name",
+      "Person": "person",
+      "PersonName": "person name",
+      "Place": "place",
+      "PlaceGeometry": "place geometry",
+      "PlaceLayer": "place layer",
+      "PlaceName": "place name",
+      "Relationship": "relationship",
+      "SourceName": "source name",
+      "Taxonomy": "taxonomy",
+      "WebIdentifier": "web identifier",
+      "Work": "work"
+    }
+  },
   "ClerkLoginModal": {
     "header": "Welcome to FairData",
     "login": "Sign in with Performant Studio"
@@ -65,6 +91,7 @@
       "add": "Add",
       "addName": "Add Name",
       "cancel": "Cancel",
+      "close": "Close",
       "delete": "Delete",
       "edit": "Edit",
       "ok": "OK",
@@ -80,9 +107,24 @@
       "header": "An error occurred saving the record",
       "required": "{{name}} is required"
     },
+    "fields": {
+      "biography": "Biography",
+      "content_warning": "Content warning",
+      "description": "Description",
+      "first_name": "First name",
+      "properties": "Properties",
+      "last_name": "Last name",
+      "middle_name": "Middle name",
+      "name": "Name",
+      "start_date": "Start date",
+      "end_date": "End date",
+      "primary": "Primary",
+      "published": "Published"
+    },
     "labels": {
       "all": "All {{name}}",
       "identifier": "Identifier",
+      "fields": "Fields",
       "project": "Project",
       "related": {
         "add": "Add {{name}}",
@@ -101,6 +143,10 @@
     },
     "words": {
       "or": "or"
+    },
+    "values": {
+      "yes": "Yes",
+      "no": "No"
     }
   },
   "CurrentRecordContextProvider": {
@@ -233,7 +279,8 @@
     "labels": {
       "details": "Details",
       "identifiers": "Identifiers",
-      "merges": "Merges"
+      "merges": "Merges",
+      "versionHistory": "Version History"
     }
   },
   "Items": {
@@ -638,6 +685,10 @@
         "content": "Do you really want to delete this project? This action cannot be undone.",
         "header": "Are you sure?"
       },
+      "publish": {
+        "content": "Set new records in this project to \"Public\" when they are created. You can always adjust the publication state of an individual record.",
+        "header": "Default Publication State"
+      },
       "share": {
         "content": "Allow other projects to discover this project and share data",
         "header": "Project Discovery"
@@ -799,6 +850,7 @@
       "allModels": "All Models",
       "allProjects": "All Projects",
       "allUsers": "All Users",
+      "auditLog": "Audit Log",
       "authorities": "Authorities",
       "configure": "Configure",
       "details": "Details",
@@ -820,6 +872,27 @@
       "name": "Name",
       "updated": "Last modified"
     }
+  },
+  "PublishButton": {
+    "buttons": {
+      "private": "Private",
+      "public": "Public"
+    },
+    "errors": {
+      "publish": "An error occurred updating the published state of this record."
+    }
+  },
+  "RecordVersionModal": {
+    "columns": {
+      "field": "Field",
+      "from": "Previous value",
+      "to": "New value"
+    },
+    "description": "{{name}} updated by {{user}} on {{date}}",
+    "labels": {
+      "empty": "Empty"
+    },
+    "title": "Version Details"
   },
   "RelatedEvents": {
     "columns": {
@@ -1083,6 +1156,20 @@
         "error": "Error Sending Invitation",
         "header": "Invitation Sent!"
       }
+    }
+  },
+  "Versions": {
+    "columns": {
+      "changes": "Changes",
+      "date": "Date",
+      "description": "Description",
+      "event": "Event",
+      "fields": "Fields",
+      "name": "Name",
+      "model": "Model",
+      "user": "User",
+      "updateType": "Update Type",
+      "uuid": "Record UUID"
     }
   },
   "WebAuthorities": {

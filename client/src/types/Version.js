@@ -1,0 +1,35 @@
+// @flow
+
+import type { User } from './User';
+
+export type Version = {
+  id: number,
+  uuid: string,
+  event: 'create' | 'update' | 'destroy',
+  item_id: number,
+  request_uuid: string,
+  created_at: string,
+  roots: {
+    root_id: number,
+    root_record_type: string,
+    root_display_name: string,
+    root_uuid: string,
+    root_project_model_id: number,
+    deleted: boolean
+  }[],
+  user: User,
+  record_type: string,
+  attributes: {
+    [string]: any
+  },
+  user_defined: {
+    "uuid": string,
+    "label": string,
+    "data_type": string,
+    "from": any,
+    "to": any
+  }[],
+  metadata: {
+    [string]: any
+  }
+}

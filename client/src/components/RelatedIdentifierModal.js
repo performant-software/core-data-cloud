@@ -33,9 +33,9 @@ const RelatedIdentifierModal = (props: Props) => {
    *
    * @type {function(*): Promise<AxiosResponse<T>>|*}
    */
-  const onSearch = useCallback((search) => (
+  const onSearch = useCallback((search, page) => (
     WebAuthoritiesService
-      .fetchAll({ search, project_id: projectId })
+      .fetchAll({ search, page, project_id: projectId })
   ), [projectId]);
 
   /**
