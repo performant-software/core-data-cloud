@@ -49,12 +49,20 @@ module CoreDataConnector
       attributes
     end
 
-    # Users can only view themselves outside of a project context.
+    # Users can only view themselves outside of a project context, with the exception of project owners, who can
+    # view all users in order to add them to their projects.
     class Scope < BaseScope
       def resolve
-        return scope.all if current_user.admin?
+        return scope.all if current_user.admin? || project_owner?
 
         User.where(id: current_user.id)
+      end
+
+      private
+
+      # Returns true if the current user is able to add users to a project, matching UserProjectPolicy#create?.
+      def project_owner?
+        current_user.member? && current_user.user_projects.where(role: UserProject::ROLE_OWNER).exists?
       end
     end
   end

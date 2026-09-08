@@ -38,7 +38,8 @@ const UserProject = (props: Props) => {
   const {
     canEditUserProjects,
     canEditUsers,
-    isOwner: isOwnerPermission
+    isOwner: isOwnerPermission,
+    isSSO
   } = usePermissions();
   const { provider } = useContext(AuthenticationContext);
 
@@ -178,7 +179,7 @@ const UserProject = (props: Props) => {
                 />
               </Form.Input>
             )}
-            { canEditUsers() && params.projectId && (
+            { (canEditUsers() || isSSO()) && params.projectId && (
               <Form.Input
                 error={editPageProps.isError('user_id')}
                 label={t('UserProject.labels.user')}
@@ -195,7 +196,7 @@ const UserProject = (props: Props) => {
                 />
               </Form.Input>
             )}
-            { !canEditUsers() && isOwner && isNew && (
+            { !isSSO() && !canEditUsers() && isOwner && isNew && (
               <UserForm
                 {...props}
                 {...editPageProps}
