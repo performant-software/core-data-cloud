@@ -49,6 +49,8 @@ resources :projects, concerns: [:versionable] do
   get :export_configuration, on: :member
   get :export_data, on: :member
   get :export_variables, on: :member
+  post :generate_static_assets, on: :member
+  post :generate_static_manifests, on: :member
   post :import_analyze, on: :member
   post :import_configuration, on: :member
   post :import_data, on: :member

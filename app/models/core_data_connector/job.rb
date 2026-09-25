@@ -7,6 +7,8 @@ module CoreDataConnector
 
     JOB_TYPE_EXPORT = 'export'
     JOB_TYPE_IMPORT = 'import'
+    JOB_TYPE_STATIC_ASSETS = 'static_assets'
+    JOB_TYPE_STATIC_MANIFESTS = 'static_manifests'
 
     # Includes
     include Rails.application.routes.url_helpers
@@ -21,6 +23,8 @@ module CoreDataConnector
     # Callbacks
     after_create_commit :queue_export_job, if: :export?
     after_create_commit :queue_import_job, if: :import?
+    after_create_commit :queue_static_assets_job, if: :static_assets?
+    after_create_commit :queue_static_manifests_job, if: :static_manifests?
 
     def download_url
       return nil unless file.attached?
@@ -36,6 +40,14 @@ module CoreDataConnector
       job_type == JOB_TYPE_IMPORT
     end
 
+    def static_assets?
+      job_type == JOB_TYPE_STATIC_ASSETS
+    end
+
+    def static_manifests?
+      job_type == JOB_TYPE_STATIC_MANIFESTS
+    end
+
     private
 
     def queue_export_job
@@ -44,6 +56,14 @@ module CoreDataConnector
 
     def queue_import_job
       ImportCsvJob.perform_later(id)
+    end
+
+    def queue_static_assets_job
+      GenerateStaticAssetsJob.perform_later(id)
+    end
+
+    def queue_static_manifests_job
+      GenerateStaticManifestsJob.perform_later(id)
     end
   end
 end
