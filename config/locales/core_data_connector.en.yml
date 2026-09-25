@@ -130,6 +130,8 @@ en:
       primary_name: "This record must have a primary name"
     projects:
       authorize: "You do not have permission to import these records. Please contact your system administrator."
+      generate_static_assets: "Base URL and destination are required"
+      generate_static_manifests: "Image base URL, manifest base URL, and destination are required"
       import_configuration: "Configuration file required"
       import_data: "Importable contents required"
     user_projects:

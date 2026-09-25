@@ -61,6 +61,20 @@ module CoreDataConnector
       !project.archived? && project_owner?
     end
 
+    # A user can generate static assets for a project's media if they are an admin.
+    def generate_static_assets?
+      return true if current_user.admin?
+
+      false
+    end
+
+    # A user can generate static manifests for a project's records if they are an admin.
+    def generate_static_manifests?
+      return true if current_user.admin?
+
+      false
+    end
+
     # A user can import data into a project if they are an admin.
     def import_analyze?
       return true if current_user.admin?
