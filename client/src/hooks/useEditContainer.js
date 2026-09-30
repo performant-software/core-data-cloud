@@ -219,6 +219,9 @@ const useEditContainer = (options: Options) => {
 
     setSaving(true);
     onSaveProp(item)
+      .then(() => {
+        if (mountedRef.current) setOriginalItem(item);
+      })
       .catch(onError)
       .finally(() => {
         if (mountedRef.current) setSaving(false);

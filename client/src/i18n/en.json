@@ -258,7 +258,11 @@
     "actions": {
       "import": {
         "content": "Import data from FairCopy.cloud",
-        "header": "Import"
+        "disabled": "Save your unsaved changes first.",
+        "header": {
+          "allowed": "Import",
+          "disabled": "Import Unavailable"
+        }
       }
     },
     "labels": {

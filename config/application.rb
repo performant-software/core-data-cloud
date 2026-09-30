@@ -29,19 +29,19 @@ module RailsReactTemplate
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
-    # Redirect requests for non-canonical domains before any other processing.
-    config.middleware.insert_before 0, CanonicalDomainRedirect
-
-    # Allow cross-origin reads of the public and reconciliation APIs. Inserted
-    # after CanonicalDomainRedirect to preserve the ordering these had while
-    # Rack::Cors was contributed by the core_data_connector engine.
-    config.middleware.insert_after CanonicalDomainRedirect, Rack::Cors do
+    # Allow cross-origin reads of the public and reconciliation APIs. Rack::Cors
+    # runs first so that redirects from CanonicalDomainRedirect carry CORS
+    # headers and preflight requests are answered on non-canonical domains.
+    config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '*'
         resource '/core_data/public/*', methods: :get
         resource '/core_data/reconcile/*', methods: [:get, :post]
       end
     end
+
+    # Redirect requests for non-canonical domains before any other processing.
+    config.middleware.insert_after Rack::Cors, CanonicalDomainRedirect
 
     # Configure Postmark for transactional emails
     config.action_mailer.delivery_method = :postmark

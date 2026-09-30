@@ -29,6 +29,8 @@ const ItemForm = (props: Props) => {
   const { project, projectModel } = useContext(ProjectContext);
   const { t } = useTranslation();
 
+  const importDisabled = !props.item.id || props.dirty;
+
   /**
    * Calls the `/core_data/items/:id/import` API endpoint.
    *
@@ -98,17 +100,26 @@ const ItemForm = (props: Props) => {
         >
           <input />
           <Popup
-            content={t('ItemForm.actions.import.content')}
-            header={t('ItemForm.actions.import.header')}
+            content={importDisabled
+              ? t('ItemForm.actions.import.disabled')
+              : t('ItemForm.actions.import.content')}
+            header={importDisabled
+              ? t('ItemForm.actions.import.header.disabled')
+              : t('ItemForm.actions.import.header.allowed')}
             trigger={(
-              <Button
-                disabled={!props.item.id}
-                icon='cloud download'
-                onClick={() => setModal(true)}
+              <span
                 style={{
+                  cursor: importDisabled ? 'not-allowed' : 'default',
+                  display: 'flex',
                   marginLeft: '1em'
                 }}
-              />
+              >
+                <Button
+                  disabled={importDisabled}
+                  icon='cloud download'
+                  onClick={() => setModal(true)}
+                />
+              </span>
             )}
           />
         </Form.Input>
