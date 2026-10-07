@@ -102,7 +102,7 @@ module CoreDataConnector
       end
 
       def build_canvas(resource_id, index)
-        service_url = "#{image_base_url}/iiif/image/v3/#{resource_id}"
+        service_url = "#{image_base_url}/iiif/3/image/#{resource_id}"
         info = fetch_static_info(resource_id)
 
         canvas_url = "#{service_url}/canvas/#{index}"
@@ -139,28 +139,31 @@ module CoreDataConnector
       end
 
       def to_collection_item(manifest, info)
+        # IIIF v3 requires thumbnail to be an array of resources, even for a single thumbnail.
+        body = manifest.dig('items', 0, 'items', 0, 'items', 0, 'body')
+
         {
           'id' => manifest['id'],
           'type' => 'Manifest',
           'label' => manifest['label'],
           'item_count' => info[:resources].size,
-          'thumbnail' => manifest.dig('items', 0, 'items', 0, 'items', 0, 'body', 'id')
+          'thumbnail' => [body.slice('id', 'type', 'format', 'width', 'height')]
         }
       end
 
       def fetch_static_info(resource_id)
-        response = HTTParty.get("#{image_base_url}/iiif/image/v3/#{resource_id}/info.json")
+        response = HTTParty.get("#{image_base_url}/iiif/3/image/#{resource_id}/info.json")
         JSON.parse(response.body)
       rescue StandardError
         {}
       end
 
       def manifest_path(model_class, record, project_model_relationship_uuid)
-        "#{model_class.model_name.route_key}/#{record.uuid}/#{project_model_relationship_uuid}/iiif/presentation/v3/manifest.json"
+        "iiif/3/presentation/#{model_class.model_name.route_key}/#{record.uuid}/#{project_model_relationship_uuid}/manifest.json"
       end
 
       def collection_path(model_class, record)
-        "#{model_class.model_name.route_key}/#{record.uuid}/iiif/presentation/v3/collection.json"
+        "iiif/3/presentation/#{model_class.model_name.route_key}/#{record.uuid}/collection.json"
       end
 
       def find_label(record)
