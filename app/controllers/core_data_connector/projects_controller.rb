@@ -98,6 +98,68 @@ module CoreDataConnector
       render json: json, status: :ok
     end
 
+    def generate_static_assets
+      render json: { errors: [I18n.t('errors.projects.generate_static_assets')] }, status: :bad_request and return unless params[:base_url].present? && params[:destination].present?
+
+      project = Project.find(params[:id])
+      authorize project
+
+      begin
+        job = Job.create(
+          job_type: Job::JOB_TYPE_STATIC_ASSETS,
+          project:,
+          user: current_user,
+          extra: { base_url: params[:base_url], destination: params[:destination] }
+        )
+
+        errors = job&.errors
+      rescue StandardError => error
+        errors = [error]
+
+        log_error(error)
+      end
+
+      if errors.nil? || errors.empty?
+        render json: { }, status: :ok
+      else
+        render json: { errors: errors }, status: :unprocessable_entity
+      end
+    end
+
+    def generate_static_manifests
+      render json: { errors: [I18n.t('errors.projects.generate_static_manifests')] }, status: :bad_request and return unless params[:image_base_url].present? && params[:manifest_base_url].present? && params[:destination].present?
+
+      project = Project.find(params[:id])
+      authorize project
+
+      begin
+        job = Job.create(
+          job_type: Job::JOB_TYPE_STATIC_MANIFESTS,
+          project:,
+          user: current_user,
+          extra: {
+            image_base_url: params[:image_base_url],
+            manifest_base_url: params[:manifest_base_url],
+            destination: params[:destination],
+            model_class: params[:model],
+            record_uuid: params[:record_uuid]
+          }
+        )
+
+        errors = job&.errors
+      rescue StandardError => error
+        errors = [error]
+
+        log_error(error)
+      end
+
+      if errors.nil? || errors.empty?
+        render json: { }, status: :ok
+      else
+        render json: { errors: errors }, status: :unprocessable_entity
+      end
+    end
+
     def import_analyze
       project = Project.find(params[:id])
       authorize project
