@@ -23,6 +23,8 @@ module CoreDataConnector
 
     # Callbacks
     after_save :update_manifests
+    before_destroy :set_manifestables, prepend: true
+    after_destroy :reset_manifestables
 
     # User defined fields parent
     resolve_defineable -> (media_content) { media_content.project_model }
@@ -58,6 +60,41 @@ module CoreDataConnector
 
       self.relationships.each { |r| update_relationship_manifests(r, iiif_service, true) }
       self.related_relationships.each { |r| update_relationship_manifests(r, iiif_service, false) }
+    end
+
+    # Resets the manifests for each record this media content was related to, removing any manifest that no longer has
+    # any media contents.
+    def reset_manifestables
+      return if @manifestables.blank?
+
+      service = Iiif::Manifest.new
+
+      @manifestables.each do |manifestable|
+        service.reset_manifests_by_type(manifestable[:model_class], {
+          id: manifestable[:id],
+          project_model_relationship_id: manifestable[:project_model_relationship_id],
+          limit: ENV['IIIF_MANIFEST_ITEM_LIMIT']
+        })
+      end
+    end
+
+    # Tracks the records (and relationship IDs) whose manifests should be reset once this record
+    # is destroyed, since the relationships will not exist afterwards
+    def set_manifestables
+      manifestables = self.relationships.reload.map do |r|
+        [r.related_record_type, r.related_record_id, r.project_model_relationship_id]
+      end
+
+      manifestables += self.related_relationships.reload.map do |r|
+        [r.primary_record_type, r.primary_record_id, r.project_model_relationship_id]
+      end
+
+      @manifestables = manifestables.uniq.filter_map do |record_type, record_id, project_model_relationship_id|
+        model_class = record_type.safe_constantize
+        next unless model_class&.include?(Manifestable)
+
+        { model_class: model_class, id: record_id, project_model_relationship_id: project_model_relationship_id }
+      end
     end
 
     def update_relationship_manifests(relationship, service, is_primary)
