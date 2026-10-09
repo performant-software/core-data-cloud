@@ -232,7 +232,7 @@ const RelatedMediaContents = (props: Props) => {
             />
           )
         }, {
-          render: () => (
+          render: () => count > 0 && (
             <ManifestUrlButton
               key='manifest'
               url={MediaContentUtils.getManifestURL(projectModel, uuid, projectModelRelationship.uuid)}

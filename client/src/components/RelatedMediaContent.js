@@ -42,11 +42,16 @@ const RelatedMediaContentForm = (props: Props) => {
   } = useRelationship(props);
 
   /**
-   * Memo-izes the manifest URL.
+   * Memo-izes the manifest URL. A manifest is only generated for saved relationships to published media, so no URL
+   * is returned otherwise to avoid linking to a manifest that does not exist.
    */
-  const manifestUrl = useMemo(() => (
-    MediaContentUtils.getManifestURL(projectModel, uuid, projectModelRelationship.uuid)
-  ), [projectModel, projectModelRelationship, uuid])
+  const manifestUrl = useMemo(() => {
+    if (!props.item.id || !foreignObject || foreignObject.published === false) {
+      return null;
+    }
+
+    return MediaContentUtils.getManifestURL(projectModel, uuid, projectModelRelationship.uuid);
+  }, [foreignObject, projectModel, projectModelRelationship, props.item.id, uuid]);
 
   /**
    * Calls the onCreateManifests callback.
@@ -144,9 +149,11 @@ const RelatedMediaContentForm = (props: Props) => {
                 icon='pencil'
                 onClick={onNavigate}
               />
-              <ManifestUrlButton
-                url={manifestUrl}
-              />
+              { manifestUrl && (
+                <ManifestUrlButton
+                  url={manifestUrl}
+                />
+              )}
               <Button
                 color='grey'
                 content={t('RelatedMediaContent.buttons.refreshManifest')}
