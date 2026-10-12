@@ -88,6 +88,34 @@ module CoreDataConnector
       end
     end
 
+    def export_json_data
+      render json: { errors: [I18n.t('errors.projects.export_json_data')] }, status: :bad_request and return unless params[:base_url].present?
+
+      project = Project.find(params[:id])
+      authorize project
+
+      begin
+        job = Job.create(
+          job_type: Job::JOB_TYPE_EXPORT_JSON,
+          project_id: project.id,
+          user: current_user,
+          extra: { base_url: params[:base_url] }
+        )
+
+        errors = job&.errors
+      rescue StandardError => error
+        errors = [error]
+
+        log_error error
+      end
+
+      if errors.nil? || errors.empty?
+        render json: { job_id: job.id }, status: :ok
+      else
+        render json: { errors: errors }, status: :bad_request
+      end
+    end
+
     def export_variables
       project = Project.find(params[:id])
       authorize project
@@ -110,40 +138,6 @@ module CoreDataConnector
           project:,
           user: current_user,
           extra: { base_url: params[:base_url], destination: params[:destination] }
-        )
-
-        errors = job&.errors
-      rescue StandardError => error
-        errors = [error]
-
-        log_error(error)
-      end
-
-      if errors.nil? || errors.empty?
-        render json: { }, status: :ok
-      else
-        render json: { errors: errors }, status: :unprocessable_entity
-      end
-    end
-
-    def generate_static_manifests
-      render json: { errors: [I18n.t('errors.projects.generate_static_manifests')] }, status: :bad_request and return unless params[:image_base_url].present? && params[:manifest_base_url].present? && params[:destination].present?
-
-      project = Project.find(params[:id])
-      authorize project
-
-      begin
-        job = Job.create(
-          job_type: Job::JOB_TYPE_STATIC_MANIFESTS,
-          project:,
-          user: current_user,
-          extra: {
-            image_base_url: params[:image_base_url],
-            manifest_base_url: params[:manifest_base_url],
-            destination: params[:destination],
-            model_class: params[:model],
-            record_uuid: params[:record_uuid]
-          }
         )
 
         errors = job&.errors
