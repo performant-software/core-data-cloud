@@ -99,6 +99,7 @@ module CoreDataConnector
       query = MediaContent
                 .joins(:project_model, :resource_description)
                 .where(project_model: { project_id: job.project_id })
+                .published
 
       cutoff = last_completed_run(job)
       query = query.where('core_data_connector_media_contents.updated_at > ?', cutoff) if cutoff
