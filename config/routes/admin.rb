@@ -25,7 +25,7 @@ resources :items, concerns: [:manifestable, :mergeable, :publishable, :versionab
   post :import, on: :member
 end
 
-resources :jobs, only: [:destroy, :index]
+resources :jobs, only: [:destroy, :index, :show]
 
 resources :media_contents, concerns: [:manifestable, :mergeable, :publishable, :versionable] do
   post :upload, on: :collection
@@ -48,7 +48,9 @@ resources :projects, concerns: [:versionable] do
   post :clear, on: :member
   get :export_configuration, on: :member
   get :export_data, on: :member
+  get :export_json_data, on: :member
   get :export_variables, on: :member
+  post :generate_static_assets, on: :member
   post :import_analyze, on: :member
   post :import_configuration, on: :member
   post :import_data, on: :member

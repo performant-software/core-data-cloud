@@ -88,6 +88,34 @@ module CoreDataConnector
       end
     end
 
+    def export_json_data
+      render json: { errors: [I18n.t('errors.projects.export_json_data')] }, status: :bad_request and return unless params[:base_url].present?
+
+      project = Project.find(params[:id])
+      authorize project
+
+      begin
+        job = Job.create(
+          job_type: Job::JOB_TYPE_EXPORT_JSON,
+          project_id: project.id,
+          user: current_user,
+          extra: { base_url: params[:base_url] }
+        )
+
+        errors = job&.errors
+      rescue StandardError => error
+        errors = [error]
+
+        log_error error
+      end
+
+      if errors.nil? || errors.empty?
+        render json: { job_id: job.id }, status: :ok
+      else
+        render json: { errors: errors }, status: :bad_request
+      end
+    end
+
     def export_variables
       project = Project.find(params[:id])
       authorize project
@@ -96,6 +124,34 @@ module CoreDataConnector
 
       json = { param_name.to_sym => serializer.render_show(project) }
       render json: json, status: :ok
+    end
+
+    def generate_static_assets
+      render json: { errors: [I18n.t('errors.projects.generate_static_assets')] }, status: :bad_request and return unless valid_static_assets_params?
+
+      project = Project.find(params[:id])
+      authorize project
+
+      begin
+        job = Job.create(
+          job_type: Job::JOB_TYPE_STATIC_ASSETS,
+          project:,
+          user: current_user,
+          extra: { base_url: params[:base_url], destination: params[:destination], storage: storage_params }
+        )
+
+        errors = job&.errors
+      rescue StandardError => error
+        errors = [error]
+
+        log_error(error)
+      end
+
+      if errors.nil? || errors.empty?
+        render json: { }, status: :ok
+      else
+        render json: { errors: errors }, status: :unprocessable_entity
+      end
     end
 
     def import_analyze
@@ -178,6 +234,22 @@ module CoreDataConnector
       json = library.fetch_library || []
 
       render json: json, status: :ok
+    end
+
+    private
+
+    # Storage credentials are required so IIIF Cloud's create_static_assets endpoint (which has
+    # no credential fallback of its own) can write the generated assets. They're passed through
+    # per-request rather than configured once per project, so a narrowly-scoped credential can be
+    # minted for each run instead of granting this app standing access to the destination bucket.
+    def valid_static_assets_params?
+      return false unless params[:base_url].present? && params[:destination].present? && params[:storage].present?
+
+      %i(bucket access_key_id secret_access_key).all? { |key| params[:storage][key].present? }
+    end
+
+    def storage_params
+      params[:storage].permit(:bucket, :access_key_id, :secret_access_key, :session_token).to_h
     end
 
     protected
