@@ -127,7 +127,7 @@ module CoreDataConnector
     end
 
     def generate_static_assets
-      render json: { errors: [I18n.t('errors.projects.generate_static_assets')] }, status: :bad_request and return unless params[:base_url].present? && params[:destination].present?
+      render json: { errors: [I18n.t('errors.projects.generate_static_assets')] }, status: :bad_request and return unless valid_static_assets_params?
 
       project = Project.find(params[:id])
       authorize project
@@ -137,7 +137,7 @@ module CoreDataConnector
           job_type: Job::JOB_TYPE_STATIC_ASSETS,
           project:,
           user: current_user,
-          extra: { base_url: params[:base_url], destination: params[:destination] }
+          extra: { base_url: params[:base_url], destination: params[:destination], storage: storage_params }
         )
 
         errors = job&.errors
@@ -234,6 +234,22 @@ module CoreDataConnector
       json = library.fetch_library || []
 
       render json: json, status: :ok
+    end
+
+    private
+
+    # Storage credentials are required so IIIF Cloud's create_static_assets endpoint (which has
+    # no credential fallback of its own) can write the generated assets. They're passed through
+    # per-request rather than configured once per project, so a narrowly-scoped credential can be
+    # minted for each run instead of granting this app standing access to the destination bucket.
+    def valid_static_assets_params?
+      return false unless params[:base_url].present? && params[:destination].present? && params[:storage].present?
+
+      %i(bucket access_key_id secret_access_key).all? { |key| params[:storage][key].present? }
+    end
+
+    def storage_params
+      params[:storage].permit(:bucket, :access_key_id, :secret_access_key, :session_token).to_h
     end
 
     protected

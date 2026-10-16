@@ -33,7 +33,7 @@ module CoreDataConnector
       resource_ids = eligible_resource_ids(job)
 
       if resource_ids.empty?
-        job.update(status: Job::JOB_STATUS_COMPLETED)
+        finalize!(job, status: Job::JOB_STATUS_COMPLETED)
         return
       end
 
@@ -45,7 +45,8 @@ module CoreDataConnector
           resource_ids: batch,
           base_url: job.extra['base_url'],
           destination: job.extra['destination'],
-          job_uuid: job_uuid
+          job_uuid: job_uuid,
+          storage: job.extra['storage'].symbolize_keys
         )
       end
 
@@ -53,7 +54,7 @@ module CoreDataConnector
       schedule_poll(job)
     rescue StandardError => error
       log_error(error)
-      job.update(status: Job::JOB_STATUS_FAILED)
+      finalize!(job, status: Job::JOB_STATUS_FAILED)
     end
 
     # Checks IIIF Cloud's reported status for the job_uuid submitted in #start. A transient error
@@ -64,10 +65,10 @@ module CoreDataConnector
 
       case remote[:status].to_s
       when Job::JOB_STATUS_COMPLETED
-        job.update(status: Job::JOB_STATUS_COMPLETED)
+        finalize!(job, status: Job::JOB_STATUS_COMPLETED)
       when Job::JOB_STATUS_FAILED
         log_error(StandardError.new("IIIF Cloud reported job failure (#{remote[:failed_count]}/#{remote[:total_count]} resources failed)"))
-        job.update(status: Job::JOB_STATUS_FAILED)
+        finalize!(job, status: Job::JOB_STATUS_FAILED)
       else
         reschedule_or_timeout(job)
       end
@@ -81,7 +82,7 @@ module CoreDataConnector
 
       if attempts >= POLL_MAX_ATTEMPTS
         log_error(StandardError.new("Timed out after #{attempts} attempts waiting for IIIF Cloud job #{job.extra['iiif_cloud_job_uuid']}"))
-        job.update(status: Job::JOB_STATUS_FAILED, extra: job.extra.merge('iiif_cloud_poll_attempts' => attempts))
+        finalize!(job, status: Job::JOB_STATUS_FAILED, extra: job.extra.merge('iiif_cloud_poll_attempts' => attempts))
       else
         job.update(extra: job.extra.merge('iiif_cloud_poll_attempts' => attempts))
         schedule_poll(job)
@@ -90,6 +91,12 @@ module CoreDataConnector
 
     def schedule_poll(job)
       self.class.set(wait: POLL_INTERVAL).perform_later(job.id)
+    end
+
+    # Marks the job with its final status, clearing the stored storage credentials along the way
+    # since they're no longer needed once the job can't make any more outbound requests.
+    def finalize!(job, status:, extra: job.extra)
+      job.update(status: status, extra: extra.except('storage'))
     end
 
     # Resource IDs for media content with an uploaded IIIF Cloud resource, belonging to the
