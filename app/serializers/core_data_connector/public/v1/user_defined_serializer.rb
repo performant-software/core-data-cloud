@@ -29,7 +29,7 @@ module CoreDataConnector
         def render_user_defined(item, fields, hash)
           return if fields.nil?
 
-          fields.each do |field|
+          fields.sort_by { |field| [field.order, field.column_name] }.each do |field|
             next unless item.user_defined
 
             value = item.user_defined[field.uuid]
