@@ -1,9 +1,10 @@
 module CoreDataConnector
   class GenerateStaticAssetsJob < ApplicationJob
-    # Number of resource IDs sent to IIIF Cloud per request. IIIF Cloud currently generates
-    # assets for the whole batch synchronously within that single request, so this is kept small
-    # as a stopgap to stay under the request timeout - not an efficiency choice.
-    BATCH_SIZE = 10
+    # Number of resource IDs sent to IIIF Cloud per request. IIIF Cloud enqueues one
+    # CreateStaticAssetsJob per resource and responds as soon as they're queued (it no longer
+    # generates the batch synchronously within the request), so this is sized for reasonable HTTP
+    # request/response overhead rather than any processing-time constraint.
+    BATCH_SIZE = 100
 
     # IIIF Cloud only enqueues the actual asset-generation work (see Public::JobsController in
     # iiif-cloud); it doesn't finish by the time create_static_assets responds. So once the
@@ -70,21 +71,33 @@ module CoreDataConnector
         log_error(StandardError.new("IIIF Cloud reported job failure (#{remote[:failed_count]}/#{remote[:total_count]} resources failed)"))
         finalize!(job, status: Job::JOB_STATUS_FAILED)
       else
-        reschedule_or_timeout(job)
+        reschedule_or_timeout(job, progress: remote[:completed_count] + remote[:failed_count])
       end
     rescue StandardError => error
       log_error(error)
-      reschedule_or_timeout(job)
+      # No successful response to read a progress count from - this attempt counts toward the
+      # timeout the same as if IIIF Cloud had reported no progress.
+      reschedule_or_timeout(job, progress: nil)
     end
 
-    def reschedule_or_timeout(job)
-      attempts = (job.extra['iiif_cloud_poll_attempts'] || 0) + 1
+    # POLL_MAX_ATTEMPTS bounds consecutive polls with *no observed progress*, not the job's total
+    # wall-clock running time - large projects can take far longer than POLL_MAX_ATTEMPTS *
+    # POLL_INTERVAL to finish, as long as more resources keep completing/failing along the way.
+    # Each time completed_count + failed_count moves, that's confirmation IIIF Cloud is still
+    # actively working through the batch, so the attempt count resets instead of accumulating
+    # toward a timeout that's only meant to catch a job that's actually stalled.
+    def reschedule_or_timeout(job, progress:)
+      last_progress = job.extra['iiif_cloud_last_progress']
+      attempts = progress && progress != last_progress ? 0 : (job.extra['iiif_cloud_poll_attempts'] || 0) + 1
+
+      extra = job.extra.merge('iiif_cloud_poll_attempts' => attempts)
+      extra['iiif_cloud_last_progress'] = progress if progress
 
       if attempts >= POLL_MAX_ATTEMPTS
-        log_error(StandardError.new("Timed out after #{attempts} attempts waiting for IIIF Cloud job #{job.extra['iiif_cloud_job_uuid']}"))
-        finalize!(job, status: Job::JOB_STATUS_FAILED, extra: job.extra.merge('iiif_cloud_poll_attempts' => attempts))
+        log_error(StandardError.new("Timed out after #{attempts} attempts with no progress waiting for IIIF Cloud job #{job.extra['iiif_cloud_job_uuid']}"))
+        finalize!(job, status: Job::JOB_STATUS_FAILED, extra: extra)
       else
-        job.update(extra: job.extra.merge('iiif_cloud_poll_attempts' => attempts))
+        job.update(extra: extra)
         schedule_poll(job)
       end
     end
