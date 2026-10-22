@@ -41,7 +41,7 @@ module CoreDataConnector
 
       udfs = UserDefinedFields::UserDefinedField
         .where(uuid: self.user_defined.keys)
-        .order(:order)
+        .order(:order, :column_name, :id)
 
       udfs.each do |udf|
         fields.push({
