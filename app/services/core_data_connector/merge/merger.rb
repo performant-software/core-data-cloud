@@ -102,7 +102,8 @@ module CoreDataConnector
           included = true and break if attrs.all? { |attr| i[attr] == item[attr] }
         end
 
-        array << item.dup unless included
+        # Preserve the original timestamp
+        array << item.dup.tap { |copy| copy.created_at = item.created_at } unless included
       end
     end
   end
