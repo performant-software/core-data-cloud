@@ -20,12 +20,14 @@ import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 type Props = {
   errors?: Array<string>,
   onClose: () => void,
-  onSave: () => Promise<any>
+  onSave: () => Promise<any>,
+  single?: boolean
 };
 
 const MediaContentsUploadModal = (props: Props) => {
   const [complete, setComplete] = useState(false);
   const [mediaContents, setMediaContents] = useState([]);
+  const [singleFileError, setSingleFileError] = useState(null);
 
   const [loadingProjectModelFields, setLoadingProjectModelFields] = useState(false);
   const [projectModelFields, setProjectModelFields] = useState([]);
@@ -57,6 +59,16 @@ const MediaContentsUploadModal = (props: Props) => {
    * media_content record from those of the relationships record.
    */
   const onSave = useCallback((records) => {
+    if (props.single && records.length > 1) {
+      setSingleFileError(t('MediaContentsUploadModal.errors.single'));
+
+      // Reject (rather than resolve) so the modal doesn't treat this as a completed upload batch, which would
+      // otherwise permanently disable the "Upload" button even after the extra file(s) are removed.
+      return Promise.reject(new Error('single_file_limit'));
+    }
+
+    setSingleFileError(null);
+
     const uuids = _.pluck(projectModelRelationshipFields, 'uuid');
 
     const payload  = [];
@@ -77,7 +89,7 @@ const MediaContentsUploadModal = (props: Props) => {
       .uploadAll(payload, project)
       .then(({ data }) => data.media_contents)
       .then((newMediaContents) => afterSave(newMediaContents, relationshipUserDefined));
-  }, [afterSave, project, projectModelRelationshipFields]);
+  }, [afterSave, project, projectModelRelationshipFields, props.single, t]);
 
   /**
    * Customizes the validation to include user-defined field use cases.
@@ -169,10 +181,14 @@ const MediaContentsUploadModal = (props: Props) => {
     return null;
   }
 
+  const errors = singleFileError
+    ? [...(props.errors || []), singleFileError]
+    : props.errors;
+
   return (
     <FileUploadModal
       closeOnComplete={false}
-      errors={props.errors}
+      errors={errors}
       itemComponent={MediaContentUploadForm}
       itemComponentProps={{
         projectModelFields,

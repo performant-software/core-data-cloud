@@ -388,6 +388,9 @@
     }
   },
   "MediaContentsUploadModal": {
+    "errors": {
+      "single": "This relationship only allows one related media record. Please remove the extra file(s) before continuing."
+    },
     "labels": {
       "name": "Name"
     }
