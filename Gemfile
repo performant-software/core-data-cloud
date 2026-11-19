@@ -55,7 +55,7 @@ gem 'typesense', '~> 5.0'
 gem 'typhoeus', '~> 1.6'
 
 # IIIF
-gem 'triple_eye_effable', git: 'https://github.com/performant-software/triple-eye-effable.git', tag: 'v0.2.9'
+gem 'triple_eye_effable', git: 'https://github.com/performant-software/triple-eye-effable.git', tag: 'v0.2.11'
 
 # User defined fields
 gem 'user_defined_fields', git: 'https://github.com/performant-software/user-defined-fields.git', tag: 'v0.1.15'
