@@ -18,12 +18,12 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { Message } from 'semantic-ui-react';
 import ItemContext from '../context/Item';
+import ItemLayoutContext from '../context/ItemLayout';
 import ManifestUrlButton from './ManifestUrlButton';
 import MediaContentUtils from '../utils/MediaContent';
 import MediaContentsSelector from './MediaContentsSelector';
 import MediaContentsService from '../services/MediaContents';
 import MediaContentsUploadModal from './MediaContentsUploadModal';
-import MediaUploadingMessage from './MediaUploadingMessage';
 import ProjectContext from '../context/Project';
 import RelatedMediaContentModal from './RelatedMediaContentModal';
 import type { Relationship as RelationshipType } from '../types/Relationship';
@@ -47,10 +47,10 @@ const Modal = {
 const RelatedMediaContentForm = (props: Props) => {
   const [creatingManifests, setCreatingManifests] = useState(false);
   const [modal, setModal] = useState(null);
-  const [showUploadMessage, setShowUploadMessage] = useState(false);
 
   const { projectModel } = useContext(ProjectContext);
   const { uuid } = useContext(ItemContext);
+  const { setMessage } = useContext(ItemLayoutContext);
   const { itemId, projectId } = useParams();
   const { foreignProjectModelId, projectModelRelationship } = useProjectModelRelationship();
   const { t } = useTranslation();
@@ -146,7 +146,10 @@ const RelatedMediaContentForm = (props: Props) => {
   }, [onSelection, props.onSetState]);
 
   /**
-   * Links the single uploaded media content record to this relationship.
+   * Links the single uploaded media content record to this relationship, and displays a message noting that the
+   * uploaded image may take time to process. This is shown via the stable ItemLayoutContext (rather than local
+   * component state) because the first successful save of a new relationship causes this component to remount,
+   * which would otherwise discard the message before the user has a chance to see it.
    *
    * @type {(function(*): void)|*}
    */
@@ -160,8 +163,8 @@ const RelatedMediaContentForm = (props: Props) => {
 
     const { relationship_user_defined: userDefined, ...mediaContent } = first.mediaContent;
     afterModalSave(mediaContent, userDefined);
-    setShowUploadMessage(true);
-  }, [afterModalSave]);
+    setMessage({ content: t('RelatedMediaContent.messages.uploaded.content') });
+  }, [afterModalSave, setMessage, t]);
 
   /**
    * Links the single selected media content record to this relationship.
@@ -181,11 +184,6 @@ const RelatedMediaContentForm = (props: Props) => {
 
   return (
     <>
-      { showUploadMessage && (
-        <MediaUploadingMessage
-          multiple={false}
-        />
-      )}
       { error && (
         <Message
           content={error.content}
@@ -198,6 +196,7 @@ const RelatedMediaContentForm = (props: Props) => {
           name: 'edit',
           icon: 'pencil'
         }, {
+          accept: () => !!props.item.id,
           name: 'delete',
           icon: 'times'
         }, {
@@ -221,7 +220,7 @@ const RelatedMediaContentForm = (props: Props) => {
         }]}
         addButton={{}}
         buttons={[{
-          render: () => !foreignObject && (
+          render: () => !props.item.id && (
             <DropdownButton
               color='grey'
               direction='right'
@@ -251,7 +250,7 @@ const RelatedMediaContentForm = (props: Props) => {
             />
           )
         }, {
-          accept: () => !!foreignObject,
+          accept: () => !!props.item.id,
           color: 'grey',
           disabled: creatingManifests,
           icon: 'redo',

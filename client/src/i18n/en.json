@@ -389,7 +389,8 @@
   },
   "MediaContentsUploadModal": {
     "errors": {
-      "single": "This relationship only allows one related media record. Please remove the extra file(s) before continuing."
+      "single": "This relationship only allows one related media record. Please remove the extra file(s) before continuing.",
+      "upload": "Something went wrong uploading your file(s). Please try again."
     },
     "labels": {
       "name": "Name"
@@ -942,6 +943,11 @@
   "RelatedMediaContent": {
     "buttons": {
       "refreshManifest": "Refresh Manifest"
+    },
+    "messages": {
+      "uploaded": {
+        "content": "Your changes have been saved. Images may take time to process; please refresh the page if you cannot see your image yet."
+      }
     }
   },
   "RelatedMediaContents": {
