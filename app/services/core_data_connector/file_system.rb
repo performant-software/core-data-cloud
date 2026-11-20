@@ -1,3 +1,4 @@
+require 'pathname'
 require 'zip'
 
 IGNORE_PATTERN = /\.DS_Store|__MACOSX|(^|\/)\._/
@@ -14,14 +15,18 @@ module CoreDataConnector
       directory
     end
 
-    def self.create_zip(directory, zip_filename)
+    # Zips every file matching the passed pattern found anywhere within the passed directory
+    # (including nested subdirectories), preserving each file's path relative to the directory.
+    def self.create_zip(directory, zip_filename, pattern: '*.csv')
       zip_filepath = File.join(directory, zip_filename)
-      file_pattern = File.join(directory, '*.csv')
+      file_pattern = File.join(directory, '**', pattern)
 
       Zip::File.open(zip_filepath, create: true) do |zipfile|
         Dir.glob(file_pattern).each do |filepath|
-          filename = File.basename(filepath)
-          zipfile.add(filename, File.join(directory, filename))
+          next if File.directory?(filepath)
+
+          relative_path = Pathname.new(filepath).relative_path_from(Pathname.new(directory)).to_s
+          zipfile.add(relative_path, filepath)
         end
       end
     end

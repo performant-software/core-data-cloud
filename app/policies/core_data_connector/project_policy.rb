@@ -54,11 +54,25 @@ module CoreDataConnector
       false
     end
 
+    # A user can export a project's data as JSON if they are an admin.
+    def export_json_data?
+      return true if current_user.admin?
+
+      false
+    end
+
     # A user can export a project's environment variables if they are an admin or an owner of the project.
     def export_variables?
       return true if current_user.admin?
 
       !project.archived? && project_owner?
+    end
+
+    # A user can generate static assets for a project's media if they are an admin.
+    def generate_static_assets?
+      return true if current_user.admin?
+
+      false
     end
 
     # A user can import data into a project if they are an admin.

@@ -6,7 +6,9 @@ module CoreDataConnector
     JOB_STATUS_FAILED = 'failed'
 
     JOB_TYPE_EXPORT = 'export'
+    JOB_TYPE_EXPORT_JSON = 'export_json'
     JOB_TYPE_IMPORT = 'import'
+    JOB_TYPE_STATIC_ASSETS = 'static_assets'
 
     # Includes
     include Rails.application.routes.url_helpers
@@ -20,7 +22,9 @@ module CoreDataConnector
 
     # Callbacks
     after_create_commit :queue_export_job, if: :export?
+    after_create_commit :queue_export_json_job, if: :export_json?
     after_create_commit :queue_import_job, if: :import?
+    after_create_commit :queue_static_assets_job, if: :static_assets?
 
     def download_url
       return nil unless file.attached?
@@ -32,8 +36,16 @@ module CoreDataConnector
       job_type == JOB_TYPE_EXPORT
     end
 
+    def export_json?
+      job_type == JOB_TYPE_EXPORT_JSON
+    end
+
     def import?
       job_type == JOB_TYPE_IMPORT
+    end
+
+    def static_assets?
+      job_type == JOB_TYPE_STATIC_ASSETS
     end
 
     private
@@ -42,8 +54,16 @@ module CoreDataConnector
       ExportCsvJob.perform_later(id)
     end
 
+    def queue_export_json_job
+      ExportJsonJob.perform_later(id)
+    end
+
     def queue_import_job
       ImportCsvJob.perform_later(id)
+    end
+
+    def queue_static_assets_job
+      GenerateStaticAssetsJob.perform_later(id)
     end
   end
 end

@@ -17,9 +17,9 @@ module CoreDataConnector
       current_user.admin?
     end
 
-    # Jobs cannot be viewed via the API.
+    # Admin users can view a job's status; no one else can.
     def show?
-      false
+      current_user.admin?
     end
 
     # Jobs cannot be updated via the API.
