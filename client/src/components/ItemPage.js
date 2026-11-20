@@ -63,6 +63,7 @@ type ComponentProps = {
 };
 
 const Component = (props: ComponentProps) => {
+  const [message, setMessage] = useState(null);
   const [publishError, setPublishError] = useState(null);
   const [saved, setSaved] = useState(false);
 
@@ -74,9 +75,14 @@ const Component = (props: ComponentProps) => {
   /**
    * Memo-izes the ItemLayoutContext value.
    *
-   * @type {{saved: boolean, setSaved: function(): void}}
+   * @type {{message: ?Object, saved: boolean, setMessage: function(?Object): void, setSaved: function(): void}}
    */
-  const layoutValue = useMemo(() => ({ saved, setSaved }), [saved, setSaved]);
+  const layoutValue = useMemo(() => ({
+    message,
+    saved,
+    setMessage,
+    setSaved
+  }), [message, saved, setMessage, setSaved]);
 
   /**
    * Memo-izes the ItemContext value.
@@ -147,15 +153,18 @@ const Component = (props: ComponentProps) => {
           className={styles.itemPage}
         >
           <ItemLayout.Toaster
-            onDismiss={() => setSaved(false)}
+            onDismiss={() => {
+              setSaved(false);
+              setMessage(null);
+            }}
             type={Toaster.MessageTypes.positive}
-            visible={saved}
+            visible={saved || !!message}
           >
             <Message.Header
-              content={t('Common.messages.save.header')}
+              content={message?.header || t('Common.messages.save.header')}
             />
             <Message.Content
-              content={t('Common.messages.save.content')}
+              content={message?.content || t('Common.messages.save.content')}
             />
           </ItemLayout.Toaster>
           <ItemLayout.Toaster

@@ -20,12 +20,15 @@ import useProjectModelRelationship from '../hooks/ProjectModelRelationship';
 type Props = {
   errors?: Array<string>,
   onClose: () => void,
-  onSave: () => Promise<any>
+  onSave: () => Promise<any>,
+  single?: boolean
 };
 
 const MediaContentsUploadModal = (props: Props) => {
   const [complete, setComplete] = useState(false);
   const [mediaContents, setMediaContents] = useState([]);
+  const [singleFileError, setSingleFileError] = useState(null);
+  const [uploadError, setUploadError] = useState(null);
 
   const [loadingProjectModelFields, setLoadingProjectModelFields] = useState(false);
   const [projectModelFields, setProjectModelFields] = useState([]);
@@ -52,11 +55,47 @@ const MediaContentsUploadModal = (props: Props) => {
   }, []);
 
   /**
+   * Parses any validation error messages from the passed error response and displays them. Re-throws the error
+   * afterward so that the modal doesn't treat this as a completed upload batch, which would otherwise permanently
+   * disable the "Upload" button.
+   *
+   * @type {function(*): void}
+   */
+  const onUploadError = useCallback((error) => {
+    const errorMessages = [];
+
+    _.each(error?.response?.data?.errors, (itemErrors) => {
+      _.each(itemErrors, (messages) => {
+        _.each([].concat(messages), (message) => {
+          errorMessages.push(_.isArray(message) ? _.last(message) : message);
+        });
+      });
+    });
+
+    setUploadError(_.isEmpty(errorMessages)
+      ? t('MediaContentsUploadModal.errors.upload')
+      : errorMessages.join('. '));
+
+    throw error;
+  }, [t]);
+
+  /**
    * In order to enter user-defined fields on upload, we're going to store values for both the media_content record
    * and the relationships record in the same container. Here we'll separate the user-defined field values for the
    * media_content record from those of the relationships record.
    */
   const onSave = useCallback((records) => {
+    if (props.single && records.length > 1) {
+      setSingleFileError(t('MediaContentsUploadModal.errors.single'));
+
+      // Reject (rather than resolve) so the modal doesn't treat this as a completed upload batch, which would
+      // otherwise permanently disable the "Upload" button even after the extra file(s) are removed.
+      return Promise.reject(new Error('single_file_limit'));
+    }
+
+    setSingleFileError(null);
+    setUploadError(null);
+
     const uuids = _.pluck(projectModelRelationshipFields, 'uuid');
 
     const payload  = [];
@@ -76,8 +115,9 @@ const MediaContentsUploadModal = (props: Props) => {
     return MediaContentsService
       .uploadAll(payload, project)
       .then(({ data }) => data.media_contents)
-      .then((newMediaContents) => afterSave(newMediaContents, relationshipUserDefined));
-  }, [afterSave, project, projectModelRelationshipFields]);
+      .then((newMediaContents) => afterSave(newMediaContents, relationshipUserDefined))
+      .catch(onUploadError);
+  }, [afterSave, onUploadError, project, projectModelRelationshipFields, props.single, t]);
 
   /**
    * Customizes the validation to include user-defined field use cases.
@@ -169,10 +209,12 @@ const MediaContentsUploadModal = (props: Props) => {
     return null;
   }
 
+  const errors = _.compact([...(props.errors || []), singleFileError, uploadError]);
+
   return (
     <FileUploadModal
       closeOnComplete={false}
-      errors={props.errors}
+      errors={errors}
       itemComponent={MediaContentUploadForm}
       itemComponentProps={{
         projectModelFields,
