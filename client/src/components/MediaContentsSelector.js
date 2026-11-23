@@ -43,7 +43,8 @@ type ItemType = {
 type Props = {
   onClose: () => void,
   onLoad: (params: any) => Promise<any>,
-  onSave: (items: Array<ItemType>) => void
+  onSave: (items: Array<ItemType>) => void,
+  single?: boolean
 };
 
 const MediaContentsSelector = (props: Props) => {
@@ -86,12 +87,17 @@ const MediaContentsSelector = (props: Props) => {
   const onItemSelection = useCallback((mediaContent) => {
     if (isSelected(mediaContent)) {
       setSelectedItems((prevItems) => _.filter(prevItems, (i) => i.mediaContent.id !== mediaContent.id));
+      onRowSelect(mediaContent);
+    } else if (props.single) {
+      // deselect any previously selected record first.
+      _.each(selectedItems, (item) => onRowSelect(item.mediaContent));
+      setSelectedItems([{ mediaContent }]);
+      onRowSelect(mediaContent);
     } else {
       setSelectedItems((prevItems) => [...prevItems, { mediaContent }]);
+      onRowSelect(mediaContent);
     }
-
-    onRowSelect(mediaContent);
-  }, [isSelected, onRowSelect]);
+  }, [isSelected, onRowSelect, props.single, selectedItems]);
 
   /**
    * Validates required fields for the passed item.
